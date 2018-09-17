@@ -1,27 +1,28 @@
 #include<stdio.h>
 #include<math.h>
-void main() 
+void main()
 {
 	double r1, r2, x1, x2, y1, y2;
-	scanf("%fl %fl %fl %fl %fl %fl", &r1, &r2, &x1, &x2, &y1, &y2);
+	scanf_s("%lf %lf %lf %lf %lf %lf", &r1, &r2, &x1, &x2, &y1, &y2);
 	if ((x1 == x2) && (y1 == y2) && (r1 == r2)) {
-		printf("Совпадают");
+		printf("Sovpadaut\n");
 		return;
 	}
-	if (((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2))>((r1+r2)*(r1+r2)))
+	if (((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) > ((r1 + r2)*(r1 + r2)))
 	{
-		printf("Не пересекаются");
+		printf("Ne imeut nichego obshego\n");
 		return;
 	}
-	if (((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2))==((r1 + r2)*(r1 + r2))||(((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) == ((r1 - r2)*(r1 - r2)))) {
-		printf("Касаются");
+	if (((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) == ((r1 + r2)*(r1 + r2)) || (((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) == ((r1 - r2)*(r1 - r2)))) {
+		printf("Kasautsya\n");
 		return;
 	}
 	if (((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) < ((r1 + r2)*(r1 + r2))) {
-	
-	if (((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) < ((r1 - r2)*(r1 - r2))) {
-		printf("Одна внутри другой");
-	}
-	else printf("Пересекаются");
 
+		if (((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) < ((r1 - r2)*(r1 - r2))) {
+			printf("Odna vnutry drugoy\n");
+		}
+		else printf("Peresekautsya\n");
+
+	}
 }
