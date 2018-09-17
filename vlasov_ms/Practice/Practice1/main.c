@@ -20,12 +20,17 @@ void main() {
 	}
 
 	if ((x1 == y1) && (x2 == y2) && (r1 == r2)) {
-		printf("Circles match (inf. common points number - their radiuses and center coordinates are equal).\n");
+		printf("Circles match (inf. common points number - circles' radiuses and center coordinates are equal).\n");
 		return;
 	}
 
 	if ((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) < r2*r2) {
 		printf("Circle #1 is inside circle #2 (no common points).\n");
+		return;
+	}
+
+	if ((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) == r2*r2) {
+		printf("Circle #1 is inside circle #2 (1 common point).\n");
 		return;
 	}
 
