@@ -3,7 +3,6 @@
 
 void main() {
 	double x1, y1, r1, x2, y2, r2, l;
-	int flag = 0;
 	printf("Enter center coordinates of circle #1 (with a space between): ");
 	scanf("%lf %lf", &x1, &y1);
 	printf("\nEnter radius of circle #1: ");
@@ -20,27 +19,36 @@ void main() {
 	}
 
 	if ((x1 == y1) && (x2 == y2) && (r1 == r2)) {
-		printf("Circles match (inf. common points number - circles' radiuses and center coordinates are equal).\n");
-		return;
-	}
-
-	if ((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) < r2*r2) {
-		printf("Circle #1 is inside circle #2 (no common points).\n");
-		return;
-	}
-
-	if ((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) == r2*r2) {
-		printf("Circle #1 is inside circle #2 (1 common point).\n");
-		return;
-	}
-
-	if ((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) < r1*r1) {
-		printf("Circle #2 is inside circle #1 (no common points).\n");
+		printf("Circles match (radiuses and center coordinates are equal).\n");
 		return;
 	}
 
 	l = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
-	if (l > r1 + r2) printf("Circles does not intersect (no common points).\n");
-	else if (l == r1 + r2) printf("Cicles concern outside (1 common point).\n");
-	else printf("Circles intersect (2 common points).\n");
+	
+	if (l > r1 + r2) {
+		printf("Circles does not intersect (no common points).\n");
+		return;
+	}
+
+	if (l == r1 + r2) {
+		printf("Cicles concern outside (1 common point).\n");
+		return;
+	}
+
+	if ((l == r1 - r2) || (l == r2 - r1)) {
+		printf("Cicles concern inside (1 common point).\n");
+		return;
+	}
+
+	if ((r1 < r2) && (l < r2 - r1)) {
+		printf("Circle #1 is inside circle #2 (no common points).\n");
+		return;
+	}
+
+	if ((r2 < r1) && (l < r1 - r2)) {
+		printf("Circle #1 is inside circle #2 (no common points).\n");
+		return;
+	}
+
+	printf("Circles intersect (2 common points).\n");
 }
