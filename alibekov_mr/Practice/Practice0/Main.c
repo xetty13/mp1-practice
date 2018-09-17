@@ -3,6 +3,7 @@
 void main()
 {
 	double r1, r2, x1, x2, y1, y2;
+	printf("Vvedite: r1, r2, x1, x2, y1, y2");
 	scanf_s("%lf %lf %lf %lf %lf %lf", &r1, &r2, &x1, &x2, &y1, &y2);
 	if ((x1 == x2) && (y1 == y2) && (r1 == r2)) {
 		printf("Sovpadaut\n");
