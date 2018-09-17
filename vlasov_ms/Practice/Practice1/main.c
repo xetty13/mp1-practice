@@ -11,7 +11,7 @@ void main() {
 	scanf_s("%lf %lf", &x2, &y2);
 	printf("Enter radius of circle #2: ");
 	scanf_s("%lf", &r2);
-	printf("\nSummary: circle #1 has center in (%lf, %lf) and radius %lf, circle #1 has center in (%lf, %lf) and radius %lf.\n",x1,y1,r1,x2,y2,r2);
+	printf("\nSummary: circle #1 has center in (%lf, %lf) and radius %lf, circle #2 has center in (%lf, %lf) and radius %lf.\n",x1,y1,r1,x2,y2,r2);
 
 	if ((r1 <= 0) || (r2 <= 0)) {
 		printf("At least one [radius] parameter is incorrect: you must enter a float number exceeding 0. Start again, please.\n");
