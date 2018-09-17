@@ -51,4 +51,5 @@ void main() {
 	}
 
 	printf("Circles intersect (2 common points).\n");
+	return;
 }
