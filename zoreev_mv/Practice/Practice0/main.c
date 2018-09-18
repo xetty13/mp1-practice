@@ -2,33 +2,47 @@
 #include <math.h>
 void main() {
 	float x1=0,x2=0,y1=0,y2=0,r1=0,r2=0,R=0;
+	printf("Please, input parmameters of the first circle, then of the second circle in x,y,r format. Press enter after inputting each parameter\n");
 	scanf("%f%f%f%f%f%f",&x1,&y1,&r1,&x2,&y2,&r2);
-	R=sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+
+	if ((r1<0)||(r2<0)) {
+		printf("Imposible circle(s)\n");
+		return;
+	}
+
+	R=sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)); //Distance between centers of circles
+
 	if ((R==0)&&(r1==r2)) {
-		printf("okrujnosti sovpadajut");
+		printf("Circles are equal\n");
 		return;
 	}
+
 	if ((r1+r2)<R) {
-		printf("ne peresekajutsa");
+		printf("Circles don't intersect, and don't lies one in the other\n");
 		return;
 	}
+
 	if ((r1+r2)==R) {
-		printf("Okrujnosti kasautsa vneshnim sposobom");
+		printf("Circles touches outside\n");
 		return;
 	}
-	if ((R>=r1)&&(R>=r2)) {
-		printf("Okrujnosti peresekaytsa v dvuh tochkah vneshnim sposobom");//Ko vneshnemu sposobu otnositsa i situacija kogda centr okrujnosti legit na drugoi okrujnosti
+
+	//From this moment r1+r2>R
+
+	if (((R+r1)>r2)&&(R+r2)>r1) {
+		printf("Circles intersect at two points\n");
 		return;
 	}
-	if (((R<r1)||(R<r2))&&(((R+r1)>r2)&&((R+r2)>r1))) {
-		printf("Okrujnosti peresekaytsa v dvuh tochkah vnutrennim sposobom");
+
+	if (((R+r1)==r2)||((R+r2)==r1)) {
+		printf("One circle touches another circle inside\n");
 		return;
 	}
-	if (((R<r1)||(R<r2))&&(((R+r1)==r2)||((R+r2)==r1))) {
-		printf("Okrujnosti kasautsa vnutrennim sposobom");
+	
+	if (((R+r1)<r2)||(R+r2)<r1) {
+		printf("One circle lie in anouther");
 		return;
 	}
-	if (((R<r1)||(R<r2))&&(((R+r1)<r2)||((R+r2)<r1))) {
-		printf("Odna okrujnosti lejit vnutri drugoi");
-}
+
+	printf("Somthing strange happen, FATAL ERROR");
 }
