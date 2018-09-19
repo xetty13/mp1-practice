@@ -3,12 +3,23 @@
 void main() {
     double x1, x2, y1, y2, r1, r2, d;
 
-    printf("Enter the coordinates and radius of the first circle \n");
+    printf("Vvedite koordinati i radius pervoi ocrujnosti \n");
     scanf_s("%lf %lf %lf",&x1,&y1,&r1);
-    printf("Enter the coordinates and radius of the second circle \n");
+
+    if (r1 < 0) {
+        printf("Ne correctnie dannie");
+        return;
+    }
+
+    printf("Vvedite koordinati i radius vtoroi ocrujnosti \n");
     scanf_s("%lf %lf %lf", &x2, &y2, &r2);
 
-    d = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)* (y1 - y2)); //Расстояние между центрами окружностей
+    if (r2 < 0) {
+        printf("Ne correctnie dannie");
+        return;
+    }
+
+    d = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)* (y1 - y2)); 
 
     if ((d > fabs(r1 - r2)) && (d < (r1 + r2)))  printf("Ocrujnosti imeut 2 obshie tochki \n"); 
     if (d < fabs(r1 - r2)) printf("Obshie tochki otsutstvuut - odna ocrujnost lejit v drugoi \n");
@@ -16,7 +27,5 @@ void main() {
     if (d == (r1 + r2)) printf("Vneshnee kasanie \n");
     if ((d == (fabs(r1 - r2))) && (r1!=r2)) printf("Vnutrenee kasanie \n");
     if ((d == 0) && (r1 == r2)) printf("Ocrujnosti sovpadaut \n");
-
-    system("pause");
-    
+  
 }
