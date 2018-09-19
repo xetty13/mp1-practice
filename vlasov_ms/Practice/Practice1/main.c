@@ -46,7 +46,7 @@ void main() {
 	}
 
 	if ((r2 < r1) && (l < r1 - r2)) {
-		printf("Circle #1 is inside circle #2 (no common points).\n");
+		printf("Circle #2 is inside circle #2 (no common points).\n");
 		return;
 	}
 
