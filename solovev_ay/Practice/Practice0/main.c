@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
-    void main()
+    	void main()
     	{
 	float x, x1, y, y1, r, r1, s = 0.0f;
 	setlocale(LC_ALL, "Russian");
