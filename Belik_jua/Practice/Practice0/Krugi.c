@@ -3,7 +3,7 @@
 
 void main()
 {
-	double x1, x2, r1, y2, y1, r2,d;
+	double x1, x2, r1, y2, y1, r2, d;
 	printf("x1 -? y1 -? r1 -?\n");
 	scanf("%lf %lf %lf", &x1, &y1, &r1);
 	printf("x2 -? y2 -? r2 -?\n");
@@ -17,21 +17,22 @@ void main()
 	if (d < fabs(r1 - r2))
 	{
 		printf("1 vnutri drugogo");
+		return;
 	}
 	if (d == fabs(r1 - r2))
 	{
 		printf("vnutrennee kasanie");
-	}
-	if ((d > fabs(r1 - r2)) && (d<(r1+r2)))
-	{
-		printf("peresekautsya");
+		return;
 	}
 	if (d == (r1 + r2))
 	{
 		printf("vneshnee kasanie");
+		return;
 	}
 	if (d > (r1 + r2))
 	{
 		printf("ne peresekautsya");
+		return;
 	}
+		printf("peresekautsya");
 }
