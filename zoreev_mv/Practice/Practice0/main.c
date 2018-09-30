@@ -18,7 +18,7 @@ void main() {
 		return;
 	}
 
-	if ((R - r1 - r2) > E) { //Warning! It's sometimes work incorrectly with uninteger. For example 0,1.24,0,0,2.24,1 gives this answer but R=1.000000 r1+r2=1.000000. I don't know why this hapening.
+	if ((R - r1 - r2) > E) {
 		printf("Circles don't intersect, and don't lies one in the other\n");
 		return;
 	}
