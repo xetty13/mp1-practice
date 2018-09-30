@@ -4,11 +4,11 @@
  void main()
  {
 	float x1, y1, r1, x2, y2, r2, d; // d-rasstoyanie mezhdu ñentrami okruzhnostej
- 	printf("Vvedite koordinaty pervoj okruzhnosti i ee radius: ");
+ 	printf("Vvedite koordinaty pervoj okruzhnosti i ee radius: \n");
 	scanf("%f %f %f", &x1, &y1, &r1);
-	printf("Vvedite koordinaty vtoroj okruzhnosti i ee radius: ");
+	printf("Vvedite koordinaty vtoroj okruzhnosti i ee radius: \n");
 	scanf("%f %f %f", &x2, &y2, &r2);
-	d = sqrtf(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2)));
+	d = sqrtf(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
 
 	if ((x1 == x2) && (y1 == y2) && (r1 == r2))
 	{
@@ -16,33 +16,21 @@
 		return;
 	}
 
-	if ((x1 == x2) && (y1 == y2) && (r1 < r2))
+	if (d + r1 < r2)
 	{
-		printf("Centry sovpadayut, pervaya okruzhnost' lezhit vo vtoroj \n");
+		printf("Pervaya okruzhnost' lezhit vo vtoroj \n");
 		return;
 	}
 
-	if ((x1 == x2) && (y1 == y2) && (r1 > r2))
+	if (d + r2 < r1)
 	{
-		printf("Centry sovpadayut, vtoraya okruzhnost' lezhit v pervoj \n");
-		return;
-	}
-
-	if (d >(r1 + r2))
-	{
-		printf("Okruzhnosti ne peresekayutsya i ne kasayutsya \n");
+		printf("Vtoraya okruzhnost' lezhit v pervoj \n");
 		return;
 	}
 
 	if (d == (r1 + r2))
 	{
-		printf("Peresekayutsa v odnoy tochke \n");
-		return;
-	}
-
-	if ((d < (r1 + r2)) && (r1 < (d + r2)) && (r2 < (d + r1)))
-	{
-		printf("Okruzhnosti peresekayutsya i imeyut dve obshie tochki \n");
+		printf("Peresekayutsa vneshne v odnoy tochke \n");
 		return;
 	}
 
@@ -57,4 +45,11 @@
 		printf("Peresekaetsya v odnoy tochke, perviy vnutri vtorogo \n");
 		return;
 	}
+	
+	if (d >(r1 + r2))
+	{
+		printf("Okruzhnosti ne peresekayutsya i ne kasayutsya \n");
+		return;
+	}
+		printf("Okruzhnosti peresekayutsya i imeyut dve obshie tochki \n");
  }
