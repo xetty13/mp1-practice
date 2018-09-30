@@ -6,7 +6,7 @@ void main() {
 	printf("Input x1,y1,r1,x2,y2,r2\n");
 	scanf("%lf%lf%lf%lf%lf%lf", &x1, &y1, &r1, &x2, &y2, &r2);
 
-	if ((r1<=0) || (r2<=0)) {
+	if ((r1 <= 0) || (r2 <= 0)) {
 		printf("Imposible circle(s)\n");
 		return;
 	}
@@ -35,7 +35,7 @@ void main() {
 		return;
 	}
 
-	if ((fabs( R + r1 - r2) < E) || (fabs(R + r2 - r1) < E)) {
+	if ((fabs(R + r1 - r2) < E) || (fabs(R + r2 - r1) < E)) {
 		printf("Circles touches inside\n");
 		return;
 	}
