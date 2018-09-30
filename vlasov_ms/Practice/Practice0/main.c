@@ -4,14 +4,14 @@
 void main() {
 	double x1, y1, r1, x2, y2, r2, l;
 	printf("Enter center coordinates of circle #1 (with a space between): ");
-	scanf_s("%lf %lf", &x1, &y1);
+	scanf("%lf %lf", &x1, &y1);
 	printf("Enter radius of circle #1: ");
-	scanf_s("%lf", &r1);
+	scanf("%lf", &r1);
 	printf("\nEnter center coordinates of circle #2 (with a space between): ");
-	scanf_s("%lf %lf", &x2, &y2);
+	scanf("%lf %lf", &x2, &y2);
 	printf("Enter radius of circle #2: ");
-	scanf_s("%lf", &r2);
-	printf("\nSummary: circle #1 has center in (%lf, %lf) and radius %lf, circle #2 has center in (%lf, %lf) and radius %lf.\n",x1,y1,r1,x2,y2,r2);
+	scanf("%lf", &r2);
+	printf("\nSummary: circle #1 has center in (%lf, %lf) and radius %lf, circle #2 has center in (%lf, %lf) and radius %lf.\n", x1, y1, r1, x2, y2, r2);
 
 	if ((r1 <= 0) || (r2 <= 0)) {
 		printf("At least one [radius] parameter is incorrect: you must enter a float number exceeding 0. Start again, please.\n");
@@ -23,8 +23,8 @@ void main() {
 		return;
 	}
 
-	l = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
-	
+	l = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+
 	if (l > r1 + r2) {
 		printf("Circles does not intersect (no common points).\n");
 		return;
@@ -40,13 +40,8 @@ void main() {
 		return;
 	}
 
-	if ((r1 < r2) && (l < r2 - r1)) {
-		printf("Circle #1 is inside circle #2 (no common points).\n");
-		return;
-	}
-
-	if ((r2 < r1) && (l < r1 - r2)) {
-		printf("Circle #2 is inside circle #2 (no common points).\n");
+	if ((l < r1 - r2) || (l < r2 - r1)) {
+		printf("Circle is inside another one (no common points).\n");
 		return;
 	}
 
