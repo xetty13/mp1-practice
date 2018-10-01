@@ -15,6 +15,6 @@ void main() {
 	m_2krish = 2 * pl_DSP * w * d * 1.5;
 	m_2dveri = h * w * 1 * pl_d;
 	m_polki = (h / 40) * pl_DSP * w * d * 1.5;
-	m = m_stenka + m_2bokovini + m_2krish + m_polki;
+	m = m_stenka + m_2bokovini + m_2krish + m_polki + m_2dveri;
 	printf("%lf\n", m);
 }
