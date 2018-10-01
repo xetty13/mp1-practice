@@ -27,5 +27,4 @@ void main()
 	}
 	m = m + dsp * w * d * p;
 	print("massa = %lf", m);
-	scanf("%lf", &m);
 }
