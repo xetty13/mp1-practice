@@ -1,4 +1,4 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <locale.h>
 
 void main()
@@ -6,10 +6,10 @@ void main()
 	double w, h, d, dsp, dvp, wood;
 	double rp, side, lid, door, shelf, tm;
 	setlocale(LC_ALL, "Russian");
-	printf("Высота, ширина, глубина (в сантиметрах),\nПлотность ДСП, ДВП, дерева в кг/см^3\n\n");
+	printf("Р’С‹СЃРѕС‚Р°, С€РёСЂРёРЅР°, РіР»СѓР±РёРЅР° (РІ СЃР°РЅС‚РёРјРµС‚СЂР°С…),\nРџР»РѕС‚РЅРѕСЃС‚СЊ Р”РЎРџ, Р”Р’Рџ, РґРµСЂРµРІР° РІ РєРі/СЃРј^3\n\n");
 	scanf("%lf %lf %lf %lf %lf %lf", &h, &w, &d, &dsp, &dvp, &wood);
 	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90) || (dsp < 0) || (dvp < 0) || (wood < 0)) {
-		printf("Некорректный ввод\n");
+		printf("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ\n");
 		return;
 	}
 	rp = h * w * 0.5 * dvp;
@@ -21,5 +21,5 @@ void main()
 	else
 		{ shelf = 3 * w * d * 1.5 * dsp; }
 	tm = rp + side + lid + door + shelf;
-	printf("\nПолная масса шкафа равна %lf\n\n", tm);
+	printf("\nРџРѕР»РЅР°СЏ РјР°СЃСЃР° С€РєР°С„Р° СЂР°РІРЅР° %lf\n\n", tm);
 }
