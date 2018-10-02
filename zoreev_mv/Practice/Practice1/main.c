@@ -1,39 +1,27 @@
 #include <stdio.h>
-void main () {
-	double h, d, w, Qdvp, Qdsp, Qder, m, back, bottom, top,door,polka;
-	printf("Enter h,d,w in mm");
-	scanf("%lflflf",h,d,w);
-	scanf("%lflflf",Qdvp,Qdsp,Qder);
+#include <locale.h>
+#include <math.h>
+void main() {
+	setlocale(LC_ALL, "Russian");
+	double h, w, d, dvp, dsp, wood,back, side, top, door, shelf, M;
+	int n;
+	printf("Введите высоту, ширину и глубину шкафа в см\n");
+	scanf("%lf%lf%lf",&h,&w,&d);
+	printf("Введите плотность двп, дсп и дерева в кг/м^3\n");
+	scanf("%lf%lf%lf",&dvp,&dsp,&wood);
 	
-	if ((Qdvp <= 0) || (Qdsp <= 0) || (Qder <= 0) || (h < 1800) || (h>2200) || (w < 800) || (w > 1000) || (d < 500) || (d > 900)) {
-		printf("Input error");
+	if ((dvp < 0) || (dsp < 0) || (wood < 0) || (h < 180) || (h > 220) || (d < 50) || (d > 90) || (w < 80) || (w > 100)) {
+		printf("Ошибка ввода\n");
 		return;
 	}
 
-	//Масса задней стенки
-	
-	back=h*w*5*Qdvp;
+	n = floor(h/40); //Щитаем что 40см это расстояние между верхними плоскостями полок, таким образом при высоте кратной 40 верхняя полка будет касаться верхней крышки
+	back = (h * w * 0.5 * dvp); //делим на 1000000 чтобы привести см^3 к м^3
+	side = (h * d* 1.5 * dsp);
+	top = (w * d * 1.5 * dsp);
+	door = (h * w * 1 * wood);
+	shelf = (n * d * (w-3) * 1.5 * dsp); //Вычитаем 3см т.к боковины не накладные, а значит полки будут уже
 
-	//Масса двух боковин
-
-	bottom=h*d*30*Qdsp;
-
-	//Масса двух накладных крышек
-
-	top=w*d*30*Qdsp;
-
-	//Масса наладных дверей
-
-	door=h*w*10*Qder;
-
-	//Масса полок
-
-
-
-	//Суммарная масса
-
-	m=back+bottom+top+door+polka;
-	printf("mass: %lf",m);
+	M = (back + side + top + door + shelf) / 1000000;  //Делим на миллион т.к плотность бралась кг/м^3, а размеры брались в см
+	printf("Масса шкафа: %lfкг\n",M);
 }
-
-

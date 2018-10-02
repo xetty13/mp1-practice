@@ -1,24 +1,34 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Practice0", "Practice0\Practice0.vcxproj", "{413EAC95-AA2A-4669-A093-054C17167ECB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Practice1", "Practice1\Practice1.vcxproj", "{E8A0BF45-4965-4A9B-9683-1ABC777B5DE2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Practice1", "Practice1\Practice1.vcxproj", "{91F59FBD-C480-453C-84EC-F0B11455BBB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{413EAC95-AA2A-4669-A093-054C17167ECB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{413EAC95-AA2A-4669-A093-054C17167ECB}.Debug|Win32.Build.0 = Debug|Win32
+		{413EAC95-AA2A-4669-A093-054C17167ECB}.Debug|x64.ActiveCfg = Debug|Win32
 		{413EAC95-AA2A-4669-A093-054C17167ECB}.Release|Win32.ActiveCfg = Release|Win32
 		{413EAC95-AA2A-4669-A093-054C17167ECB}.Release|Win32.Build.0 = Release|Win32
-		{E8A0BF45-4965-4A9B-9683-1ABC777B5DE2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E8A0BF45-4965-4A9B-9683-1ABC777B5DE2}.Debug|Win32.Build.0 = Debug|Win32
-		{E8A0BF45-4965-4A9B-9683-1ABC777B5DE2}.Release|Win32.ActiveCfg = Release|Win32
-		{E8A0BF45-4965-4A9B-9683-1ABC777B5DE2}.Release|Win32.Build.0 = Release|Win32
+		{413EAC95-AA2A-4669-A093-054C17167ECB}.Release|x64.ActiveCfg = Release|Win32
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Debug|Win32.Build.0 = Debug|Win32
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Debug|x64.ActiveCfg = Debug|x64
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Debug|x64.Build.0 = Debug|x64
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Release|Win32.ActiveCfg = Release|Win32
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Release|Win32.Build.0 = Release|Win32
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Release|x64.ActiveCfg = Release|x64
+		{91F59FBD-C480-453C-84EC-F0B11455BBB3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
