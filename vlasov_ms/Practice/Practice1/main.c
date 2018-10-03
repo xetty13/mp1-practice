@@ -49,13 +49,11 @@ void main() {
 		return;
 	}
 
-	printf("Выполняю расчет...\n");
-
 	vZad = h * w * 0.5;
 	vBok = 2 * h * d * 1.5;
 	vKry = 2 * w * d * 1.5;
 	vDve = h * w * 1;
-	vPol = d * (w - 3) * 1.5 * floor(h / 40);
+	vPol = d * (w - 3) * 1.5 * floor(h / 40); // решил, что так код чисто читабельнее будет, сомневаюсь я насчет этих псевдоприведений (int)
 	m = vZad * (pDvp / 1000000) + vBok * (pDsp / 1000000) + vKry * (pDsp / 1000000) + vDve * (pWood / 1000000) + vPol * (pDsp / 1000000);
-	printf("Масса шкафа: %.2lf кг\n", m);
+	printf("\nМАССА ШКАФА: %.2lf кг\n", m);
 }
