@@ -1,5 +1,6 @@
 ﻿#include <stdio.h>
 #include <locale.h>
+#include <math.h>
 
 void main() {
 	double h, w, d, pDvp, pDsp, pWood, m, vZad, vBok, vKry, vDve, vPol;
@@ -27,21 +28,21 @@ void main() {
 		return;
 	}
 
-	printf("\nВведите плотность ДВП (в кг/см3): ");
+	printf("\nВведите плотность ДВП (в кг/м3): ");
 	scanf("%lf", &pDvp);
 	if (pDvp <= 0) {
 		printf("ОШИБКА: Плотность должна быть больше 0");
 		return;
 	}
 
-	printf("Введите плотность ДСП (в кг/см3): ");
+	printf("Введите плотность ДСП (в кг/м3): ");
 	scanf("%lf", &pDsp);
 	if (pDsp <= 0) {
 		printf("ОШИБКА: Плотность должна быть больше 0");
 		return;
 	}
 
-	printf("Введите плотность дерева (в кг/см3): ");
+	printf("Введите плотность дерева (в кг/м3): ");
 	scanf("%lf", &pWood);
 	if (pWood <= 0) {
 		printf("ОШИБКА: Плотность должна быть больше 0");
@@ -50,11 +51,11 @@ void main() {
 
 	printf("Выполняю расчет...\n");
 
-	vZad = h * w * 0.005;
-	vBok = 2 * h * d * 0.015;
-	vKry = 2 * w * d * 0.015;
-	vDve = h * w * 0.01;
-	vPol = d * (w - 0.03) * 0.015 * ((int)(h - ((int)h % 40)) / 40);
-	m = vZad * pDvp + vBok * pDsp + vKry * pDsp + vDve * pWood + vPol * pDsp;
-	printf("Масса шкафа: %lf кг", m);
+	vZad = h * w * 0.5;
+	vBok = 2 * h * d * 1.5;
+	vKry = 2 * w * d * 1.5;
+	vDve = h * w * 1;
+	vPol = d * (w - 3) * 1.5 * floor(h / 40);
+	m = vZad * (pDvp / 1000000) + vBok * (pDsp / 1000000) + vKry * (pDsp / 1000000) + vDve * (pWood / 1000000) + vPol * (pDsp / 1000000);
+	printf("Масса шкафа: %.2lf кг\n", m);
 }
