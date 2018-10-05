@@ -4,43 +4,39 @@
 
 void main()
 {
-	float h, w, d, m; // РџР°СЂР°РјРµС‚СЂС‹ С€РєР°С„Р°
-	float densityDSP, densityDVP, densityTree; // РџР»РѕС‚РЅРѕСЃС‚СЊ РјР°С‚РµСЂРёР°Р»РѕРІ
-	float wall, sides, doors, lids, shelfs; // Р§Р°СЃС‚Рё С€РєР°С„Р°
+	float h, w, d, m; // Параметры шкафа
+	float densityDSP, densityDVP, densityTree; // Плотности материалов
+	float wall, sides, doors, lids, shelfs; // Части шкафа
 	setlocale(LC_ALL, "Russian");
 
-<<<<<<< HEAD
 	printf("Введите высоту (от 180 до 220 см), ширину (от 80 до 130 см), глубину (от 50 до 90 см) шкафа в см: ");
-=======
-	printf("Р’РІРµРґРёС‚Рµ РІС‹СЃРѕС‚Сѓ (РѕС‚ 180 РґРѕ 220 СЃРј), С€РёСЂРёРЅСѓ (РѕС‚ 80 РґРѕ 130 СЃРј), РіР»СѓР±РёРЅСѓ (РѕС‚ 50 РґРѕ 90 СЃРј) С€РєР°С„Р° РІ СЃРј: ");
->>>>>>> ef66c46897fb75ff193d492c6b437c1ebe37370b
 	scanf("%f %f %f", &h, &w, &d);
 
 	if ((h < 180.0) || (h > 220.0) || (w < 80.0) || (w > 130.0) || (d < 50.0) || (d > 90.0))
 	{
-		printf("Р’РІРµРґРµРЅС‹ РЅРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ С€РєР°С„Р°. РџСЂРѕРІРµСЂСЊС‚Рµ РґР°РЅРЅС‹Рµ.\n");
+		printf("Неверно введены данные.\n");
 		return;
 	}
 
-	printf("Р’РІРµРґРёС‚Рµ РїР»РѕС‚РЅРѕСЃС‚СЊ Р”РЎРџ, Р”Р’Рџ Рё РґРµСЂРµРІР° РІ РєРі/Рј^3: ");
+	printf("Введите плотности ДСП, ДВП и дерева в кг/м^3 : ");
 	scanf("%f %f %f", &densityDSP, &densityDVP, &densityTree);
 
 	if ((densityDSP <= 0) || (densityDVP <= 0) || (densityTree <= 0))
 	{
-		printf("Р’РІРµРґРµРЅС‹ РЅРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ С€РєР°С„Р°. РџСЂРѕРІРµСЂСЊС‚Рµ РґР°РЅРЅС‹Рµ.\n");
+		printf("Неверно введены данные.\n");
 		return;
 	}
 
-	h = h / 100.0f;
-	w = w / 100.0f;
-	d = d / 100.0f;
+	h /= 100.0f;
+	w /= 100.0f;
+	d /= 100.0f;
 
 	wall = h * w * (5 / 1000.0f) * densityDVP;
 	sides = 2 * h * d * (15 / 1000.0f) * densityDSP;
 	lids = 2 * w * d * (15 / 1000.0f) * densityDSP;
 	doors =  h * w * (1 / 100.0f) * densityTree;
-	shelfs = floor(h / 0.4) * w * d * (1 / 1000.0f) * densityDSP;
+	shelfs = floor(h / (0.4 + 15 / 1000.0f)) * w * d * (15 / 1000.0f) * densityDSP; // Пусть высота полки равна 15 мм
 
 	m = wall + sides + lids + doors + shelfs;
-	printf("РњР°СЃСЃР° С€РєР°С„Р° РІ РєРі СЂР°РІРЅР° %.3f\n", m);
+	printf("Масса шкафа в кг равна %.3f\n", m);
 }
