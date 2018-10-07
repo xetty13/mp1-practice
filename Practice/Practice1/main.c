@@ -3,26 +3,26 @@
 #include <locale.h>
 void main()
 {
-	float h,w,d;//h-высота w-ширина d-глубина
+	float h,w,d;//h-РІС‹СЃРѕС‚Р° w-С€РёСЂРёРЅР° d-РіР»СѓР±РёРЅР°
 	float DVP, DSP, drev;
 	float zad, bok, krish, dveri, polki;
-	double kol;//количество полок
+	double kol;//РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР»РѕРє
 	setlocale(LC_ALL, "Russian");
-	printf("Введите высоту, ширину, глубину\n");
+	printf("Р’РІРµРґРёС‚Рµ РІС‹СЃРѕС‚Сѓ, С€РёСЂРёРЅСѓ, РіР»СѓР±РёРЅСѓ\n");
 	scanf("%f %f %f", &h, &w, &d);
 	if ((h < 180) || (h > 220)){
-		printf("Неправильная высота\n");
+		printf("РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РІС‹СЃРѕС‚Р°\n");
 		return;}
 	if ((d < 50) || (d > 90)){
-		printf("Неправильная глубина\n");
+		printf("РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РіР»СѓР±РёРЅР°\n");
 		return;}
 	if ((w < 80) && (w > 120)){
-		printf("Неправильная ширина\n");
+		printf("РќРµРїСЂР°РІРёР»СЊРЅР°СЏ С€РёСЂРёРЅР°\n");
 		return;}
-	printf("Введите плотности ДВП, ДСП, дерева\n");
+	printf("Р’РІРµРґРёС‚Рµ РїР»РѕС‚РЅРѕСЃС‚Рё Р”Р’Рџ, Р”РЎРџ, РґРµСЂРµРІР°\n");
 	scanf("%f %f %f", &DVP, &DSP, &drev);
 	if ((DVP <= 0) || (DSP <= 0) || (drev <= 0)){
-		printf("Неправильная плотность\n");
+		printf("РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РїР»РѕС‚РЅРѕСЃС‚СЊ\n");
 		return;}
 	kol= floor(h / 40);
 	zad=h * w * DVP * 0.5f;
@@ -30,5 +30,5 @@ void main()
 	krish=2.0f * DSP * w * d *1.5f;
 	dveri=drev * h * w * 2.0f;
 	polki=kol * d * w * drev;
-	printf("Масса шкафа равна %.0f\n", zad + bok + krish + dveri + polki);
+	printf("РњР°СЃСЃР° С€РєР°С„Р° СЂР°РІРЅР° %.0f\n", zad + bok + krish + dveri + polki);
 }
