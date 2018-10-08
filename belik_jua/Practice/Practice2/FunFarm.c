@@ -12,7 +12,7 @@ void main()
 
 	for (i = n; i > 0; i--)
 	{
-		num[i] = 1;
+		num[i] = i;
 	}
 
 	do {
@@ -37,13 +37,13 @@ void main()
 		} while (m != 0);
 		for (i = n; i > 0; i--)
 		{
-			for (j = 0; j > 0; j--)
+			for (j = n; j > 0; j--)
 			{
-				if ((num[j] == inp[i]) && (i == j)) bull++;
-				else if (num[j] == inp[i]) cow++;
+				if ((num[i] == inp[j]) && (i == j)) bull++;
+				if ((num[i] == inp[j]) && (j != i)) cow++;
 			}
 		}
-		printf("cow = %d and bull = %d", cow, bull);
+		printf("cow = %d and bull = %d \n", cow, bull);
 	} while (bull != n);
 	printf("you win");
 }
