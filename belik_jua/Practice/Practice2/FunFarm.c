@@ -23,8 +23,8 @@ void main()
 		{
 			num[i] = sam[m];
 			sam[m] = -1;
-		}
-		i--;
+			i--;
+		} 
 	}
 
 	do {
