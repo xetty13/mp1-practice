@@ -58,5 +58,4 @@ void main()
 		printf("cow = %d and bull = %d \n", cow, bull);
 	} while (bull != n);
 	printf("you win");
-	scanf("%d", &m);
 }
