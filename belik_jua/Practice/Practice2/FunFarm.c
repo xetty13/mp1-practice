@@ -1,18 +1,30 @@
 #include <stdio.h>
+#include <time.h>
 
 void main()
 {
+	srand(time(NULL));
 	int i, n, bull = 0, cow = 0, a, j, m;
-	int num[10], inp[10];
+	int num[10], inp[10], sam[10];
 	
 	do {
-		printf("n = ");
+		printf("0 > n > 10, n = ");
 		scanf("%d",&n);
 	} while ((n <= 0) || (n > 10));
-
-	for (i = n; i > 0; i--)
+	for (i = 0; i < 10; i++)
 	{
-		num[i] = i;
+		sam[i] = i;
+	}
+	i = n;
+	while (i > 0)
+	{
+		m = rand() % 10;
+		if (sam[m] != -1)
+		{
+			num[i] = sam[m];
+			sam[m] = -1;
+		}
+		i--;
 	}
 
 	do {
@@ -20,7 +32,7 @@ void main()
 		cow = 0;
 		do {
 			m = 0;
-			printf("number = ");
+			printf("number (no repetitions) = ");
 			scanf("%d", &a);
 			for (i = n; i > 0; i--)
 			{
@@ -46,4 +58,5 @@ void main()
 		printf("cow = %d and bull = %d \n", cow, bull);
 	} while (bull != n);
 	printf("you win");
+	scanf("%d", &m);
 }
