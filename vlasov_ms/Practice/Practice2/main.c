@@ -5,7 +5,7 @@
 void main() {
 	long int n, Num1, Num2, cached_Num2, cached_2_Num2;
 	int bufs, cows, cNum2;
-	char current_number, comparing_number, flag = 0;
+	char current_number, comparing_number, flag = 0, flag2 = 0;
 	setlocale(LC_ALL, "Russian");
 	do {
 		system("cls");
@@ -42,13 +42,15 @@ void main() {
 					}
 				}
 				if (flag) {
-					flag = 0;
-					if(flag++ == 0) printf("Цифры в вашем числе повторяются. Повторите попытку: ");
-					continue;
+					flag2 = 0;
+					if(flag2++ == 0) printf("Цифры в вашем числе повторяются. Повторите попытку: ");
+					break;
 				}
 				else break;
 			}
 			//break;
+			printf("gg");
+			if (flag == 0) break;
 		}
 		else 
 			printf("\aВы ввели не %d-значное число. Попробуйте еще раз: ", n);
