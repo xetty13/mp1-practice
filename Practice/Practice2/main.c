@@ -6,6 +6,7 @@ void main()
 {
 	int n, a;
 	setlocale(LC_ALL, "Rus");
+	printf("%d %d", a, n);
 	do
 	{
 		printf("Введите длину числа\n");
@@ -16,7 +17,8 @@ void main()
 			continue;
 		}
 	} while (n <= 0 || n > 10);
-	n = rand() % 10;
-	do { a = rand() % 10; } while (a == n);
-	printf("%d %d\n", n, a);
+	//n = rand() % 10;
+	//do { a = rand() % 10; } while (a == n);
+	//printf("%d %d\n", n, a);
+	int arrray(n);
 }
