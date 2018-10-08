@@ -31,5 +31,5 @@ void main()
 		printf("Circles touch inside");
 		return;
 	}
-		printf("Circles have two common points");
+	printf("Circles have two common points");
 }
