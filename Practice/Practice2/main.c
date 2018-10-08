@@ -1,4 +1,4 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <locale.h>
 
 void main()
@@ -7,11 +7,11 @@ void main()
 	setlocale(LC_ALL, "Rus");
 	do
 	{
-		printf("Введите длину числа\n");
+		printf("Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ С‡РёСЃР»Р°\n");
 		scanf("%d", &n);
 		if (n <= 0 || n > 10)
 		{
-			printf("Неверные данные\n\n");
+			printf("РќРµРІРµСЂРЅС‹Рµ РґР°РЅРЅС‹Рµ\n\n");
 			continue;
 		}
 	} while (n <= 0 || n > 10);
