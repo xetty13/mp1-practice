@@ -1,9 +1,10 @@
 ﻿#include <stdio.h>
 #include <locale.h>
+#include <stdlib.h>
 
 void main()
 {
-	int n;
+	int n, a;
 	setlocale(LC_ALL, "Rus");
 	do
 	{
@@ -15,5 +16,7 @@ void main()
 			continue;
 		}
 	} while (n <= 0 || n > 10);
-
+	n = rand() % 10;
+	do { a = rand() % 10; } while (a == n);
+	printf("%d %d\n", n, a);
 }
