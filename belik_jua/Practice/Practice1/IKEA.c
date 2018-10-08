@@ -25,5 +25,5 @@ void main()
 		p++;
 	}
 	m = m + dsp * w * d * p;
-	print("massa = %lf", m);
+	printf("massa = %lf", m);
 }
