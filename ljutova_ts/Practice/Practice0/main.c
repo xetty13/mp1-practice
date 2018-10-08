@@ -24,28 +24,28 @@ void main()
 	} 
 	if ((r1 == r2) && (x1 == x2) && (y1 == y2)) 
 	{ 
-	printf("Circles match"); 
-	return; 
+	    printf("Circles match"); 
+	    return; 
 	} 
 	if (d == (r1 + r2)) 
 	{ 
-	printf("Circles intersect at one point, external touch"); 
-	return; 
+	    printf("Circles intersect at one point, external touch"); 
+	    return; 
 	} 
 	if (d > r1 + r2) 
 	{ 
-	printf("Circles do not intersect"); 
-	return; 
+	    printf("Circles do not intersect"); 
+	    return; 
 	} 
 	if (d>(r1 - r2) && d<(r1 + r2)) 
 	{ 
-	printf("Circles intersect at two points"); 
-	return; 
+	    printf("Circles intersect at two points"); 
+	    return; 
 	} 
 	if (d<(r1 - r2) || d<(r2 - r1)) 
 	{ 
-	printf("One circle is located on the other"); 
-	return; 
+	    printf("One circle is located on the other"); 
+	    return; 
 	} 
 	if (d == (r1 - r2) || d == (r2 - r1)) 
 	printf("One circle is located inside the other and has one point in common with it on the center line, internal touch"); 
