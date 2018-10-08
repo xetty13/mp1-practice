@@ -33,19 +33,22 @@ void main() {
 				current_number = cached_Num2 % 10;
 				cached_2_Num2 = Num2;
 				cached_Num2 /= 10;
+				cached_2_Num2 = cached_Num2;
 				while (cached_2_Num2 > 0) {
 					comparing_number = cached_2_Num2 % 10;
 					cached_2_Num2 /= 10;
 					if (comparing_number == current_number) {
-						flag = 1;
+						flag++;
 					}
 				}
-				if (flag == 1) {
-					printf("Цифры в вашем числе повторяются. Повторите попытку: ");
+				if (flag) {
+					flag = 0;
+					if(flag++ == 0) printf("Цифры в вашем числе повторяются. Повторите попытку: ");
+					continue;
 				}
 				else break;
 			}
-			break;
+			//break;
 		}
 		else 
 			printf("\aВы ввели не %d-значное число. Попробуйте еще раз: ", n);
