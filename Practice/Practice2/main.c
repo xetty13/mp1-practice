@@ -6,7 +6,6 @@ void main()
 {
 	int n, a;
 	setlocale(LC_ALL, "Rus");
-	printf("%d %d", a, n);
 	do
 	{
 		printf("Введите длину числа\n");
