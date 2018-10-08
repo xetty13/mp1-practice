@@ -7,7 +7,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="osnova.c">
+    <ClCompile Include="baza.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
