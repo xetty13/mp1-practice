@@ -2,16 +2,16 @@
 #include<locale.h>
 void main()
 {
-	setlocale(LC_ALL, "Rus");
 	int p1 = 950, p2 = 800, p3 = 540;
 	float h, w, d, m1, m2, m3, m4, m5, M, a1 = 0.005, a2 = 0.015, a3 = 0.01;
+	int n;
+	setlocale(LC_ALL, "Rus");	
 	printf("Введите высоту шкафа, м :");
 	scanf("%f", &h);
 	printf("Введите ширину шкафа, м:");
 	scanf("%f", &w);
 	printf("Введите глубину шкафа, м:");
-	scanf("%f", &d);
-	int n;
+	scanf("%f", &d);	
 	if (1.8 <= h <= 2.2)
 	{
 		if (1.8 <= h <= 2)
