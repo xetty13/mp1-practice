@@ -8,10 +8,11 @@ void main()
 {
 	float w, h, d;
 	float rp, side, lid, door, shelf, tm;
-	setlocale(LC_ALL, "Russian");
+	setlocale(LC_ALL, "Rus");
 	printf("Для расчёта массы шкафа введите:\nВысота (180 – 220 см), ширина (80 – 120 см), глубина (50 – 90 см)\n\n");
 	scanf("%f %f %f", &h, &w, &d);
-	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90)) {
+	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90))
+	{
 		printf("Неверные данные\n");
 		return;
 	}
@@ -23,9 +24,9 @@ void main()
 	lid = 2 * w * d * 0.015f * DSP;
 	door = w * h * 0.01f * WOOD;
 	if (h > 200)
-		{shelf = 5 * w * d * 0.015f * DSP;}
+		shelf = 5 * w * d * 0.015f * DSP;
 	else
-		{shelf = 4 * w * d * 0.015f * DSP;}
+		shelf = 4 * w * d * 0.015f * DSP;
 	tm = rp + side + lid + door + shelf;
 	printf("\nПолная масса шкафа равна %.1f кг\n\n", tm);
 }
