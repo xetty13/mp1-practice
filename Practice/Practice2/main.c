@@ -1,31 +1,32 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <locale.h>
 #include <math.h>
 
 void main()
 {
-	int n, in, nt, i = 0, q, w, c = 0, r, rt1 = 0, rt2 = 0, rr, cow = 0, bull = 0, c1 = 0, c2 = 0;
+	int n, i = 0, q, w, c = 0, r, rt1 = 0, rt2 = 0, rr, cow = 0, bull = 0, c1 = 0, c2 = 0;
+	long long in, nt;
 	int rnd[10] = { 0 }, ain[10] = { 0 };
 	setlocale(LC_ALL, "Rus");
 	srand(time(NULL));
 	//Ввод длины числа
 	do
 	{
-		printf("Введите длину числа от 2 до 9\n");
+		printf("Введите длину числа от 2 до 10\n");
 		scanf("%d", &n);
-		if (n <= 1 || n > 9)
+		if (n <= 1 || n > 10)
 		{
 			printf("Повторите ввод\n\n");
 			continue;
 		}
 	} while (n <= 1 || n > 10);
 	//Ввод первого числа пользователя
-	nt = (int)pow(10, n);
+	nt = (long long)pow(10, n);
 	do {
 		do
 		{
 			printf("Введите %i-значное число с различными цифарами\n", n);
-			scanf("%d", &in);
+			scanf("%lli", &in);
 			if ((in < nt * 0.1) || (in > nt))
 			{
 				printf("Повторите ввод\n\n");
@@ -48,7 +49,7 @@ void main()
 				}
 			}
 		}
-	} while ((ain[0] == 0) || c != 0);
+	} while (c != 0);
 	//Генерация псевдослучайного числа
 	for (r = 0; r < n; r++)
 	{
