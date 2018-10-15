@@ -1,14 +1,17 @@
 #include <stdio.h>
 #include <locale.h>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
+#define N 10
 
 void main()
 {
 	int n, i = 0, q, w, c = 0, r, rt1 = 0, rt2 = 0, rr, cow = 0, bull = 0, c1 = 0, c2 = 0;
 	long long in, nt;
-	int rnd[10] = { 0 }, ain[10] = { 0 };
+	int rnd[N] = { 0 }, ain[N] = { 0 };
 	setlocale(LC_ALL, "Rus");
-	srand(time(NULL));
+	srand((unsigned int)time(0));
 	//Ввод длины числа
 	do
 	{
