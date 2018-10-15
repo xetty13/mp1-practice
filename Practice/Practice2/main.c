@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include < math.h > 
 #include <locale.h>
-
+#include <time.h>
 int voz(int x)
 {
-  int k,c;
+  int e,c;
   c=1;
-  for (k=0;k<x;k++)
+  for (e=0;e<x;e++)
   {
 	  c*=10;
   }
@@ -16,20 +16,46 @@ int voz(int x)
 int chisl(int x, int y)
 {
 	int k;
-	k=x/voz(y-1)%10;
+	k=(x/voz(y-1))%10;
 	return(k);
 }
 void main()
 {
-	int a,n,b,i,c;
+	int a,n,i,h,k,x,y;
+	int A[10]={0};
+	int B[10]={0};
 	setlocale(LC_ALL, "Russian");
 	scanf("%d", &n);
-	scanf("%d",b);
-	for (i=0;i<n;i++)
+	scanf("%d %d", &x, &y);
+	srand((unsigned int) time(0));
+	a=(rand()*((y-x)/RAND_MAX));
+	printf("%d",&a);
+	
+	while(1){
+	scanf("%d",&h);
+	for (i=0; i<n; i++)
 	{
-		if (chisl(a, i)=chisl(b, i))
+		if (chisl(a,i)==chisl(h,i))
 		{
-			printf("%d", i);
+			A[chisl(a,i)-1]+=1;
 		}
+	for (k=0; k<n; k++)
+	{
+		if (chisl(a,i)==chisl(h,k) && (i!=k))
+		{
+			B[chisl(a,i)-1]+=1;
+		}
+	}
+	}
+	printf("Быки: ");
+	for (i=0; i<n; i++)
+	{
+		if (A[i]!=0) printf(" %d",&A[i]);
+	}
+	printf("Коровы: ");
+	for (i=0; i<n; i++)
+	{
+		if (B[i]!=0) printf(" %d",&B[i]);
+	}
 	}
 }
