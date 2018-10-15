@@ -1,32 +1,31 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 void main()
 {
-	srand(time(NULL));
 	int i, n, bull = 0, cow = 0, a, j, m;
-	int num[10], inp[10], sam[10];
+	int num[10], inp[10], sam[10] = { 0,1,2,3,4,5,6,7,8,9 };
+	srand((unsigned int)time(0));
 	
 	do {
 		printf("0 > n > 10, n = ");
 		scanf("%d",&n);
 	} while ((n <= 0) || (n > 10));
-	for (i = 0; i < 10; i++)
-	{
-		sam[i] = i;
-	}
+
 	i = n;
 	while (i > 0)
 	{
-		m = rand() % 10;
-		if (sam[m] != -1)
+		m = 10.0 / RAND_MAX * rand();
+		if (i == n) m = 9.0 / RAND_MAX * rand() + 1;
+		if (sam[m] != -1) 
 		{
 			num[i] = sam[m];
 			sam[m] = -1;
 			i--;
 		} 
 	}
-
+ 
 	do {
 		bull = 0;
 		cow = 0;
