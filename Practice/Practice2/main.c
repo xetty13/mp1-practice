@@ -21,41 +21,39 @@ int chisl(int x, int y)
 }
 void main()
 {
-	int a,n,i,h,k,x,y;
-	int A[10]={0};
+	int a,n,i,h,k;
+	int A[10]={0,0,0,0,0,0,0,0,0,0};
 	int B[10]={0};
 	setlocale(LC_ALL, "Russian");
 	scanf("%d", &n);
-	scanf("%d %d", &x, &y);
-	srand((unsigned int) time(0));
-	a=(rand()*((y-x)/RAND_MAX));
-	printf("%d",&a);
+	a=4444;
+	printf("%d",a);
 	
 	while(1){
-	scanf("%d",&h);
+	scanf(" %d",&h);
 	for (i=0; i<n; i++)
 	{
-		if (chisl(a,i)==chisl(h,i))
+			if (chisl(a,i)==chisl(h,i))
+			{
+				A[chisl(a,i)-1]+=1;
+			}
+		for (k=0; k<n; k++)
 		{
-			A[chisl(a,i)-1]+=1;
+			if (chisl(a,i)==chisl(h,k) && (i!=k))
+			{
+				B[chisl(a,i)-1]+=1;
+			}
 		}
-	for (k=0; k<n; k++)
-	{
-		if (chisl(a,i)==chisl(h,k) && (i!=k))
-		{
-			B[chisl(a,i)-1]+=1;
-		}
-	}
 	}
 	printf("Быки: ");
 	for (i=0; i<n; i++)
 	{
-		if (A[i]!=0) printf(" %d",&A[i]);
+		if (A[i]!=0) printf(" %d ",A[i]);
 	}
 	printf("Коровы: ");
 	for (i=0; i<n; i++)
 	{
-		if (B[i]!=0) printf(" %d",&B[i]);
+		if (B[i]!=0) printf(" %d ",B[i]);
 	}
 	}
 }
