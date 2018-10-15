@@ -3,10 +3,10 @@
 #include <locale.h>
 
 void main() {
-	setlocale(LC_ALL, "Russian");
 	double dsp_m, dsp, dvp_m, dvp, wood_m, wood, h, w, d;
 	double sidewm, swm, cm, dm, sm, m;
 	int nof;
+	setlocale(LC_ALL, "Russian");
 	printf("Введите плотность ДСП(кг/м^3): ");
 	scanf("%lf", &dsp_m);
 	if (dsp_m < 0) {
