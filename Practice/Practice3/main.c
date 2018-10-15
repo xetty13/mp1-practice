@@ -5,7 +5,7 @@
 
 void main()
 {
-	int mode, num, att = 0, inp, a = 1, b = 1000;
+	int mode, num, att = 0, inp, a = 1, b = 1000, lie = 0;
 	char answ;
 	srand((unsigned)time(0));
 	setlocale(LC_ALL, "Rus");
@@ -15,7 +15,8 @@ void main()
 		scanf("%d", &mode);
 		if (mode == 0)
 		{
-			num = (float)998 / RAND_MAX * rand() + 1;
+			num = rand() % (b - a - 1) + 1 + a;
+			//num = (float)(b - a - 1) / RAND_MAX * rand() + 1;
 			do
 			{
 				do
@@ -48,28 +49,39 @@ void main()
 			} while ((num < 1) || (num > 999));
 			do
 			{
-				inp = (float)(b - a) / RAND_MAX * rand() + 1;
+				inp = rand() % (b - a - 1) + 1 + a;
 				printf("Число %d, оцените его (символы '>' '=' '<')\n", inp);
 				do
 				{
-					scanf("%c", &answ);
-					if ((answ != '<') || (answ != '>') || (answ != '=')) printf("Неверный символ");
-				} while ((answ != '<') || (answ != '>') || (answ != '='));
+					ent:
+					scanf(" %c", &answ);
+					if (!((answ == '<') || (answ == '>') || (answ == '='))) printf("Неверный символ\n");
+					//Контроль ввода
+					if ((answ == '<') && !(num < inp) || (answ == '>') && !(num > inp) || (answ == '=') && (num != inp))
+					{
+						printf("Ложный ввод\n");
+						lie++;
+						goto ent;
+						//continue;
+					}
+				} while (!((answ == '<') || (answ == '>') || (answ == '=')));
 				switch (answ)
 				{
-				case '>': 
-					b = inp;
+				case '>':
+					a = inp;
 					att++;
 					break;
-				case '=': 
+				case '=':
 					att++;
 					break;
 				case '<':
-					a = inp;
+					b = inp;
 					att++;
 				}
-			} while (answ != '=');			
-			printf("Введено верное число, совершено %d попыток\n", att);
+			} while (answ != '=');
+			printf("\nВведено верное число, совершено %d попыток\n", att);
+			if (lie != 0) printf("Попыток нечестной игры: %d\n", lie);
+			printf("\n");
 			return;
 		}
 		printf("Выберите режим\n");
