@@ -22,7 +22,7 @@ void main()
 			do {
 				printf("inp = ");
 				scanf("%d", &inp);
-			} while ((inp < 1) || (inp>1000));
+			} while ((inp < 1) || (inp > 1000));
 			if (num > inp) printf(" > \n");
 			if (num < inp) printf(" < \n");
 			i++;
@@ -36,15 +36,17 @@ void main()
 			scanf("%d", &num);
 		} while ((num < 1) || (num>1000));
 		do {
-			inp = ( (double) (b - a)) / RAND_MAX * rand() + a;
-			printf(" %d ", inp);
-			scanf("%c", &m);
+			i++;
+			inp = ((double) (b-a)) / RAND_MAX * rand() + a;
+			printf("%d ", inp);
+			scanf("%s", &m);
 			if (m == '>')
-				a = inp;
+				a = inp; 
 			if (m == '<')
 				b = inp;
-			i++;
-		} while (m != '=');
+			if (m == '=')
+				break;
+		} while (inp != num);
 		printf("The program guessed from %d attempts", i);
 	}
 }
