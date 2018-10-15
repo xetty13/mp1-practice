@@ -1,13 +1,14 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <locale.h>
 #include <math.h>
 #include <stdlib.h>
+#include <time.h>
 
 void main() {
-	srand(time(NULL));
 	int n, nc, bs, es, k, i, c, j, nh, e, prov, bk = 0, ko = 0, l = 0;
 	int numb[11];
 	int nhnumb[11];
+	srand(time(NULL));
 	setlocale(LC_ALL, "Russian");
 	while (1) {
 		printf("Введите длину числа с неповторяющимися числами: ");
@@ -18,9 +19,9 @@ void main() {
 		else break;
 	} // проверка длины
 	for (i = 1; i <= n; i++) {
+		int k;
 		j = 1;
-
-		int k = rand() % 10;
+		k = rand() % 10;
 		numb[i] = k;
 
 		while (numb[1] == 0) {
@@ -31,7 +32,7 @@ void main() {
 		}
 		// проверка на 0
 
-		for (j = 1; j < i; j++) {
+		for (j = 1; j <= i; j++) {
 			for (;;) {
 				if (numb[i] == numb[i - j]) {
 					int k = rand() % 10;
@@ -42,7 +43,6 @@ void main() {
 			}
 		}
 		// проверка на совпадение
-		//printf("%d", numb[i]);
 	} // проверка числа компьютера
 
 	es = pow((double)10, (double)n);
@@ -53,6 +53,7 @@ void main() {
 
 	while (1) {
 		while (1) {
+			int l;
 			while (1) {
 				if ((nh > bs) && (nh < es)) {
 					break;
@@ -65,13 +66,13 @@ void main() {
 			}
 			// проверка на длину
 			e = n;
-			for (int l = 1; l <= n; l++) {
+			for (l = 1; l <= n; l++) {
 				nhnumb[e] = nh % 10;
 				nh = nh / 10;
 				e = e - 1;
 			}
 			// Разбиение числа
-			for (e = 1; e < n; e++) {
+			for (e = 1; e <= n; e++) {
 				l = e + 1;
 				for (l; l <= n; l++) {
 					if (nhnumb[l] == nhnumb[e]) {
@@ -101,11 +102,12 @@ void main() {
 				}
 			}
 		}
-		printf("Колличество коров %d\n", ko);
-		printf("Колличество быков %d\n", bk);
+		printf("Количество коров %d\n", ko);
+		printf("Количество быков %d\n", bk);
 		if (bk == n) {
 			printf("Молодец, ты угадал загаданное компьютером число!!!\n");
-			return 0;
+			printf("\n");
+			return;
 		}
 		else {
 			ko = 0;
