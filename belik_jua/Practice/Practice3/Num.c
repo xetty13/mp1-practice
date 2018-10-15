@@ -36,7 +36,7 @@ void main()
 			scanf("%d", &num);
 		} while ((num < 1) || (num>1000));
 		do {
-			inp = ((b - a) * 1.0) / RAND_MAX * rand() + a;
+			inp = ( (double) (b - a)) / RAND_MAX * rand() + a;
 			printf(" %d ", inp);
 			scanf("%c", &m);
 			if (m == '>')
