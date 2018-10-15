@@ -1,25 +1,32 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <locale.h>
+#define DVP 300
+#define DSP 700
+#define WOOD 600
 
 void main()
 {
-	double w, h, d, dsp, dvp, wood;
-	double rp, side, lid, door, shelf, tm;
-	setlocale(LC_ALL, "Russian");
-	printf("Высота, ширина, глубина (в сантиметрах),\nПлотность ДСП, ДВП, дерева в кг/см^3\n\n");
-	scanf("%lf %lf %lf %lf %lf %lf", &h, &w, &d, &dsp, &dvp, &wood);
-	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90) || (dsp < 0) || (dvp < 0) || (wood < 0)) {
-		printf("Некорректный ввод\n");
+	float w, h, d;
+	float rp, side, lid, door, shelf, tm;
+	setlocale(LC_ALL, "Rus");
+	printf("Р”Р»СЏ СЂР°СЃС‡С‘С‚Р° РјР°СЃСЃС‹ С€РєР°С„Р° РІРІРµРґРёС‚Рµ:\nР’С‹СЃРѕС‚Р° (180 вЂ“ 220 СЃРј), С€РёСЂРёРЅР° (80 вЂ“ 120 СЃРј), РіР»СѓР±РёРЅР° (50 вЂ“ 90 СЃРј)\n\n");
+	scanf("%f %f %f", &h, &w, &d);
+	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90))
+	{
+		printf("РќРµРІРµСЂРЅС‹Рµ РґР°РЅРЅС‹Рµ\n");
 		return;
 	}
-	rp = h * w * 0.5 * dvp;
-	side = 2 * h * w * 1.5 * dsp;
-	lid = 2 * w * d * 1.5 * dsp;
-	door = w * h * wood;
+	h /= 100;
+	w /= 100;
+	d /= 100;
+	rp = h * w * 0.005f * DVP;
+	side = 2 * h * d * 0.015f * DSP;
+	lid = 2 * w * d * 0.015f * DSP;
+	door = w * h * 0.01f * WOOD;
 	if (h > 200)
-		{shelf = 4 * w * d * 1.5 * dsp;}
+		shelf = 5 * w * d * 0.015f * DSP;
 	else
-		{ shelf = 3 * w * d * 1.5 * dsp; }
+		shelf = 4 * w * d * 0.015f * DSP;
 	tm = rp + side + lid + door + shelf;
-	printf("\nПолная масса шкафа равна %lf\n\n", tm);
+	printf("\nРџРѕР»РЅР°СЏ РјР°СЃСЃР° С€РєР°С„Р° СЂР°РІРЅР° %.1f РєРі\n\n", tm);
 }
