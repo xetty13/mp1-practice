@@ -5,46 +5,40 @@
 #include <time.h>
 
 void main() {
-	int n, nc, bs, es, k, i, c, j, nh, e, prov, bk = 0, ko = 0, l = 0;
-	int numb[11];
-	int nhnumb[11];
+	int n, nc, bs, es, k, i, c, j=1, nh, e, prov, bk = 0, ko = 0, l = 0;
+	int numb[10];
+	int nhnumb[10];
 	srand(time(NULL));
 	setlocale(LC_ALL, "Russian");
-	while (1) {
+	do {
 		printf("Введите длину числа с неповторяющимися числами: ");
 		scanf("%d", &n);
 		if ((n <= 0) || (n >= 11)) {
 			printf("Такого числа с неповторяющимися цифрами не существует\n");
 		}
-		else break;
-	} // проверка длины
-	for (i = 1; i <= n; i++) {
-		int k;
-		j = 1;
+	} while ((n <= 0) || (n >= 11)); // проверка длины
+	for (i = 0; i < n; i++) {
 		k = rand() % 10;
 		numb[i] = k;
-
-		while (numb[1] == 0) {
-
-			int k = rand() % 10;
+		while (numb[0] == 0) {
+			k = rand() % 10;
 			numb[i] = k;
-
 		}
 		// проверка на 0
-
-		for (j = 1; j <= i; j++) {
+		for (j; j <= i; j++) {
 			for (;;) {
-				if (numb[i] == numb[i - j]) {
-					int k = rand() % 10;
+				if (numb[i] == numb[j - 1]) {
+					k = rand() % 10;
 					numb[i] = k;
 					j = 1;
 				}
 				else break;
 			}
-		}
-		// проверка на совпадение
+		} // проверка на совпадение
+		j = 1;
+		printf("%d", numb[i]);
 	} // проверка числа компьютера
-
+	printf("\n");
 	es = pow((double)10, (double)n);
 	bs = pow((double)10, (double)n - 1);
 	printf("Компьютер загадал %d-значное число с неповторяющимися цифрами\n", n);
