@@ -6,8 +6,12 @@
 
 void main() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int n, bs, es, k, i=0, c, j=1, nh, e, prov=0, bk = 0, ko = 0, l = 0;
 	long long int nc;
+=======
+	int n, nc, bs, es, k, i, c, j=1, nh, e, prov, bk = 0, ko = 0, l = 0;
+>>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 =======
 	int n, nc, bs, es, k, i, c, j=1, nh, e, prov, bk = 0, ko = 0, l = 0;
 >>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
@@ -17,14 +21,18 @@ void main() {
 	setlocale(LC_ALL, "Russian");
 	do {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		printf("Введите длину числа с неповторяющимися числами: ");
 =======
+=======
+>>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 		printf("Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ С‡РёСЃР»Р° СЃ РЅРµРїРѕРІС‚РѕСЂСЏСЋС‰РёРјРёСЃСЏ С‡РёСЃР»Р°РјРё: ");
 >>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 		scanf("%d", &n);
 		if ((n <= 0) || (n >= 11)) {
 			printf("Такого числа с неповторяющимися цифрами не существует\n");
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	} while ((n <= 0) || (n >= 11)); // проверка длины
 	es = pow((double)10, (double)n);
@@ -54,6 +62,8 @@ void main() {
 					l = 1;
 					break;
 =======
+=======
+>>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 	} while ((n <= 0) || (n >= 11)); // РїСЂРѕРІРµСЂРєР° РґР»РёРЅС‹
 	for (i = 0; i < n; i++) {
 		k = rand() % 10;
@@ -72,6 +82,7 @@ void main() {
 >>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 				}
 			}
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (prov == 0) break;
 		} while (e < n);
@@ -97,6 +108,8 @@ void main() {
 			e = n-1;
 			for (l = 0; l < n; l++) {
 =======
+=======
+>>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 		} // РїСЂРѕРІРµСЂРєР° РЅР° СЃРѕРІРїР°РґРµРЅРёРµ
 		j = 1;
 		printf("%d", numb[i]);
@@ -124,6 +137,9 @@ void main() {
 			// РїСЂРѕРІРµСЂРєР° РЅР° РґР»РёРЅСѓ
 			e = n;
 			for (l = 1; l <= n; l++) {
+<<<<<<< HEAD
+>>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
+=======
 >>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 				nhnumb[e] = nh % 10;
 				nh = nh / 10;
@@ -135,6 +151,9 @@ void main() {
 =======
 			// Р Р°Р·Р±РёРµРЅРёРµ С‡РёСЃР»Р°
 			for (e = 1; e <= n; e++) {
+<<<<<<< HEAD
+>>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
+=======
 >>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
 				l = e + 1;
 				for (l; l < n; l++) {
@@ -197,4 +216,7 @@ void main() {
 =======
 	} // РїСЂРѕРІРµСЂРєР° РІРІРѕРґРёРјРѕРіРѕ С‡РёСЃР»Р°
 }
+<<<<<<< HEAD
+>>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
+=======
 >>>>>>> 3e4edd08dab71bc52eff79a5e4b2c7cc8e6fd5e7
