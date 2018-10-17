@@ -5,9 +5,7 @@
 #include <time.h>
 #define MAX 10
 
-/* функция проверки на повторения цифр   *
- * в числе (без массива - по-моему, это  *
- * по меньшей мере эффективно)           */
+// функция проверки на повторение цифр в числе
 int checkReps(long long number) {
 	long long cached_number;
 	char current_number, comparing_number, flag = 0;
@@ -33,21 +31,19 @@ int checkReps(long long number) {
 void main() {
 	long long Num1 = 0, Num2 = 0, cached_Num, ord10 = 1;
 	int bufs = 0, cows = 0, cNum2;
-	char flag = 0, aNum1[MAX], aNum2[MAX], n, i, j, temp_num, k = 0;
+	char flag = 0, aNum1[MAX], aNum2[MAX], n, i, j, k = 0, temp_num;
 	setlocale(LC_ALL, "Russian");
-	for (i = 0; i < MAX; i++) aNum1[i] = aNum2[i] = -1;
 
 	// приветственный экран
+	printf("Игра \"БЫКИ И КОРОВЫ\"\n");
 	do {
-		system("cls");
-		printf("Игра \"БЫКИ И КОРОВЫ\"\n");
 		printf("Введите длину загадываемого числа (от 1 до %d): ", MAX);
 		scanf("%hhd", &n);
 	} while ((n < 1) || (n > MAX));
 
 	// вычисление числа без повторяющихся цифр
 	srand((unsigned)time(NULL));
-	for (i = n; i > 0; i--) ord10 *= 10;
+	for (i = 1; i < n; i++) ord10 *= 10;
 	aNum1[0] = rand() % (9 - 1 + 1) + 1;
 	for (i = 1; i < n; i++) {
 		temp_num = rand() % (9 - 0 + 1) + 0;
@@ -58,12 +54,11 @@ void main() {
 		if (k > 0) i--;
 		else aNum1[i] = temp_num;
 	}
-	ord10 /= 10;
-	for (i = 0; i < n; i++) {
+	for (i = 0; ord10 > 0; i++) {
 		Num1 += aNum1[i] * ord10;
 		ord10 /= 10;
 	}
-	printf("Chislo: %lld\n", Num1);
+	printf("%lld\n", Num1);
 	printf("Отлично, я загадал %d-значное число с неповторяющимися цифрами. Теперь попробуйте угадать его.\n", n);
 	printf("Введите %d-значное число: ", n);
 	
@@ -97,18 +92,16 @@ void main() {
 			cached_Num /= 10;
 			i++;
 		}
-		// посчитаем коров
+		// посчитаем коров и быков
+		cows = bufs = 0;
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
-				if ((aNum1[j] == aNum2[i]) && (i != j)) {
-					cows++;
+				if (aNum1[j] == aNum2[i]) {
+					if (i == j) bufs++;
+					else cows++;
 					break;
 				}
 			}
-		}
-		// посчитаем быков
-		for (i = 0; i < n; i++) {
-			if (aNum1[i] == aNum2[i]) bufs++;
 		}
 		// отобразим
 		printf("[%lld]: %d коров, %d быков. Попробуйте еще раз: ", Num2, cows, bufs);
