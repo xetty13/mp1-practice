@@ -3,13 +3,13 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <time.h>
-#define MAX 9
+#define MAX 10
 
 /* функция проверки на повторения цифр   *
  * в числе (без массива - по-моему, это  *
  * по меньшей мере эффективно)           */
-int checkReps(long int number) {
-	long int cached_number;
+int checkReps(long long number) {
+	long long cached_number;
 	char current_number, comparing_number, flag = 0;
 	while (number > 0) {
 		flag = 0;
@@ -31,9 +31,9 @@ int checkReps(long int number) {
 }
 
 void main() {
-	long int Num1 = 0, Num2 = 0, cached_Num, ord10 = 1;
+	long long Num1 = 0, Num2 = 0, cached_Num, ord10 = 1;
 	int bufs = 0, cows = 0, cNum2;
-	char flag = 0, aNum1[MAX], aNum2[MAX], n, i, j;
+	char flag = 0, aNum1[MAX], aNum2[MAX], n, i, j, temp_num, k = 0;
 	setlocale(LC_ALL, "Russian");
 	for (i = 0; i < MAX; i++) aNum1[i] = aNum2[i] = -1;
 
@@ -41,22 +41,35 @@ void main() {
 	do {
 		system("cls");
 		printf("Игра \"БЫКИ И КОРОВЫ\"\n");
-		printf("Введите длину загадываемого числа (от 1 до 9): ");
+		printf("Введите длину загадываемого числа (от 1 до %d): ", MAX);
 		scanf("%hhd", &n);
-	} while ((n < 1) || (n > 9));
+	} while ((n < 1) || (n > MAX));
 
 	// вычисление числа без повторяющихся цифр
-	srand((unsigned int)time(NULL));
+	srand((unsigned)time(NULL));
 	for (i = n; i > 0; i--) ord10 *= 10;
-	do {
-		Num1 = rand() % ((ord10 - 1) - (ord10 / 10) + 1) + (ord10 / 10);
-	} while (checkReps(Num1) == 0);
-	printf("Chislo: %d\n", Num1);
-	printf("Отлично, я загадал %d-значное число с неповторяющимися цифрами. Теперь попробуйте угадать его.\nВведите %d-значное число: ", n, n);
+	aNum1[0] = rand() % (9 - 1 + 1) + 1;
+	for (i = 1; i < n; i++) {
+		temp_num = rand() % (9 - 0 + 1) + 0;
+		k = 0;
+		for (j = 0; j < i; j++) {
+			if (aNum1[j] == temp_num) k++;
+		}
+		if (k > 0) i--;
+		else aNum1[i] = temp_num;
+	}
+	ord10 /= 10;
+	for (i = 0; i < n; i++) {
+		Num1 += aNum1[i] * ord10;
+		ord10 /= 10;
+	}
+	printf("Chislo: %lld\n", Num1);
+	printf("Отлично, я загадал %d-значное число с неповторяющимися цифрами. Теперь попробуйте угадать его.\n", n);
+	printf("Введите %d-значное число: ", n);
 	
 	while (Num1 != Num2) {
 		// запрашиваем число у пользователя
-		scanf("%d", &Num2);
+		scanf("%lld", &Num2);
 		if (Num1 == Num2) break;
 		// подсчет цифр во введенном числе
 		cNum2 = 0;
@@ -76,37 +89,33 @@ void main() {
 			printf("Вы ввели не %d-значное число. Попробуйте еще раз: ", n);
 			continue;
 		}
-		// засунем числа в массивы
-		cached_Num = Num1;
-		i = 0;
-		while (cached_Num > 0) {
-			aNum1[i] = cached_Num % 10;
-			cached_Num /= 10;
-			i++;
-		}
+		// засунем число в массив
 		cached_Num = Num2;
 		i = 0;
 		while (cached_Num > 0) {
-			aNum2[i] = cached_Num % 10;
+			aNum2[n - i - 1] = cached_Num % 10;
 			cached_Num /= 10;
 			i++;
 		}
 		// посчитаем коров
-		for (i = 0; aNum2[i] != -1; i++) {
-			for (j = 0; aNum1[j] != -1; j++) {
-				if ((aNum1[j] == aNum2[i]) && (i != j)) cows++;
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < n; j++) {
+				if ((aNum1[j] == aNum2[i]) && (i != j)) {
+					cows++;
+					break;
+				}
 			}
 		}
 		// посчитаем быков
-		for (i = 0; aNum1[i] != -1; i++) {
+		for (i = 0; i < n; i++) {
 			if (aNum1[i] == aNum2[i]) bufs++;
 		}
 		// отобразим
-		printf("[%d]: %d коров, %d быков. Попробуйте еще раз: ", Num2, cows, bufs);
+		printf("[%lld]: %d коров, %d быков. Попробуйте еще раз: ", Num2, cows, bufs);
 	}
 
 	// если вдруг число угадано
-	printf("Бинго! Действительно, было загадано число %d.\n", Num1);
+	printf("Бинго! Действительно, было загадано число %lld.\n", Num1);
 	return;
 
 	
