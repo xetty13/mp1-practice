@@ -1,16 +1,58 @@
-#include <stdio.h>
+#include <stdio.h> 
+#include <time.h> 
+#include <stdlib.h> 
+
 void main()
 {
-	int n, i, a[10];
+	int a[10], b[10];
+	int n, cows = 0, bulls = 0, p;
+	int temp = 1;
 	do
 	{
-		printf("Enter n:");
+		printf("Enter n: ");
 		scanf("%d", &n);
-	} while ((n < 0) || (n > 10));
-	for (i = 0; i < n; i++)
+		if ((n <= 0) || (n >= 10))
+			printf("Number does not exist \n");
+	} while ((n <= 0) || (n >= 10));
+	srand((unsigned int)time(0));
+	while (temp)
 	{
-
+		temp = 0;
+		for (int i = 0; i < n; i++)
+			a[i] = rand() % 9;
+		if (a[0] == 0)
+			a[0] = rand() % 9 + 1;
+		for (int i = 0; i < n; i++)
+			for (int j = i + 1; j < n; j++)
+				if (a[i] == a[j])
+				{
+					temp = 1;
+					break;
+				}
 	}
-	printf("a = %d", a);
+	while (bulls != n)
+	{
+		cows = 0;
+		bulls = 0;
+		printf("Enter your number: ");
+		scanf("%d", &p);
+		for (int i = n; i > 0; i--)
+		{
+			b[i - 1] = p % 10;
+			p /= 10;
+		}
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				if (b[i] == a[j])
+					cows++;
+		for (int i = 0; i < n; i++)
+			if (a[i] == b[i])
+				bulls++;
+		if (cows >= bulls)
+			cows -= bulls;
+		printf("Cows: %d\n", cows);
+		printf("Bulls: %d\n", bulls);
+	}
+	printf("You win!!!");
 }
 
