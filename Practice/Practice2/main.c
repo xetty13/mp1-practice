@@ -1,63 +1,99 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include <locale.h>
-void main()
-{
-	int number,user_number,i;
-	int zhak;
-	long int a,b;//отрезок от а до b
-	a=0;
-	b=1000;
+
+void main(){
+	int zag[10]={0};
+	int arr_number_user[10]={0};
+	int number_user,count,a,q,n,b,k,i,bull;
 	setlocale(LC_ALL, "Russian");
 	srand((unsigned int) time(0));
-	do{
-		printf("Укажите режим работы\n1 - отгадать самому;\n2 - загадать компьютеру;\n3 - выйти из программы\n");
-		scanf("%d",&i);
-		if (i==1)
+	b=1;
+	q=0;
+	printf("Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ С‡РёСЃР»Р°\n");
+	scanf("%d",&n);
+	while((b!=0)||(q==1))//РїСЂРѕРІРµСЂРєР° Р·Р°РіР°РґР°РЅРЅРѕРіРѕ С‡РёСЃР»Р°
+	{
+		b=0;q=0;
+		for (i=0;i<n;i++)
 		{
-			number=rand()%1000;
-			user_number=-1;
-			while(user_number!=number)
+			zag[i]=rand()%10;
+		}
+		if (zag[0]==0)
+		{
+			q++;
+		}
+		for (i=0;i<n;i++)
+		{
+			for(k=0;k<i;k++)
 			{
-				printf("\n");
-				scanf("%d", &user_number);
-				if (number>user_number)
+				if ((zag[k]==zag[i]))
 				{
-					printf("\nЗагаданное число больше");
+					b++;
 				}
-				if (number<user_number)
+			}
+		}
+	}
+	bull=0;
+	while(bull!=n)
+	{
+		b=1;
+		count=0;
+		while((b!=0) || (count!=n))//РїСЂРѕРІРµСЂРєР° С‡РёСЃР»Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+		{
+			printf("\nР’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ \n");
+			scanf("%d", &number_user);
+			a=number_user;
+			count=0;
+			while(a!=0)
+			{
+				a=a/10;
+				count++;
+			}
+			if (count!=n)printf("РќРµРІРµСЂРЅР°СЏ РґР»РёРЅР° С‡РёСЃР»Р°");
+			a=number_user;
+			for (i=0;i<n;i++)
+			{
+				arr_number_user[i]=a%10;
+				a=a/10;
+			}
+			b=0;
+			for (i=0;i<n;i++)
+			{
+				for(k=0;k<i;k++)
 				{
-					printf("\Загаданное число меньше");
+					if (arr_number_user[k]==arr_number_user[i])
+					{
+						b++;
+					}
 				}
-				if (number==user_number)
+			}
+			if (b!=0)printf("Р¦РёС„СЂС‹ РІ С‡РёСЃР»Рµ РїРѕРІС‚РѕСЂСЏСЋС‚СЃСЏ");
+		}
+		bull=0;
+		printf("\nРћС‚РіР°РґР°РЅРЅС‹Рµ Р±С‹РєРё:");
+		for (i=0;i<n;i++)
+		{
+			if (zag[i]==arr_number_user[i])
+			{
+				printf(" %d", zag[i]);
+				bull++;
+			}
+		}
+		printf("\nРћС‚РіР°РґР°РЅРЅС‹Рµ РєРѕСЂРѕРІС‹:");
+		for (i=0;i<n;i++)
+		{
+			for(k=0;k<n;k++)
+			{
+				if ((zag[i]==arr_number_user[k])&&(k!=i))
 				{
-					printf("\nУгадали\n");
+					printf(" %d", arr_number_user[k]);
 				}
 			}
 		}
 		
-		if (i==2)
-		{
-			do
-			{
-				number=a + rand()%(b - a + 1);
-				printf("\n%d",number);
-				printf("\n Оцените число\n1 если число болшьше,\n2 если число меньше,\n= если число равно загаданному\n");
-				scanf("%d", &zhak);//Все прекрасно работает с числами, но как только пытаешься использовать символы и тип char сразу начинается ерунда
-				if (zhak==1)
-				{
-					a=number+1;
-				}
-				if (zhak==2)
-				{
-					b=number-1;
-				}
-				if (zhak==3)
-				{
-					printf("Число угадано");
-				}
-			}while(zhak!=3);
-		}
-	}while(i!=3);
+	}
+	printf("\n РџРѕР·РґСЂР°РІР»СЏСЋ! Р’С‹ РѕС‚РіР°РґР°Р»Рё РІСЃРµ С†РёС„СЂС‹.");
 }
