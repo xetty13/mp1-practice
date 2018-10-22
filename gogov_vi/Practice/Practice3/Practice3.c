@@ -58,11 +58,11 @@ void main() {
 				p++;
 				while ((z == bol) && (nc < nh)) {
 					printf("Неправильная оценка числа\nПопробуйте еще раз: ");
-					scanf(" %c", &z);
+					scanf("%*с %c", &z);
 				}
 				while ((z == men) && (nc > nh)) {
 					printf("Неправильная оценка числа\nПопробуйте еще раз: ");
-					scanf(" %c", &z);
+					scanf("%*с %c", &z);
 				}
 				if (z == bol) {
 					a = nc - 1;
