@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <time.h> 
@@ -62,4 +63,15 @@ void main()
 		}
 		printf("bull = %d, cow = %d \n", bull, cow);
 	} while (bull != n);
+=======
+#include <stdio.h>
+void main()
+{
+	int n, 
+		do
+			{printf("Vvedite n");
+	scanf ("%d", &n)
+		while 
+
+>>>>>>> 7a2ae15abbb03ccd1f9ab2c0eebc40970e532f0d
 }
