@@ -4,7 +4,7 @@
 #include<time.h>
 void main()
 {
-	int n, r, k, b;
+	int n, r, k, b, a;
 	int i = 0;
 	char c;
 	setlocale(LC_ALL, "Rus");
@@ -34,35 +34,36 @@ void main()
 				break;
 			}
 		}
-		printf("Колличесво попыток: %d \n", i);
+		printf("Количество попыток: %d \n", i);
 	}
 	else if (n == 2)
 	{
-		printf("Загадайте число от 1 до 1000\n");
+		printf("Загадайте число от 1 до 1000, введите его: ");
+        scanf("%d", &a);
 		k = 1 + rand() % 1000;
+        printf("Компьютер пробует угадать: %d \n", k);
 		while (1)
 		{
 			i++;
-			printf("Компьютер пробует угадать: %d \n", k);
 			printf("Загаданное число является: \n");
-			scanf("%c", &c);
+			scanf("%*c%c", &c);
 			if (c == '<')
 			{
 				b = 1 + rand() % k;
-				printf("%d \n", &b);
+				printf("%d \n", b);
 			}
 			else if (c == '>')
 			{
 				b = k + rand() % 1000;
-				printf("%d \n", &b);
+				printf("%d \n", b);
 			}
-			else (c == '=');
+			else if (c == '=')
 			{
 				printf("Компьютер угадал\n");
 				break;
 			}
 
 		}
-		printf("Колличесво попыток: %d \n", i);
+		printf("Количество попыток: %d \n", i);
 	}
 }
