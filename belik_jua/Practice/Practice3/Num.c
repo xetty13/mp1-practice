@@ -39,14 +39,15 @@ void main()
 			i++;
 			inp = ((double) (b-a)) / RAND_MAX * rand() + a;
 			printf("%d ", inp);
-			scanf("%s", &m);
-			switch (m)
-			{
-			case '>': a = inp + 1;
-				break;
-			case '<': b = inp;
-			}
-			if (m == '=') inp = 0;
+			scanf("%*c%c", &m);
+            switch (m)
+            {
+            case '>': a = inp + 1;
+                break;
+            case '<': b = inp;
+                break;
+            case '=': inp = 0;
+            }
 		} while (inp != 0);
 		printf("The program guessed from %d attempts", i);
 	}
