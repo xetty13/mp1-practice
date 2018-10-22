@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
-void main() {	
+void main() {
 	double x1, y1, r1, r2, x2, y2, d;
 	setlocale(LC_ALL, "Russian");
 	printf("Введите координаты центра первой окружности(x,y) и радиус:\n");
@@ -37,7 +37,7 @@ void main() {
 		printf("Окружности имеют 1 общую точку (внутреннее касание) \n");
 		return;
 	}
-	if((d+r1 <r2) || (d+r2<r1)){
+	if ((d + r1 <r2) || (d + r2<r1)) {
 		printf("Одна окружность внутри другой окружности");
 	}
 	printf("Окружности пересекаются (две общие точки)\n");
