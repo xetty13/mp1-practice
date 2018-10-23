@@ -4,7 +4,7 @@
 #include<time.h>
 void main()
 {
-	int n, r, k, b, a;
+	int n, r, k, a, x = 1, y = 1000;
 	int i = 0;
 	char c;
 	setlocale(LC_ALL, "Rus");
@@ -13,7 +13,7 @@ void main()
 	srand((unsigned int)time(0));
 	if (n == 1)
 	{
-		r = 1 + rand() % 1000;
+		r = rand() * (y - x) / RAND_MAX + x;
 		printf("Компьютер загадывает случайное число от 1 до 1000, попробуйте отгадать:\n");
 		while (1)
 		{
@@ -39,23 +39,25 @@ void main()
 	else if (n == 2)
 	{
 		printf("Загадайте число от 1 до 1000, введите его: ");
-        scanf("%d", &a);
-		k = 1 + rand() % 1000;
-        printf("Компьютер пробует угадать: %d \n", k);
+		scanf("%d", &a);
+		k = rand() * (y - x) / RAND_MAX + x;;
+		printf("Компьютер пробует угадать: %d \n", k);
 		while (1)
 		{
 			i++;
-			printf("Загаданное число является: \n");
+			printf("Загаданное вами число является <,> или =: \n");
 			scanf("%*c%c", &c);
 			if (c == '<')
 			{
-				b = 1 + rand() % k;
-				printf("%d \n", b);
+				y = k;
+				k = rand() * (y - x) / RAND_MAX + x;
+				printf("%d \n", k);
 			}
 			else if (c == '>')
 			{
-				b = k + rand() % 1000;
-				printf("%d \n", b);
+				x = k;
+				k = rand() * (y - x) / RAND_MAX + x;
+				printf("%d \n", k);
 			}
 			else if (c == '=')
 			{
