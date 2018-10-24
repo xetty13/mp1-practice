@@ -8,16 +8,15 @@ void main()
 	printf ("Vvedite znacheniya plotnostey dereva, DVP i DSP");  //* plotnost ukazyvat v kg\sm^3
 	scanf ("%lf %lf %lf", &pder, &pdvp, &pdsp);
 	{
-		if ((h >= 180) && (h <= 220) && (w >= 80) && (w <= 120) && (d >= 50) && (d <= 90))
+		if ((h >= 1,8) && (h <= 2,2) && (w >= 0,8) && (w <= 1,2) && (d >= 0,5) && (d <= 0,9))
 		{
-			m1 = (h * w * 0,5 * pdvp);
-	                m2 = (h * d * 1,5 * pdsp);
-	                m3 = (w * d * 1,5 * pdsp);
-		        m4 = (h * w * 1 * pder);
-		        m5 = (floor(h / 40) * w * d * 1,5 * pdsp);
+                        m1 = (h * w * 0,005 * pdvp);
+	                m2 = (h * d * 0,015 * pdsp);
+	                m3 = (w * d * 0,015 * pdsp);
+		        m4 = (h * w * 0,01 * pder);
+		        m5 = (floor(h / 0,4) * w * d * 0,015 * pdsp);
 		        M = (m1 + m2 + m3 + m4 + m5);
-			printf ("Massa shkapha %lf kg", M);
-		}
+	                printf ("Massa shkapha %lf kg", M);
 		else 
 		{
 			printf("Vvedennye dannye ne korrektny");
