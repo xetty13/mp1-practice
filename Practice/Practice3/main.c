@@ -4,8 +4,8 @@
 #include <locale.h>
 void main()
 {
-	int number,user_number,i;
-	int zhak;
+	int number,user_number,i,p;
+	char zhak;
 	long int a,b;//отрезок от а до b
 	a=0;
 	b=1000;
@@ -16,6 +16,7 @@ void main()
 		scanf("%d",&i);
 		if (i==1)
 		{
+			p=0;
 			number=rand()%1000;
 			user_number=-1;
 			while(user_number!=number)
@@ -32,32 +33,35 @@ void main()
 				}
 				if (number==user_number)
 				{
-					printf("\nУгадали\n");
+					printf("\nУгадали за %d попыток \n", p);
 				}
 			}
+			p++;
 		}
 		
 		if (i==2)
 		{
+			p=0;
 			do
 			{
 				number=a + rand()%(b - a + 1);
 				printf("\n%d",number);
-				printf("\n Оцените число\n1 если число болшьше,\n2 если число меньше,\n= если число равно загаданному\n");
-				scanf("%d", &zhak);//Все прекрасно работает с числами, но как только пытаешься использовать символы и тип char сразу начинается ерунда
-				if (zhak==1)
+				printf("\n Оцените число\n> если число болшьше,\n< если число меньше,\n= если число равно загаданному\n");
+				scanf("%*c%c", &zhak);//Все прекрасно работает с числами, но как только пытаешься использовать символы и тип char сразу начинается ерунда
+				if (zhak=='>')
 				{
 					a=number+1;
 				}
-				if (zhak==2)
+				if (zhak=='<')
 				{
 					b=number-1;
 				}
-				if (zhak==3)
+				if (zhak=='=')
 				{
-					printf("Число угадано");
+					printf("Число угадано за %d попыток", p);
 				}
-			}while(zhak!=3);
+				p++;
+			}while(zhak!='=');
 		}
 	}while(i!=3);
 }
