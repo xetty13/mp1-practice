@@ -19,7 +19,7 @@ void main() {
 
 	if (mode == 1) {
 		printf("\nВыбран режим 1 (компьютер загадывает число).\n\n");
-		num = rand() % (end - start) + start;
+		num = rand() % (end - start + 1) + start;
 		printf("Компьютер загадал число от 1 до 1000. Попробуйте отгадать его!\n");
 		printf("Введите число от 1 до 1000: ");
 
@@ -43,7 +43,7 @@ void main() {
 		}
 		while (act != '=') {
 			count++;
-			sug = rand() % (end - start) + start;
+			sug = rand() % (end - start + 1) + start;
 			printf("Я думаю, что вы загадали %d (введите > , < или = ): ", sug);
 			scanf(" %c", &act);
 
