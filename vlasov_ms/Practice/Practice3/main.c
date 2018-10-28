@@ -19,7 +19,7 @@ void main() {
 
 	if (mode == 1) {
 		printf("\nВыбран режим 1 (компьютер загадывает число).\n\n");
-		num = (end - start) / RAND_MAX * rand() + start;
+		num = rand() % (end - start) + start;
 		printf("Компьютер загадал число от 1 до 1000. Попробуйте отгадать его!\n");
 		printf("Введите число от 1 до 1000: ");
 
@@ -41,41 +41,20 @@ void main() {
 			printf("Ошибка ввода: нужно ввести число от 1 до 1000. Попробуйте еще раз: ");
 			scanf("%d", &num);
 		}
-		while (1) {
+		while (act != '=') {
 			count++;
-			sug = (end - start) / RAND_MAX * rand() + start;
+			sug = rand() % (end - start) + start;
 			printf("Я думаю, что вы загадали %d (введите > , < или = ): ", sug);
-			scanf("%c", &act);
+			scanf(" %c", &act);
 
 			if (act == '>')
-				if (num > sug)
-					if (sug + 1 < end) start = sug + 1;
-					else {
-						end = sug + 1;
-						start = end;
-					}
-				else if (sug + 1 > END_MAX)
-					printf("Ошибка: число не может быть больше %d.\n", END_MAX);
-				else 
-					printf("Атата, обманывать нехорошо, загаданное число не больше %d!\n", sug);
+				start = sug + 1;
 
 			else if (act == '<')
-				if (num < sug)
-					if (sug - 1 > start) end = sug - 1;
-					else {
-						start = sug - 1;
-						end = start;
-					}
-				else if (sug - 1 < START_MIN)
-					printf("Ошибка: число не может быть меньше %d.\n", START_MIN);
-				else
-					printf("Атата, обманывать нехорошо, загаданное число не меньше %d!\n", sug);
+				end = sug - 1;
 
-			else if (act == '=')
-				if (num == sug) break;
-				else printf("Атата, обманывать нехорошо, %d не является числом, которое вы загадали!\n", sug);
-
-			else printf("Ошибка ввода. Нужно вводить > , < или =.\n");
+			else if (act != '=') 
+				printf("Ошибка ввода. Нужно вводить > , < или =.\n");
 		}
 
 		printf("Ура, компьютер отгадал число %d за %d попыток!\n", num, count);
