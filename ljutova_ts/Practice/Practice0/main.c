@@ -42,7 +42,7 @@ void main()
         printf("Circles intersect at two points");
         return;
     }
-    if (d <(r1 - r2) || d < (r2 - r1))
+    if (d < (r1 - r2) || d < (r2 - r1))
     {
         printf("One circle is located on the other");
         return;
