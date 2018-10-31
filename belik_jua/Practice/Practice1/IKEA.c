@@ -26,9 +26,9 @@ void main()
     scanf("%lf", &dsp);
     printf("density wood \n");
     scanf("%lf", &der);
-    dvp = 0.5 * dvp;
-    dsp = 1.5 * dsp;
-    der = 1 * der;
+    dvp = 0.005 * dvp;
+    dsp = 0.015 * dsp;
+    der = 0.01 * der;
 
     m = dvp * h * w + 2 * dsp * h * d + 2 * dsp * w * d + der * h * w;
     m = m + dsp * ((int)((h - 2 * 0.015) / (0.4 + 0.015))) * (w - 2 * 0.015) * (d - 0.005);
