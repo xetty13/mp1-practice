@@ -5,9 +5,9 @@ void main()
     double h = 0, w = 0, d = 0, m = 0, dvp, dsp, der;
 
     do{
-        printf("180 < h < 200, h = \n");
+        printf("180 < h < 220, h = \n");
         scanf("%lf", &h);
-    } while ((h > 200) || (h < 180));
+    } while ((h > 220) || (h < 180));
     h = h * 0.01;
     do {
         printf("80 < w < 120, w = \n");
