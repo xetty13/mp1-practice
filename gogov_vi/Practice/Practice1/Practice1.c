@@ -2,10 +2,11 @@
 #include <math.h>
 #include <locale.h>
 
-void main() {
-	setlocale(LC_ALL, "Russian");
+void main() 
+{
 	double dsp_m, dsp, dvp_m, dvp, wood_m, wood, h, w, d;
 	double sidewm, swm, cm, dm, sm, m;
+	setlocale(LC_ALL, "Russian");
 	int nof;
 	printf("Введите плотность ДСП(кг/м^3): ");
 	scanf("%lf", &dsp_m);
