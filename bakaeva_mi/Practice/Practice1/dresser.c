@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include <math.h>
+#define qdcp 0.015
+#define qdvp 0.005
+#define qder 0.01
+
+
 void main() {
-    double w, h, d, dcp, dvp, der, m1, m2, m3, m4, m5, m ;
+    double w, h, d, dcp, dvp, der;
+    double m1, m2, m3, m4, m5, m;
 
     printf(" Vvedite visotu (180sm - 220sm), shirinu (80sm - 120sm) i glubinu (50sm - 90sm) shkafa \n");
     scanf(" %lf %lf %lf", &h, &w, &d);
@@ -33,12 +39,15 @@ void main() {
         return;
     }
 
-    m1 = (h * w * 5 * dvp) / 10000000;          //Zadnia stenka
-    m2 = (2 * dcp * h * d * 15) / 10000000;     //Bokovini
-    m3 = (2 * dcp * w * d * 15) / 10000000;     //Verh i niz
-    m4 = (h * w * 1 * der) / 1000000;           //Dveri
-    m5 = (floor(h / 40) * dcp * (w - 3) * d * 15) / 10000000;    //Polki
+    h /= 100;
+    w /= 100;
+    d /= 100;
 
+    m1 = (h * w * qdvp * dvp);          //Zadnia stenka
+    m2 = (2 * dcp * h * d * qdcp);     //Bokovini
+    m3 = (2 * dcp * w * d * qdcp);     //Verh i niz
+    m4 = (h * w * qder * der);           //Dveri
+    m5 = (h - 2 * qdcp) / (0.4 + qdcp) * (w - 2 * qdcp) * (d - qdvp);    //Polki
     m = m1 + m2 + m3 + m4 + m5;
 
     printf(" Massa shkafa = %.2lf kg \n", m);
