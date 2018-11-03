@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <math.h>
 
 void main()
@@ -27,8 +27,7 @@ void main()
         printf("Vkljuchena\n");
         return;
     }
-    if (((r1 > dist) && ((dist + r2) == r1)) ||
-        ((r2 > dist) && ((dist + r1) == r2))) {
+    if (((r1 > dist) && ((dist + r2) == r1)) || ((r2 > dist) && ((dist + r1) == r2))) {
         printf("Kasajutsja iznutri\n");
         return;
     }
