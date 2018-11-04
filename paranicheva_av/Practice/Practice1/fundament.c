@@ -5,7 +5,7 @@ void main()
 	double h, w, d, pder, pdvp, pdsp, m1, m2, m3, m4, m5, M;
 	printf ("Vvedite h, w, d");
 	scanf ("%lf %lf %lf", &h, &w, &d);
-	printf ("Vvedite znacheniya plotnostey dereva, DVP i DSP");  //* plotnost ukazyvat v kg\sm^3
+	printf ("Vvedite znacheniya plotnostey dereva, DVP i DSP"); 
 	scanf ("%lf %lf %lf", &pder, &pdvp, &pdsp);
 	{
 		if ((h >= 1,8) && (h <= 2,2) && (w >= 0,8) && (w <= 1,2) && (d >= 0,5) && (d <= 0,9))
