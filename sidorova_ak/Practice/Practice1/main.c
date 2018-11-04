@@ -3,7 +3,7 @@
 #include <math.h>
 
 void main()
-    {
+{
     float h, w, d, m; // Параметры шкафа
     float densityDSP, densityDVP, densityTree; // Плотности материалов
     float wall, sides, doors, lids, shelfs; // Части шкафа
@@ -31,11 +31,11 @@ void main()
     w /= 100.0f;
     d /= 100.0f;
 
-    wall = h * w * (5 / 1000.0f) * densityDVP;
-    sides = 2 * h * d * (15 / 1000.0f) * densityDSP;
-    lids = 2 * w * d * (15 / 1000.0f) * densityDSP;
-    doors =  h * w * (1 / 100.0f) * densityTree;
-    shelfs = floor(h / (0.4 + 15 / 1000.0f)) * w * d * (15 / 1000.0f) * densityDSP; // Пусть высота полки равна 15 мм
+    wall = h * w * 0.005f * densityDVP;
+    sides = 2 * h * d * 0.015f * densityDSP;
+    lids = 2 * w * d * 0.015f * densityDSP;
+    doors =  h * w *  0.01f * densityTree;
+    shelfs = (h - 2 * 0.015) / (0.4 + 0.015) * (w - 2 * 0.015) * (d - 0.005) * 0.015f * densityDSP; // Пусть высота полки равна 15 мм
 
     m = wall + sides + lids + doors + shelfs;
     printf("Масса шкафа в кг равна %.3f\n", m);
