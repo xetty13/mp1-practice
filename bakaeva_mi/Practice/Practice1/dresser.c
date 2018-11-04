@@ -1,5 +1,12 @@
 #include <stdio.h>
 #include <math.h>
+<<<<<<< Updated upstream
+=======
+#define qdcp 0.015
+#define qdvp 0.005
+#define qder 0.01
+
+>>>>>>> Stashed changes
 void main() {
     double w, h, d, dcp, dvp, der, m1, m2, m3, m4, m5, m ;
 
