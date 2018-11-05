@@ -14,7 +14,7 @@ void main()
 	                m2 = (h * d * 0,015 * pdsp);
 	                m3 = (w * d * 0,015 * pdsp);
 		        m4 = (h * w * 0,01 * pder);
-		        m5 = (floor(h / 0,4) * w * d * 0,015 * pdsp);
+		        m5 = (floor((h - 2 * 0.015) / (0.4 + 0.015)) * (w - 2 * 0.015) * (d - 0.005)
 		        M = (m1 + m2 + m3 + m4 + m5);
 	                printf ("Massa shkapha %lf kg", M);
 		else 
