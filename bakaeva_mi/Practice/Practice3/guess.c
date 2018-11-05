@@ -50,7 +50,7 @@ void main() {
         } while ((n < 1) || (n > 1000));
 
         printf("\nUser: I made a number. Guess it, Computer!\n\n");
-            i = 0;
+        i = 0;
 
         do
         {
@@ -75,7 +75,7 @@ void main() {
                 printf(" User: GUESSED!");
                 printf(" Number of attempts = %d ", i);
                 return;
-            default: 
+            default:
                 printf("Please, enter only > or < or =\n");
             }
         } while (a != n);
