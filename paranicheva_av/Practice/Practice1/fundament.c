@@ -17,6 +17,7 @@ void main()
 		        m5 = (floor((h - 2 * 0.015) / (0.4 + 0.015)) * (w - 2 * 0.015) * (d - 0.005) * 0.01 * pdsp);
 		        M = (m1 + m2 + m3 + m4 + m5);
 	                printf ("Massa shkapha %lf kg", M);
+		}
 		else 
 		{
 			printf("Vvedennye dannye ne korrektny");
