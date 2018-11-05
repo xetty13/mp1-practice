@@ -1,13 +1,14 @@
 ﻿#include <stdio.h>
 #include <locale.h>
-#include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #define N 10
 
 void main()
 {
-    int n, i = 0, q, w, c = 0, r, rt1 = 0, rt2 = 0, rr, cow = 0, bull = 0, c1 = 0, c2 = 0, rc1, rc2;
+    int n, i = 0, q, w, c = 0, r, rt1 = 0, rt2 = 0, rr;
+    int cow = 0, bull = 0, c1 = 0, c2 = 0, rc1, rc2;
     long long in, nt;
     int rnd[N] = { 0 }, ain[N] = { 0 }, ord[N];
     setlocale(LC_ALL, "Rus");
