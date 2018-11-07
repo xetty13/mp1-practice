@@ -38,5 +38,5 @@ void main()
         printf("Kasajutsja iznutri\n");
         return;
     }
-    printf("Peresekajutsja\n") ;
+    printf("Peresekajutsja\n");
 }
