@@ -12,7 +12,7 @@ void main()
         printf("Ne suschestvujet\n");
         return;
     }
-    if ((x1 == x2) && (y1 == y2) && (r1 == r2))
+    if (x1 == x2 && y1 == y2 && r1 == r2)
     {
         printf("Sovpadajut\n");
         return;
@@ -27,13 +27,13 @@ void main()
         printf("Kasajutsja\n");
         return;
     }
-    if (((dist + r2) < r1) || ((dist + r1) < r2))
+    if ((dist + r2) < r1 || (dist + r1) < r2)
     {
         printf("Vkljuchena\n");
         return;
     }
-    if (((r1 > dist) && ((dist + r2) == r1)) ||
-        ((r2 > dist) && ((dist + r1) == r2)))
+    if ((r1 > dist && (dist + r2) == r1) ||
+        (r2 > dist && (dist + r1) == r2))
     {
         printf("Kasajutsja iznutri\n");
         return;
