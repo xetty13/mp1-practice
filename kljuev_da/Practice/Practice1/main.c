@@ -31,5 +31,5 @@ void main()
     shelf = (int)((h - 2 * 0.015f) / (0.4 + 0.015f)) *
       (w - 2 * 0.015f) * (d - 0.005f) * 0.015f;
     tm = rp + side + lid + door + shelf;
-    printf("\nПолная масса шкафа равна %.1f кг\n\n", tm);
+    printf("\nПолная масса шкафа равна %.1f кг\n\n", tm) ;
 }
