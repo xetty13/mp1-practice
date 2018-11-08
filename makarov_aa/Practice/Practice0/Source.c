@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
 #include <math.h>
-void main() {
+void main()
+{
 	double x1, y1, r1, x2, y2, r2, o;
 	setlocale(LC_ALL, "Russian");
 	printf("Введите х координату центра первой окружности \n");
@@ -16,7 +17,8 @@ void main() {
 	scanf("%lf", &y2);
 	printf("Введите радиус второй окружности \n");
 	scanf("%lf", &r2);
-	o = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);//квадрат расстояния для упрощения условий
+	o = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+	//квадрат расстояния для упрощения условий
 	if ((r1 == r2) && (o == 0))
 	{
 		printf("Совпадают");
