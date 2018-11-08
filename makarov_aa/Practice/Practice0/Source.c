@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <locale.h>
 #include <math.h>
-
 void main()
 {
     double x1, y1, r1, x2, y2, r2, o;
     setlocale(LC_ALL, "Russian");
-    printf("Введите х координату центра первой окружности \n");
+    printf("Введите x координату центра первой окружности \n");
     scanf("%lf", &x1);
     printf("Введите у координату центра первой окружности \n");
     scanf("%lf", &y1);
