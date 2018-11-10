@@ -36,7 +36,7 @@ void main()
 		printf("Vysota zadana neverno. Vvedennoe chislo ne vhodit v predely ot 180 do 220 cm \n");
 		return 0;
 	}
-	h = h / 100;
+	h = h * 0.01;
 	printf("Vvedite shirinu skapha v santimetrah (ot 80 do 120 cm) \n ");
 	scanf("%lf", &w);
 	if (w < 80 || w > 120)
@@ -44,7 +44,7 @@ void main()
 		printf("Shirina zadana neverno. Vvedennoe chislo ne vhodit v predely ot 80 do 120 cm \n");
 		return 0;
 	}
-	w = w / 100;
+	w = w * 0.01;
 	printf("Vvedite glubinu skapha v santimetrah (ot 50 do 90 cm) \n");
 	scanf("%lf", &d);
 	if (d < 50 || d > 90)
@@ -52,12 +52,12 @@ void main()
 		printf("Glubina zadana neverno. Vvedennoe chislo ne vhodit v predely ot 50 do 90 cm \n");
 		return 0;
 	}
-	d = d / 100;
-	m_zst = p_dvp * t_dvp * (h - 2 * t_dsp) * (w - 2* t_dsp);
-	m_bok = 2 * p_dsp * t_dsp * (h - 2 * t_dsp) * d;
+	d = d * 0.01; //перевод в метры
+	m_zst = p_dvp * t_dvp * (h - 2 * t_dsp) * w;
+	m_bok = 2 * p_dsp * t_dsp * (h - 2 * t_dsp) * (d - t_dvp);
 	m_kr = 2 * p_dsp * w * d * t_dsp;
 	m_dv = p_der * h * t_der * w;
-	m_p = p_dsp * (h - 2 * t_dsp) / (0.4 + t_dsp) * (w - 2 * t_dsp) * (d - t_dvp);
+	m_p = p_dsp (h - 2 * t_dsp) / (0.4 + t_dsp) * (w - 2 * t_dsp) * (d - t_dvp);
 	M = (m_p + m_kr + m_bok + m_zst + m_dv);
 	printf("Massa shkapha ravna (v kg) %lf", M);
 }
