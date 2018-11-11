@@ -1,10 +1,9 @@
 #include <stdio.h> 
 #include <math.h> 
+
 void main()
 {
-
 	double h, d, w, p_dvp, p_dsp, p_der, t_dvp, t_dsp, t_der, M, m_zst, m_bok, m_dv, m_kr, m_p;
-
 	int k;
 	printf("Vvedite plotnost dereva v kg/m^3 \n");
 	scanf("%lf", &p_der);
@@ -13,7 +12,7 @@ void main()
 		printf("Plotnost dereva zadana neverno. Vvedennoe chislo ne yavlyaetsa polozhitelnym.\n");
 		return;
 	}
-	printf("Vvedite plotnost DSP v kg/m^3 \n");
+	printf("Vvedite plotnost DSP v g/m^3 \n");
 	scanf("%lf", &p_dsp);
 	if (p_dsp <= 0)
 	{
@@ -27,28 +26,28 @@ void main()
 		printf("Plotnost DVP zadana neverno. Vvedennoe chislo ne yavlyaetsa polozhitelnym.\n");
 		return 0;
 	}
-        t_der = 0.01; //толщина в метрах
+	t_der = 0.01;
 	t_dsp = 0.015;
 	t_dvp = 0.005;
 	printf("Vvedite vysotu skapha v santimetrah (ot 180 do 220 cm) \n");
 	scanf("%lf", &h);
-	if ((h < 180) || (h > 220))
+	if (h < 180 || h > 220)
 	{
 		printf("Vysota zadana neverno. Vvedennoe chislo ne vhodit v predely ot 180 do 220 cm \n");
 		return 0;
 	}
-	h = h * 0.01; //перевод в метры
-	printf("Vvedite shirinu skapha v santimetrah  (ot 80 do 120 cm) \n ");
+	h = h * 0.01;
+	printf("Vvedite shirinu skapha v santimetrah (ot 80 do 120 cm) \n ");
 	scanf("%lf", &w);
-	if ((w < 80) || (w > 120))
+	if (w < 80 || w > 120)
 	{
 		printf("Shirina zadana neverno. Vvedennoe chislo ne vhodit v predely ot 80 do 120 cm \n");
 		return 0;
 	}
-	w = w * 0.01; //перевод в метры
-	printf("Vvedite glubinu skapha v santimetrah  (ot 50 do 90 cm) \n");
+	w = w * 0.01;
+	printf("Vvedite glubinu skapha v santimetrah (ot 50 do 90 cm) \n");
 	scanf("%lf", &d);
-	if ((d < 50) || (d > 90))
+	if (d < 50 || d > 90)
 	{
 		printf("Glubina zadana neverno. Vvedennoe chislo ne vhodit v predely ot 50 do 90 cm \n");
 		return 0;
