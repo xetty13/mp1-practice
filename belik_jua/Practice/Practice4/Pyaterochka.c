@@ -12,49 +12,88 @@ void Command()
     printf("5 - calculate the total \n");
 }
 
-void Scan(int quantity[], int goods[], int num)
+void Gen(int a[], int n, int m)
+{
+    int i;
+    srand((unsigned int)time(0));
+    for (i = 1; i < n; i++)
+        a[i] = m / RAND_MAX * rand() + 1;
+}
+
+void Scan(int quan[], int goo[], int num)
 {
     int temp;
-    printf("Enter barcode \n");
-    scanf("%d", &temp);
-    goods[num] = temp;
-    printf("Enter the quantity of goods \n");
-    scanf("%d", &quantity[temp]);
+    do
+    {
+        printf("Enter barcode \n");
+        scanf("%d", &temp);
+    } while ((temp < 0) || (temp > N));
+    goo[num] = temp;
+    do
+    {
+        printf("Enter the quantity of goods \n");
+        scanf("%d", &temp);
+    } while ((temp < 0) || (temp > 1000));
+    quan[goo[num]] += temp;
 }
 
-void Desciption(int goods[], char product[], int price[], int discount[], int num)
+void Desciption(char prod[], int pr[], int dis[], int num)
 {
-    printf("%d %s %d %d", goods[num], product[goods[num]], price[goods[num]], discount[goods[num]]);
+    printf("%d %s %d %d", num, prod[num], pr[num], dis[num]);
 }
 
-void AddToCheck(int *check, int *total, int goods[], int quantity[], int price[], int discount[], int num)
+void AddToCheck(int *check, int *total, int quan[], int pr[], int dis[], int num)
 {
-    printf("1");
+    check += (pr[num] * quan[num]);
+    total += (pr[num] * quan[num] * (100 - dis[num]) / 100);
+}
+
+void Form(int quan[], char prod[], int pr[], int dis[], int check, int total)
+{
+    int i;
+    for (i = 1; i < N; i++)
+    {
+        if (quan[i] > 0)
+        {
+            Desciption(prod, pr, dis, i);
+            printf("quan %d total %d \n", quan[i], quan[i] * pr[i] * (100 - dis[i]) / 100);
+        }
+    }
+    printf("total %d \n", total);
+    printf("discount %d \n", check * 100 / total);
 }
 
 void main()
 {
     int num = 0, i, total = 0, check = 0;
-    int quantity[N], price[N], discount[N], goods[N];
-    char product[N];
-    Scan(quantity, goods, num);
+    int quan[N] = {0}, pr[N], dis[N], goo[N];
+    char prod[N];
+    Gen(pr, N, 1000);
+    Gen(dis, N, 50);
+//    prod[1] = "Y";
+//    prod[2] = "M";
+    Scan(quan, goo, num);
     do
     {
         Command();
         scanf("%d", &i);
         switch (i) {
         case 1: 
-            Scan(quantity, goods, num);
+            Scan(quan, goo, num);
             break;
         case 2:
-            Desciption(goods, product, price, discount, num);
+            Desciption(prod, pr, dis, goo[num]);
             break;
         case 3: 
-            AddToCheck(&check, &total, goods, quantity, price, discount, num);
+            AddToCheck(&check, &total, quan, pr, dis, goo[num]);
             num++;
             break;
-
+        case 4:
+            Form(quan, prod, pr, dis, check, total);
+            break;
+        case 5:
+            Form(quan, prod, pr, dis, check, total);
+            break;
         }
-
     } while (i != 5);
 }
