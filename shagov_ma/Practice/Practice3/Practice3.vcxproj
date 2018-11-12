@@ -10,11 +10,8 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8A9BE3A2-E148-4C5F-AC6F-6E0C0CE68414}</ProjectGuid>
+    <ProjectGuid>{FD5356C5-2DE7-4229-8111-B677F3772983}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Practice3</RootNamespace>
   </PropertyGroup>
@@ -78,6 +75,9 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
