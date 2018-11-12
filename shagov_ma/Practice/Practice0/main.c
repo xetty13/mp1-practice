@@ -43,7 +43,6 @@ void main()
         printf("Окружности касаются\n");
         return;
     }
-
     printf("Окружности пересекаются\n");
     return;
 }
