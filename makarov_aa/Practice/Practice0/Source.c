@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
 #include <math.h>
+
 void main()
 {
     double x1, y1, r1, x2, y2, r2, o;
@@ -39,7 +40,7 @@ void main()
         printf("Одна окружность в другой без касания");
         return;
     }
-    if (o >(r1 + r2) * (r1 + r2))
+    if (o > (r1 + r2) * (r1 + r2))
     {
         printf("Не пересекаются");
         return;
