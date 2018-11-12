@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
-void main(){
+void main()
+{
 	float h, w, d;//h-высота w-ширина d-глубина
 	float DVP, DSP, drev;
 	float zad, bok, krish, dveri, polki;
@@ -9,20 +10,28 @@ void main(){
 	setlocale(LC_ALL, "Russian");
 	printf("Введите высоту, ширину, глубину\n");
 	scanf("%f %f %f", &h, &w, &d);
-	if ((h < 180) || (h > 220)){
+	if ((h < 180) || (h > 220))
+	{
 		printf("Неправильная высота\n");
-		return;}
-	if ((d < 50) || (d > 90)){
+		return;
+	}
+	if ((d < 50) || (d > 90))
+	{
 		printf("Неправильная глубина\n");
-		return;}
-	if ((w < 80) && (w > 120)){
+		return;
+	}
+	if ((w < 80) && (w > 120))
+	{
 		printf("Неправильная ширина\n");
-		return;}
+		return;
+	}
 	printf("Введите плотности ДВП, ДСП, дерева(КГ/М^3)\n");
 	scanf("%f %f %f", &DVP, &DSP, &drev);
-	if ((DVP <= 0) || (DSP <= 0) || (drev <= 0)){
+	if ((DVP <= 0) || (DSP <= 0) || (drev <= 0))
+	{
 		printf("Неправильная плотность\n");
-		return;}
+		return;
+	}
 	kol = floor(h / 40);
 	h = h/100;//Перевод в СИ см-->м
 	w = w/100;
