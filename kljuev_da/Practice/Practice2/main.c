@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <time.h>
@@ -7,7 +7,7 @@
 
 void main()
 {
-    int n, i = 0, q, w, c = 0, r, rt1 = 0, rt2 = 0, rr;
+    int n, i = 0, q, w, c = 0, rt1 = 0, rt2 = 0, rr;
     int cow = 0, bull = 0, c1 = 0, c2 = 0, rc1, rc2;
     long long in, nt;
     int rnd[N] = { 0 }, ain[N] = { 0 }, ord[N];
@@ -49,7 +49,7 @@ void main()
             } while ((in < nt * 0.1) || (in >= nt));
             for (i = 0; i < n; i++)
             {
-                ain[i] = in - (int)(in * 0.1) * 10;
+                ain[i] = in - (long long)(in * 0.1) * 10;
                 in /= 10;
             }
             for (q = 0; q < n; q++)
