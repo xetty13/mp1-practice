@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CF33FEBC-4598-47EA-B654-48FB562824BB}</ProjectGuid>
+    <ProjectGuid>{BD325747-EAC4-4481-818A-2EDCF48F7CCD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Practice1</RootNamespace>
   </PropertyGroup>
@@ -76,9 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
-    </ClCompile>
+    <ClCompile Include="main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
