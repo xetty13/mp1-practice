@@ -1,16 +1,15 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
-#include<string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #define N 10
 
 void Command()
 {
-    prinf("1 - add item \n");
-    prinf("2 - display description \n");
-    prinf("3 - add item to check \n");
-    prinf("4 - form a check \n");
-    prinf("5 - calculate the total \n");
+    printf("1 - add item \n");
+    printf("2 - display description \n");
+    printf("3 - add item to check \n");
+    printf("4 - form a check \n");
+    printf("5 - calculate the total \n");
 }
 
 void Scan(int quantity[], int goods[], int num)
@@ -30,7 +29,7 @@ void Desciption(int goods[], char product[], int price[], int discount[], int nu
 
 void AddToCheck(int *check, int *total, int goods[], int quantity[], int price[], int discount[], int num)
 {
-    
+    printf("1");
 }
 
 void main()
@@ -38,10 +37,10 @@ void main()
     int num = 0, i, total = 0, check = 0;
     int quantity[N], price[N], discount[N], goods[N];
     char product[N];
-    scan(quantity, goods, num);
+    Scan(quantity, goods, num);
     do
     {
-        Comand();
+        Command();
         scanf("%d", &i);
         switch (i) {
         case 1: 
