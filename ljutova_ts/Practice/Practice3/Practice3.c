@@ -50,7 +50,7 @@ void main()
 			ch = rand() % (max - min + 1) + min;
 			printf("Computer: %d \n", ch);
 			printf("Vvedite (>),(<),(=) v sootvetstvii s tem bolshe, menshe ili ravno zagadanoe chislo i otgadki computera \n");
-			scanf("%9s", z, (unsigned)_countof(z));
+			scanf("%9s", &z);
 			switch (z[0])
 			{
 			case '>': min = ch;
