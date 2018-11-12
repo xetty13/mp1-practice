@@ -6,7 +6,7 @@
 #define N 10
 void main()
 {
-	int n, nc, bs, es, k, i=1, c, j = 1, nh, e, prov = 0, bk = 0, ko = 0, l = 0;
+	int n, nc, bs=10, es=10, k, i=1, c, j = 1, nh, e, prov = 0, bk = 0, ko = 0, l = 0;
 	int numb[N];
 	int nhnumb[N];
 	srand(time(NULL));
@@ -40,8 +40,18 @@ void main()
 		} // проверка на совпадение
 		i++;
 	} // проверка числа компьютера
-	es = pow((double)10, (double)n);
-	bs = pow((double)10, (double)n - 1);
+	l = 0;
+	while(l<n){
+		es *= es;
+		l++;
+	}
+	l = 0;
+	while(l<n){
+		bs *= bs;
+		l++;
+	}
+	//es = pow((double)10, (double)n);
+	//bs = pow((double)10, (double)n - 1);
 	printf("Компьютер загадал %d-значное число с неповторяющимися цифрами\n", n);
 	printf("Попробуйте отгадать это n-значное число: ");
 	scanf("%d", &nh);
