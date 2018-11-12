@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
-
-void main() 
+ void main() 
 {
 	double dsp_m, dvp_m, wood_m, h, w, d;
 	double sidewm, swm, cm, dm, sm, m;
@@ -30,22 +29,21 @@ void main()
 	}
 	printf("Введите высоту шкафа в сантиметрах от 180 до 220: ");
 	scanf("%lf", &h);
-	if (h < 180 || h > 220) 
+	if ((h < 180) || (h > 220)) 
 	{
 		printf(" ОШИБКА \a \n Введены некорректные данные\n");
 		return;
 	}
 	printf("Введите ширину шкафа в сантиметрах от 80 до 120: ");
 	scanf("%lf", &w);
-	if (w < 80 || w > 120) 
+	if ((w < 80) || (w > 120)) 
 	{
 		printf(" ОШИБКА \a \n Введены некорректные данные\n");
 		return;
 	}
-
-	printf("Введите глубину шкафа в сантиметрах от 50 до 90: ");
+ 	printf("Введите глубину шкафа в сантиметрах от 50 до 90: ");
 	scanf("%lf", &d);
-	if (d < 50 || d > 90) 
+	if ((d < 50) || (d > 90)) 
 	{
 		printf(" ОШИБКА \a \n Введены некорректные данные\n");
 		return;
