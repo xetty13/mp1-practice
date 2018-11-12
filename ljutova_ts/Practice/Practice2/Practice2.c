@@ -5,7 +5,7 @@
 void main()
 {
 	int a[10], b[10];
-	int n, cows = 0, bulls = 0, p;
+	int n, cows = 0, bulls = 0, p, i, j;
 	int temp = 1;
 	do
 	{
@@ -18,12 +18,12 @@ void main()
 	while (temp)
 	{
 		temp = 0;
-		for (int i = 0; i < n; i++)
+		for (i = 0; i < n; i++)
 			a[i] = rand() % 9;
 		if (a[0] == 0)
 			a[0] = rand() % 9 + 1;
-		for (int i = 0; i < n; i++)
-			for (int j = i + 1; j < n; j++)
+		for (i = 0; i < n; i++)
+			for (j = i + 1; j < n; j++)
 				if (a[i] == a[j])
 				{
 					temp = 1;
@@ -36,16 +36,16 @@ void main()
 		bulls = 0;
 		printf("Enter your number: ");
 		scanf("%d", &p);
-		for (int i = n; i > 0; i--)
+		for (i = n; i > 0; i--)
 		{
 			b[i - 1] = p % 10;
 			p /= 10;
 		}
-		for (int i = 0; i < n; i++)
+		for (i = 0; i < n; i++)
 			for (int j = 0; j < n; j++)
 				if (b[i] == a[j])
 					cows++;
-		for (int i = 0; i < n; i++)
+		for (i = 0; i < n; i++)
 			if (a[i] == b[i])
 				bulls++;
 		if (cows >= bulls)
