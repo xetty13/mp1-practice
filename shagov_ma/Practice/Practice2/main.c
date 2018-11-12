@@ -12,23 +12,23 @@ void main(){
 	srand((unsigned int) time(0));
 	b = 1;
 	q = 0;
-	printf("Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ С‡РёСЃР»Р°\n");
+	printf("Введите длину числа\n");
 	scanf("%d",&n);
-	while((b!=0)||(q==1))//РїСЂРѕРІРµСЂРєР° Р·Р°РіР°РґР°РЅРЅРѕРіРѕ С‡РёСЃР»Р°
+	while((b != 0) || (q == 1))//проверка загаданного числа
 	{
 		b = 0;
 		q = 0;
-		for (i = 0;i < n;i++)
+		for (i = 0; i < n; i++)
 		{
-			zag[i] = rand()%10;
+			zag[i] = rand() % 10;
 		}
 		if (zag[0] == 0)
 		{
 			q++;
 		}
-		for (i = 0;i < n;i++)
+		for (i = 0; i < n;i++)
 		{
-			for(k = 0;k < i;k++)
+			for(k = 0; k < i;k++)
 			{
 				if ((zag[k] == zag[i]))
 				{
@@ -38,13 +38,13 @@ void main(){
 		}
 	}
 	bull = 0;
-	while(bull != n)
+	while (bull != n)
 	{
 		b = 1;
 		count = 0;
-		while((b != 0) || (count != n))//РїСЂРѕРІРµСЂРєР° С‡РёСЃР»Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+		while ((b != 0) || (count != n))//проверка числа пользователя
 		{
-			printf("\nР’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ \n");
+			printf("\nВведите число \n");
 			scanf("%d", &number_user);
 			a = number_user;
 			count = 0;
@@ -53,17 +53,17 @@ void main(){
 				a= a/10;
 				count++;
 			}
-			if (count != n)printf("РќРµРІРµСЂРЅР°СЏ РґР»РёРЅР° С‡РёСЃР»Р°");
-			a=number_user;
+			if (count != n)printf("Неверная длина числа");
+			a = number_user;
 			for (i = 0;i < n;i++)
 			{
-				arr_number_user[i]=a%10;
-				a = a/10;
+				arr_number_user[i] = a % 10;
+				a = a / 10;
 			}
 			b = 0;
-			for (i = 0;i < n;i++)
+			for (i = 0; i < n; i++)
 			{
-				for(k = 0;k < i;k++)
+				for(k = 0; k < i; k++)
 				{
 					if (arr_number_user[k] == arr_number_user[i])
 					{
@@ -71,11 +71,11 @@ void main(){
 					}
 				}
 			}
-			if (b != 0)printf("Р¦РёС„СЂС‹ РІ С‡РёСЃР»Рµ РїРѕРІС‚РѕСЂСЏСЋС‚СЃСЏ");
+			if (b != 0)printf("Цифры в числе повторяются");
 		}
 		bull = 0;
-		printf("\nРћС‚РіР°РґР°РЅРЅС‹Рµ Р±С‹РєРё:");
-		for (i = 0;i < n;i++)
+		printf("\nОтгаданные быки:");
+		for (i = 0; i < n; i++)
 		{
 			if (zag[i] == arr_number_user[i])
 			{
@@ -83,7 +83,7 @@ void main(){
 				bull++;
 			}
 		}
-		printf("\nРћС‚РіР°РґР°РЅРЅС‹Рµ РєРѕСЂРѕРІС‹:");
+		printf("\nОтгаданные коровы:");
 		for (i = 0;i < n;i++)
 		{
 			for(k = 0;k < n;k++)
@@ -96,5 +96,5 @@ void main(){
 		}
 		
 	}
-	printf("\n РџРѕР·РґСЂР°РІР»СЏСЋ! Р’С‹ РѕС‚РіР°РґР°Р»Рё РІСЃРµ С†РёС„СЂС‹.");
+	printf("\n Поздравляю! Вы отгадали все цифры.");
 }

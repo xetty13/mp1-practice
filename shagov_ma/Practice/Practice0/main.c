@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
+
 void main()
 {
 	float x, y, r; //координаты первой окр
@@ -8,9 +9,9 @@ void main()
 	float k; //рассто€ние между центрами
 	setlocale(LC_ALL, "Russian");
 	printf("¬ведите координаты центра первой окружности и ее радиус\n");
-	scanf("%f%f%f", &x, &y, &r);
+	scanf("%f %f %f", &x, &y, &r);
 	printf("¬ведите координаты центра второй окружности и ее радиус\n");
-	scanf("%f%f%f", &a, &b, &c);
+	scanf("%f %f %f", &a, &b, &c);
 	if ((x == a) && (y == b) && (r == c))
 	{
 		printf("ќкружности совпадают\n");
