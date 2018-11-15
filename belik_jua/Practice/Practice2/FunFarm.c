@@ -5,7 +5,7 @@
 void main()
 {
 	int i, n, bull = 0, cow = 0, a, j, m;
-	int num[10], inp[10], sam[10] = { 0,1,2,3,4,5,6,7,8,9 };
+	int num[10], inp[10], sam[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	srand((unsigned int)time(0));
 	
 	do {
