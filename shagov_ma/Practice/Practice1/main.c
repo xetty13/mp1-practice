@@ -1,46 +1,55 @@
-#include <stdio.h>
-#include <math.h>
-#include <locale.h>
+п»ї#include <stdio.h>
+
+void pick(int a[], int n)
+{
+	int i = 0;
+	int t, j, min, minidx;
+	for (; i < n; i++)
+	{
+		int min = a[i];
+		int minidx = i;
+		for (j = i + 1; j < n; j++)
+		{
+			if (a[j] < min)
+			{
+				min = a[j];
+				minidx = j;
+			}
+			t = a[i];
+			a[i] = a[minidx];
+			a[minidx] = t;
+		}
+	}
+}
+
+void paste(int a[], int n)
+{
+	int i, j, tmp;
+	for (i = 1; i < n; i++)
+	{
+		j = i - 1;;
+		tmp = a[i];
+		while ((j >= 0) && (a[j] > tmp))
+		{
+			a[j+1] = a[j];
+			a[j] = tmp;
+			j--;
+		}
+	}
+}
 
 void main()
 {
-	float h, w, d;//h-высота w-ширина d-глубина
-	float DVP, DSP, drev;
-	float zad, bok, krish, dveri, polki;
-	double kol;//количество полок
-	setlocale(LC_ALL, "Russian");
-	printf("Введите высоту, ширину, глубину\n");
-	scanf("%f %f %f", &h, &w, &d);
-	if ((h < 180) || (h > 220))
+	int i;
+	int b[5];
+	for (i = 0; i < 5; i++)
 	{
-		printf("Неправильная высота\n");
-		return;
+		scanf("%d", &b[i]);
 	}
-	if ((d < 50) || (d > 90))
+	paste(b, 5);
+	for (i = 0; i < 5; i++)
 	{
-		printf("Неправильная глубина\n");
-		return;
+		printf("%d", b[i]);
 	}
-	if ((w < 80) && (w > 120))
-	{
-		printf("Неправильная ширина\n");
-		return;
-	}
-	printf("Введите плотности ДВП, ДСП, дерева(КГ/М^3)\n");
-	scanf("%f %f %f", &DVP, &DSP, &drev);
-	if ((DVP <= 0) || (DSP <= 0) || (drev <= 0))
-	{
-		printf("Неправильная плотность\n");
-		return;
-	}
-	kol = floor(h / 40);
-	h = h / 100.0f;//Перевод в СИ см-->м
-	w = w / 100.0f;
-	d = d / 100.0f;
-	zad = (h - 2 * 0.015f) * w * DVP * 0.005f;
-	bok = 2.0f * DSP * (h - 2 * 0.015f) * (d - 0.005f)  * 0.015f;
-	krish = 2.0f * DSP * w * d *0.015f;
-	dveri = drev * (h - 2 * 0.015f) * (w - 2 * 0.015) * 2.0f;
-	polki = kol * (h - 2 * 0.015f) / (0.4f + 0.015f) * (w - 2 * 0.015f) * (d - 0.005f)* drev;
-	printf("Масса шкафа равна %f\n", zad + bok + krish + dveri + polki);
+
 }
