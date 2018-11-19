@@ -54,7 +54,7 @@ void Desciption(char prod[][L], int pr[], int dis[], int num)
     printf(" price %d dis %d \n", pr[num], dis[num]);
 }
 
-void AddToCheck(int quan[], int pr[], int dis[], int num, int q)
+void AddToCheck(int quan[], int num, int q)
 {
     quan[num] += q;
 }
@@ -87,7 +87,7 @@ void main()
 {
     int num = 0, i, q;
     int quan[N] = {0}, pr[N], dis[N], goo[N];
-    char prod[N][L] = {'M', 'i', 'l', 'k',' ', 'B', 'r', 'e', 'a', 'd', 'E', 'g', 'g', ' ', ' ', 'F', 'l', 'o', 'u', 'r'};
+    char prod[N][L] = { ' ',' ',' ',' ',' ','M', 'i', 'l', 'k',' ', 'B', 'r', 'e', 'a', 'd', 'E', 'g', 'g', ' ', ' ', 'F', 'l', 'o', 'u', 'r' };
     Gen(pr, N, 1000.0);
     Gen(dis, N, 50.0);
     q = Scan(goo, num);
@@ -104,7 +104,7 @@ void main()
             Desciption(prod, pr, dis, goo[num]);
             break;
         case 3: 
-            AddToCheck(quan, pr, dis, goo[num], q);
+            AddToCheck(quan, goo[num], q);
             num++;
             break;
         case 4:
