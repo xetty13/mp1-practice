@@ -87,7 +87,7 @@ void main()
 {
     int num = 0, i, q;
     int quan[N] = {0}, pr[N], dis[N], goo[N];
-    char prod[N][L] = { ' ', ' ', ' ', ' ', ' ', 'M', 'i', 'l', 'k',' ', 'B', 'r', 'e', 'a', 'd', 'E', 'g', 'g', ' ', ' ', 'F', 'l', 'o', 'u', 'r' };
+    char prod[N][L] = { "     ", "Milk ", "Bread", "Egg  ", "Flour", "Apple", "Meat ", "Fish " };
     Gen(pr, N, 1000.0); 
     Gen(dis, N, 50.0);
     q = Scan(goo, num);
