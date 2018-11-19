@@ -2,7 +2,8 @@
 #include <time.h>
 #include <stdlib.h>
 
-void main() {
+void main()
+{
     char regim, ocenka;
     int n, i, a, n1, n2;
 
