@@ -14,7 +14,7 @@ void main()
 	srand((unsigned int) time(0));
 	printf("”кажите режим работы\n1 - отгадать самому;\n2 - загадать компьютеру;\n3 - выйти из программы\n");
 	do{
-		scanf("%d",&i);
+		scanf("%d", &i);
 		if (i == 1)
 		{
 			p = 0;
@@ -50,11 +50,11 @@ void main()
 				scanf("%*c%c", &zhak);
 				if (zhak == '>')
 				{
-					a = number+1;
+					a = number + 1;
 				}
 				if (zhak == '<')
 				{
-					b = number-1;
+					b = number - 1;
 				}
 				if (zhak == '=')
 				{

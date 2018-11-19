@@ -40,7 +40,7 @@ void main()
 	zad = (h - 2 * 0.015f) * w * DVP * 0.005f;
 	bok = 2.0f * DSP * (h - 2 * 0.015f) * (d - 0.005f)  * 0.015f;
 	krish = 2.0f * DSP * w * d *0.015f;
-	dveri = drev * (h - 2 * 0.015f) * (w - 2 * 0.015) * 2.0f;
+	dveri = drev * (h - 2 * 0.015f) * (w - 2 * 0.015f) * 2.0f;
 	polki = kol * (h - 2 * 0.015f) / (0.4f + 0.015f) * (w - 2 * 0.015f) * (d - 0.005f)* drev;
 	printf("Масса шкафа равна %f\n", zad + bok + krish + dveri + polki);
 }
