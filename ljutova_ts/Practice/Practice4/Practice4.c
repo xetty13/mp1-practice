@@ -1,18 +1,26 @@
-#include <stdio.h>
-#define N 10
-#define K 10
-#define L 10
-#define M 10
-void fill(int a[], int n)
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <time.h> 
+#define N 10 
+#define K 10 
+#define L 10 
+#define M 10 
+void fill_shtrih(int a[], int n)
 {
 	int i;
-	for (i = 0; i < 4; i++)
 	{
-		printf("Vvedite shtrih-cod: ");
+		printf("Vvedite shtrih-cod 1 chislo: \n ");
 		scanf("%d", &(a[i]));
+		printf("Vvedite shtrih-cod 2 chislo: \n ");
+		scanf("%d", &(a[i + 1]));
+		printf("Vvedite shtrih-cod 3 chislo: \n ");
+		scanf("%d", &(a[i + 2]));
+		printf("Vvedite shtrih-cod 4 chislo: \n ");
+		scanf("%d", &(a[i + 3]));
+		return;
 	}
 }
-void fill(char b[], int n)
+void fill_name(char b[], int n)
 {
 	int j;
 	for (j = 0; j < n; j++)
@@ -21,54 +29,49 @@ void fill(char b[], int n)
 		scanf("%c", &(b[j]));
 	}
 }
-void fill(int c[], int n)
+void fill_stmst(int c[], int n)
 {
 	int s;
+	srand((unsigned)time(0));
 	for (s = 0; s < n; s++)
-	{
-		printf("Vvedite stoimost' za edinitsy tovara: ");
-		scanf("%d", &(c[s]));
-	}
+		c[s] = rand();
 }
-void fill(int d[], int n)
+void fill_skidka(float d[], int n)
 {
 	int y;
-	for (y = 0; y < n; y++)
-	{
-		printf("Vvedite skidky: ");
-		scanf("%d", &(d[y]));
-	}
+	srand((unsigned)time(0));
+	for (y = 1; y < n; y++)
+		d[y] = 0.49 + rand();
 }
-void sum(int c[], int s)
+int sum(int c[], int n)
 {
-	int s, n;
+	int sum, s;
 	for (s = 0; s < n; s++)
-	{
-		c[s] += c[s];
-	}
+		sum += c[s];
+	return sum;
 
 }
-void output(int a[], int n)
+void output_shtrih(int a[], int n)
 {
 	int i;
 	for (i = 0; i < 4; i++)
-		printf( "%d", a[i]);
+		printf("%d", a[i]);
 }
-void output(int b[], int n)
+void output(int a, int b, char c, float d)
 {
-	int j;
-	for (j = 0; j < n; j++)
-		printf("%c", b[j]);
+	printf("Shtrih-cod: %d \n", a);
+	printf("Naimenovanie: %d \n", b);
+	printf("Stoimost: %c \n", sum);
+	printf("Skidka: %.2f \n", d);
+
 }
-void output(int c[], int n)
+void main()
 {
-	int s;
-	for (s = 0; s < n; s++)
-		printf("%d", c[s]);
-}
-void output(int d[], int n)
-{
-	int y;
-	for (y = 0; y < n; y++)
-		printf("%c", d[y]);
+	int X[N], Y[K], Z[L], W[M];
+	fill_shtrih(X, N);
+	fill_name(Y, K);
+	fill_stmst(Z, L);
+	fill_skidka(W, M);
+	output(X[N], Y[K], Z[L], W[M]);
+	printf("%d", sum(X, N), (Y, K), (Z, L), (W, M));
 }
