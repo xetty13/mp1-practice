@@ -18,7 +18,7 @@ void Gen(int a[], int n)
 {
     int i;
     srand((unsigned int)time(0));
-    for (i = 1; i < n; i++)
+    for (i = 0; i < n; i++)
     {
         a[i] =((double) K) / RAND_MAX * rand();
     }
@@ -27,28 +27,25 @@ void Gen(int a[], int n)
 void Print(int a[], int n)
 {
     int i;
-    for (i = 1; i < n; i++)
+    for (i = 0; i < n; i++)
         printf("%d ", a[i]);
     printf("\n");
 }
 
 void ChooseSort(int a[], int n)
 {
-    int i, j, min, ind;
-    for (i = 0; i < n; i++)
+    int i, j, tmp, ind;
+    for (i = 0; i < n - 1; i++)
     {
-        min = a[i];
         ind = i;
         for (j = i + 1; j < n; j++)
         {
-            if (min > a[j])
-            {
-                min = a[j];
+            if (a[ind] > a[j])
                 ind = j;
-            }
-            a[ind] = a[i];
-            a[i] = min;
         }
+        tmp = a[ind];
+        a[ind] = a[i];
+        a[i] = tmp;
     }
 }
 
@@ -129,5 +126,5 @@ void main()
             break;
         }
         Print(a, N);
-    } while (i != 6);
+    } while (i != 6); 
 }
