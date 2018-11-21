@@ -6,9 +6,9 @@
 void main()
 
 {
-	setlocale(LC_ALL, "Rus");
-	int n, i, b = 0, c = 9, q, m, p = 0, d = 0;
+	int n, i, b = 0, w = 1, c = 9, q, m, p = 0, d = 0;
 	int a[10], t[10];
+	setlocale(LC_ALL, "Rus");
 	srand((unsigned int)time(0));
 	do
 	{
@@ -18,12 +18,10 @@ void main()
 	for (i = 0; i < n; i++)
 	{
 		a[i] = rand() * (c - b) / RAND_MAX + b;
-		while (1)
+		while (a[0] == 0)
 		{
 			if (a[0] = 0)
-				a[0] = rand() * (c - b) / RAND_MAX + b;
-			else
-				break;
+				a[0] = rand() * (c - w) / RAND_MAX + w;
 		}
 		for (q = 0; q < i; q++)
 		{
@@ -37,8 +35,8 @@ void main()
 	}
 	while (1)
 	{
-		d = 0;
 		p = 0;
+		d = 0;
 		printf("¬ведите n-значное число с неповтор€ющимис€ цифрами \n");
 		for (m = 0; m < n; m++)
 		{
@@ -63,3 +61,4 @@ void main()
 		}
 	}
 }
+
