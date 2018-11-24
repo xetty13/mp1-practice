@@ -223,7 +223,7 @@ void num2()
     int pos;
     do
     {
-        printf("\n Go to menu  - 111\n----------------\n\n");
+        printf("\n Go to menu  - 111\n -----------------\n\n");
         pos = scan(id, N + 1);
         if (pos == 111)
             break;
@@ -249,7 +249,6 @@ void num4()
 
 void main()
 {
-    int id[N][s] = { 0 };
     int variant;
 
     menu();
