@@ -1,5 +1,5 @@
 ﻿#include <stdio.h>
-//#include <conio.h>
+#include <conio.h>
 #include <time.h>
 #include <stdlib.h>
 #define s 4
