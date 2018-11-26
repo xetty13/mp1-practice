@@ -27,9 +27,9 @@ void main()
 	float discounts[9999] = {0};//массив скидок
 	int check[9999] = {0};//массив для чека
 	char names[4][9] = //массив с символами для состовления названий
-		{{'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o'}, 
+	{{'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o'}, 
         {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'}, 
-		{'z', 'x', 'c', 'v', 'b', 'n', 'm', '1', '2'},
+	{'z', 'x', 'c', 'v', 'b', 'n', 'm', '1', '2'},
         {'3', '4', '5', '6', '7', '8', '9', '0', '!'}};
 	int prices[9999];//массив со скидками
 	int i, pick, user_choose, q;
@@ -43,7 +43,7 @@ void main()
 	}
 	for(i = 1; i < 9999; i++)
 	{
-		discounts[i] = rand()%50*0.01f;
+		discounts[i] = rand() %50 * 0.01f;
 	}
 	user_choose = -1;
 	do {
@@ -57,17 +57,17 @@ void main()
 			do{ printf("Введите штрих-код\n");
 				scanf("%d",&user_choose);
 				q = 0;
-				if ((user_choose>10000) || (user_choose<1))
+				if ((user_choose > 10000) || (user_choose < 1))
 				{
 					printf("\nТовара с таким штрих-кодом нет");
 					printf("\nВведите новый штрих код");
 					q++;
 				}
-			} while(q!=0);
+			} while(q != 0);
 			break;
 		case 2:
 			
-			if (user_choose==-1)
+			if (user_choose == -1)
 			{
 				printf("\nВы не отсканировали товар\n");
 				return;
@@ -100,5 +100,5 @@ void main()
 			printf("Общая цена %.0f\n", s);
 			break;
 		}
-	} while(pick!=6);
+	} while(pick != 6);
 }
