@@ -4,8 +4,7 @@
 #include <math.h>
 #include <locale.h>
 
-void main()
-{
+void main(){
 	int zag[10] = {0};
 	int arr_number_user[10] = {0};
 	int number_user, count, a, q, n, b, k, i, bull;
@@ -13,60 +12,58 @@ void main()
 	srand((unsigned int) time(0));
 	b = 1;
 	q = 0;
-	printf("Введите длину числа\n");
+	printf("Р’РІРµРґРёС‚Рµ РґР»РёРЅСѓ С‡РёСЃР»Р°\n");
 	scanf("%d",&n);
-	while((b != 0)||(q == 1))//проверка загаданного числа
+	while((b != 0) || (q == 1))//РїСЂРѕРІРµСЂРєР° Р·Р°РіР°РґР°РЅРЅРѕРіРѕ С‡РёСЃР»Р°
 	{
 		b = 0;
 		q = 0;
-		for (i = 0;i < n;i++)
+		for (i = 0; i < n; i++)
 		{
-			zag[i] = rand()%10;
+			zag[i] = rand() % 10;
 		}
 		if (zag[0] == 0)
 		{
 			q++;
-			break;
 		}
-		for (i = 0;i < n;i++)
+		for (i = 0; i < n;i++)
 		{
-			for(k = 0;k < i;k++)
+			for(k = 0; k < i;k++)
 			{
 				if ((zag[k] == zag[i]))
 				{
 					b++;
-					break;
 				}
 			}
 		}
 	}
 	bull = 0;
-	while(bull != n)
+	while (bull != n)
 	{
 		b = 1;
 		count = 0;
-		while((b != 0) || (count != n))//проверка числа пользователя
+		while ((b != 0) || (count != n))//РїСЂРѕРІРµСЂРєР° С‡РёСЃР»Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		{
-			printf("\nВведите число \n");
+			printf("\nР’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ \n");
 			scanf("%d", &number_user);
 			a = number_user;
 			count = 0;
 			while(a != 0)
 			{
-				a = a/10;
+				a= a/10;
 				count++;
 			}
-			if (count != n)printf("Неверная длина числа");
-			a=number_user;
+			if (count != n)printf("РќРµРІРµСЂРЅР°СЏ РґР»РёРЅР° С‡РёСЃР»Р°");
+			a = number_user;
 			for (i = 0;i < n;i++)
 			{
-				arr_number_user[i] = a%10;
-				a = a/10;
+				arr_number_user[i] = a % 10;
+				a = a / 10;
 			}
 			b = 0;
-			for (i = 0;i < n;i++)
+			for (i = 0; i < n; i++)
 			{
-				for(k = 0;k < i;k++)
+				for(k = 0; k < i; k++)
 				{
 					if (arr_number_user[k] == arr_number_user[i])
 					{
@@ -74,11 +71,11 @@ void main()
 					}
 				}
 			}
-			if (b != 0)printf("Цифры в числе повторяются");
+			if (b != 0)printf("Р¦РёС„СЂС‹ РІ С‡РёСЃР»Рµ РїРѕРІС‚РѕСЂСЏСЋС‚СЃСЏ");
 		}
 		bull = 0;
-		printf("\nОтгаданные быки:");
-		for (i = 0;i < n;i++)
+		printf("\nРћС‚РіР°РґР°РЅРЅС‹Рµ Р±С‹РєРё:");
+		for (i = 0; i < n; i++)
 		{
 			if (zag[i] == arr_number_user[i])
 			{
@@ -86,7 +83,7 @@ void main()
 				bull++;
 			}
 		}
-		printf("\nОтгаданные коровы:");
+		printf("\nРћС‚РіР°РґР°РЅРЅС‹Рµ РєРѕСЂРѕРІС‹:");
 		for (i = 0;i < n;i++)
 		{
 			for(k = 0;k < n;k++)
@@ -99,5 +96,5 @@ void main()
 		}
 		
 	}
-	printf("\n Поздравляю! Вы отгадали все цифры.");
+	printf("\n РџРѕР·РґСЂР°РІР»СЏСЋ! Р’С‹ РѕС‚РіР°РґР°Р»Рё РІСЃРµ С†РёС„СЂС‹.");
 }

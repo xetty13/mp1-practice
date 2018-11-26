@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5B2D7BAF-E9EF-4BC7-8F35-4D443ECB7537}</ProjectGuid>
+    <ProjectGuid>{CBD117A9-2D95-4206-B98B-DA16A37CAB33}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Practice4</RootNamespace>
   </PropertyGroup>
