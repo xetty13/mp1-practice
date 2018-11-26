@@ -1,77 +1,94 @@
 #include <stdio.h> 
-#include <stdlib.h> 
-#include <time.h> 
 #define N 10 
-#define K 10 
-#define L 10 
-#define M 10 
-void fill_shtrih(int a[], int n)
+
+int shtrih(int sh1[])
+{
+	int i, flag = 0, sh, sht2, sht;
+	printf("Enter shtrih-cod: \n ");
+	scanf("%d", &sht);
+	for (i = 0; i < N; i++)
+	{
+		if (sh1[i] == sht)
+		{
+			flag = 1;
+			break;
+		}
+	}
+	if (flag == 1)
+		return i;
+
+	return -1;
+
+}
+void product(char name[][6], int price[], float sale[], int a)
 {
 	int i;
-	{
-		printf("Vvedite shtrih-cod 1 chislo: \n ");
-		scanf("%d", &(a[i]));
-		printf("Vvedite shtrih-cod 2 chislo: \n ");
-		scanf("%d", &(a[i + 1]));
-		printf("Vvedite shtrih-cod 3 chislo: \n ");
-		scanf("%d", &(a[i + 2]));
-		printf("Vvedite shtrih-cod 4 chislo: \n ");
-		scanf("%d", &(a[i + 3]));
-		return;
-	}
+	for (i = 0; i < 7; i++)
+		printf("Your product: % \n", name[a][i]);
+	printf("\nCost: %d \n", price[a]);
+	printf("\nSale: %0.0f%% \n", sale[a]);
 }
-void fill_name(char b[], int n)
+double sum(int price[], float sale[], int a)
 {
-	int j;
-	for (j = 0; j < n; j++)
-	{
-		printf("Vvedite naimenovanie: ");
-		scanf("%c", &(b[j]));
-	}
-}
-void fill_stmst(int c[], int n)
-{
-	int s;
-	srand((unsigned)time(0));
-	for (s = 0; s < n; s++)
-		c[s] = rand();
-}
-void fill_skidka(float d[], int n)
-{
-	int y;
-	srand((unsigned)time(0));
-	for (y = 1; y < n; y++)
-		d[y] = 0.49 + rand();
-}
-int sum(int c[], int n)
-{
-	int sum, s;
-	for (s = 0; s < n; s++)
-		sum += c[s];
+	int i;
+	double sum = 0.0;
+	for (i = 0; i < N; i++)
+		sum += (1 - sale[a] / 100.0) * price[a];
 	return sum;
 
 }
-void output_shtrih(int a[], int n)
+void output_check(int name[][6], int price[], float sale[], int a)
 {
 	int i;
-	for (i = 0; i < 4; i++)
-		printf("%d", a[i]);
+	printf(" OOO Prosto Kassa\n");
+	printf("----------------------------------\n");
+	printf("----------------------------------\n");
+	printf(" Name Cost Sale Discount price \n");
+	for (i = 0; i < N; i++)
+	{
+		printf("%c", name[i][6]);
+		printf("%d", price[a]);
+		printf("%0.0f", sale[a]);
+		printf("%lf \n", (1 - sale[a] / 100.0) * price[a]);
+		printf("----------------------------------");
+		printf("TOTAL: %d \n", sum);
+	}
 }
-void output(int a, int b, char c, float d)
+void Menu()
 {
-	printf("Shtrih-cod: %d \n", a);
-	printf("Naimenovanie: %d \n", b);
-	printf("Stoimost: %c \n", sum);
-	printf("Skidka: %.2f \n", d);
-
+	printf("-------- MENU ------- \n");
+	printf("1. display product information \n");
+	printf("2. show check \n");
 }
 void main()
 {
-	int X[N], Y[K], Z[L], W[M];
-	fill_shtrih(X, N);
-	fill_name(Y, K);
-	fill_stmst(Z, L);
-	fill_skidka(W, M);
-	output(X[N], Y[K], Z[L], W[M]);
-	printf("%d", sum(X, N), (Y, K), (Z, L), (W, M));
+	int a;
+	int sh[N] = { 2348 , 1357 , 3585 , 1736 , 3461 , 9753 , 1528 , 6776 , 7913 , 4781 };
+	char name[N][6] = { "bread" , "meat" , "fish", "egg" , "milk", "potato", "butter",
+		"apple", "salt", "cheese" };
+	int price[N] = { 20, 34, 54, 12, 65, 52, 76, 46, 19, 95 };
+	float sale[N] = { 5, 15, 5, 20, 10, 35, 20, 40, 10, 25 };
+	int menu;
+	do
+	{
+		Menu();
+		scanf("%d", &menu);
+		switch (menu)
+		{
+		case 1:
+		{
+			a = shtrih(sh);
+			if (a == -1)
+			{
+				printf("Your product does not found, try again \n");
+				break;
+			}
+			product(name, price, sale, a);
+			break;
+		case 2:
+			output_check(name, price, sale, N);
+			break;
+		}
+		}
+	} while (1);
 }
