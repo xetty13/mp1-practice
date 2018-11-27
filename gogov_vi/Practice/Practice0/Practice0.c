@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
+
  void main()
 {
     double x1, y1, r1, r2, x2, y2, d;
