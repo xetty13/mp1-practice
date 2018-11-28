@@ -1,66 +1,94 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#define N 10
 void main()
 {
-	int r, ch, ch_pl, k, n1 = 1, n2 = 1000;
-	char ssign;
+	int n, cows = 0, bulls = 0, i, f, j, m = 0;
+	int  ch[N] = { 0 };
+	int ch_mb[N] = { 0 };
+	long long ch_predp, ch_nast = 0, predp, a;
 
-	printf("HELLO! WELCOME TO THE GAME!\n");
-	printf("The game has 2 modes\n");
-	printf("1 - the player guesses the number \n");
-	printf("2 - the computer guesses the number \n");
 	do
 	{
-		printf("Choose the game mode (1 or 2) \n"); //����� ������ � ���������
-		scanf("%d", &r);
-	} while ((r != 1) && (r != 2));
+		printf("Vvedite kolichestvo tcifr v zagadannom chisle (do 10)\n"); //ввод кол-ва цифр числа и проверка 
+		scanf("%d", &n);
+	} while (n <= 0 || n > N);
+
+
 	srand((unsigned int)time(0));
-	k = 0;
-	if (r == 1)   //����� 1  
-	{
-		ch = rand() % (n2 - n1 + 1) + n1;
-		printf("The computer made a number from 1 to 1000. Let's guess!\n");
-		do
+	f = 0; 
+	ch[0] = rand() % 9+1;
+	
+		for (i = 1; i < n; i++)
 		{
-			while ((ch_pl > 0) && (ch_pl <= 1000))
-				scanf("%d", &ch_pl);
-			if (ch_pl < ch)
-				printf("This number %d is smaller than the number made by the computer. Try again \n", ch_pl);
-			else
-				printf("This number %d is bigger than the number made by the computer. Try again \n", ch_pl);
-				k++; // ������� �������
-		} while (ch != ch_pl);
-		printf("You guessed the number! It's %d. Number of attempts: %d \n", ch, k);
-		return;
-	}
-
-	else       //����� 2
-	{
-		printf("HINT: if the computer has entered a number larger, enter '>' else '<' /n  ");
-		printf("If the computer has entered a number equal to done, enter '=' ");
-		while ((ch_pl > 0) && (ch_pl <= 1000))
-		{
-			printf("Make a number from 1 to 1000\n");
-			scanf("%d", &ch_pl);
-		}
-		do
-		{
-			ch = rand() % (n2 - n1 + 1) + n1;
-			printf("The computer made a number %d /n", ch);
-
-			while ((ssign == '=') || (ssign == '<') || (ssign == '>'))
+			if (f == 1)
 			{
-				printf("Enter the sign /n");
-				scanf("%�", &ssign);
+				i--;
+				j--;
 			}
-			if (ssign == '<')
-				n2 = ch - 1;      // "����������" �������
-			if (ssign == '>')
-				n1 = ch + 1;
-			k++;
-		} while (ssign != '=');
-			printf("Computer guessed the number! It's %d. Number of attempts: %d \n", ch, k);
-		return;
+			ch[i] = rand() % 9;
+			f = 0;
+			for (j = 1; j < n; j++)
+				if (ch[i - 1] == ch[j])
+					f = 1;
+		}
+
+
+
+	for (i = 0; i < n; i++)
+		printf("%d", ch[i]);
+	
+	i = 1;
+	ch_nast = ch[0];
+	while (i < n) // перевод числа, введенного комп., из массива в переменную 
+	{
+		
+		ch_nast = ch_nast * 10 + ch[i];
+		i++;
 	}
+	printf("\n");
+	printf("%lld\n", ch_nast);
+	do
+	{
+		printf("Vvedite predpolagaemoe chislo (naturalnoe i pervaya tsifra ne 0)\n"); //ввод числа игроком и преобразование его в массив
+		f = 0;                                      //с проверкой на 1й "0" 
+		do
+		{
+			scanf("%lld", &ch_predp);
+			a = ch_predp;
+			while (m != n)                      // проверка на кол-во введенных цифр
+			{
+				a = a % 10;
+				m++;
+			}
+			predp = ch_predp;
+			for (i = n - 1; i = 0; i--)
+			{
+				ch_mb[i] = predp % 10;
+				predp /= 10;
+				if (ch_mb[0] == 0) f = 1;
+			}
+
+			for (i = 0; i < n; i++)
+				for (j = i + 1; j < n - 1; j++)
+					if (ch_mb[i] == ch_mb[j])
+						f = 1;
+		} while (f == 0 || ch_predp < 0 || m > n);
+
+
+
+		for (i = 0; i < n; i++)
+			for (j = 0; j < n; j++)
+				if (ch_mb[i] == ch[j])
+					if (i == j)
+					{
+						cows++;
+						bulls++;
+					}
+					else cows++;
+		printf("Korovy = %d\n", cows);
+		printf("Byki = %d\n", bulls);
+	} while (ch_nast != ch_predp);
+	printf("Pozdravlyaem! Vy otgadaly chislo! %lld ", ch_nast);
 }
