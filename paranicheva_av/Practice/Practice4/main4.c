@@ -9,8 +9,8 @@ int Scan_product(int a[], int kolichestvo[], int sch)
 		scanf ("%d", &a[sch]);
 	}
 	while ((a[sch] > N) || (a[sch] < 1));
-        printf ("Vvedite kolichestvo tovara\n");
-        scanf ("%d", &k);
+       printf ("Vvedite kolichestvo tovara\n");
+       scanf ("%d", &k);
 	return k;
 }
 void Product_description(char prod[][10], int stoimost[], int skidka[], int k)
@@ -35,7 +35,7 @@ void Form_a_check(int prod[][10],int stoimost[],int skidka[],int kolichestvo[])
 			Product_description(prod, stoimost, skidka, m);
 		        printf (" Kolichestvo tovara = %d\n", kolichestvo[m]);
 		        osbs = osbs + kolichestvo[m] * stoimost[m];
-                       ss += stoimost[m] * 0.01 * ((100 - skidka[m]) * kolichestvo[m]);
+                      ss += stoimost[m] * 0.01 * ((100 - skidka[m]) * kolichestvo[m]);
 		}
 	}
 	if (osbs > 0)
