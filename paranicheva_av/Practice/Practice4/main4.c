@@ -35,7 +35,7 @@ void Form_a_check(int prod[][10],int stoimost[],int skidka[],int kolichestvo[])
 			Product_description(prod, stoimost, skidka, m);
 		        printf (" Kolichestvo tovara = %d\n", kolichestvo[m]);
 		        osbs = osbs + kolichestvo[m] * stoimost[m];
-                        ss += stoimost[m] * 0.01 * ((100 - skidka[m]) * kolichestvo[m]);
+                       ss += stoimost[m] * 0.01 * ((100 - skidka[m]) * kolichestvo[m]);
 		}
 	}
 	if (osbs > 0)
