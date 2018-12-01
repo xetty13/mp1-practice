@@ -9,8 +9,8 @@ int Scan_product(int a[], int kolichestvo[], int sch)
 		scanf ("%d", &a[sch]);
 	}
 	while ((a[sch] > N) || (a[sch] < 1));
-       printf ("Vvedite kolichestvo tovara\n");
-       scanf ("%d", &k);
+      printf ("Vvedite kolichestvo tovara\n");
+      scanf ("%d", &k);
 	return k;
 }
 void Product_description(char prod[][10], int stoimost[], int skidka[], int k)
