@@ -9,8 +9,8 @@ int Scan_product(int a[], int kolichestvo[], int sch)
 		scanf ("%d", &a[sch]);
 	}
 	while ((a[sch] > N) || (a[sch] < 1));
-	printf ("Vvedite kolichestvo tovara\n");
-    scanf ("%d", &k);
+        printf ("Vvedite kolichestvo tovara\n");
+        scanf ("%d", &k);
 	return k;
 }
 void Product_description(char prod[][10], int stoimost[], int skidka[], int k)
@@ -18,7 +18,7 @@ void Product_description(char prod[][10], int stoimost[], int skidka[], int k)
 	int i;
 	for(i=0; i < 10; i++)
 		printf ("%c", prod[k][i]);
-	printf ("stoimost = %d, skidka = %d\n", stoimost[k], skidka[k]);
+		printf ("stoimost = %d, skidka = %d\n", stoimost[k], skidka[k]);
 }
 void Add_item_to_check(int kolichestvo[], int nom, int koltov)
 {
@@ -31,13 +31,17 @@ void Form_a_check(int prod[][10],int stoimost[],int skidka[],int kolichestvo[])
 	{
 		if ( kolichestvo[m] > 0)
 		{
+			printf ("%d ", m);
 			Product_description(prod, stoimost, skidka, m);
-		    printf ("Kolichestvo tovara = %d", kolichestvo[m]);
-		    osbs = osbs + kolichestvo[m] * stoimost[m];
-            ss += stoimost[m] * 0.01 * (100 - skidka[m] * kolichestvo[m]);
+		        printf (" Kolichestvo tovara = %d\n", kolichestvo[m]);
+		        osbs = osbs + kolichestvo[m] * stoimost[m];
+                        ss += stoimost[m] * 0.01 * ((100 - skidka[m]) * kolichestvo[m]);
 		}
 	}
-	printf("Stoimost bez skidok = %d\n Stoimost so skidkami = %d\n Obschaya skidka = %d\n", osbs, ss, (osbs - ss) * 100 / osbs);
+	if (osbs > 0)
+		printf (" Stoimost bez skidok = %d \n Stoimost so skidkami = %d\n Obschaya skidka = %d\n", osbs, ss, (osbs - ss) * 100 / osbs);
+	else 
+		printf ("V cheke net tovarov");
 }
 
 
@@ -52,11 +56,11 @@ void main()
 
 	do
 	{
-		printf (" 1. Scan product \n 2. Product description \n 3. Add item to check \n 4. Form a check \n 5. Calculate the total  ");
+		printf (" 1. Scan product \n 2. Product description \n 3. Add item to check \n 4. Form a check \n 5. Calculate the total \n");
 		scanf ("%d", &vybor);
 		switch (vybor)
 		{
-		case 1: Scan_product(a, kolichestvo, sch);
+		case 1: kolvo = Scan_product(a, kolichestvo, sch);
 			break;
 		case 2: Product_description(prod, stoimost, skidka, a[sch]);
 			break;
