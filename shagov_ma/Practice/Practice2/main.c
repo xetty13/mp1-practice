@@ -33,6 +33,7 @@ void main(){
 				if ((zag[k] == zag[i]))
 				{
 					b++;
+					break;
 				}
 			}
 		}
@@ -68,6 +69,7 @@ void main(){
 					if (arr_number_user[k] == arr_number_user[i])
 					{
 						b++;
+						break;
 					}
 				}
 			}
