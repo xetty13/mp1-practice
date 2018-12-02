@@ -46,13 +46,13 @@ void Form_a_check(int prod[][10],int stoimost[],int skidka[],int kolichestvo[])
 
 
 void main()
-{//baza
+{
 	char prod[N][10] = {"          ", "butter    ", "ice cream  ", "milk      ", "yogurt    ", "tea       ", "eggs      "};
 	int stoimost[N] = {0, 70, 50, 50, 30, 80, 60};
 	int skidka[N] = {0, 5, 5, 10, 5, 5, 3};
 	int kolichestvo[N] = {0};
 	int a[10];
-	int vybor, kolvo, sch = 0; // kolvo tecushi tovar
+	int vybor, kolvo, sch = 0;
 
 	do
 	{
