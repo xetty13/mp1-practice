@@ -1,15 +1,21 @@
 #include <stdio.h>
 #define N 9999
+#define L 10
 void main()
 {
     int mode, sum = 0, sum_dis = 0;
     long int num, i;
-    char *goods[N] = {"Chocolate", "Bread", "Pasta", "Milk", "Cheese", "Apples", "Fish", "Meat", "Biscuits", "Juice"};
+    char goods[N][L] = {"Chocolate", "Bread", "Pasta", "Milk", "Cheese", "Apples", "Fish", "Meat", "Biscuits", "Juice"};
     int price[N] = {57, 20, 48, 42, 87, 30, 96, 110, 75, 65};
     float discount[N] = {15, 3, 5, 4, 25, 10, 30, 35, 17, 8};
     int count[N] = {0};
     printf ("Electronic cash register\n");
-    printf ("Select an operation. To select the operation, enter: 1 - scan the product; 2 - display the product description; 3 - add product data to the check; 4 - generate a check for the purchase; 5 - calculate the total amount to be paid\n");
+    printf ("Select an operation. To select the operation, enter:\n");
+    printf("1 - scan the product\n");
+    printf("2 - display the product description\n");
+    printf("3 - add product data to the check\n");
+    printf("4 - generate a check for the purchase\n");
+    printf("5 - calculate the total amount to be paid\n");
     do
     {
         do 
@@ -25,7 +31,10 @@ void main()
         }
         if (mode == 2)
         {
-            printf ("Goods - %c\n", *goods[num - 1]);
+            printf ("Goods - ");
+            for (i = 0; i < L; i++)
+                printf( "%c", goods[num - 1][i]);
+            printf ("\n");
             printf ("Price - %d\n", price[num - 1]);
             printf ("Discount - %f\n", discount[num - 1]);
         }
@@ -40,7 +49,9 @@ void main()
             for (i = 0; i < N; i++)
                 if (count[i] != 0)
                 {
-                    printf ( "%c           %d             %d          %d\n", *goods[i], price[i], count[i], price[i] * count[i]);
+                    for (num = 0; num < L; num++)
+                        printf ("%c", goods[i][num]);
+                    printf ( "  %d              %d          %d\n", price[i], count[i], price[i] * count[i]);
                     sum += price[i] * count[i];
                     sum_dis += count[i] * price[i] * (discount[i] / 100);
                 }
