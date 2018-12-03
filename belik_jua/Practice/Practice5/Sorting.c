@@ -11,7 +11,9 @@ void Command()
     printf("3 - InsertionSort \n");
     printf("4 - BubbleSort \n");
     printf("5 - CountingSort \n");
-    printf("6 - Exit \n");
+    printf("6 - QuickSort \n");
+    printf("7 - MergeSort \n");
+    printf("8 - Exit \n");
 }
 
 void Gen(int a[], int n)
@@ -97,6 +99,58 @@ void CountingSort(int a[], int n)
     }
 }
 
+void Quicksplit(int a[], int *i, int *j, int p)
+{
+    int tmp;
+    do {
+        while (a[(*i)] < p)
+            (*i)++;
+        while (a[(*j)] > p)
+            (*j)--;
+        if ((*i) <= (*j))
+        {
+            tmp = a[(*i)];
+            a[(*i)] = a[(*j)];
+            a[(*j)] = tmp;
+        }
+    } while ((*i) < (*j));
+}
+
+void QuickSort(int a[], int n1, int n2)
+{
+    int m = (n1 + n2) / 2;
+    int i = n1, j = n2;
+    Quicksplit(a, &i, &j, a[m]);
+/*    if (i > n1)
+        QuickSort(a, n1, i);
+    if (j < n2)
+        QuickSort(a, j, n2); */
+}
+
+void Merge(int a[], int l, int m, int r)  //2 chast mas ne uporayd
+{
+    int i = l, j = m + 1, tmp;
+    for (i = l; i <= r; i++)
+    {
+        if (a[i] > a[j]) 
+        {
+            tmp = a[i];
+            a[i] = a[j];
+            a[j] = tmp;
+        }
+    }
+}
+
+void MergeSort(int a[], int l, int r)
+{
+    int m;
+    if (l >= r) return;
+    m = (l + r) / 2;
+    MergeSort(a, l, m);
+    MergeSort(a, m + 1, r);
+    Merge(a, l, m, r);
+}
+
 void main()
 {
     int a[N];
@@ -124,7 +178,12 @@ void main()
         case 5:
             CountingSort(a, N);
             break;
+        case 6:
+            QuickSort(a, 0, N);
+            break;
+        case 7:
+            MergeSort(a, 0, (N - 1));
         }
         Print(a, N);
-    } while (i != 6); 
+    } while (i != 8); 
 }
