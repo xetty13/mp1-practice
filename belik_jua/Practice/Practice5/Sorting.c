@@ -104,15 +104,17 @@ void Quicksplit(int a[], int *i, int *j, int p)
     int tmp;
     do {
         while (a[(*i)] < p)
-            (*i)++;
+            (*i)++; 
         while (a[(*j)] > p)
-            (*j)--;
+            (*j)--; 
         if ((*i) <= (*j))
         {
             tmp = a[(*i)];
             a[(*i)] = a[(*j)];
             a[(*j)] = tmp;
-        }
+            (*i)++;
+            (*j)--;
+        } 
     } while ((*i) < (*j));
 }
 
@@ -121,24 +123,27 @@ void QuickSort(int a[], int n1, int n2)
     int m = (n1 + n2) / 2;
     int i = n1, j = n2;
     Quicksplit(a, &i, &j, a[m]);
-/*    if (i > n1)
-        QuickSort(a, n1, i);
-    if (j < n2)
-        QuickSort(a, j, n2); */
+    if (j > n1)
+        QuickSort(a, n1, j);
+    if (i < n2)
+        QuickSort(a, i, n2); 
 }
 
-void Merge(int a[], int l, int m, int r)  //2 chast mas ne uporayd
+void Merge(int a[], int l, int m, int r) 
 {
-    int i = l, j = m + 1, tmp;
-    for (i = l; i <= r; i++)
+    int i, j = m + 1, h, tmp;
+    for (i = l; ((i < r) && (j <= r)); i++)
     {
-        if (a[i] > a[j]) 
+        if (a[i] > a[j])
         {
-            tmp = a[i];
-            a[i] = a[j];
-            a[j] = tmp;
+            tmp = a[j];
+            for (h = j; h > i; h--)
+                a[h] = a[h - 1];
+            a[i] = tmp;
+            j++;
         }
     }
+    
 }
 
 void MergeSort(int a[], int l, int r)
@@ -154,9 +159,9 @@ void MergeSort(int a[], int l, int r)
 void main()
 {
     int a[N];
-    int i;
+    int i;              
     Gen(a, N);
-    Print(a, N);
+    Print(a, N);        
     do
     {
         Command();
@@ -179,7 +184,7 @@ void main()
             CountingSort(a, N);
             break;
         case 6:
-            QuickSort(a, 0, N);
+            QuickSort(a, 0, (N - 1));
             break;
         case 7:
             MergeSort(a, 0, (N - 1));
