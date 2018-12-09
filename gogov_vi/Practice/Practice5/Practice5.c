@@ -164,7 +164,8 @@ void quicksort(int a[], int n1, int n2)
 // Сортировка слиянием 
 void merge(int a[], int l, int m, int r)
 {
-	int i, j, s = 0, k , *arr;
+	int i, j, s = 0, k;
+	int *arr;
 	arr = (int*)malloc(r * sizeof(int));
 	i = l; 
 	j = m + 1;
@@ -185,7 +186,6 @@ void merge(int a[], int l, int m, int r)
 	}
 	for (int k = 0; k < r - l + 1; k++)
 		a[l + k] = arr[k];
-	free(arr);
 }
 
 void mergesort(int a[], int l, int r)
