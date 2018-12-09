@@ -129,74 +129,35 @@ void print(int a[], int n)
 // Вывод Массива Конец
 
 // Быстрая сортировка
-/*
+
 void quicksplit(int a[], int *i, int *j, int p)
 {
 	int tmp;
-	printf("i = %d a[i] = %d j = %d a[j] = %d p = %d\n", *i, a[*i], *j , a[*j], p);
-	do
-	{
-		while (a[*i] < p) {
-			printf("i++\n");
-			(*i)++;
-		}
-		printf("a[i] = %d i = %d\n", a[*i], *i);
-		while (a[*j] > p) {
-			printf("j--\n");
-			(*j)--;
-		}
-		printf("a[j] = %d j = %d\n", a[*j], *j);
-		if (*i <= *j)
-		{
-			if (a[*i] > a[*j]) {
+	do {
+		while (a[*i] < p) (*i)++;
+		while (a[*j] > p) (*j)--;
+
+		if (*i <= *j) {
+			if (a[*i] > a[*j])
+			{
 				tmp = a[*i];
 				a[*i] = a[*j];
 				a[*j] = tmp;
-				i++;
-				j--;
 			}
+			(*i)++;
+			(*j)--;
 		}
 	} while (*i <= *j);
-	printf("%d %d\n", a[*i], a[*j]);
-	print(a, N);
-	
 }
 
 void quicksort(int a[], int n1, int n2)
 {
-	int pidx = (n1 + n2) / 2;
-	int i = n1, j = n2;
-	quicksplit(a, &i, &j, a[pidx]);
-	if (j > n1) 
-		quicksort(a, n1, j);
-	if (i < n2) 
-		quicksort(a, i, n2);
-}
-*/
-void qs(int a[], int n1, int n2)
-{
-	int i = n1, j = n2, x = a[(n1 + n2) / 2];
-	int tmp;
-	do {
-		while (a[i] < x) i++;
-		while (a[j] > x) j--;
-
-		if (i <= j) {
-			if (a[i] > a[j]) 
-			{
-				tmp = a[i];
-				a[i] = a[j];
-				a[j] = tmp;
-			}
-			i++;
-			j--;
-		}
-	} while (i <= j);
-
+	int i = n1, j = n2, p = a[(n1 + n2) / 2];
+	quicksplit(a, &i, &j, p);
 	if (i < n2)
-		qs(a, i, n2);
+		quicksort(a, i, n2);
 	if (n1 < j)
-		qs(a, n1, j);
+		quicksort(a, n1, j);
 }
 // Быстрая сортировка конец
 
@@ -266,7 +227,7 @@ void main()
             print(a, N);
             break;
 		case 5:
-			qs(a, 0, N - 1);
+			quicksort(a, 0, N - 1);
 			print(a, N);
 			break;
 		case 6:
