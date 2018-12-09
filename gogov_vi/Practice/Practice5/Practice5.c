@@ -48,7 +48,7 @@ void insert(int a[], int n)
     }
 }
 
-void buble(int a[], int n)
+void bubble(int a[], int n)
 {
     int i, j, tmp;
     for (i = 0; i < n; i++)
@@ -67,19 +67,28 @@ void buble(int a[], int n)
 
 void countingsord(int a[], int n)
 {
-    int count[K];
-    int i, b = 0, j;
-    for (i = 0; i < K; i++) 
-        count[i] = 0;
+	int *arr;
+	int i, b = 0, j, max = a[N], min = a[0], k;
+	for (i = 0; i < n; i++)
+	{
+		if (a[i] < min)
+			min = a[i];
+	}
+	for (i = 0; i < n; i++)
+	{
+		if (a[i] > max)
+			max = a[i];
+	}
+	k = abs(max - min) + 1;
+	arr = (int*)malloc(k * sizeof(int));
+    for (i = 0; i < k; i++) 
+        arr[i] = 0;
     for (i = 0; i < n; i++) 
-        count[a[i]]++;
-    for (i = 0; i < K; i++)
+        arr[a[i] - min]++;
+    for (i = 0; i < k; i++)
     {
-        for (j = 0; j < count[i]; j++)
-        {
-            a[b] = i;
-            b++;
-        }
+        for (j = 0; j < arr[i]; j++)
+            a[b++] = i + min;
     }
 }
 
@@ -120,21 +129,37 @@ void print(int a[], int n)
 // Вывод Массива Конец
 
 // Быстрая сортировка
-
+/*
 void quicksplit(int a[], int *i, int *j, int p)
 {
-	int tmp = 0;
+	int tmp;
+	printf("i = %d a[i] = %d j = %d a[j] = %d p = %d\n", *i, a[*i], *j , a[*j], p);
 	do
 	{
-		while (a[*i] < p) (*i)++;
-		while (a[*j] > p) (*j)--;
-		if (*i < *j)
-		{
-			tmp = a[*i];
-			a[*i] = a[*j];
-			a[*j] = tmp;
+		while (a[*i] < p) {
+			printf("i++\n");
+			(*i)++;
 		}
-	} while (*i < *j);
+		printf("a[i] = %d i = %d\n", a[*i], *i);
+		while (a[*j] > p) {
+			printf("j--\n");
+			(*j)--;
+		}
+		printf("a[j] = %d j = %d\n", a[*j], *j);
+		if (*i <= *j)
+		{
+			if (a[*i] > a[*j]) {
+				tmp = a[*i];
+				a[*i] = a[*j];
+				a[*j] = tmp;
+				i++;
+				j--;
+			}
+		}
+	} while (*i <= *j);
+	printf("%d %d\n", a[*i], a[*j]);
+	print(a, N);
+	
 }
 
 void quicksort(int a[], int n1, int n2)
@@ -145,9 +170,34 @@ void quicksort(int a[], int n1, int n2)
 	if (j > n1) 
 		quicksort(a, n1, j);
 	if (i < n2) 
-		quicksort(a, n2, i);
+		quicksort(a, i, n2);
 }
+*/
+void qs(int a[], int n1, int n2)
+{
+	int i = n1, j = n2, x = a[(n1 + n2) / 2];
+	int tmp;
+	do {
+		while (a[i] < x) i++;
+		while (a[j] > x) j--;
 
+		if (i <= j) {
+			if (a[i] > a[j]) 
+			{
+				tmp = a[i];
+				a[i] = a[j];
+				a[j] = tmp;
+			}
+			i++;
+			j--;
+		}
+	} while (i <= j);
+
+	if (i < n2)
+		qs(a, i, n2);
+	if (n1 < j)
+		qs(a, n1, j);
+}
 // Быстрая сортировка конец
 
 // Сортировка слиянием 
@@ -174,7 +224,8 @@ void merge(int a[], int l, int m, int r)
 	}
 	for (int k = 0; k < r - l + 1; k++)
 		a[l + k] = arr[k];
-	}
+	free(arr);
+}
 
 void mergesort(int a[], int l, int r)
 {
@@ -192,7 +243,7 @@ void main()
 	int a[N];
     int men;
     setlocale(LC_ALL, "Russian");
-	generation(a, N, 0, 10);
+	generation(a, N, 0, 100);
 	print(a, N);
     while (1) {
         menu();
@@ -207,7 +258,7 @@ void main()
             print(a, N);
             break;
         case 3:
-            buble(a, N);
+            bubble(a, N);
             print(a, N);
             break;
         case 4:
@@ -215,7 +266,7 @@ void main()
             print(a, N);
             break;
 		case 5:
-			quicksort(a, 0, N - 1);
+			qs(a, 0, N - 1);
 			print(a, N);
 			break;
 		case 6:
