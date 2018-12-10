@@ -16,7 +16,12 @@ void Command()
     printf("8 - Exit \n");
 }
 
-void Gen(int a[], int n)
+void Allocate(int n, int **a)
+{
+    *a = (int*)malloc(n * sizeof(int));
+}
+
+void Gen(int *a, int n)
 {
     int i;
     srand((unsigned int)time(0));
@@ -26,7 +31,7 @@ void Gen(int a[], int n)
     }
 }
 
-void Print(int a[], int n)
+void Print(int *a, int n)
 {
     int i;
     for (i = 0; i < n; i++)
@@ -34,7 +39,7 @@ void Print(int a[], int n)
     printf("\n");
 }
 
-void ChooseSort(int a[], int n)
+void ChooseSort(int *a, int n)
 {
     int i, j, tmp, ind;
     for (i = 0; i < n - 1; i++)
@@ -51,7 +56,7 @@ void ChooseSort(int a[], int n)
     }
 }
 
-void InsertionSort(int a[], int n)
+void InsertionSort(int *a, int n)
 {
     int i, j, temp;
     for (i = 1; i < n; i++)
@@ -67,7 +72,7 @@ void InsertionSort(int a[], int n)
     }
 }
 
-void BubbleSort(int a[], int n)
+void BubbleSort(int *a, int n)
 {
     int i, j, temp;
     for (i = 0; i < n; i++)
@@ -84,7 +89,7 @@ void BubbleSort(int a[], int n)
     }
 }
 
-void CountingSort(int a[], int n)
+void CountingSort(int *a, int n)
 {
     int b[K];
     int i, j, idx = 0;
@@ -118,7 +123,7 @@ void Quicksplit(int a[], int *i, int *j, int p)
     } while ((*i) < (*j));
 }
 
-void QuickSort(int a[], int n1, int n2)
+void QuickSort(int *a, int n1, int n2)
 {
     int m = (n1 + n2) / 2;
     int i = n1, j = n2;
@@ -129,7 +134,7 @@ void QuickSort(int a[], int n1, int n2)
         QuickSort(a, i, n2); 
 }
 
-void Merge(int a[], int l, int m, int r) 
+void Merge(int *a, int l, int m, int r) 
 {
     int i, j = m + 1, h, tmp;
     for (i = l; ((i < r) && (j <= r)); i++)
@@ -146,7 +151,7 @@ void Merge(int a[], int l, int m, int r)
     
 }
 
-void MergeSort(int a[], int l, int r)
+void MergeSort(int *a, int l, int r)
 {
     int m;
     if (l >= r) return;
@@ -158,8 +163,9 @@ void MergeSort(int a[], int l, int r)
 
 void main()
 {
-    int a[N];
-    int i;              
+    int i;   
+    int *a = NULL;
+    Allocate(N, &a);
     Gen(a, N);
     Print(a, N);        
     do
@@ -169,6 +175,8 @@ void main()
         printf("\n");
         switch (i) {
         case 1:
+            free(a);
+            Allocate(N, &a);
             Gen(a, N);
             break;
         case 2:
@@ -191,4 +199,5 @@ void main()
         }
         Print(a, N);
     } while (i != 8); 
+    free(a);
 }
