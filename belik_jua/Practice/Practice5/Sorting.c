@@ -17,7 +17,7 @@ int ListDirectoryContents(const wchar_t *sDir, long *size, wchar_t *name)
     if ((hFind = FindFirstFile(sPath, &fdFile)) == INVALID_HANDLE_VALUE)
     {
         wprintf(L"Path not found: [%s]\n", sDir);
-        return 1;
+        return 0;
     }
 
     do
@@ -32,7 +32,7 @@ int ListDirectoryContents(const wchar_t *sDir, long *size, wchar_t *name)
 //            wprintf(L"File: %s Size: %d\n", sPath, fileSize);
             
             *(name + i) = sPath;
-            *(size + i) = (long)fileSize; printf("%d ", name[i]); i++; //del
+            *(size + i) = (long)fileSize; printf("%d ", size[i]); i++; //del
         }
     } while (FindNextFile(hFind, &fdFile));
     FindClose(hFind);
@@ -57,8 +57,8 @@ void Print(int *a, long *size, wchar_t *name, int n)
     {
 //        wsprintf(name[a[i] * MAX_NAME], L"%s\\%s", sDir, fdFile.cFileName);
 //        wprintf(L"File: %s Size: %d\n", name[a[i] * MAX_NAME], size[a[i]]);
-        printf("%s size: %d", *(name + a[i]), a[i]);
-//        printf("%d ", *(size + a[i]));
+//        printf("%s size: %d \n", *(name + a[i]), *(size + a[i]));
+        printf("%d ", *(size + a[i]));
     }
     printf("\n");
 }
@@ -199,18 +199,21 @@ void main()
 {
     int i = 0; 
     int* ind; 
-    int N;
-
+    int N = 0;
     long* size;                          
     size = (long*)malloc(MAX_LEN);         
-    wchar_t* name[] = {""};
+    wchar_t* name[MAX_LEN];
     *name = (wchar_t*)malloc(MAX_NAME * MAX_LEN);
     char* a = (char*)malloc(MAX_LEN);
     wchar_t* sDir = (wchar_t*)malloc(MAX_LEN);
-    fgets(a, MAX_LEN, stdin);
-    a[strlen(a) - 1] = '\0';
-    swprintf(sDir, MAX_LEN, L"%hs", a);
-    N = ListDirectoryContents(sDir, size, name);
+
+    do
+    {
+        fgets(a, MAX_LEN, stdin);
+        a[strlen(a) - 1] = '\0';
+        swprintf(sDir, MAX_LEN, L"%hs", a);
+        N = ListDirectoryContents(sDir, size, name);
+    } while (N == 0);
     free(a);
     free(sDir); 
     
@@ -219,7 +222,7 @@ void main()
         Command();
         ind = (int*)malloc(N * sizeof(int));
         for (i = 0; i < N; i++)
-            ind[i] = i;  Print(ind, size, name, N);  //del
+            ind[i] = i;  
         scanf("%d", &i);
         printf("\n");//time
         switch (i) {
