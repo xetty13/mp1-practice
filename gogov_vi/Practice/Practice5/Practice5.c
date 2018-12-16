@@ -225,40 +225,34 @@ int* merge(ULONGLONG* a, int l, int m, int r, int* fileId)
         if (a[i] < a[j])
         {
             arr[k++] = a[i++];
-            fileId[k++] = fileId[i++];
         }
         else
         {
             arr[k++] = a[j++];
-            fileId[k++] = fileId[j++];
         }
     }
     while (i <= m)
     {
         arr[k++] = a[i++];
-        fileId[k++] = fileId[i++];
     }
     while (j <= r)
     {
         arr[k++] = a[j++];
-        fileId[k++] = fileId[j++];
     }
     for (k = l; k <= r; k++)
     {
         a[k] = arr[k - l];
     }
-    return fileId;
 }
 
 int* mergesort(ULONGLONG* a, int l, int r, int* fileId)
 {
-    int m, *newId;
+    int m;
     if (l >= r) return;
     m = (l + r) / 2;
     mergesort(a, l, m, fileId);
-    mergesort(a, m + 1, r, fileId);
-    newId = merge(a, l, m, r, fileId);
-    return newId;
+	mergesort(a, m + 1, r, fileId);
+	fileId = merge(a, l, m, r, fileId);
 }
 // Быстрая сортировка Конец
 
@@ -384,7 +378,7 @@ void main()
             // Готово
         case 6:
             scanf("%c", &e);
-            newId = mergesort(filesize, 0, count_files - 1, fileId);
+            newId = mergesort(size, 0, count_files - 1, fileId);
             break;
         default:
             entpath(cb, b, filesize);
