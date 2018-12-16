@@ -1,169 +1,114 @@
+
+#include <windows.h>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
-#define N 7
-#define k 6
-#define n1 0
-#define n2 5
-int arr[N] = { 0 };
+#include <time.h>
+#include <locale.h>
+#include <string.h>
 
+//#define MAX_PATH 800 //Количество файлов в папке
+#define N 50 //Размер массива
+#define BUFFER 2048 //Размер буффера
 
-void input(int a[], int n)
+void input(wchar_t **path) //Массив куда будет записана директория
 {
-    int i;
-    srand((unsigned int)time(0));
-    for (i = 0; i < n; i++)
-        a[i] = rand() % (n2 - n1) + n1;
+    char *str; //Создадим указатель
+    *path = (wchar_t*)malloc(BUFFER * sizeof(wchar_t)); //выделение памяти для пути
+    str = (char*)malloc(BUFFER * sizeof(char));
+    fgets(str, BUFFER, stdin);   //СПРОСИТЬ МАКСИМА
+    str[strlen(str) - 1] = '\0';
+    swprintf(*path, BUFFER, L"%hs", str);
 }
 
-void output(int a[], int n)
+int ListDirectoryContetns(const wchar_t *sDir, wchar_t **fNames)
 {
-    int i;
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
-    printf("\n");
-}
+    WIN32_FIND_DATA fdFile;
+    HANDLE hFind = NULL;
+    int i = 0;
 
-void choose_sort(int a[], int n)
-{
-    int i, j, min, minidx;
-    int copy[N];
+    wchar_t sPath[2048];//Буфер?
 
-    for (i = 0; i < n; i++)
-        copy[i] = a[i];
+    wsprintf(sPath, L"%s\\*.*", sDir); //sPath - куда попала преобразованная строка, маска, указатель на введенную строку
 
-    for (i = 0; i < n; i++)
+    hFind = FindFirstFile(sPath, &fdFile);
+
+    //Проверка на существование директории
+    if (hFind == INVALID_HANDLE_VALUE)
     {
-        min = copy[i];
-        minidx = i;
-        for (j = i + 1; j < n; j++)
-            if (copy[j] < min)
-            {
-                min = copy[j];
-                minidx = j;
-            }
-        copy[minidx] = copy[i];
-        copy[i] = min;
+        wprintf(L"Path not found: [%s]\n", sDir);
+        return -1;
     }
-    output(copy, N);
-    printf("\n");
-}
 
-void insert_sort(int a[], int n)
-{
-    int i, j, tmp;
-    int copy[N];
-
-    for (i = 0; i < n; i++)
-        copy[i] = a[i];
-
-    for (i = 1; i < n; i++)
-    {
-        tmp = copy[i];
-        j = i - 1;
-        while ((j >= 0) && (copy[j] > tmp))
-        {
-            copy[j + 1] = copy[j];
-            copy[j] = tmp;
-            j--;
-        }
-    }
-    output(copy, N);
-    printf("\n");
-}
-
-void bubble_sort(int a[], int n)
-{
-    int i, j, tmp;
-    int copy[N];
-
-    for (i = 0; i < n; i++)
-        copy[i] = a[i];
-    for (i = 0; i < n; i++)
-        for (j = 1; j < n; j++)
-            if (copy[j - 1] > copy[j])
-            {
-                tmp = copy[j];
-                copy[j] = copy[j - 1];
-                copy[j - 1] = tmp;
-            }
-    output(copy, N);
-    printf("\n");
-}
-
-void count_sort(int a[], int n)
-{
-    int i, j, idx, min, max;
-    int count[k] = { 0 };
-    int copy[N];
-
-    for (i = 0; i < n; i++)
-        copy[i] = a[i];
-
-    min = copy[0];
-    max = copy[0];
-    for (i = 0; i < n; i++)
-    {
-        if (min > copy[i]) min = copy[i];
-        if (max < copy[i]) max = copy[i];
-    }
-    idx = 0;
-    for (i = 0; i < n; i++)
-    {
-        count[copy[i]]++;
-        
-        for (i = min; i < max + 1; i++)
-            for (j = 0; j < count[i]; j++)
-                copy[idx++] = i;
-    }
-    output(copy, N);
-    printf("\n");
-}
-
-void quick_split(int a[], int *i, int *j, int p)
-{
-    int tmp;
     do
     {
-        while (a[*i] < p) *i++;
-        while (a[*j] > p) *j--;
-        if (*i <= *j)
+        //Найденный первый файл будет возвращать "."
+        // Последующие файлы будут возвращать ".."
+        if (wcscmp(fdFile.cFileName, L".") != 0 && wcscmp(fdFile.cFileName, L"..") != 0)
         {
-            tmp = a[*i];
-            a[*i] = a[*j];
-            a[*j] = tmp;
+            //Создадим путь к файлуб используя переданный в [sDir] и имя файла, которое мы только что нашли
+            wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
+            wsprintf(fNames[i], L"%s", sPath);
+            //Является ли объект файлом или папкой?
+            if (fdFile.dwFileAttributes &FILE_ATTRIBUTE_DIRECTORY)
+            {
+                wprintf(L"Directory: %s\n", sPath);
+                ListDirectoryContetns(sPath, fNames); //Рекурсия
+            }
+            else
+            {
+                wprintf(L"File: %s\n", sPath);
+            }
+            i++;
         }
-    } while (*i < *j);
+    } while (FindNextFile(hFind, &fdFile)); //Поиск следующего файла
+
+    FindClose(hFind);
+
+    return i;
 }
 
-void quick_sort(int a[], int s1, int s2)
+void start()
 {
-    int m = (s1 + s2) / 2;
-    int i = s1, j = s2;
-    int copy[N];
+    //choose_method();
 
-    for (i = 0; i < N; i++)
-        copy[i] = a[i];
-    quick_split(a, &i, &j, m);
-    if (i > s1) quick_sort(copy, i, j);
-    if (j < s2) quick_sort(copy, j, s2);
-    output(copy, N);
-    printf("\n");
+   /* switch ()
+    {
+    case(1):
+    case(2):
+    }
+    time();*/
 }
 
 void main()
 {
-    input(arr, N);
-    output(arr, N);
+    char answer;
+    wchar_t *path;
+    wchar_t **fNames;
+    long *fSizes;
+    int count_files = 0;
 
-    choose_sort(arr, N);
+    fNames = (wchar_t**)malloc(MAX_PATH * sizeof(wchar_t*));
+    fSizes = (long*)malloc(MAX_PATH * sizeof(long));
 
-    insert_sort(arr, N);
+    printf("\tFILE MANAGER\n\n");
+   // start(&path, path, fNames, fSizes);
 
-    bubble_sort(arr, N);
+    //Ввод пути с клавиатуры
+    input(&path);
+    //Передаем в функцию записи имен и рзмеров введенную директорию и массив с именами и размерами
+    count_files = ListDirectoryContents(path, fNames);
+    printf("\n%d", count_files); //Вывод количества найденных файлов
 
-    count_sort(arr, N);
+    do
+    {
+        printf("Start over? ( y or n )");
+        scanf("%c", &answer);
+        switch (answer)
+        {
+        case('y'): start();
+        case('n'): break;
+        }
+    } while (answer != 'n');
 
     system("pause");
-
 }
