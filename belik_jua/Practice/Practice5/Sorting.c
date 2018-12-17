@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <string.h>
 #define K 100
 #define MAX_LEN 100
-#define MAX_NAME 100
 
-int ListDirectoryContents(const wchar_t *sDir, long *size, wchar_t *name) 
+int ListDirectoryContents(const wchar_t *sDir, ULONGLONG *size, wchar_t ***name) 
 {
     WIN32_FIND_DATA fdFile;
     HANDLE hFind = NULL;
-    wchar_t sPath[MAX_NAME]; 
-    int i = 0; 
-    int j = 0;
+    wchar_t sPath[2048]; 
+    int j, i = 0; 
 
+    free(size);
     wsprintf(sPath, L"%s\\*.*", sDir);
     if ((hFind = FindFirstFile(sPath, &fdFile)) == INVALID_HANDLE_VALUE)
     {
@@ -24,17 +24,33 @@ int ListDirectoryContents(const wchar_t *sDir, long *size, wchar_t *name)
     {
         if (wcscmp(fdFile.cFileName, L".") != 0 && wcscmp(fdFile.cFileName, L"..") != 0)
         {
+            i++;
+        } 
+    } while (FindNextFile(hFind, &fdFile)); wsprintf(sPath, L"%s\\*.*", sDir);
+    hFind = NULL;
+    hFind = FindFirstFile(sPath, &fdFile);
+    *size = (ULONGLONG*)malloc(sizeof(ULONGLONG) * i);
+    *name = (wchar_t**)malloc(sizeof(char*) * i); 
+    i = 0;
+    do
+    {
+        if (wcscmp(fdFile.cFileName, L".") != 0 && wcscmp(fdFile.cFileName, L"..") != 0)
+        {
             ULONGLONG fileSize = fdFile.nFileSizeHigh;
             fileSize <<= sizeof(fdFile.nFileSizeHigh) * 8;
             fileSize |= fdFile.nFileSizeLow;
 
-//            wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
-//            wprintf(L"File: %s Size: %d\n", sPath, fileSize);
-            
-            *(name + i) = sPath;
-            *(size + i) = (long)fileSize; printf("%d ", size[i]); i++; //del
+            wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
+            wprintf(L"File: %s Size: %d\n", sPath, fileSize);
+            j = 0;
+            *(size + i) = fileSize; 
+ //           (*name)[i] = (wchar_t*)malloc(sizeof(*wchar_t) * strlen(sPath));
+            while (sPath[j] != '\0') j++; 
+            (*name)[i] = (wchar_t*)malloc(sizeof(char*) * j); 
+            strncpy((*name)[i], sPath, j);
+            i++;
         }
-    } while (FindNextFile(hFind, &fdFile));
+    } while (FindNextFile(hFind, &fdFile)); printf(" %d ", i); //del
     FindClose(hFind);
     return i;
 }
@@ -50,20 +66,21 @@ void Command()
     printf("7 - Exit \n");
 }
 
-void Print(int *a, long *size, wchar_t *name, int n) 
+void Print(int *a, ULONGLONG *size, wchar_t **name, int n) 
 {
     int i;     WIN32_FIND_DATA fdFile;
     for (i = 0; i < n; i++)
     {
 //        wsprintf(name[a[i] * MAX_NAME], L"%s\\%s", sDir, fdFile.cFileName);
 //        wprintf(L"File: %s Size: %d\n", name[a[i] * MAX_NAME], size[a[i]]);
-//        printf("%s size: %d \n", *(name + a[i]), *(size + a[i]));
-        printf("%d ", *(size + a[i]));
+//        printf("%s size: %lld \n", name[a[i]], *(size + a[i]));
+        puts(name[i]);
+        printf(" size: %lld \n", *(size + a[i]));
     }
     printf("\n");
 }
 
-void ChooseSort(int *a, long *size, int n)
+void ChooseSort(int *a, ULONGLONG *size, int n)
 {
     int i, j, tmp, ind;
     for (i = 0; i < n - 1; i++)
@@ -80,7 +97,7 @@ void ChooseSort(int *a, long *size, int n)
     }
 }
 
-void InsertionSort(int *a, long *size, int n)
+void InsertionSort(int *a, ULONGLONG *size, int n)
 {
     int i, j, tmp;
     for (i = 1; i < n; i++)
@@ -96,7 +113,7 @@ void InsertionSort(int *a, long *size, int n)
     }
 }
 
-void BubbleSort(int *a, long *size, int n)
+void BubbleSort(int *a, ULONGLONG *size, int n)
 {
     int i, j, temp;
     for (i = 0; i < n; i++)
@@ -113,7 +130,7 @@ void BubbleSort(int *a, long *size, int n)
     }
 }
 
-void CountingSort(int *a, long *size, int n)
+void CountingSort(int *a, ULONGLONG *size, int n)
 {
     int *b = (int*)malloc(K * sizeof(int));
     int i, j, idx = 0;
@@ -138,7 +155,7 @@ void CountingSort(int *a, long *size, int n)
     free(b);
 }
 
-void Quicksplit(int *a, long *size, int *i, int *j, int p)
+void Quicksplit(int *a, ULONGLONG *size, int *i, int *j, int p)
 {
     int tmp;
     do {
@@ -157,7 +174,7 @@ void Quicksplit(int *a, long *size, int *i, int *j, int p)
     } while ((*i) < (*j));
 }
 
-void QuickSort(int *a, long *size, int n1, int n2)
+void QuickSort(int *a, ULONGLONG *size, int n1, int n2)
 {
     int m = (n1 + n2) / 2;
     int i = n1, j = n2;
@@ -168,7 +185,7 @@ void QuickSort(int *a, long *size, int n1, int n2)
         QuickSort(a, size, i, n2); 
 }
 
-void Merge(int *a, long *size, int l, int m, int r) 
+void Merge(int *a, ULONGLONG *size, int l, int m, int r) 
 {
     int i, j = m + 1, h, tmp;
     for (i = l; ((i < r) && (j <= r)); i++)
@@ -185,7 +202,7 @@ void Merge(int *a, long *size, int l, int m, int r)
     
 }
 
-void MergeSort(int *a, long *size, int l, int r)
+void MergeSort(int *a, ULONGLONG *size, int l, int r)
 {
     int m;
     if (l >= r) return;
@@ -200,19 +217,18 @@ void main()
     int i = 0; 
     int* ind; 
     int N = 0;
-    long* size;                          
-    size = (long*)malloc(MAX_LEN);         
-    wchar_t* name[MAX_LEN];
-    *name = (wchar_t*)malloc(MAX_NAME * MAX_LEN);
+    ULONGLONG* size = (ULONGLONG*)malloc(sizeof(ULONGLONG) * MAX_LEN); ;
+    wchar_t** name;
     char* a = (char*)malloc(MAX_LEN);
     wchar_t* sDir = (wchar_t*)malloc(MAX_LEN);
 
     do
     {
-        fgets(a, MAX_LEN, stdin);
-        a[strlen(a) - 1] = '\0';
-        swprintf(sDir, MAX_LEN, L"%hs", a);
-        N = ListDirectoryContents(sDir, size, name);
+               printf("???\n");
+               fgets(a, MAX_LEN, stdin);
+               a[strlen(a) - 1] = '\0';
+               swprintf(sDir, MAX_LEN, L"%hs", a); 
+        N = ListDirectoryContents(sDir, size, &name);
     } while (N == 0);
     free(a);
     free(sDir); 
@@ -247,6 +263,8 @@ void main()
         Print(ind, size, name, N, sDir);
         free(ind);
     } while (i != 7); 
+    for (i = 0; i < N; i++)
+        free(name[i]);
     free(name);
     free(size);
 }
