@@ -147,42 +147,59 @@ int* bubble(ULONGLONG* a, int n)
     return newId;
 }
 
-int* countingsort(ULONGLONG* a, int n, int* fileId)
+int* countingsort(ULONGLONG* a, int n)
 {
-    int *arr, *newId;
-    ULONGLONG *size, k, max = a[N], min = a[0];
+    int *newId;
+    ULONGLONG *size, *arr, k, max = a[n - 1], min = a[0];
     int i, b = 0, j;
-    size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
     newId = (int*)malloc(n * sizeof(int));
-    for (i = 0; i < n; i++)
+	size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
+    /*for (i = 0; i < n; i++)
     {
         newId[i] = i;
-        size[i] = a[i];
+    }*/
+    for (i = 0; i < n; i++)
+    {
+        if (a[i] < min)
+            min = a[i];
     }
     for (i = 0; i < n; i++)
     {
-        if (size[i] < min)
-            min = size[i];
+        if (a[i] > max)
+            max = a[i];
     }
-    for (i = 0; i < n; i++)
-    {
-        if (size[i] > max)
-            max = size[i];
-    }
-    k = abs(max - min) + 1;
-    arr = (int*)malloc(k * sizeof(int));
+	k = max + min + 1; // Разность положительное число
+    arr = (ULONGLONG*)malloc(k * sizeof(ULONGLONG));
     for (i = 0; i < k; i++) 
         arr[i] = 0;
     for (i = 0; i < n; i++)
     {
-        arr[size[i] - min]++;
+        arr[a[i] - min]++;
     }
     for (i = 0; i < k; i++)
     {
         for (j = 0; j < arr[i]; j++)
             size[b++] = i + min;
     }
-    free(size);
+	for (j = 0; j < n; j++)
+		arr[j] = a[j];
+	printf("\n");
+	b = 0;
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+			if ((size[i] == arr[j]))
+			{
+				newId[b] = j;
+				arr[j] = -1;
+				b++;
+				break;
+			}
+	}
+	for (i = 0; i < n; i++)
+		printf("%d|", newId[i]);
+	free(arr);
+	free(size);
     return newId;
 }
 
@@ -331,13 +348,14 @@ void main()
     setlocale(LC_ALL, "Russian");
 
     while (1) {
-        entpath(cb, b, filesize);
-        count_files = ListDirectoryContents(cb, fileNames, filesize);
-        if (count_files == -1)
-        {
-            printf("Указанный путь не найден");
-            return;
-        }
+		do {
+			entpath(cb, b, filesize);
+			count_files = ListDirectoryContents(cb, fileNames, filesize);
+			if (count_files == -1)
+			{
+				printf("Неверно введен путь. Попробуйте снова\n");
+			}
+		} while (count_files == -1);
         size = (ULONGLONG*)malloc(count_files * sizeof(ULONGLONG));
         fileId = (int*)malloc((count_files + 1) * sizeof(int));
         for (i = 0; i < count_files; i++)
@@ -355,37 +373,43 @@ void main()
         case 1:
             scanf("%c", &e);
             newId = choose(filesize, count_files);
+			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 2:
             scanf("%c", &e);
             newId = insert(filesize, count_files);
+			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 3:
             scanf("%c", &e);
             newId = bubble(filesize, count_files);
+			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 4:
             scanf("%c", &e);
-            newId = countingsort(filesize, count_files, fileId);
+            newId = countingsort(filesize, count_files);
+			print_newId(filesize, fileNames, count_files, newId);
             break;
+			// Готово
         case 5:
             scanf("%c", &e);
             newId = quicksort(size, 0, count_files - 1, count_files, fileId);
+			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 6:
             scanf("%c", &e);
             newId = mergesort(size, 0, count_files - 1, fileId);
+			print_newId(filesize, fileNames, count_files, newId);
             break;
         default:
             entpath(cb, b, filesize);
             menu();
             scanf("%d", &men);
         }
-        print_newId(filesize, fileNames, count_files, newId);
         end = clock();
         time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
         printf("Время сортировки данных: %.5lf секунд\n", time_spent);
