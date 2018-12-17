@@ -371,42 +371,41 @@ void main()
         begin = clock();
         switch (men) {
         case 1:
-            scanf("%c", &e);
+			scanf("%c", &e);
             newId = choose(filesize, count_files);
 			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 2:
-            scanf("%c", &e);
+			scanf("%c", &e);
             newId = insert(filesize, count_files);
 			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 3:
-            scanf("%c", &e);
+			scanf("%c", &e);
             newId = bubble(filesize, count_files);
 			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 4:
-            scanf("%c", &e);
+			scanf("%c", &e);
             newId = countingsort(filesize, count_files);
 			print_newId(filesize, fileNames, count_files, newId);
             break;
 			// Готово
         case 5:
-            scanf("%c", &e);
+			scanf("%c", &e);
             newId = quicksort(size, 0, count_files - 1, count_files, fileId);
 			print_newId(filesize, fileNames, count_files, newId);
             break;
             // Готово
         case 6:
-            scanf("%c", &e);
+			scanf("%c", &e);
             newId = mergesort(size, 0, count_files - 1, fileId);
 			print_newId(filesize, fileNames, count_files, newId);
             break;
         default:
-            entpath(cb, b, filesize);
             menu();
             scanf("%d", &men);
         }
