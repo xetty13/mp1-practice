@@ -1,4 +1,3 @@
-
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,25 +7,28 @@
 
 //#define MAX_PATH 800 //Количество файлов в папке
 #define N 50 //Размер массива
-#define BUFFER 2048 //Размер буффера
+#define BUFFER 1000 //Размер буффера
 
 void input(wchar_t **path) //Массив куда будет записана директория
 {
     char *str; //Создадим указатель
+    int k = 0, i = 0;
+
     *path = (wchar_t*)malloc(BUFFER * sizeof(wchar_t)); //выделение памяти для пути
     str = (char*)malloc(BUFFER * sizeof(char));
+    printf("Enter the path");
     fgets(str, BUFFER, stdin);   //СПРОСИТЬ МАКСИМА
-    str[strlen(str) - 1] = '\0';
+   // str[strlen(str) - 1] = '\0';
     swprintf(*path, BUFFER, L"%hs", str);
 }
 
-int ListDirectoryContetns(const wchar_t *sDir, wchar_t **fNames)
+int ListDirectoryContetns(const wchar_t *sDir, int **fNames)
 {
     WIN32_FIND_DATA fdFile;
-    HANDLE hFind = NULL;
+    HANDLE hFind = FindFirstFile("C:\\*", &fdFile);
     int i = 0;
 
-    wchar_t sPath[2048];//Буфер?
+    wchar_t sPath[2048];
 
     wsprintf(sPath, L"%s\\*.*", sDir); //sPath - куда попала преобразованная строка, маска, указатель на введенную строку
 
@@ -43,7 +45,7 @@ int ListDirectoryContetns(const wchar_t *sDir, wchar_t **fNames)
     {
         //Найденный первый файл будет возвращать "."
         // Последующие файлы будут возвращать ".."
-        if (wcscmp(fdFile.cFileName, L".") != 0 && wcscmp(fdFile.cFileName, L"..") != 0)
+        /*if (wcscmp(fdFile.cFileName, L".") != 0 && wcscmp(fdFile.cFileName, L"..") != 0)
         {
             //Создадим путь к файлуб используя переданный в [sDir] и имя файла, которое мы только что нашли
             wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
@@ -57,14 +59,16 @@ int ListDirectoryContetns(const wchar_t *sDir, wchar_t **fNames)
             else
             {
                 wprintf(L"File: %s\n", sPath);
-            }
-            i++;
-        }
-    } while (FindNextFile(hFind, &fdFile)); //Поиск следующего файла
+            }*/
 
+        strcpy(fNames[i], fdFile.cFileName);
+        puts(fNames[i]);
+            i++;
+    }while (FindNextFile(hFind, &fdFile)); //Поиск следующего файла
+    FindClose(hFind);
+    return i;
     FindClose(hFind);
 
-    return i;
 }
 
 void start()
@@ -79,7 +83,7 @@ void start()
     time();*/
 }
 
-void main()
+int main()
 {
     char answer;
     wchar_t *path;
@@ -91,24 +95,49 @@ void main()
     fSizes = (long*)malloc(MAX_PATH * sizeof(long));
 
     printf("\tFILE MANAGER\n\n");
-   // start(&path, path, fNames, fSizes);
+    // start(&path, path, fNames, fSizes);
 
-    //Ввод пути с клавиатуры
+     //Ввод пути с клавиатуры
     input(&path);
     //Передаем в функцию записи имен и рзмеров введенную директорию и массив с именами и размерами
-    count_files = ListDirectoryContents(path, fNames);
-    printf("\n%d", count_files); //Вывод количества найденных файлов
+    //count_files = ListDirectoryContents(&(path[0]), &fNames);
 
-    do
+    WIN32_FIND_DATA fdFile;
+    HANDLE hFind = FindFirstFile("C:\\*", &fdFile);
+    int i = 0;
+
+    //wchar_t sPath[2048];
+
+    //wsprintf(sPath, L"%s\\*.*", path); //sPath - куда попала преобразованная строка, маска, указатель на введенную строку
+
+    //hFind = FindFirstFile(sPath, &fdFile);
+
+    //Проверка на существование директории
+    if (hFind == INVALID_HANDLE_VALUE)
     {
-        printf("Start over? ( y or n )");
-        scanf("%c", &answer);
-        switch (answer)
+       puts(L"Path not found");
+        do
         {
-        case('y'): start();
-        case('n'): break;
-        }
-    } while (answer != 'n');
+            strcpy(fNames[i], fdFile.cFileName);
+           // puts(fNames[i]);
+            i++;
+        } while (FindNextFile(hFind, &fdFile)); //Поиск следующего файла
+        FindClose(hFind);
 
-    system("pause");
+        printf("%d", i); //Вывод количества найденных файлов
+
+        do
+        {
+            printf("Start over? ( y or n )");
+            scanf("%c", &answer);
+            switch (answer)
+            {
+            case('y') : start();
+            case('n') : break;
+            }
+        } while (answer != 'n');
+
+        system("pause");
+
+    }
 }
