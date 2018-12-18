@@ -4,7 +4,6 @@
 #include <time.h>
 #include <windows.h>
 #include <string.h>
-#define N 50    
 #define BUFFER 2048 
 
 void swapint(int *n1, int *n2)
@@ -202,10 +201,10 @@ int* countingsort(ULONGLONG* a, int n)
     return newId;
 }
 
-int* quicksort(ULONGLONG* size, int n1, int n2, int n, int* id)
+int* quicksort(ULONGLONG* size, int n1, int n2, int* newid)
 {
-    ULONGLONG tmp;
-    int i = n1, j = n2, p = size[(n1 + n2) / 2], tmp1, k;
+    ULONGLONG p = size[(n1 + n2) / 2];;
+    int i = n1, j = n2, tmp1, k;
     do {
         while (size[i] < p) i++;
         while (size[j] > p) j--;
@@ -214,17 +213,17 @@ int* quicksort(ULONGLONG* size, int n1, int n2, int n, int* id)
             if (size[i] > size[j])
             {
                 swaplong(size + i, size + j);
-                swapint(id + i, id + j);
+                swapint(newid + i, newid + j);
             }
             i++;
             j--;
         }
     } while (i <= j);
     if (i < n2)
-        id = quicksort(size, i, n2, n, id);
+		newid = quicksort(size, i, n2, newid);
     if (n1 < j)
-        id = quicksort(size, n1, j, n, id);
-    return id;
+		newid = quicksort(size, n1, j, newid);
+    return newid;
 }
 
 // Быстрая сортировка
@@ -427,7 +426,7 @@ void main()
 			// Готово
         case 5:
 			scanf("%c", &e);
-            newId = quicksort(size, 0, count_files - 1, count_files, fileId);
+            newId = quicksort(size, 0, count_files - 1, fileId);
 			end = clock();
 			print_newId(filesize, fileNames, count_files, newId);
 			free(size);
