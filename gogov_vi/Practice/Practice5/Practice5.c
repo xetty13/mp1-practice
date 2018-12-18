@@ -200,7 +200,7 @@ int* countingsort(ULONGLONG* a, int n)
 	free(size);
     return newId;
 }
-
+// Быстрая сортировка
 int* quicksort(ULONGLONG* size, int n1, int n2, int* newid)
 {
     ULONGLONG p = size[(n1 + n2) / 2];;
@@ -225,8 +225,8 @@ int* quicksort(ULONGLONG* size, int n1, int n2, int* newid)
 		newid = quicksort(size, n1, j, newid);
     return newid;
 }
+// Быстрая сортировка Конец
 
-// Быстрая сортировка
 void merge(ULONGLONG* copy_size, int* id_file, int l, int m, int r)
 {
 	int i, j, k = 0;
@@ -308,7 +308,6 @@ int* merge_memory(ULONGLONG* a, int n, int l, int r)
 	return id_file;
 }
 
-// Быстрая сортировка Конец
 
 int menu()
 {
@@ -444,7 +443,7 @@ void main()
             scanf("%d", &men);
         }
         time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-        printf("Время сортировки данных: %.5lf секунд\n", time_spent);
+        printf("Время сортировки данных: %.3lf секунд\n", time_spent);
         printf("-----------------------------------------------------------\n");
         count_files = 0;
     }
