@@ -114,8 +114,7 @@ int* insert(ULONGLONG* a, int n)
             size[j + 1] = size[j];
             newId[j + 1] = newId[j];
             newId[j] = i;
-            size[j] = tmp;
-            j--;
+            size[j--] = tmp;
         }
     }
     free(size);
@@ -194,8 +193,6 @@ int* countingsort(ULONGLONG* a, int n)
 				break;
 			}
 	}
-	for (i = 0; i < n; i++)
-		printf("%d|", newId[i]);
 	free(arr);
 	free(size);
     return newId;
@@ -212,7 +209,7 @@ int* quicksort(ULONGLONG* size, int n1, int n2, int* newid)
         if (i <= j) {
             if (size[i] > size[j])
             {
-                swaplong(size + i, size + j);
+               swaplong(size + i, size + j);
                 swapint(newid + i, newid + j);
             }
             i++;
@@ -234,7 +231,7 @@ void merge(ULONGLONG* copy_size, int* id_file, int l, int m, int r)
 	int n = r - l + 1;
 	int *tmpId;
 	tmpId = (int*)malloc(n * sizeof(int));
-	arr = (ULONGLONG*)malloc(n * sizeof(ULONGLONG)); // Новый массив для записи
+	arr = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
 	for (i = 0; i < n; i++)
 		tmpId[i] = id_file[i + l];
 	i = l;
@@ -275,9 +272,6 @@ void merge(ULONGLONG* copy_size, int* id_file, int l, int m, int r)
 		copy_size[k] = arr[k - l];
 		id_file[k] = tmpId[k - l];
 	}
-	for (i = 0; i < n; i++)
-		printf("%d|", id_file[i]);
-	system("pause");
 	free(arr);
 	free(tmpId);
 }
@@ -344,15 +338,15 @@ void print_newId(ULONGLONG *filesize, wchar_t **fileNames, int count_files, int*
 // Вывод Массива Конец
 
 // Ввод пути
-void entpath(wchar_t** cb)
+void entpath(wchar_t** path)
 {
 	char* b;
-	*cb = (wchar_t*)malloc(BUFFER * sizeof(wchar_t));
+	*path = (wchar_t*)malloc(BUFFER * sizeof(wchar_t));
 	b = (char*)malloc(BUFFER * sizeof(char));
     printf("Укажите путь к файлам(вместо \\ пишите /)\n");
     fgets(b, BUFFER, stdin);
     b[strlen(b) - 1] = '\0';
-    swprintf(*cb, BUFFER, L"%hs", b);
+    swprintf(*path, BUFFER, L"%hs", b);
 }
 
 // Ввод пути конец
@@ -369,7 +363,6 @@ void main()
     char e;
     clock_t begin, end;
     double time_spent;
-    wchar_t* cb = (wchar_t*)malloc(BUFFER);
     setlocale(LC_ALL, "Russian");
 
     while (1) {
