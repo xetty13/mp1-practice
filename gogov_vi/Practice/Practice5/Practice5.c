@@ -168,7 +168,7 @@ int* countingsort(ULONGLONG* a, int n)
         if (a[i] > max)
             max = a[i];
     }
-	k = max + min + 1; // Разность положительное число
+	k = max - min + 1; // Разность положительное число
     arr = (ULONGLONG*)malloc(k * sizeof(ULONGLONG));
     for (i = 0; i < k; i++) 
         arr[i] = 0;
