@@ -30,7 +30,7 @@ int ListDirectoryContents(const wchar_t *sDir, ULONGLONG *size, wchar_t ***name)
     hFind = NULL;
     hFind = FindFirstFile(sPath, &fdFile);
     *size = (ULONGLONG*)malloc(sizeof(ULONGLONG) * i);
-    *name = (wchar_t**)malloc(sizeof(char*) * i); 
+    *name = (wchar_t**)malloc(sizeof(wchar_t*) * i); 
     i = 0;
     do
     {
@@ -41,16 +41,16 @@ int ListDirectoryContents(const wchar_t *sDir, ULONGLONG *size, wchar_t ***name)
             fileSize |= fdFile.nFileSizeLow;
 
             wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
-            wprintf(L"File: %s Size: %d\n", sPath, fileSize);
+
             j = 0;
             *(size + i) = fileSize; 
- //           (*name)[i] = (wchar_t*)malloc(sizeof(*wchar_t) * strlen(sPath));
+
             while (sPath[j] != '\0') j++; 
-            (*name)[i] = (wchar_t*)malloc(sizeof(char*) * j); 
-            strncpy((*name)[i], sPath, j);
+            (*name)[i] = (wchar_t*)malloc(sizeof(wchar_t) * j); 
+            wsprintf((*name)[i], L"%s", sPath);
             i++;
         }
-    } while (FindNextFile(hFind, &fdFile)); printf(" %d ", i); //del
+    } while (FindNextFile(hFind, &fdFile)); 
     FindClose(hFind);
     return i;
 }
@@ -71,11 +71,7 @@ void Print(int *a, ULONGLONG *size, wchar_t **name, int n)
     int i;     WIN32_FIND_DATA fdFile;
     for (i = 0; i < n; i++)
     {
-//        wsprintf(name[a[i] * MAX_NAME], L"%s\\%s", sDir, fdFile.cFileName);
-//        wprintf(L"File: %s Size: %d\n", name[a[i] * MAX_NAME], size[a[i]]);
-//        printf("%s size: %lld \n", name[a[i]], *(size + a[i]));
-        puts(name[i]);
-        printf(" size: %lld \n", *(size + a[i]));
+        wprintf(L"File: %s size: %lld \n", name[a[i]], *(size + a[i]));
     }
     printf("\n");
 }
@@ -155,7 +151,7 @@ void CountingSort(int *a, ULONGLONG *size, int n)
     free(b);
 }
 
-void Quicksplit(int *a, ULONGLONG *size, int *i, int *j, int p)
+void Quicksplit(int *a, ULONGLONG *size, int *i, int *j, ULONGLONG p)
 {
     int tmp;
     do {
