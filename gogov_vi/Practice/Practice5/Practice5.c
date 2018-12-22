@@ -166,7 +166,9 @@ int* countingsort(ULONGLONG* a, int n)
         if (a[i] > max)
             max = a[i];
     }
-	k = max - min + 1; // Разность положительное число
+	k = max - min + 1;
+	if (k * (ULONGLONG)sizeof(int) > (ULONGLONG)UINT_MAX)
+		return NULL;
     arr = (ULONGLONG*)malloc(k * sizeof(ULONGLONG));
     for (i = 0; i < k; i++) 
         arr[i] = 0;
@@ -197,7 +199,7 @@ int* countingsort(ULONGLONG* a, int n)
 	free(size);
     return newId;
 }
-// Быстрая сортировка
+
 int* quicksort(ULONGLONG* size, int n1, int n2, int* newid)
 {
     ULONGLONG p = size[(n1 + n2) / 2];;
@@ -210,7 +212,7 @@ int* quicksort(ULONGLONG* size, int n1, int n2, int* newid)
             if (size[i] > size[j])
             {
                swaplong(size + i, size + j);
-                swapint(newid + i, newid + j);
+               swapint(newid + i, newid + j);
             }
             i++;
             j--;
@@ -222,7 +224,6 @@ int* quicksort(ULONGLONG* size, int n1, int n2, int* newid)
 		newid = quicksort(size, n1, j, newid);
     return newid;
 }
-// Быстрая сортировка Конец
 
 void merge(ULONGLONG* copy_size, int* id_file, int l, int m, int r)
 {
@@ -275,6 +276,7 @@ void merge(ULONGLONG* copy_size, int* id_file, int l, int m, int r)
 	free(arr);
 	free(tmpId);
 }
+
 void mergesort(ULONGLONG* copy_size, int* id_file, int l, int r)
 {
 	int m;
@@ -329,7 +331,7 @@ void print(ULONGLONG* filesize, wchar_t **fileNames, int count_files)
 void print_newId(ULONGLONG *filesize, wchar_t **fileNames, int count_files, int* newId)
 {
     int i;
-    printf("Отсортированный список\n");
+    printf("Отсортированный список файлов:\n");
     for (i = 0; i < count_files; i++)
         wprintf(L"Файл: %s Размер: %lld байт\n", fileNames[newId[i]], filesize[newId[i]]);
     printf("\n");
@@ -351,93 +353,102 @@ void entpath(wchar_t** path)
 
 // Ввод пути конец
 
-// C:/Program Files/Git
 
 void main()
 {
     wchar_t *path;
     wchar_t **fileNames;
 	ULONGLONG* size, *filesize;
-    int *fileId, *newId;
+    int *fileId, *newId, err = 0;
     int men, i, count_files;
     char e;
     clock_t begin, end;
     double time_spent;
     setlocale(LC_ALL, "Russian");
-
-    while (1) {
-		do {
+	printf("Файловый менеджер.\nДля закрытия программы нажмите на крестик.\n");
+	while (1) {
 			entpath(&path);
 			count_files = ListDirectoryContents(path, &fileNames, &filesize);
 			if (count_files == -1)
 			{
 				printf("Неверно введен путь. Попробуйте снова\n");
+				continue;
 			}
-		} while (count_files == -1);
-        size = (ULONGLONG*)malloc(count_files * sizeof(ULONGLONG));
-        fileId = (int*)malloc((count_files + 1) * sizeof(int));
-        for (i = 0; i < count_files; i++)
-        {
-            fileId[i] = i;
-            size[i] = filesize[i];
-        }
-        printf("Файлов найдено: %d\n", count_files);
-        for (i = 0; i < count_files; i++)
-            wprintf(L"Файл: %s Размер: %lld байт\n", fileNames[i], filesize[i]);
-        menu();
-        scanf("%d", &men);
-        begin = clock();
-        switch (men) {
-        case 1:
-			scanf("%c", &e);
-            newId = choose(filesize, count_files);
-			end = clock();
-			print_newId(filesize, fileNames, count_files, newId);
-            break;
-            // Готово
-        case 2:
-			scanf("%c", &e);
-            newId = insert(filesize, count_files);
-			end = clock();
-			print_newId(filesize, fileNames, count_files, newId);
-            break;
-            // Готово
-        case 3:
-			scanf("%c", &e);
-            newId = bubble(filesize, count_files);
-			end = clock();
-			print_newId(filesize, fileNames, count_files, newId);
-            break;
-            // Готово
-        case 4:
-			scanf("%c", &e);
-            newId = countingsort(filesize, count_files);
-			end = clock();
-			print_newId(filesize, fileNames, count_files, newId);
-            break;
-			// Готово
-        case 5:
-			scanf("%c", &e);
-            newId = quicksort(size, 0, count_files - 1, fileId);
-			end = clock();
-			print_newId(filesize, fileNames, count_files, newId);
-			free(size);
-            break;
-            // Готово
-        case 6:
-			scanf("%c", &e);
-            newId = merge_memory(filesize, count_files, fileId[0], fileId[count_files - 1]);
-			end = clock();
-			print_newId(filesize, fileNames, count_files, newId);
-            break;
-			// Готово
-        default:
-            menu();
-            scanf("%d", &men);
-        }
-        time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-        printf("Время сортировки данных: %.3lf секунд\n", time_spent);
-        printf("-----------------------------------------------------------\n");
-        count_files = 0;
-    }
+			if (count_files == 0)
+			{
+				printf("В папке отсутствуют файлы. Попробуйте снова\n");
+				continue;
+			}
+		err = 0;
+		size = (ULONGLONG*)malloc(count_files * sizeof(ULONGLONG));
+		fileId = (int*)malloc((count_files) * sizeof(int));
+		for (i = 0; i < count_files; i++)
+		{
+			fileId[i] = i;
+			size[i] = filesize[i];
+		}
+		printf("Файлов найдено: %d\n", count_files);
+		for (i = 0; i < count_files; i++)
+			wprintf(L"Файл: %s Размер: %lld байт\n", fileNames[i], filesize[i]);
+		menu();
+		scanf("%d", &men);
+		begin = clock();
+			switch (men) {
+			case 1:
+				scanf("%c", &e);
+				newId = choose(filesize, count_files);
+				end = clock();
+				break;
+			case 2:
+				scanf("%c", &e);
+				newId = insert(filesize, count_files);
+				end = clock();
+				break;
+			case 3:
+				scanf("%c", &e);
+				newId = bubble(filesize, count_files);
+				end = clock();
+				break;
+			case 4:
+				scanf("%c", &e);
+				newId = countingsort(filesize, count_files);
+				if (newId == NULL)
+					err = 1;
+				end = clock();
+				break;
+			case 5:
+				scanf("%c", &e);
+				newId = quicksort(size, 0, count_files - 1, fileId);
+				end = clock();
+				break;
+			case 6:
+				scanf("%c", &e);
+				newId = merge_memory(filesize, count_files, fileId[0], fileId[count_files - 1]);
+				end = clock();
+				break;
+			default:
+				menu();
+				scanf("%d", &men);
+			}
+			time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+			if (err != 1)
+			{
+				print_newId(filesize, fileNames, count_files, newId);
+				printf("Время сортировки данных: %.3lf секунд\n", time_spent);
+				printf("-----------------------------------------------------------\n");
+			}
+			else
+			{
+				printf("Диапазон размеров файлов большой ");
+				printf("для сортировки подсчетом.\n");
+				printf("Попробуйте снова, не используя сортироку подсчетом.\n");
+			}
+			count_files = 0;
+			free(filesize);
+			free(fileId);
+			for (i = 0; i < count_files; i++)
+				free(fileNames[i]);
+			free(fileNames);
+			free(newId);
+		}
 }
