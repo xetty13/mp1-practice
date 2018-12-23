@@ -336,7 +336,7 @@ void menu()
 void print_newId(ULONGLONG *filesize, wchar_t **fileNames, int count_files, int* newId)
 {
     int i;
-    printf("Отсортированный список файлов:\n");
+    printf("\nОтсортированный список файлов:\n");
     for (i = 0; i < count_files; i++)
         wprintf(L"Файл: %s Размер: %lld байт\n", fileNames[newId[i]], filesize[newId[i]]);
     printf("\n");
@@ -354,6 +354,7 @@ void entpath(wchar_t** path)
     fgets(b, BUFFER, stdin);
     b[strlen(b) - 1] = '\0';
     swprintf(*path, BUFFER, L"%hs", b);
+    free(b);
 }
 
 // Ввод пути конец
@@ -364,7 +365,7 @@ void main()
     wchar_t *path;
     wchar_t **fileNames;
     ULONGLONG* size, *filesize;
-    int *fileId, *newId, err = 0;
+    int *fileId, *newId, err;
     int men, i, count_files;
     char e;
     clock_t begin, end;
