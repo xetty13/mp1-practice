@@ -1,23 +1,23 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <time.h>
+#include <math.h>
 #include <locale.h>
 #include <string.h>
-#define BUFFER 1000 //Размер буффера
-#define c 100
+#define BUFFER 1000 //Р Р°Р·РјРµСЂ Р±СѓС„С„РµСЂР°
+#define c 1500
 
-void input(wchar_t **path) //Массив куда будет записана директория
+void input(wchar_t **path)
 {
-    char *str; //Сюда принимаем строку в char
+    char *str;
 
     *path = (wchar_t*)malloc(BUFFER * sizeof(wchar_t));
     str = (char*)malloc(BUFFER * sizeof(char));
-    printf("\n-----------------------------------\n");
-    printf("Enter the path  ");
-    fgets(str, BUFFER, stdin);   //Ввод строки до enter
-    str[strlen(str) - 1] = '\0'; //Удаление перевода строки в конце
-    swprintf(*path, BUFFER, L"%hs", str); //Преобразовываем строку char  в wchar_t 
+    printf("\n  Please, enter the path:  ");
+    fgets(str, BUFFER, stdin); 
+    str[strlen(str) - 1] = '\0'; //РЈРґР°Р»РµРЅРёРµ РїРµСЂРµРІРѕРґР° СЃС‚СЂРѕРєРё РІ РєРѕРЅС†Рµ
+    swprintf(*path, BUFFER, L"%hs", str); //РџСЂРµРѕР±СЂР°Р·РѕРІС‹РІР°РµРј СЃС‚СЂРѕРєСѓ char  РІ wchar_t 
 }
 
 int ListDirectoryContetns(const wchar_t *sDir, wchar_t ***fNames, ULONGLONG **fSizes)
@@ -29,9 +29,10 @@ int ListDirectoryContetns(const wchar_t *sDir, wchar_t ***fNames, ULONGLONG **fS
     sPath = (wchar_t*)malloc(BUFFER * sizeof(wchar_t));
 
     wsprintf(sPath, L"%s\\*.*", sDir);
-    //Проверка на существование директории
+
+    //РџСЂРѕРІРµСЂРєР° РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РґРёСЂРµРєС‚РѕСЂРёРё
     if ((hFind = FindFirstFile(sPath, &fdFile)) == INVALID_HANDLE_VALUE)
-        return -1; //Path not found
+        return -1; 
 
     do
     {
@@ -46,8 +47,8 @@ int ListDirectoryContetns(const wchar_t *sDir, wchar_t ***fNames, ULONGLONG **fS
 
     do
     {
-        //Найденный первый файл будет возвращать "."
-        // Последующие файлы будут возвращать ".."
+        //РќР°Р№РґРµРЅРЅС‹Р№ РїРµСЂРІС‹Р№ С„Р°Р№Р» Р±СѓРґРµС‚ РІРѕР·РІСЂР°С‰Р°С‚СЊ "."
+        // РџРѕСЃР»РµРґСѓСЋС‰РёРµ С„Р°Р№Р»С‹ Р±СѓРґСѓС‚ РІРѕР·РІСЂР°С‰Р°С‚СЊ ".."
         if (wcscmp(fdFile.cFileName, L".") != 0 && wcscmp(fdFile.cFileName, L"..") != 0)
         {
             ULONGLONG fSize = fdFile.nFileSizeHigh;
@@ -60,7 +61,7 @@ int ListDirectoryContetns(const wchar_t *sDir, wchar_t ***fNames, ULONGLONG **fS
             wsprintf((*fNames)[i], L"%s", sPath);
             i++;
         }
-    } while (FindNextFile(hFind, &fdFile)); //Поиск следующего файла
+    } while (FindNextFile(hFind, &fdFile));
     return i;
     FindClose(hFind);
     free(sPath);
@@ -74,8 +75,7 @@ void choose_method(int *method)
     printf("  3) Bubble sorting\n");
     printf("  4) Count sorting\n");
     printf("  5) Quick sorting\n");
-    printf("  6) Merge sorting\n");
-    printf("  7) Exit\n\n");
+    printf("  6) Merge sorting\n\n");
     printf("  Method: ");
     scanf("%d", method);
     printf("\n");
@@ -86,7 +86,7 @@ void output(int *ind, int count_files, wchar_t **fNames, ULONGLONG *size)
     int i;
     WIN32_FIND_DATA fdFile;
     for (i = 0; i < count_files; i++)
-        wprintf(L"%s\t  %lld кб \n", fNames[ind[i]], *(size + ind[i]) / 1024);
+        wprintf(L"  %s\t  %.0llf РєР± \n", fNames[ind[i]], ceil((float)(*(size + ind[i]) / 1024.0)));
     printf("\n\n");
 }
 
@@ -141,39 +141,43 @@ void bubble_sort(ULONGLONG *size, int count_files, int *ind)
 
 }
 
-void count_sort(ULONGLONG *size, int count_files, int *ind)
+int count_sort(ULONGLONG *size, int count_files, int *ind)
 {
-    int *count;
+    int *count = (int*)malloc(c * sizeof(int));
     int i, j, id = 0, idel = 0;
-    int del = 0, min, max;
+    int del = 0, min, max, pos = 0;
 
-    //min = size[0];
-    //max = size[0];
+    min = size[0] / 1024;
+    max = size[0] /1024;
 
-    //for (i = 0; i < count_files; i++)
-    //{
-      //  if (size[i] < min)
-      //      min = size[i];
-      //  if (size[i] > max)
-       //     max = size[i];
-   // }
-   // del = max - min + 1;
-   // idel = (int)del;
-    count = (int*)malloc(c * sizeof(int));
-    for (i = 0; i < c; i++)
-        count[i] = 0;
     for (i = 0; i < count_files; i++)
-        count[size[i]]++;
-    for (i = 0; i < c; i++)
-            if (count[i] > 0)
-            {
-                del = 0;
+    {
+        if ((size[i] / 1024) < min)
+            min = size[i] / 1024;
+        if ((size[i] / 1024) > max)
+            max = size[i] / 1024;
+    }
+    del = max - min + 1;
+    idel = (int)del;
+    if (idel > c)
+    {
+        printf("  File sizes are too large for this sort, please choose another sort");
+        return -1;
+    }
+
+    for (i = 0; i < count_files; i++)
+        for (j = 0; j < idel; j++)
+            count[size[ind[i]] / 1024]++;
+    
+        for (i = 0; i < idel, j < count_files; i++)
+            if(count[i] > 0)
+            {  
                 for (j = 0; j < count[i]; j++)
                 {
-                    while (size[del] != i) del++;
-                    ind[id++] = del++;
+                    while((size[pos] / 1024) != i)
+                    pos--;
+                    ind[id--] = pos--;
                 }
-
             }
 
     free(count);
@@ -254,26 +258,28 @@ void main()
     fNames = (wchar_t**)malloc(MAX_PATH * sizeof(wchar_t*));
     fSizes = (ULONGLONG*)malloc(MAX_PATH * sizeof(ULONGLONG));
 
-    printf("\t    -FILE MANAGER-\n");
+    printf("  +------------------------------------+\n");
+    printf("  |\t    -FILE MANAGER-             |\n");
+    printf("  +------------------------------------+\n");
 
     do
     {
-        //Ввод пути с клавиатуры
+        //Р’РІРѕРґ РїСѓС‚Рё СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
         input(&path);
         count_files = ListDirectoryContetns(path, &fNames, &fSizes);
 
         if (count_files == -1)
         {
             printf("  Path not found");
-            break;
+            continue;
         }
         if (count_files == 0)
         {
             printf("  Folder is empty");
-            break;
+            continue;
         }
 
-        printf("  Files found:  %d\n\n", count_files); //Вывод количества найденных файлов
+        printf("  Files found:  %d\n\n", count_files);
 
         ind = (int*)malloc(count_files * sizeof(int));
         i = 0;
@@ -324,7 +330,6 @@ void main()
             output(ind, count_files, fNames, fSizes);
             break;
         }
-        case(7): return;
         }
         end = clock();
         time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
@@ -337,5 +342,4 @@ void main()
         free(fNames);
         free(fSizes);
     } while (1);
-        system("pause");
 }
