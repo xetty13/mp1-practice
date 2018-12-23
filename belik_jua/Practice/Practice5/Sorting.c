@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <string.h>
-#define K 100
-#define MAX_LEN 100
+#include <time.h>
+#define K 20000
+#define MAX_LEN 10000
 
 int ListDirectoryContents(const wchar_t *sDir, ULONGLONG *size, wchar_t ***name) 
 {
@@ -12,12 +13,11 @@ int ListDirectoryContents(const wchar_t *sDir, ULONGLONG *size, wchar_t ***name)
     wchar_t sPath[2048]; 
     int j, i = 0; 
 
-    free(size);
     wsprintf(sPath, L"%s\\*.*", sDir);
     if ((hFind = FindFirstFile(sPath, &fdFile)) == INVALID_HANDLE_VALUE)
     {
         wprintf(L"Path not found: [%s]\n", sDir);
-        return 0;
+        return -1;
     }
 
     do
@@ -43,7 +43,7 @@ int ListDirectoryContents(const wchar_t *sDir, ULONGLONG *size, wchar_t ***name)
             wsprintf(sPath, L"%s\\%s", sDir, fdFile.cFileName);
 
             j = 0;
-            *(size + i) = fileSize; 
+            *(size + i) = fileSize / 1024; 
 
             while (sPath[j] != '\0') j++; 
             (*name)[i] = (wchar_t*)malloc(sizeof(wchar_t) * j); 
@@ -63,16 +63,18 @@ void Command()
     printf("4 - CountingSort \n");
     printf("5 - QuickSort \n");
     printf("6 - MergeSort \n");
-    printf("7 - Exit \n");
+    printf("7 - New path to the folder\n");
+    printf("8 - Exit\n");
 }
 
-void Print(int *a, ULONGLONG *size, wchar_t **name, int n) 
+void Print(int *a, ULONGLONG *size, wchar_t **name, int n, float time) 
 {
-    int i;     WIN32_FIND_DATA fdFile;
+    int i;     
     for (i = 0; i < n; i++)
     {
         wprintf(L"File: %s size: %lld \n", name[a[i]], *(size + a[i]));
     }
+    printf("Sorting time: %.10f s\n", time);
     printf("\n");
 }
 
@@ -126,7 +128,7 @@ void BubbleSort(int *a, ULONGLONG *size, int n)
     }
 }
 
-void CountingSort(int *a, ULONGLONG *size, int n)
+int CountingSort(int *a, ULONGLONG *size, int n)
 {
     int *b = (int*)malloc(K * sizeof(int));
     int i, j, idx = 0;
@@ -134,7 +136,14 @@ void CountingSort(int *a, ULONGLONG *size, int n)
     for (i = 0; i < K; i++)
         b[i] = 0;
     for (i = 0; i < n; i++)
-        b[size[a[i]]]++;
+    {
+        if (size[a[i]] > K)
+        {
+            printf("CountingSort cannot be performed, please, select another sort\n");
+            return 1;
+        }
+            b[size[a[i]]]++;
+    }
     for (i = 0; i < K; i++)
     {
         if (b[i]>0)
@@ -149,6 +158,7 @@ void CountingSort(int *a, ULONGLONG *size, int n)
         }
     }
     free(b);
+    return 0;
 }
 
 void Quicksplit(int *a, ULONGLONG *size, int *i, int *j, ULONGLONG p)
@@ -211,8 +221,11 @@ void MergeSort(int *a, ULONGLONG *size, int l, int r)
 void main()
 {
     int i = 0; 
+    int count = 0;
+    clock_t start, end;
+    float allTime = 0.0f;
     int* ind; 
-    int N = 0;
+    int N = -1;
     ULONGLONG* size = (ULONGLONG*)malloc(sizeof(ULONGLONG) * MAX_LEN); ;
     wchar_t** name;
     char* a = (char*)malloc(MAX_LEN);
@@ -220,23 +233,25 @@ void main()
 
     do
     {
-               printf("???\n");
-               fgets(a, MAX_LEN, stdin);
-               a[strlen(a) - 1] = '\0';
-               swprintf(sDir, MAX_LEN, L"%hs", a); 
+        if (N == 0)
+            printf("Folder is Empty\n");
+        printf("Enter the path to the folder\n");
+        fgets(a, MAX_LEN, stdin);
+        a[strlen(a) - 1] = '\0';
+        swprintf(sDir, MAX_LEN, L"%hs", a); 
         N = ListDirectoryContents(sDir, size, &name);
-    } while (N == 0);
-    free(a);
-    free(sDir); 
-    
+    } while ((N == 0) || (N == -1));
+       
     do
     { 
+        count = 0;
         Command();
         ind = (int*)malloc(N * sizeof(int));
         for (i = 0; i < N; i++)
             ind[i] = i;  
         scanf("%d", &i);
-        printf("\n");//time
+        printf("\n");
+        start = clock();
         switch (i) {
         case 1:
             ChooseSort(ind, size, N);
@@ -248,19 +263,44 @@ void main()
             BubbleSort(ind, size, N);
             break;
         case 4:
-            CountingSort(ind, size, N);
+            count = CountingSort(ind, size, N);
             break;
         case 5:
             QuickSort(ind, size, 0, (N - 1));
             break;
         case 6:
             MergeSort(ind, size, 0, (N - 1));
+            break;
+        case 7:
+            N = -1; 
+            count = 1;
+            scanf("%*c");
+            do
+            {
+                if (N == 0)
+                    printf("Folder is Empty\n");
+                printf("Enter the path to the folder\n"); 
+                fgets(a, MAX_LEN, stdin); 
+                a[strlen(a) - 1] = '\0';
+                swprintf(sDir, MAX_LEN, L"%hs", a); 
+                N = ListDirectoryContents(sDir, size, &name);
+            } while ((N == 0) || (N == -1));
+            break;
+        case 8:
+            count = 1;
+            break;
         }
-        Print(ind, size, name, N, sDir);
+        end = clock();
+        allTime = (float)(end - start) / CLOCKS_PER_SEC;
+        if (count == 0)
+            Print(ind, size, name, N, allTime);
         free(ind);
-    } while (i != 7); 
+    } while (i != 8); 
+
     for (i = 0; i < N; i++)
         free(name[i]);
     free(name);
     free(size);
+    free(a);
+    free(sDir);
 }
