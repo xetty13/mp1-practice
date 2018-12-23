@@ -139,7 +139,7 @@ int CountingSort(int *a, ULONGLONG *size, int n)
     {
         if (size[a[i]] > K)
         {
-            printf("CountingSort cannot be performed, please, select another sort\n");
+            printf("CountingSort cannot be performed, please, choose another sort\n");
             return 1;
         }
             b[size[a[i]]]++;
