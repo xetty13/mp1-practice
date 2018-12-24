@@ -160,25 +160,23 @@ int count_sort(ULONGLONG *size, int count_files, int *ind)
     del = max - min + 1;
     idel = (int)del;
     if (idel > c)
-    {
-        printf("  File sizes are too large for this sort, please choose another sort");
         return -1;
-    }
 
-    for (i = 0; i < count_files; i++)
-        for (j = 0; j < idel; j++)
-            count[size[ind[i]] / 1024]++;
-    
-        for (i = 0; i < idel, j < count_files; i++)
-            if(count[i] > 0)
-            {  
-                for (j = 0; j < count[i]; j++)
-                {
-                    while((size[pos] / 1024) != i)
-                    pos--;
-                    ind[id--] = pos--;
-                }
+    for (i = 0; i < idel; i++)
+    {
+        if (count[i]>0)
+        {
+            pos = 0;
+            for (j = 0; j < count[i]; j++)
+            {
+                while (size[pos] != i)
+                    pos++;
+                ind[id] = pos;
+                pos++;
+                id++;
             }
+        }
+    }
 
     free(count);
 }
@@ -244,7 +242,7 @@ void merge_sort(ULONGLONG *size, int lb, int ub, int *ind)
 
 void main()
 {
-    int ans = 1;
+    int ans = 0;
     wchar_t *path;
     wchar_t **fNames;
     ULONGLONG *fSizes;
@@ -314,7 +312,12 @@ void main()
         }
         case(4):
         {
-            count_sort(fSizes, count_files, ind);
+            ans = count_sort(fSizes, count_files, ind);
+            if (ans == -1)
+            {
+                printf("  File sizes are too large for this sort, please choose another sort");
+                break;
+            }
             output(ind, count_files, fNames, fSizes);
             break;
         }
