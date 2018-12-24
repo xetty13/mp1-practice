@@ -1,12 +1,13 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <locale.h>
 
 #define MAX 7
 #define PROCENT 37
+#define MAX_LEN 17
 
 int barcode, count = 0, scancheck;
 int barcodes[MAX] = { 7899, 9730, 4430, 3965, 5364, 4828, 7281 };
-char name[MAX][20] = { "Сок Мультифрукт","Хлеб нарезной","Булки из Атака",
+char name[MAX][MAX_LEN] = { "Сок Мультифрукт","Хлеб нарезной","Булки из Атака",
 "Big Bon","Сыр с плесенью","Молоко Свежесть","Бумага Туалетная" };
 int price[MAX] = { 62, 27, 19, 21, 499, 32, 52 };
 int sale[MAX] = { 5, 2, 50, 10, 1, 9, 9 };
@@ -27,15 +28,13 @@ void pmenu()
 
 int searchcod(int cod)
 {
-    int i;
+    int i = -1;
     for (i = 0; i < MAX; i++) {
-        if (barcode == barcodes[i])
+        if (cod == barcodes[i])
             break;
     }
-    if (i >= MAX)
-    {
-        i = -1;
-    }
+	if (i >= MAX)
+		i = -1;
     return i;
 }
 
@@ -54,9 +53,9 @@ void scancod()
     else
     {
         skid = price[i] * (1 - (float)(sale[i] / 100.00));
-        for (j = 0; j < 20; j++)
+        for (j = 0; j < MAX_LEN; j++)
             printf("%c", name[i][j]);
-        printf("Цена за ед. %4d | Скидка %2d%c | Цена со скидкой %.2f\n",
+        printf("| Цена за ед. %4d | Скидка %2d%c | Цена со скидкой %.2f\n",
             price[i], sale[i], PROCENT, skid);
     }
 }
@@ -89,7 +88,7 @@ void checkall()
         {
             skid = price[i] * (1 - (float)(sale[i] * 0.01));
             printf("| %7d | ", barcodes[i]);
-            for (j = 0; j < 16; j++)
+            for (j = 0; j < MAX_LEN - 1; j++)
                 printf("%c", name[i][j]);
             printf("| %11d | %5d%c | %15.2f | %7d|\n", price[i], sale[i], PROCENT, skid, count_check[i]);
             j = 0;
