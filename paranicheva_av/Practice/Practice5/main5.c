@@ -253,7 +253,7 @@ do {
 		if (kolvo > 0)
         Output_string(fileName,  tmpSizes, filesIndex,  kolvo);
 
-    } while (vybor != 7); 
+    } while (vybor < 1 || vybor > 6); 
     
     free(tmpSizes);
 	free(filesIndex);
