@@ -44,12 +44,12 @@ void main()
                 popitki++;
             }
             if (nchel == nkomp) 
-                {
-                    
-                    popitki++;
-                    printf("Поздравляем, вы угадали число c %d попытки(-ок)!!!\n", popitki);
-                    return;
-                }
+            {
+                
+                popitki++;
+                printf("Поздравляем, вы угадали число c %d попытки(-ок)!!!\n", popitki);
+                return;
+            }
         }
     }
     if (rezhim == 2) 
