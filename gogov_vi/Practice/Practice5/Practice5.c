@@ -63,17 +63,10 @@ int ListDirectoryContents(const wchar_t *sDir, wchar_t ***filenames, ULONGLONG *
     return l;
 }
 
-int* choose(ULONGLONG* a ,int n)
+void choose(ULONGLONG* size ,int n, int* newId)
 {
-    int i, j, minidx, *newId;
-    ULONGLONG min, *size;
-    size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
-    newId = (int*)malloc(n * sizeof(int));
-    for (i = 0; i < n; i++)
-    {
-        newId[i] = i;
-        size[i] = a[i];
-    }
+    int i, j, minidx;
+    ULONGLONG min;
     for (i = 0; i < n; i++)
     {
         min = size[i];
@@ -90,21 +83,12 @@ int* choose(ULONGLONG* a ,int n)
         swapint(newId + minidx, newId + i);
         size[i] = min;
     }
-    free(size);
-    return newId;
 }
 
-int* insert(ULONGLONG* a, int n)
+void insert(ULONGLONG* size, int n, int* newId)
 {
-    int i, j, *newId;
-    ULONGLONG tmp, *size;
-    size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
-    newId = (int*)malloc(n * sizeof(int));
-    for (i = 0; i < n; i++)
-    {
-        newId[i] = i;
-        size[i] = a[i];
-    }
+    int i, j;
+    ULONGLONG tmp;
     for (i = 1; i < n; i++)
     {
         j = i - 1;
@@ -117,21 +101,12 @@ int* insert(ULONGLONG* a, int n)
             size[j--] = tmp;
         }
     }
-    free(size);
-    return newId;
 }
 
-int* bubble(ULONGLONG* a, int n)
+void bubble(ULONGLONG* size, int n, int* newId)
 {
-    int i, j, *newId;
-    ULONGLONG tmp, *size;
-    size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
-    newId = (int*)malloc(n * sizeof(int));
-    for (i = 0; i < n; i++)
-    {
-        newId[i] = i;
-        size[i] = a[i];
-    }
+    int i, j;
+    ULONGLONG tmp;
     for (i = 0; i < n; i++)
     {
         for (j = 1; j < n - i; j++)
@@ -145,26 +120,21 @@ int* bubble(ULONGLONG* a, int n)
             }
         }
     }
-    free(size);
-    return newId;
 }
 
-int* countingsort(ULONGLONG* a, int n)
+void countingsort(ULONGLONG* size, int n, int *newId)
 {
-    int *newId;
-    ULONGLONG *size, *arr, k, max = a[n - 1], min = a[0];
+    ULONGLONG *arr, k, max = size[n - 1], min = size[0], *a;
     int i, b = 0, j;
-    newId = (int*)malloc(n * sizeof(int));
-    size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
     for (i = 0; i < n; i++)
     {
-        if (a[i] < min)
-            min = a[i];
+        if (size[i] < min)
+            min = size[i];
     }
     for (i = 0; i < n; i++)
     {
-        if (a[i] > max)
-            max = a[i];
+        if (size[i] > max)
+            max = size[i];
     }
     k = max - min + 1;
     if (k * (ULONGLONG)sizeof(int) > (ULONGLONG)UINT_MAX)
@@ -174,30 +144,30 @@ int* countingsort(ULONGLONG* a, int n)
         arr[i] = 0;
     for (i = 0; i < n; i++)
     {
-        arr[a[i] - min]++;
+        arr[size[i] - min]++;
     }
-    for (i = 0; i < k; i++)
+	a = (ULONGLONG*)malloc(n * sizeof(ULONGLONG)); // Нужен для записи отсортированного массива
+	for (i = 0; i < k; i++)
     {
         for (j = 0; j < arr[i]; j++)
-            size[b++] = i + min;
+            a[b++] = i + min;
     }
     for (j = 0; j < n; j++)
         arr[j] = a[j];
+	free(a);
     b = 0;
     for (i = 0; i < n; i++)
     {
         for (j = 0; j < n; j++)
-            if ((size[i] == arr[j]))
+            if ((arr[i] == size[j]))
             {
                 newId[b] = j;
-                arr[j] = -1;
+                size[j] = -1;
                 b++;
                 break;
             }
     }
     free(arr);
-    free(size);
-    return newId;
 }
 
 void quicksort(ULONGLONG* size, int n1, int n2, int* newid)
@@ -222,21 +192,6 @@ void quicksort(ULONGLONG* size, int n1, int n2, int* newid)
         quicksort(size, i, n2, newid);
     if (n1 < j)
         quicksort(size, n1, j, newid);
-}
-
-int* quicksort_memory(ULONGLONG* size, int n1, int n2)
-{
-    int n = n2 - n1 + 1, i;
-    int *newid = (int*)malloc(n * sizeof(int));
-    ULONGLONG* copy_size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
-    for (i = 0; i < n; i++)
-    {
-        copy_size[i] = size[i];
-        newid[i] = i;
-    }
-    quicksort(copy_size, n1, n2, newid);
-    free(copy_size);
-    return newid;
 }
 
 void merge(ULONGLONG* copy_size, int* id_file, int l, int m, int r)
@@ -297,26 +252,9 @@ void mergesort(ULONGLONG* copy_size, int* id_file, int l, int r)
     if (l >= r) return;
     m = (l + r) / 2;
     mergesort(copy_size, id_file, l, m);
-    mergesort(copy_size, id_file, m + 1, r);
+	mergesort(copy_size, id_file, m + 1, r);
     merge(copy_size, id_file, l, m, r);
 }
-
-int* merge_memory(ULONGLONG* a, int n, int l, int r)
-{
-    ULONGLONG* copy_size = (ULONGLONG*)malloc(n * sizeof(ULONGLONG));
-    int *id_file, *newId;
-    int i;
-    id_file = (int*)malloc(n * sizeof(int));
-    for (i = 0; i < n; i++) 
-    {
-        copy_size[i] = a[i];
-        id_file[i] = i;
-    }
-    mergesort(copy_size, id_file, l, r);
-    free(copy_size);
-    return id_file;
-}
-
 
 void menu()
 {
@@ -331,8 +269,6 @@ void menu()
     printf("Выберите способ сортировки: ");
 }
 
-// Вывод Массива
-
 void print_newId(ULONGLONG *filesize, wchar_t **fileNames, int count_files, int* newId)
 {
     int i;
@@ -342,9 +278,6 @@ void print_newId(ULONGLONG *filesize, wchar_t **fileNames, int count_files, int*
     printf("\n");
 }
 
-// Вывод Массива Конец
-
-// Ввод пути
 void entpath(wchar_t** path)
 {
     char* b;
@@ -357,15 +290,12 @@ void entpath(wchar_t** path)
     free(b);
 }
 
-// Ввод пути конец
-
-
 void main()
 {
     wchar_t *path;
     wchar_t **fileNames;
     ULONGLONG* size, *filesize;
-    int *fileId, *newId, err;
+    int *fileId, err;
     int men, i, count_files;
     char e;
     clock_t begin, end;
@@ -388,8 +318,11 @@ void main()
         err = 0;
         size = (ULONGLONG*)malloc(count_files * sizeof(ULONGLONG));
         fileId = (int*)malloc(count_files * sizeof(int));
-        for (i = 0; i < count_files; i++)
-            fileId[i] = i;
+		for (i = 0; i < count_files; i++)
+		{
+			fileId[i] = i;
+			size[i] = filesize[i];
+		}
         printf("Файлов найдено: %d\n", count_files);
         for (i = 0; i < count_files; i++)
             wprintf(L"Файл: %s Размер: %lld байт\n", fileNames[i], filesize[i]);
@@ -399,34 +332,34 @@ void main()
             switch (men) {
             case 1:
                 scanf("%c", &e);
-                newId = choose(filesize, count_files);
+				choose(size, count_files, fileId);
                 end = clock();
                 break;
             case 2:
                 scanf("%c", &e);
-                newId = insert(filesize, count_files);
+				insert(size, count_files, fileId);
                 end = clock();
                 break;
             case 3:
                 scanf("%c", &e);
-                newId = bubble(filesize, count_files);
+				bubble(size, count_files, fileId);
                 end = clock();
                 break;
             case 4:
                 scanf("%c", &e);
-                newId = countingsort(filesize, count_files);
-                if (newId == NULL)
+				countingsort(size, count_files, fileId);
+                if (fileId == NULL)
                     err = 1;
                 end = clock();
                 break;
             case 5:
                 scanf("%c", &e);
-                newId = quicksort_memory(filesize, fileId[0], count_files - 1);
+				quicksort(size, fileId[0], fileId[count_files - 1], fileId);
                 end = clock();
                 break;
             case 6:
                 scanf("%c", &e);
-                newId = merge_memory(filesize, count_files, fileId[0], fileId[count_files - 1]);
+                mergesort(size, fileId, fileId[0], fileId[count_files - 1]);
                 end = clock();
                 break;
             default:
@@ -436,7 +369,7 @@ void main()
             time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
             if (err != 1)
             {
-                print_newId(filesize, fileNames, count_files, newId);
+                print_newId(filesize, fileNames, count_files, fileId);
                 printf("Время сортировки данных: %.3lf секунд\n", time_spent);
                 printf("-----------------------------------------------------------\n");
             }
@@ -446,11 +379,12 @@ void main()
                 printf("для сортировки подсчетом.\n");
                 printf("Попробуйте снова, не используя сортироку подсчетом.\n");
             }
+			free(fileId);
+			free(size);
             free(filesize);
             for (i = 0; i < count_files; i++)
                 free(fileNames[i]);
             free(fileNames);
-            free(newId);
             count_files = 0;
         }
 }
