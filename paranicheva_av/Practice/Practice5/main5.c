@@ -43,7 +43,7 @@ void Input_string(wchar_t **sDir)
 {
     char *inpstr;
     inpstr = (char*)malloc((MAX_LEN)* sizeof(char));
-    *sDir = (wchar_t*)malloc((MAX_LEN)* sizeof(wchar_t)); //выделение памяти
+    *sDir = (wchar_t*)malloc((MAX_LEN)* sizeof(wchar_t)); 
     fgets(inpstr, MAX_LEN, stdin);
     inpstr[strlen(inpstr) - 1] = '\0';
     swprintf(*sDir, MAX_LEN, L"%hs", inpstr);
@@ -115,7 +115,7 @@ void Counting_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
     {
         if (tmpSize[filesIndex[i]] > MAX_COUNT_OF_FILES)
         {
-            printf("слишком большой размер файла\n"); //переведи
+            printf("File size too large\n"); 
             return;
         }
         count[tmpSize[filesIndex[i]]]++;
@@ -213,8 +213,8 @@ int main()
         filesIndex[i] = i;
     Output_string(fileName, filesSize, filesIndex, kolvo);                   
 
-    tmpSizes = (ULONGLONG*)malloc(kolvo * sizeof(ULONGLONG));           // Выделение доп. памяти для
-    for (i = 0; i < kolvo; i++)                                         // сохранения и изменения размеров файлов
+    tmpSizes = (ULONGLONG*)malloc(kolvo * sizeof(ULONGLONG));           
+    for (i = 0; i < kolvo; i++)                                         
         tmpSizes[i] = filesSize[i]; 
 	free(filesSize);
 do {
