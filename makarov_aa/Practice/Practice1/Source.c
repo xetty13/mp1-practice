@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
+
 void main()
 {
     float pDSP, pDVP, pWOOD; // плотности
@@ -15,12 +16,12 @@ void main()
     scanf("%f", &pWOOD);
     printf("Введите высоту шкафа (в см)\n");
     scanf("%f", &h);
-    h /= 100;
-        if ((h < 1.8) || (h > 2.2))
-        {
-            printf("Модели с заданными параметрами не существует");
-            return;
-        }
+    h /= 100;    
+    if ((h < 1.8) || (h > 2.2))
+    {
+        printf("Модели с заданными параметрами не существует");
+        return;
+    }
     printf("Введите глубину шкафа (в см)\n");
     scanf("%f", &d);
     d /= 100;
