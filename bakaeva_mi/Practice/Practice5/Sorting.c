@@ -76,9 +76,12 @@ void choose_method(int *method)
     printf("  4) Count sorting\n");
     printf("  5) Quick sorting\n");
     printf("  6) Merge sorting\n\n");
-    printf("  Method: ");
-    scanf("%d", method);
-    printf("\n");
+    do
+    {
+        printf("  Method: ");
+        scanf("%d", method);
+        printf("\n");
+    } while ((*method < 1) && (*method > 6));
 }
 
 void output(int *ind, int count_files, wchar_t **fNames, ULONGLONG *size)
@@ -95,15 +98,13 @@ void choose_sort(int count_files, ULONGLONG *size, int *ind)
     int i = 0, j = 0, k = 0, t = 0;
     long min;
 
-    for (i = 0; i < count_files; i++)
+    for (i = 0; i < count_files - 1; i++)
     {
         k = i;
-        min = size[i];
         for (j = i + 1; j < count_files; j++)
-            if (size[j] < min)
+            if (size[ind[k]] > size[ind[j]])
             {
                 k = j;
-                min = size[j];
             }
         t = ind[k];
         ind[k] = ind[i];
@@ -114,12 +115,16 @@ void choose_sort(int count_files, ULONGLONG *size, int *ind)
 void insert_sort(ULONGLONG *size, int count_files, int *ind)
 {
     int k, i, j;
-    for (i = 0; i < count_files; i++)
+    for (i = 1; i < count_files; i++)
     {
-        k = size[i];
-        for (j = i - 1; j >= 0 && size[j] > k; j--)
+        k = ind[i];
+        j = i - 1;
+        while((j >= 0) && (size[ind[j]] > size[k]))
+        {
             ind[j + 1] = ind[j];
-        ind[j + 1] = i;
+            ind[j] = k;
+            j--;
+        }
     }
 }
 
@@ -147,19 +152,20 @@ int count_sort(ULONGLONG *size, int count_files, int *ind)
     int i, j, id = 0, idel = 0;
     int del = 0, min, max, pos = 0;
 
-    min = size[0] / 1024;
-    max = size[0] /1024;
+    min = size[0];
+    max = size[0];
 
     for (i = 0; i < count_files; i++)
     {
-        if ((size[i] / 1024) < min)
-            min = size[i] / 1024;
-        if ((size[i] / 1024) > max)
-            max = size[i] / 1024;
+        if ((size[i]) < min)
+            min = size[i];
+        if ((size[i]) > max)
+            max = size[i];
     }
     del = max - min + 1;
     idel = (int)del;
-    if (idel > c)
+    for (i = 0; i < count_files; i++)
+    if (size[i] > c)
         return -1;
 
     for (i = 0; i < idel; i++)
@@ -257,7 +263,7 @@ void main()
     fSizes = (ULONGLONG*)malloc(MAX_PATH * sizeof(ULONGLONG));
 
     printf("  +------------------------------------+\n");
-    printf("  |\t    -FILE MANAGER-             |\n");
+    printf("  |\t      -FILE MANAGER-           |\n");
     printf("  +------------------------------------+\n");
 
     do
@@ -315,7 +321,7 @@ void main()
             ans = count_sort(fSizes, count_files, ind);
             if (ans == -1)
             {
-                printf("  File sizes are too large for this sort, please choose another sort");
+                printf("  File sizes are too large for this sort, please choose another sort\n");
                 break;
             }
             output(ind, count_files, fNames, fSizes);
