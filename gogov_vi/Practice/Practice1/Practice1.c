@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
- void main() 
+
+void main() 
 {
 	double dsp_m, dvp_m, wood_m, h, w, d;
 	double sidewm, swm, cm, dm, sm, m;
