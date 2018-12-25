@@ -1,11 +1,11 @@
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
 #include <locale.h>
 #define BUFFERSIZE 2048
 #define CS 1000
-//Список данных из директория
+//РЎРїРёСЃРѕРє РґР°РЅРЅС‹С… РёР· РґРёСЂРµРєС‚РѕСЂРёСЏ
 int ListDirectoryContents(const wchar_t *sDir, wchar_t **filesName,
 	ULONGLONG *filesSize)
 {
@@ -37,14 +37,14 @@ int ListDirectoryContents(const wchar_t *sDir, wchar_t **filesName,
 
 void Sort()
 {
-	printf("Выберите вид сортировки: \n");
-	printf("1 - Сортировка выбором: \n");
-	printf("2 - Сортировка вставками \n");
-	printf("3 - Пузырьковая сортировка \n");
-	printf("4 - Сортировка подсчетом \n");
-	printf("5 - Быстрая сортировка \n");
-	printf("6 - Сортировка слиянием \n");
-	printf("7 - Выход из программы \n");
+	printf("Р’С‹Р±РµСЂРёС‚Рµ РІРёРґ СЃРѕСЂС‚РёСЂРѕРІРєРё: \n");
+	printf("1 - РЎРѕСЂС‚РёСЂРѕРІРєР° РІС‹Р±РѕСЂРѕРј \n");
+	printf("2 - РЎРѕСЂС‚РёСЂРѕРІРєР° РІСЃС‚Р°РІРєР°РјРё \n");
+	printf("3 - РџСѓР·С‹СЂСЊРєРѕРІР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР° \n");
+	printf("4 - РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕРґСЃС‡РµС‚РѕРј \n");
+	printf("5 - Р‘С‹СЃС‚СЂР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР° \n");
+	printf("6 - РЎРѕСЂС‚РёСЂРѕРІРєР° СЃР»РёСЏРЅРёРµРј \n");
+	printf("7 - Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹ \n");
 }
 
 void InputFiles(wchar_t **sDir)
@@ -52,8 +52,8 @@ void InputFiles(wchar_t **sDir)
 	char *inputStr;
 	*sDir = (wchar_t*)malloc(BUFFERSIZE * sizeof(wchar_t));
 	inputStr = (char*)malloc(BUFFERSIZE * sizeof(char));
-	fgets(inputStr, BUFFERSIZE, stdin); // считываем символы из файла
-	inputStr[strlen(inputStr) - 1] = '\0'; //заменяем символ переноса строки на 0
+	fgets(inputStr, BUFFERSIZE, stdin); // СЃС‡РёС‚С‹РІР°РµРј СЃРёРјРІРѕР»С‹ РёР· С„Р°Р№Р»Р°
+	inputStr[strlen(inputStr) - 1] = '\0'; //Р·Р°РјРµРЅСЏРµРј СЃРёРјРІРѕР» РїРµСЂРµРЅРѕСЃР° СЃС‚СЂРѕРєРё РЅР° 0
 	swprintf(*sDir, BUFFERSIZE, L"%hs", inputStr);
 	free(inputStr);
 }
@@ -62,10 +62,10 @@ void OutputFiles(ULONGLONG *fileSize, wchar_t **fileNames, unsigned long *fileId
 {
 	unsigned long i;
 	for (i = 0; i < n; i++)
-		wprintf(L"Файл:  %s (Размер: %lld байт) \n", fileNames[fileIdx[i]], fileSize[fileIdx[i]]);
+		wprintf(L"Р¤Р°Р№Р»:  %s (Р Р°Р·РјРµСЂ: %lld Р±Р°Р№С‚) \n", fileNames[fileIdx[i]], fileSize[fileIdx[i]]);
 }
 
-// сортировка выбором
+// СЃРѕСЂС‚РёСЂРѕРІРєР° РІС‹Р±РѕСЂРѕРј
 void chooseSort(ULONGLONG *fileSize, int *fileIdx, int n)
 {
 	int i, j, minidx;
@@ -84,7 +84,7 @@ void chooseSort(ULONGLONG *fileSize, int *fileIdx, int n)
 
 	}
 }
-// сортировка вставками
+// СЃРѕСЂС‚РёСЂРѕРІРєР° РІСЃС‚Р°РІРєР°РјРё
 void insertSort(ULONGLONG *fileSize, int *fileIdx, int n)
 {
 	int i, j, idx;
@@ -100,7 +100,7 @@ void insertSort(ULONGLONG *fileSize, int *fileIdx, int n)
 		}
 	}
 }
-// пузырьковая сортировка
+// РїСѓР·С‹СЂСЊРєРѕРІР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР°
 void bubbleSort(ULONGLONG *fileSize, int *fileIdx, int n)
 {
 	int i, j, tmp;
@@ -121,7 +121,7 @@ void bubbleSort(ULONGLONG *fileSize, int *fileIdx, int n)
 		}
 	}
 }
-// сортировка подсчетом
+// СЃРѕСЂС‚РёСЂРѕРІРєР° РїРѕРґСЃС‡РµС‚РѕРј
 void countSort(ULONGLONG *fileSize, int *fileIdx, int n)
 {
 	int i, idx = 0, j, r = 0;
@@ -133,8 +133,8 @@ void countSort(ULONGLONG *fileSize, int *fileIdx, int n)
 			count[fileSize[fileIdx[i]]]++;
 		else
 		{
-			printf("Размер файла слишком большой. ");
-			printf("Попробуйте другую сортировку\n");
+			printf("Р Р°Р·РјРµСЂ С„Р°Р№Р»Р° СЃР»РёС€РєРѕРј Р±РѕР»СЊС€РѕР№. ");
+			printf("РџРѕРїСЂРѕР±СѓР№С‚Рµ РґСЂСѓРіСѓСЋ СЃРѕСЂС‚РёСЂРѕРІРєСѓ\n");
 			return 0;
 		}
 	for (i = 0; i < CS; i++)
@@ -152,7 +152,7 @@ void countSort(ULONGLONG *fileSize, int *fileIdx, int n)
 	}
 	free(count);
 }
-// быстрая сортировка (дополнительная функция)
+// Р±С‹СЃС‚СЂР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР° (РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ)
 void quick_split(ULONGLONG *fileSize, int fileIdx, int *i, int *j, int p)
 {
 	ULONGLONG tmp;
@@ -172,7 +172,7 @@ void quick_split(ULONGLONG *fileSize, int fileIdx, int *i, int *j, int p)
 		}
 	} while (*i <= *j);
 }
-//быстрая сортировка
+//Р±С‹СЃС‚СЂР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР°
 void quick_sort(ULONGLONG *fileSize, int fileIdx, int n1, int n2)
 {
 	int m;
@@ -184,7 +184,7 @@ void quick_sort(ULONGLONG *fileSize, int fileIdx, int n1, int n2)
 	if (j > n1)
 		quick_sort(fileSize, fileIdx, n1, j);
 }
-//сортировка слиянием (дополнительная функция)
+//СЃРѕСЂС‚РёСЂРѕРІРєР° СЃР»РёСЏРЅРёРµРј (РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ)
 void merge(ULONGLONG *fileSize, int *fileIdx, int l, int m, int r)
 {
 	int i, j, tmp, s;
@@ -202,7 +202,7 @@ void merge(ULONGLONG *fileSize, int *fileIdx, int l, int m, int r)
 		}
 	}
 }
-//сортировка слиянием
+//СЃРѕСЂС‚РёСЂРѕРІРєР° СЃР»РёСЏРЅРёРµРј
 void merge_sort(ULONGLONG *fileSize, int fileIdx, int l, int r)
 {
 	int m;
@@ -225,17 +225,17 @@ void main()
 	float alltime = 0.0f;
 	filesName = (wchar_t**)malloc(BUFFERSIZE * sizeof(wchar_t*));
 	filesSize = (ULONGLONG*)malloc(BUFFERSIZE * sizeof(ULONGLONG));
-	printf("---------- Ф А Й Л О В Ы Й   М Е Н Е Д Ж Е Р ----------\n");
-	printf("Введите путь к папке: ");
+	printf("---------- Р¤ Рђ Р™ Р› Рћ Р’ Р« Р™   Рњ Р• Рќ Р• Р” Р– Р• Р  ----------\n");
+	printf("Р’РІРµРґРёС‚Рµ РїСѓС‚СЊ Рє РїР°РїРєРµ: ");
 	InputFiles(&p);
 	N = ListDirectoryContents(p, filesName, filesSize);
 	if (N == -1)
-		printf("Ошибка. Путь не найден.");
+		printf("РћС€РёР±РєР°. РџСѓС‚СЊ РЅРµ РЅР°Р№РґРµРЅ.");
 
 	filesIndex = (unsigned long*)malloc(N * sizeof(unsigned long));
 	for (i = 0; i < N; i++)
-		filesIndex[i] = i; //заполнение массива индексов
-	printf("Всего файлов: %d.\n", N);
+		filesIndex[i] = i; //Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° РёРЅРґРµРєСЃРѕРІ
+	printf("Р’СЃРµРіРѕ С„Р°Р№Р»РѕРІ: %d.\n", N);
 	OutputFiles(filesSize, filesName, filesIndex, N);
 	Sort();
 	do
@@ -264,13 +264,13 @@ void main()
 			merge_sort(filesSize, filesIndex, 0, (N - 1));
 			break;
 		default:
-			printf("Сортировка не найдена. Исходные файлы: \n ");
+			printf("РЎРѕСЂС‚РёСЂРѕРІРєР° РЅРµ РЅР°Р№РґРµРЅР°. РСЃС…РѕРґРЅС‹Рµ С„Р°Р№Р»С‹: \n ");
 		}
 		end = clock();
 		alltime = (double)(end - begin) / CLOCKS_PER_SEC;
 		OutputFiles(filesSize, filesName, filesIndex, N);
-		printf("\n Time: %.5lf сек \n", alltime);
-		printf("Вы можете выбрать другой метод сортировки или выйти: ");
+		printf("\n Time: %.5lf СЃРµРє \n", alltime);
+		printf("Р’С‹ РјРѕР¶РµС‚Рµ РІС‹Р±СЂР°С‚СЊ РґСЂСѓРіРѕР№ РјРµС‚РѕРґ СЃРѕСЂС‚РёСЂРѕРІРєРё РёР»Рё РІС‹Р№С‚Рё: ");
 		for (i = 0; i < N; i++)
 			filesIndex[i] = i;
 	} while (number != 7);
