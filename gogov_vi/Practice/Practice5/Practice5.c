@@ -146,15 +146,15 @@ void countingsort(ULONGLONG* size, int n, int *newId)
     {
         arr[size[i] - min]++;
     }
-	a = (ULONGLONG*)malloc(n * sizeof(ULONGLONG)); // Нужен для записи отсортированного массива
-	for (i = 0; i < k; i++)
+    a = (ULONGLONG*)malloc(n * sizeof(ULONGLONG)); // Нужен для записи отсортированного массива
+    for (i = 0; i < k; i++)
     {
         for (j = 0; j < arr[i]; j++)
             a[b++] = i + min;
     }
     for (j = 0; j < n; j++)
         arr[j] = a[j];
-	free(a);
+    free(a);
     b = 0;
     for (i = 0; i < n; i++)
     {
@@ -252,7 +252,7 @@ void mergesort(ULONGLONG* copy_size, int* id_file, int l, int r)
     if (l >= r) return;
     m = (l + r) / 2;
     mergesort(copy_size, id_file, l, m);
-	mergesort(copy_size, id_file, m + 1, r);
+    mergesort(copy_size, id_file, m + 1, r);
     merge(copy_size, id_file, l, m, r);
 }
 
@@ -318,47 +318,52 @@ void main()
         err = 0;
         size = (ULONGLONG*)malloc(count_files * sizeof(ULONGLONG));
         fileId = (int*)malloc(count_files * sizeof(int));
-		for (i = 0; i < count_files; i++)
-		{
-			fileId[i] = i;
-			size[i] = filesize[i];
-		}
+        for (i = 0; i < count_files; i++)
+        {
+              fileId[i] = i;
+              size[i] = filesize[i];
+        }
         printf("Файлов найдено: %d\n", count_files);
         for (i = 0; i < count_files; i++)
             wprintf(L"Файл: %s Размер: %lld байт\n", fileNames[i], filesize[i]);
         menu();
         scanf("%d", &men);
-        begin = clock();
             switch (men) {
             case 1:
                 scanf("%c", &e);
-				choose(size, count_files, fileId);
+                begin = clock();
+                choose(size, count_files, fileId);
                 end = clock();
                 break;
             case 2:
                 scanf("%c", &e);
-				insert(size, count_files, fileId);
+                begin = clock();
+                insert(size, count_files, fileId);
                 end = clock();
                 break;
             case 3:
                 scanf("%c", &e);
-				bubble(size, count_files, fileId);
+                begin = clock();
+                bubble(size, count_files, fileId);
                 end = clock();
                 break;
             case 4:
                 scanf("%c", &e);
-				countingsort(size, count_files, fileId);
+                begin = clock();
+                countingsort(size, count_files, fileId);
                 if (fileId == NULL)
                     err = 1;
                 end = clock();
                 break;
             case 5:
                 scanf("%c", &e);
-				quicksort(size, fileId[0], fileId[count_files - 1], fileId);
+                begin = clock();
+                quicksort(size, fileId[0], fileId[count_files - 1], fileId);
                 end = clock();
                 break;
             case 6:
                 scanf("%c", &e);
+                begin = clock();
                 mergesort(size, fileId, fileId[0], fileId[count_files - 1]);
                 end = clock();
                 break;
@@ -379,8 +384,8 @@ void main()
                 printf("для сортировки подсчетом.\n");
                 printf("Попробуйте снова, не используя сортироку подсчетом.\n");
             }
-			free(fileId);
-			free(size);
+            free(fileId);
+            free(size);
             free(filesize);
             for (i = 0; i < count_files; i++)
                 free(fileNames[i]);
