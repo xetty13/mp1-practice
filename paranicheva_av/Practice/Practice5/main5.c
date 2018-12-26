@@ -76,7 +76,7 @@ void Choose_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 }
 void Insert_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 {
-	int i, j, tmp;
+    int i, j, tmp;
     for (i = 1; i < kolvo; i++)
     {
         tmp = filesIndex[i];
@@ -91,7 +91,7 @@ void Insert_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 }
 void Bubble_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 {
-	int i, j, tmp;
+    int i, j, tmp;
     for (i = 0; i < kolvo; i++)
     {
         for (j = 1; j < kolvo - i; j++)
@@ -107,7 +107,7 @@ void Bubble_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 }
 void Counting_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 {
-	int *count = (int*)malloc(MAX_COUNT_OF_FILES * sizeof(int));
+    int *count = (int*)malloc(MAX_COUNT_OF_FILES * sizeof(int));
     int i, j, idx = 0, h = 0;
     for (i = 0; i < MAX_COUNT_OF_FILES; i++)
         count[i] = 0;
