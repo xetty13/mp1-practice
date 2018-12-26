@@ -78,9 +78,9 @@ void chooseSort(ULONGLONG *fileSize, int *fileIdx, int n)
 			if (fileSize[fileIdx[j]] < fileSize[fileIdx[minidx]])
 				minidx = j;
 		}
-		tmp = fileSize[minidx];
-		fileSize[minidx] = fileSize[i];
-		fileSize[i] = tmp;
+		tmp = fileIdx[minidx];                  //Мы меняем массив индексов, но при этом 
+		fileIdx[minidx] = fileIdx[i];           //значения остаются
+		fileIdx[i] = tmp;
 
 	}
 }
