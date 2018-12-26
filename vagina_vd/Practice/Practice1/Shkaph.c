@@ -57,7 +57,7 @@ void main()
 	m_bok = 2 * p_dsp * t_dsp * (h - 2 * t_dsp) * (d - t_dvp);
 	m_kr = 2 * p_dsp * w * d * t_dsp;
 	m_dv = p_der * h * t_der * w;
-	m_p = p_dsp * (h - 2 * t_dsp) / (0.4 + t_dsp) * (w - 2 * t_dsp) * (d - t_dvp);
+	m_p = p_dsp * (int)((h - 2 * t_dsp) / (0.4 + t_dsp)) * (w - 2 * t_dsp) * (d - t_dvp);
 	M = (m_p + m_kr + m_bok + m_zst + m_dv);
 	printf("Massa shkapha ravna (v kg) %lf", M);
 }
