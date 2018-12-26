@@ -10,10 +10,10 @@ void main()
 	{
 		if ((h >= 1.8) && (h <= 2.2) && (w >= 0.8) && (w <= 1.2) && (d >= 0.5) && (d <= 0.9))
 		{
-                      m1 = (h * w * 0,005 * pdvp);
-	                m2 = (h * d * 0,015 * pdsp);
-	                m3 = (w * d * 0,015 * pdsp);
-		        m4 = (h * w * 0,01 * pder);
+                      m1 = (h * w * 0.005 * pdvp);
+	                m2 = (h * d * 0.015 * pdsp);
+	                m3 = (w * d * 0.015 * pdsp);
+		        m4 = (h * w * 0.01 * pder);
 		        m5 = (floor((h - 2 * 0.015) / (0.4 + 0.015)) * (w - 2 * 0.015) * (d - 0.005) * 0.01 * pdsp);
 		        M = (m1 + m2 + m3 + m4 + m5);
 	                printf ("Massa shkapha %lf kg", M);
