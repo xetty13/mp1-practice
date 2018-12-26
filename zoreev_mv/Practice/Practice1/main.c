@@ -19,7 +19,11 @@ void main()
         return;
     }
 
-    n = floor((h - 2 * 1.5) / (40 + 1.5));
+    h = h / 100;
+    w = w / 100;
+    d = d / 100;
+
+    n = floor((h - 2 * 0.015) / (0.4 + 0.015));
     
     back = (h * w * 0.5 * dvp);
     side = (2 * h * d* 1.5 * dsp);
@@ -27,6 +31,6 @@ void main()
     door = (h * w * 1 * wood);
     shelf = (n * (d - 0.5) * (w - 2 * 1.5) * 1.5 * dsp);
 
-    M = (back + side + top + door + shelf) / 1000000;
+    M = (back + side + top + door + shelf);
     printf("Масса шкафа: %lfкг\n",M);
 }
