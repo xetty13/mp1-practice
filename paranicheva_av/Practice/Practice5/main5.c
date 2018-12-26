@@ -256,5 +256,5 @@ do {
     } while (vybor < 1 || vybor > 6); 
     
     free(tmpSizes);
-	free(filesIndex);
+    free(filesIndex);
 }
