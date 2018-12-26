@@ -21,11 +21,10 @@ void main()
 
     srand((unsigned int)time(0));
 
-    for (i = 0; i < dlina; i++)
+    chislo[0] = rand() % 8 + 1;
+    for (i = 1; i < dlina; i++)
     {
         chislo[i] = rand() % 9;
-        if (chislo[0] == 0)
-            chislo[0] = rand() % 9 + 1;
         if (i > 0)
             for (j = 0; j < i; j++)
                 if (chislo[i] == chislo[j])
@@ -34,7 +33,7 @@ void main()
                     break;
                 }
     }
-
+   
     printf("Computer: I made a number, try to guess it!\n");
 
     while (bull != dlina) {
