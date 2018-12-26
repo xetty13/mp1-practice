@@ -38,7 +38,7 @@ void main()
         return;
     }
     //inside
-    if (dist < abs(r1 - r2))
+    if (dist < fabs(r1 - r2))
     {
         printf("no common dots \n");
         printf("one inside another \n");
@@ -46,7 +46,7 @@ void main()
     }
     // touching
     // inside
-    if (dist == abs(r1 - r2))
+    if (dist == fabs(r1 - r2))
     {
         printf("one touches another internally \n");
         return;
@@ -58,7 +58,7 @@ void main()
         return;
     }
     // intersect
-    if (dist > abs(r1 - r2) && dist < (r1 + r2))
+    if (dist > fabs(r1 - r2) && dist < (r1 + r2))
     {
         printf("two common dots \n");
         return;
