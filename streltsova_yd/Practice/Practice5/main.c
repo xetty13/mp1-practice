@@ -210,42 +210,53 @@ void main()
     Menu();
     do
     {
+        f = 0;
         do
         {
             scanf ("%d", &mode);
         }while ((mode != 1) && (mode != 2) && (mode != 3) && (mode != 4) && (mode != 5) && (mode != 6) && (mode != 7) && (mode != 8));
-        start = clock();
         switch (mode)
-    {
+        {
     case 1:
+        start = clock();
         Selection_sort (fSize, ind, count);
+        end = clock();
         break;
     case 2:
+        start = clock();
         Insertion_sort (fSize, ind, count);
+        end = clock();
         break;
     case 3:
+        start = clock();
         Bubble_sort (fSize, ind, count);
+        end = clock();
         break;
     case 4:
+        start = clock();
         f = Counting_sort (fSize, ind, count);
+        end = clock();
         break;
     case 5:
+        start = clock();
         Quick_sort (fSize, ind, 0, count - 1);
+        end = clock();
         break;
     case 6:
+        start = clock();
         Merge_sort (fSize, ind, 0, count - 1);
-    }
         end = clock();
-        time = (float)(end - start) / CLOCKS_PER_SEC;
+        }
+        time = (double)(end - start) / CLOCKS_PER_SEC;
         if (f == 0)
         {
             Output_Directory(fName, fSize, ind, count);
-            printf("\n Time: %.4lf sec.\n", time);
+            printf("\n Time: %.6lf sec.\n", time);
         }
         for (i = 0; i < count; i++)         
             ind[i] = i;
         start = end = 0;
-    }while (mode != 7);
+    } while (mode != 7);
     free(fName);
     free(fSize);
     free(ind);
