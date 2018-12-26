@@ -122,7 +122,7 @@ void bubble(ULONGLONG* size, int n, int* newId)
     }
 }
 
-void countingsort(ULONGLONG* size, int n, int *newId)
+int countingsort(ULONGLONG* size, int n, int *newId)
 {
     ULONGLONG *arr, k, max = size[n - 1], min = size[0], *a;
     int i, b = 0, j;
@@ -138,7 +138,7 @@ void countingsort(ULONGLONG* size, int n, int *newId)
     }
     k = max - min + 1;
     if (k * (ULONGLONG)sizeof(int) > (ULONGLONG)UINT_MAX)
-        return NULL;
+        return 1;
     arr = (ULONGLONG*)malloc(k * sizeof(ULONGLONG));
     for (i = 0; i < k; i++) 
         arr[i] = 0;
@@ -168,6 +168,7 @@ void countingsort(ULONGLONG* size, int n, int *newId)
             }
     }
     free(arr);
+    return 0;
 }
 
 void quicksort(ULONGLONG* size, int n1, int n2, int* newid)
@@ -350,9 +351,7 @@ void main()
             case 4:
                 scanf("%c", &e);
                 begin = clock();
-                countingsort(size, count_files, fileId);
-                if (fileId == NULL)
-                    err = 1;
+                err = countingsort(size, count_files, fileId);
                 end = clock();
                 break;
             case 5:
