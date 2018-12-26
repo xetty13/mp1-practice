@@ -62,9 +62,9 @@ int ListDirectoryContetns(const wchar_t *sDir, wchar_t ***fNames, ULONGLONG **fS
             i++;
         }
     } while (FindNextFile(hFind, &fdFile));
-    return i;
     FindClose(hFind);
     free(sPath);
+    return i;
 }
 
 void choose_method(int *method)
@@ -96,7 +96,7 @@ void output(int *ind, int count_files, wchar_t **fNames, ULONGLONG *size)
 void choose_sort(int count_files, ULONGLONG *size, int *ind)
 {
     int i = 0, j = 0, k = 0, t = 0;
-    long min;
+    ULONGLONG min;
 
     for (i = 0; i < count_files - 1; i++)
     {
@@ -256,7 +256,7 @@ void main()
     int method, i = 0;
     int *ind = NULL;
     clock_t begin, end;
-    double time_spent = 0;
+    float time_spent = 0;
     setlocale(LC_ALL, "Russian");
 
     fNames = (wchar_t**)malloc(MAX_PATH * sizeof(wchar_t*));
@@ -295,30 +295,41 @@ void main()
 
         choose_method(&method);
 
-        begin = clock();
         switch (method)
         {
         case(1):
         {
+            getchar();
+            begin = clock();
             choose_sort(count_files, fSizes, ind);
+            end = clock();
             output(ind, count_files, fNames, fSizes);
             break;
         }
         case(2):
         {
+            getchar();
+            begin = clock();
             insert_sort(fSizes, count_files, ind);
+            end = clock();
             output(ind, count_files, fNames, fSizes);
             break;
         }
         case(3):
         {
+            getchar();
+            begin = clock();
             bubble_sort(fSizes, count_files, ind);
+            end = clock();
             output(ind, count_files, fNames, fSizes);
             break;
         }
         case(4):
         {
+            getchar();
+            begin = clock();
             ans = count_sort(fSizes, count_files, ind);
+            end = clock();
             if (ans == -1)
             {
                 printf("  File sizes are too large for this sort, please choose another sort\n");
@@ -329,22 +340,27 @@ void main()
         }
         case(5):
         {
+            getchar();
+            begin = clock();
             quick_sort(fSizes, ind, 0, count_files - 1);
+            end = clock();
             output(ind, count_files, fNames, fSizes);
             break;
         }
         case(6):
         {
+            getchar();
+            begin = clock();
             merge_sort(fSizes, 0, count_files - 1, ind);
+            end = clock();
             output(ind, count_files, fNames, fSizes);
             break;
         }
         }
-        end = clock();
-        time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+        time_spent = (float)(end - begin) / CLOCKS_PER_SEC;
         printf("  Sorting time: %.3f cek\n", time_spent);
 
-        getchar();
+        //getchar();
         free(ind);
         for (i = 0; i < count_files; i++)
             free(fNames[i]);
