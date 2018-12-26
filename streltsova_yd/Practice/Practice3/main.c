@@ -13,15 +13,15 @@ void main()
     } while ((mode != 1) && (mode != 2));
     if (mode == 1)
     {
-        srand ((unsigned int) time(0));
-        n = 1000.0 / RAND_MAX  * rand () + 1;
+        srand ((unsigned int)time(0));
+        n = 1000.0 / RAND_MAX  * rand() + 1;
         printf ("Number generated. Try to guess it. Enter a number from 1 to 1000\n");
         while (n != n1)
         {
             do
             {
                 scanf ("%d", &n1);
-            }while ((n1 < 1) || (n1 > 1000));
+            } while ((n1 < 1) || (n1 > 1000));
             if (n > n1) 
                 printf ("The number is greater\n");
             if (n < n1)
@@ -36,7 +36,7 @@ void main()
     do
     {
         scanf ("%d", &n1);
-    }while ((n1 < 1) || (n1 > 1000));
+    } while ((n1 < 1) || (n1 > 1000));
     while (sign != '=')
     {
         mid = (i1 + i2) / 2;
@@ -44,9 +44,11 @@ void main()
         do
         {
             scanf ("%c", &sign);
-        }while ((sign != '<') && (sign != '>') && (sign != '='));
-        if (sign == '<') i2 = mid - 1;
-        if (sign == '>') i1 = mid +1;
+        } while ((sign != '<') && (sign != '>') && (sign != '='));
+        if (sign == '<') 
+            i2 = mid - 1;
+        if (sign == '>') 
+            i1 = mid + 1;
         k++;
     }
     printf ("The number was matched\n");
