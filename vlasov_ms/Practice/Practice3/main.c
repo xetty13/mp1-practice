@@ -53,7 +53,7 @@ void main()
             count++;
             sug = rand() % (end - start + 1) + start;
             printf("Я думаю, что вы загадали %d (введите > , < или = ): ", sug);
-            scanf(" %c", &act);
+            scanf("%*c%c", &act);
 
             if (act == '>')
                 start = sug + 1;
