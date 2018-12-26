@@ -5,11 +5,11 @@
 void main()
 {
 	int a[10], b[10];
-	int n, cows = 0, bulls = 0, p;
+	int n, cows = 0, bulls = 0, p, p1, i, j, f;
 	int temp = 1;
 	do
 	{
-		printf("Enter n: ");
+		printf("Enter number of digits: ");
 		scanf("%d", &n);
 		if ((n <= 0) || (n >= 10))
 			printf("Number does not exist \n");
@@ -18,12 +18,12 @@ void main()
 	while (temp)
 	{
 		temp = 0;
-		for (int i = 0; i < n; i++)
+		for (i = 0; i < n; i++)
 			a[i] = rand() % 9;
 		if (a[0] == 0)
 			a[0] = rand() % 9 + 1;
-		for (int i = 0; i < n; i++)
-			for (int j = i + 1; j < n; j++)
+		for (i = 0; i < n; i++)
+			for (j = i + 1; j < n; j++)
 				if (a[i] == a[j])
 				{
 					temp = 1;
@@ -32,15 +32,35 @@ void main()
 	}
 	while (bulls != n)
 	{
+		do
+		{
+			i = 0, f = 0;
+			printf("Enter your number: ");
+			scanf("%d", &p);
+			p1 = p;
+			while (p1 != 0)
+			{
+				p1 = p1 / 10;
+				i++;
+			}
+			if (i == n)
+			{
+				for (i = n - 1; i > -1; i--)
+				{
+					b[i] = p % 10;
+					p = p / 10;
+				}
+				for (i = 0; i < n - 1; i++)
+					for (j = i + 1; j < n; j++)
+						if (b[i] == b[j])
+							f = 1;
+			}
+			else f = 1;
+			if (f == 1)
+				printf("Your number is incorrect.Try again.\n");
+		} while (f != 0);
 		cows = 0;
 		bulls = 0;
-		printf("Enter your number: ");
-		scanf("%d", &p);
-		for (int i = n; i > 0; i--)
-		{
-			b[i - 1] = p % 10;
-			p /= 10;
-		}
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < n; j++)
 				if (b[i] == a[j])
@@ -48,8 +68,6 @@ void main()
 		for (int i = 0; i < n; i++)
 			if (a[i] == b[i])
 				bulls++;
-		if (cows >= bulls)
-			cows -= bulls;
 		printf("Cows: %d\n", cows);
 		printf("Bulls: %d\n", bulls);
 	}
