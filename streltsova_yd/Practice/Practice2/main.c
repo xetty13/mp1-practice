@@ -13,10 +13,10 @@ void main()
         scanf ("%d", &n);
     } while ((n <= 0) || (n > 10));
     i = n;
-    srand ((unsigned int) time(0));
+    srand ((unsigned int)time(0));
     while (i != 0)
     {
-        j = 10.0 / RAND_MAX * rand ();
+        j = 10.0 / RAND_MAX * rand();
         flag = 0; clone = num;
         while (clone != 0)
         {
@@ -69,9 +69,9 @@ void main()
         for ( i = 0; i < n; i++) 
             for (j = 0; j < n; j++)
             {
-                if ((a[i] == b[j]) && ( i == j)) 
+                if ((a[i] == b[j]) && (i == j)) 
                     bulls++;
-                if ((a[i] == b[j]) && ( i != j))
+                if ((a[i] == b[j]) && (i != j))
                     cows++;
             }
             printf ("Number of bulls = %d\n", bulls);
