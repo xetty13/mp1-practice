@@ -60,7 +60,7 @@ void Output(wchar_t **filesName, ULONGLONG *filesSize, int *filesIndex, int kolv
 
 void Choose_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 {
-	int i, j, tmp, ind;
+    int i, j, tmp, ind;
     for (i = 0; i < kolvo - 1; i++)
     {
         ind = i;
