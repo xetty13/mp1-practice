@@ -21,7 +21,7 @@ void main() {
 		V1 = h * w * l1;
 		V2 = 2 * h * d * l2;
 		V3 = 2 * w * d * l2;
-		V4 = 2 * h * w * l3;
+		V4 = h * w * l3;
 		V5 = (h - 2 * l2) / (0.4 + l2) * (w - 2 * l2) * (d - l1);
 		m1 = V1 * p2;
 		m2 = V2 * p1;
