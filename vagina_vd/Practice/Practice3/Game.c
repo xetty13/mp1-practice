@@ -23,7 +23,7 @@ void main()
 		do
 		{
 			do 
-			{ 
+			{
 				scanf("%d", &ch_pl);
 			} while (ch_pl <= 0 && ch_pl > 1000);
 				
@@ -31,39 +31,34 @@ void main()
 				printf("This number %d is smaller than the number made by the computer. Try again \n", ch_pl);
 			else
 				printf("This number %d is bigger than the number made by the computer. Try again \n", ch_pl);
-				k++; // счетчик попыток
+			k++; // счетчик попыток
 		} while (ch != ch_pl);
 		printf("You guessed the number! It's %d. Number of attempts: %d \n", ch, k);
 		return;
 	}
-
-	else       //режим 2
+	printf("HINT: If the computer has entered a number larger, enter '>' else '<' \n  ");
+	printf("    If the computer has entered a number equal to done, enter '=' \n ");
+	printf("\n");
+	do
 	{
-		printf("HINT: If the computer has entered a number larger, enter '>' else '<' \n  ");
-		printf("    If the computer has entered a number equal to done, enter '=' \n ");
-		printf("\n");
-		do
+		printf("Make a number from 1 to 1000\n");
+		scanf("%d", &ch_pl);
+	} while (ch_pl <= 0 && ch_pl > 1000);
+	do
+	{
+		ch = rand() % (n2 - n1 + 1) + n1;
+		printf("The computer made a number %d\n", ch);
+		do 
 		{
-			printf("Make a number from 1 to 1000\n");
-			scanf("%d", &ch_pl);
-		} while (ch_pl <= 0 && ch_pl > 1000);
-		do
-		{
-			ch = rand() % (n2 - n1 + 1) + n1;
-			printf("The computer made a number %d\n", ch);
-
-			do 
-			{
-				printf("Enter the sign\n");
-				scanf("%1s", &ssign);
-			} while (ssign != '=' && ssign != '<' && ssign != '>');
-			if (ssign == '>')
-				n2 = ch - 1;      // "сокращение" отрезка
-			if (ssign == '<')
-				n1 = ch + 1;
-			k++;
-		} while (ssign != '=');
-			printf("Computer guessed the number! It's %d. Number of attempts: %d \n", ch, k);
-		return;
-	}
+			printf("Enter the sign\n");
+			scanf("%1s", &ssign);
+		} while (ssign != '=' && ssign != '<' && ssign != '>');
+		if (ssign == '>')
+			n2 = ch - 1;      // "сокращение" отрезка
+		if (ssign == '<')
+			n1 = ch + 1;
+		k++;
+	} while (ssign != '=');
+	printf("Computer guessed the number! It's %d. Number of attempts: %d \n", ch, k);
+	return;
 }
