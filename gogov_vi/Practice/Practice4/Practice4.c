@@ -6,7 +6,7 @@
 #define MAX_LEN 17
 
 int barcode, count = 0, scancheck;
-int barcodes[MAX] = { 7899, 9730, 4430, 3965, 5364, 4828, 7281 };
+char barcodes[MAX][5] = { "7899" , "9730" , "4430" , "3965" , "5364" , "4828" , "7281" };
 char name[MAX][MAX_LEN] = { "Сок Мультифрукт","Хлеб нарезной","Булки из Атака",
 "Big Bon","Сыр с плесенью","Молоко Свежесть","Бумага Туалетная" };
 int price[MAX] = { 62, 27, 19, 21, 499, 32, 52 };
@@ -30,11 +30,11 @@ int searchcod(int cod)
 {
     int i = -1;
     for (i = 0; i < MAX; i++) {
-        if (cod == barcodes[i])
+        if (cod == atoi(barcodes[i]))
             break;
     }
-	if (i >= MAX)
-		i = -1;
+    if (i >= MAX)
+        i = -1;
     return i;
 }
 
@@ -87,7 +87,7 @@ void checkall()
         if (check[i] == 1)
         {
             skid = price[i] * (1 - (float)(sale[i] * 0.01));
-            printf("| %7d | ", barcodes[i]);
+            printf("| %7s | ", barcodes[i]);
             for (j = 0; j < MAX_LEN - 1; j++)
                 printf("%c", name[i][j]);
             printf("| %11d | %5d%c | %15.2f | %7d|\n", price[i], sale[i], PROCENT, skid, count_check[i]);
