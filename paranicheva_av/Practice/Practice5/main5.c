@@ -39,7 +39,7 @@ int ListDirectoryContents(const wchar_t *sDir, wchar_t **fileName, ULONGLONG *fi
     return j;
 }
 
-void Input_string(wchar_t **sDir)
+void Input(wchar_t **sDir)
 {
     char *inpstr;
     inpstr = (char*)malloc((MAX_LEN)* sizeof(char));
@@ -49,7 +49,7 @@ void Input_string(wchar_t **sDir)
     swprintf(*sDir, MAX_LEN, L"%hs", inpstr);
 }
 
-void Output_string(wchar_t **filesName, ULONGLONG *filesSize, int *filesIndex, int kolvo)
+void Output(wchar_t **filesName, ULONGLONG *filesSize, int *filesIndex, int kolvo)
 {
     int i;
     for (i = 0; i < kolvo; i++)
@@ -194,7 +194,7 @@ int main()
     wchar_t *path;
     ULONGLONG *filesSize, *tmpSizes;
     clock_t start, end;
-	int *filesIndex;
+    int *filesIndex;
     unsigned long inpstr;
     int  vybor, i = 0, kolvo = -1;
     float sorttime = 0.0f;
@@ -205,13 +205,13 @@ int main()
 
     while (kolvo == -1)
     {
-        Input_string(&path);
+        Input(&path);
         kolvo = ListDirectoryContents(path, fileName, filesSize);
     }
     filesIndex = (int*)malloc(kolvo * sizeof(int));
     for (i = 0; i < kolvo; i++)
         filesIndex[i] = i;
-    Output_string(fileName, filesSize, filesIndex, kolvo);                   
+    Output(fileName, filesSize, filesIndex, kolvo);                   
 
     tmpSizes = (ULONGLONG*)malloc(kolvo * sizeof(ULONGLONG));           
     for (i = 0; i < kolvo; i++)                                         
@@ -251,7 +251,7 @@ do {
         sorttime = (float)(end - start) / CLOCKS_PER_SEC;
         printf("Time of sorting: %.4lf s\n", sorttime);
 		if (kolvo > 0)
-        Output_string(fileName,  tmpSizes, filesIndex,  kolvo);
+        Output(fileName,  tmpSizes, filesIndex,  kolvo);
 
     } while (vybor < 1 || vybor > 6); 
     
