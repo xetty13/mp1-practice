@@ -200,7 +200,7 @@ int main()
     printf("Input path\n");
 
     filesSize = (ULONGLONG*)malloc(MAX_LEN * sizeof(ULONGLONG)); 
-	fileName = (wchar_t**)malloc((MAX_LEN)* sizeof(wchar_t*));
+    fileName = (wchar_t**)malloc((MAX_LEN)* sizeof(wchar_t*));
 
     while (kolvo == -1)
     {
@@ -284,5 +284,3 @@ int main()
     free(tmpSizes);
     free(filesIndex);
 }
-
-	
