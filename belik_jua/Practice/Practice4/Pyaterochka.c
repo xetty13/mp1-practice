@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #define N 10000
-#define L 10
 
 void Command()
 {
@@ -17,11 +16,11 @@ void Gen(int a[], int n, double m)
 {
     int i;
     srand((unsigned int)time(0));
-    for (i = 1; i < n; i++)
+    for (i = 0; i < n; i++)
         a[i] = m / RAND_MAX * rand() + 1;
 }
 
-int Scan(int goo[], int num)
+int Scan(int *num, char **id)
 {
     char tov[4];
     int tmp, i;
@@ -29,12 +28,15 @@ int Scan(int goo[], int num)
     {
         printf("Enter barcode \n");
         scanf("%s", &tov);
-        tmp = tov[3] - '0' + (tov[2] - '0') * 10 + (tov[1] - '0') * 100 + (tov[0] - '0') * 1000; 
+        i = 0;
+        while (strncmp(tov, id[i], 4) != 0)
+        {
+            i++;
+        }
+        tmp = i;
     } 
     while ((tmp < 0) || (tmp > N)); 
-    goo[num] = tmp; 
-    for (i = 0; i < 4; i++)
-        tov[i] = NULL;
+    *num = tmp; 
     do
     {
         printf("Enter the quantity of goods \n");
@@ -44,29 +46,30 @@ int Scan(int goo[], int num)
     return tmp;
 }
 
-void Desciption(char prod[][L], int pr[], int dis[], int num)
+void Desciption(char **prod, int pr[], int dis[], int num, char **id)
 {
     int i;
     printf("id ");
-        for (i = 0; i < L; i++)
-            printf("%c", prod[num][i]); 
-    printf(" price %d dis %d \n", pr[num], dis[num]);
+    for (i = 0; i < 4; i++)
+        printf("%c", id[num][i]);
+    printf(" %s price %d dis %d \n", prod[num], pr[num], dis[num]);
 }
 
 void AddToCheck(int quan[], int num, int q)
 {
     quan[num] += q;
+    printf("Item added to check\n");
 }
 
-void Form(int quan[], char prod[][L], int pr[], int dis[])
+void Form(int quan[], char **prod, int pr[], int dis[], char **id)
 {
     int i, tov;
     int check = 0, total = 0;
-    for (i = 1; i < N; i++)
+    for (i = 0; i < N; i++)
     {
         if (quan[i] > 0)
         {
-            Desciption(prod, pr, dis, i);
+            Desciption(prod, pr, dis, i, id);
             tov = quan[i] * pr[i] * (100 - dis[i]) / 100;
             printf("quan %d total %d \n", quan[i], tov);
             check += (pr[i] * quan[i]);
@@ -79,26 +82,68 @@ void Form(int quan[], char prod[][L], int pr[], int dis[])
         printf("without discount %d discount %d total %d \n", check, i, total);
     }
     else
-        printf("No products added");
+        printf("Check empty\n");
 }
 
 void main()
 {
-    int num = 0, i, j, q;
-    int quan[N] = {0}, pr[N], dis[N], goo[N];
-    char prod[N][L] = { "0000 Pack ", "0001 Milk ", "0002 Bread", "0003 Egg  ", "0004 Flour", "0005 Apple", "0006 Meat ", "0007 Fish " }; 
-    for (i = 8; i < N; i++)
+    int num = 0, i, q;
+    int quan[N] = {0}, pr[N], dis[N];
+    char** prod = (char**)malloc(sizeof(char*) * N);
+    char** id = (char**)malloc(sizeof(char*) * N);
+    for (i = 0; i < N; i++)
     {
-        prod[i][0] = (i / 1000) + '0';
-        prod[i][1] = (i / 100) % 10 + '0';
-        prod[i][2] = (i / 10) % 10 + '0';
-        prod[i][3] = (i % 10) + '0';
-        for (j = 4; j < L; j++)
-            prod[i][j] = prod[i % 8][j];
+        switch (i % 10) {
+        case 0:
+            prod[i] = (char*)malloc(sizeof(char) * 4); 
+            prod[i] = "Pack";
+            break;
+        case 1:
+            prod[i] = (char*)malloc(sizeof(char) * 4);
+            prod[i] = "Milk";
+            break;
+        case 2:
+            prod[i] = (char*)malloc(sizeof(char) * 5);
+            prod[i] = "Bread";
+            break;
+        case 3:
+            prod[i] = (char*)malloc(sizeof(char) * 3);
+            prod[i] = "Egg";
+            break;
+        case 4:
+            prod[i] = (char*)malloc(sizeof(char) * 5);
+            prod[i] = "Flour";
+            break;
+        case 5:
+            prod[i] = (char*)malloc(sizeof(char) * 5);
+            prod[i] = "Apple";
+            break;
+        case 6:
+            prod[i] = (char*)malloc(sizeof(char) * 4);
+            prod[i] = "Meat";
+            break;
+        case 7:
+            prod[i] = (char*)malloc(sizeof(char) * 4);
+            prod[i] = "Fish";
+            break;
+        case 8:
+            prod[i] = (char*)malloc(sizeof(char) * 4);
+            prod[i] = "Nuts";
+            break;
+        case 9:
+            prod[i] = (char*)malloc(sizeof(char) * 9);
+            prod[i] = "Chocolate";
+            break;
+        }
+        id[i] = (char*)malloc(sizeof(char) * 4);
+        id[i][3] = i % 10 + '0';
+        id[i][2] = (i / 10) % 10 + '0';
+        id[i][1] = (i / 100) % 10 + '0';
+        id[i][0] = (i / 1000) + '0';
     }
     Gen(pr, N, 1000.0); 
     Gen(dis, N, 50.0);
-    q = Scan(goo, num); 
+    q = Scan(&num, id); 
     do
     {
         Command();
@@ -106,22 +151,30 @@ void main()
         printf("\n");
         switch (i) {
         case 1: 
-            q = Scan(goo, num);
+            q = Scan(&num, id);
             break;
         case 2:
-            Desciption(prod, pr, dis, goo[num]);
+            Desciption(prod, pr, dis, num, id);
             break;
         case 3: 
-            AddToCheck(quan, goo[num], q);
+            AddToCheck(quan, num, q);
             num++;
             break;
         case 4:
-            Form(quan, prod, pr, dis);
+            Form(quan, prod, pr, dis, id);
             break;
         case 5:
-            Form(quan, prod, pr, dis);
+            Form(quan, prod, pr, dis, id);
             break;
+        default:
+            printf("Invalid command\n");
         }
     } 
     while (i != 5);
+    for (i = 0; i < N; i++)
+        free(prod[i]);
+    free(prod);
+    for (i = 0; i < N; i++)
+        free(id[i]);
+    free(id);
 }
