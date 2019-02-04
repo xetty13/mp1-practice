@@ -20,11 +20,12 @@ void Scan_product(int *ind, int *kolvo,  int *i, char **scan, int *k)
 void Product_description(char **scan, char **prod, int price[], int discount[], int *ind )
 {
 	int h = *ind + 1;
-	printf("%c%c%c%c   name - %s  unit price = %d   discount = %d\n", scan[h][0], scan[h][1], scan[h][2], scan[h][3], prod[*ind], price[*ind], discount[*ind]);
+	printf("%c%c%c%c   name - %s  ", scan[h][0], scan[h][1], scan[h][2], scan[h][3], prod[*ind]);
+	printf("unit price = %d   discount = %d\n", price[*ind], discount[*ind])
 }
 void Add_item_to_check(int *check, int *ind, int *sch, int *i, int kolvo[], int *k)
 {
-	
+
 	kolvo[*i] = *k;
 	check[*sch] = *ind;
 }
@@ -37,7 +38,7 @@ void Add_item_to_check(int *check, int *ind, int *sch, int *i, int kolvo[], int 
 		kprice[j] = price[check[j]] * kolvo[j];
 		printf("price = %d\n", kprice[j]);
 	}
-	
+
 }
  void Calculate_the_total(int kprice[], int price[], int discount[], int kolvo[], int *check, int sch)
 {
@@ -61,7 +62,7 @@ void main()
 	int *kolvo;
 	int *check;
 	int *kprice;
-	
+
 	for (i = 0; i < 10000; i++)
     {
 		scan[i] = (char*)malloc(sizeof(char) * 4);
@@ -77,13 +78,14 @@ void main()
 	i = 0;
 	do
 	{
-		printf (" 1. Scan product \n 2. Product description \n 3. Add item to check \n 4. Form a check \n 5. Calculate the total\n  ");
+		printf (" 1. Scan product \n 2. Product description \n 3. Add item to check \n 4. Form a check \n ");
+		printf ("5. Calculate the total\n");
 		scanf ("%d", &choice);
 		switch (choice)
 			{
 			case 1: 
 				Scan_product(&ind, kolvo, &i, scan, &k);
-				
+
 				break;
 			case 2: 
 				Product_description(scan, prod, price, discount, &ind );
