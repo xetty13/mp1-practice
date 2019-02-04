@@ -360,9 +360,8 @@ void main()
                 end = clock();
                 break;
             default:
-				printf("Неверно выбран способ сортировки.\n");
-				getchar();
-				continue;
+				menu();
+				scanf("%d", &men);
             }
             time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
             if (err != 1)
