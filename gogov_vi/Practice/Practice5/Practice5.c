@@ -174,7 +174,7 @@ int countingsort(ULONGLONG* size, int n, int *newId)
 void quicksort(ULONGLONG* size, int n1, int n2, int* newid)
 {
     ULONGLONG p = size[(n1 + n2) / 2];;
-    int i = n1, j = n2, tmp1, k;
+    int i = n1, j = n2;
     do {
         while (size[i] < p) i++;
         while (size[j] > p) j--;
@@ -284,7 +284,7 @@ void entpath(wchar_t** path)
     char* b;
     *path = (wchar_t*)malloc(BUFFER * sizeof(wchar_t));
     b = (char*)malloc(BUFFER * sizeof(char));
-    printf("Укажите путь к файлам(вместо \\ пишите /): ");
+    printf("Укажите путь к файлам (вместо \\ пишите /): ");
     fgets(b, BUFFER, stdin);
     b[strlen(b) - 1] = '\0';
     swprintf(*path, BUFFER, L"%hs", b);
@@ -298,7 +298,6 @@ void main()
     ULONGLONG* size, *filesize;
     int *fileId, err;
     int men, i, count_files;
-    char e;
     clock_t begin, end;
     double time_spent;
     setlocale(LC_ALL, "Russian");
@@ -328,47 +327,42 @@ void main()
         for (i = 0; i < count_files; i++)
             wprintf(L"Файл: %s Размер: %lld байт\n", fileNames[i], filesize[i]);
         menu();
-        scanf("%d", &men);
+        scanf("%d%*с", &men);
             switch (men) {
             case 1:
-                scanf("%c", &e);
                 begin = clock();
                 choose(size, count_files, fileId);
                 end = clock();
                 break;
             case 2:
-                scanf("%c", &e);
                 begin = clock();
                 insert(size, count_files, fileId);
                 end = clock();
                 break;
             case 3:
-                scanf("%c", &e);
                 begin = clock();
                 bubble(size, count_files, fileId);
                 end = clock();
                 break;
             case 4:
-                scanf("%c", &e);
                 begin = clock();
                 err = countingsort(size, count_files, fileId);
                 end = clock();
                 break;
             case 5:
-                scanf("%c", &e);
                 begin = clock();
                 quicksort(size, fileId[0], fileId[count_files - 1], fileId);
                 end = clock();
                 break;
             case 6:
-                scanf("%c", &e);
                 begin = clock();
                 mergesort(size, fileId, fileId[0], fileId[count_files - 1]);
                 end = clock();
                 break;
             default:
-                menu();
-                scanf("%d", &men);
+				printf("Неверно выбран способ сортировки.\n");
+				getchar();
+				continue;
             }
             time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
             if (err != 1)
@@ -383,6 +377,7 @@ void main()
                 printf("для сортировки подсчетом.\n");
                 printf("Попробуйте снова, не используя сортироку подсчетом.\n");
             }
+			getchar();
             free(fileId);
             free(size);
             free(filesize);
