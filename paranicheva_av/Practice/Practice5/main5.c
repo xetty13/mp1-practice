@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <locale.h>
 
 #define MAX_LEN 2048
 #define MAX_COUNT_OF_FILES 65535
