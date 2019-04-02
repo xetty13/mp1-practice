@@ -1,40 +1,44 @@
 #include "Vector.h" 
 
-//Выделяем память под вектор 
+//Выделение памяти под вектор 
 Vector Create(int n)
 {
 	Vector x;
+	int i;
 	x.size = n;
 	x.V = (float*)malloc(sizeof(float)*x.size);
+	for (i = 0; i < n; i++)
+		x.V[i] = 0;
 	printf("Vector is create");
 	return x;
 }
 
-//Заполняем 
+//Заполнение 
 Vector fill()
 {
 	Vector x;
-	int n, i;
-		printf("Enter size of your vector:");
-		scanf("%d", &n);
+	int i, n;
+	printf("Enter size of your vector:");
+	scanf("%d", &n);
 	x.size = n;
 	x.V = (float*)malloc(sizeof(float)*x.size);
-	
-	for (i = 0; i < n; i++)
+	printf("Enter coordinats of your vector:");
+	for (i = 0; i < x.size; i++)
 	{
-		printf("Enter coordinats of your vector");
-		scanf("%d",x.V[i]);
+		scanf("%d", x.V[i]);
 	}
+	printf("Vector fill");
 	return x;
 }
 
-//Удаление
+//Удаление 
 void Delete(Vector* x)
 {
 	free(x->V);
 	printf("Vector is delete \n");
 }
 
+//Суммирование 
 Vector Sum(Vector V1, Vector V2)
 {
 	Vector s;
@@ -56,7 +60,9 @@ Vector Sum(Vector V1, Vector V2)
 	}
 }
 
-Vector Minus(Vector V1, Vector V2)
+
+//Вычитание 
+Vector Sub(Vector V1, Vector V2)
 {
 	Vector m;
 	int i;
@@ -77,6 +83,41 @@ Vector Minus(Vector V1, Vector V2)
 	}
 }
 
+//Скалярное произведение 
+Vector scalar(Vector V1, Vector V2)
+{
+	int i;
+	Vector sc;
+	sc = Create(V1.size);
+	if (V1.size == V2.size)
+	{
+		for (i = 0; i < V1.size; i++)
+		{
+			sc.V[i] = V1.V[i] * V2.V[i];
+		}
+		printf("scalar");
+		return sc;
+	}
+	else
+	{
+		printf("Error. Different sizes");
+		return sc;
+	}
+}
+
+//Длина вектора
+int Length(Vector V)
+{
+	int i, l;
+
+	for (i = 0; i < V.size; i++)
+		l += V.V[i] * V.V[i];
+	l = sqrt(l);
+	return l;
+}
+
+
+//Вывод 
 Vector Output(Vector x)
 {
 	int i;
@@ -85,7 +126,6 @@ Vector Output(Vector x)
 	else
 	{
 		for (i = 0; i < x.size; i++)
-			printf("%d", x.V);
+			printf("%d", x.V[i]);
 	}
 }
-

@@ -2,15 +2,21 @@
 
 void main()
 {
-	Vector V1, V2, V3, v1, v2, v3;
+	Vector v1, v2, v3, s, m, sc;
+	int l;
 	v1 = fill();
-	printf("Enter V1 =");
-	Output(V1);
-
-	V2 = Create(10);
-	V3 = Create(10);
-	//V3 = Sum(V1, V2);
-// V3 = Minus(V1, V2);
-	//Delete(&V1);
+	Output(v1);
+	v1 = fill();
+	Output(v2);
+	v3 = fill();
+	Output(v3);
+	s = Sum(v1, v2);
+	Output(s);
+	m = Sub(v1, v2);
+	Output(m);
+	l = Length(s);
+	printf("length = ", l);
+	sc = scalar(v1, v2);
+	printf("Scalar = ", sc);
 	system("pause");
 }
