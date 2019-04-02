@@ -21,8 +21,9 @@ void Print(Vector *a)
 {
     int i;
     for (i = 0; i < a->n; i++)
-        printf("%f", a->x[i]);
-}
+        printf("%f ", a->x[i]);
+    printf("\n");
+};
 void Delete(Vector *a)
 {
     free (a->x);
@@ -35,41 +36,50 @@ Vector* Sum(Vector *a, Vector *b)
     Vector *c;
     c = Create(a->n);
     if (a->n != b->n)
-        return;
+    {
+        printf("Error: different dimension of vectors\n");
+        return 0;
+    }
     for (i = 0; i < a->n; i++)
         c->x[i] = a->x[i] + b->x[i];
     return c;
-}
+};
 Vector* Diff(Vector *a, Vector *b)
 {
     int i;
     Vector *c;
     c = Create(a->n);
     if (a->n != b->n)
-        return;
+    {
+        printf("Error: different dimension of vectors\n");
+        return 0;
+    }
     for (i = 0; i < a->n; i++)
         c->x[i] = a->x[i] - b->x[i];
     return c;
-}
+};
 float Scalar(Vector *a, Vector *b)
 {
     int i;
     float S = 0;
     if (a->n != b->n)
+    {
+        printf("Error: different dimension of vectors\n");
         return 0;
+    }
     for (i = 0; i < a->n; i++)
-        S += (a->x[i] * b->x[i]);
+        S += a->x[i] * b->x[i];
     return S;
-}
+};
 float Length(Vector*a)
 {
     int i;
     float l = 0;
     for (i = 0; i < a->n; i++)
         l += (a->x[i] * a->x[i]);
-    l = sqrt(l);
+    l = (float)sqrt(l);
     return l;
-}
+};
 float Angle(Vector *a, Vector *b)
 {
     float c, l1, l2, A;
@@ -78,7 +88,7 @@ float Angle(Vector *a, Vector *b)
     l2 = Length(b);
     if ((l1 == 0) || (l2 == 0))
         return 0;
-    A = acos(c / (l1 * l2)); 
-    A = A / 3.14 * 180;
+    A = (float)acos(c / (l1 * l2)); 
+    A = (float)(A / 3.14 * 180);
     return A;
-}
+};
