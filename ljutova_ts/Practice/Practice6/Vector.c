@@ -1,10 +1,10 @@
-#include "Vector.h" 
+п»ї#include "Vector.h" 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define P 3.14F
 
-//Выделение памяти под вектор 
+//Р’С‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё РїРѕРґ РІРµРєС‚РѕСЂ 
 Vector Create(int n)
 {
 	Vector x;
@@ -16,7 +16,7 @@ Vector Create(int n)
 	return x;
 }
 
-//Заполнение 
+//Р—Р°РїРѕР»РЅРµРЅРёРµ 
 Vector fill()
 {
 	Vector x;
@@ -34,14 +34,14 @@ Vector fill()
 	return x;
 }
 
-//Удаление 
+//РЈРґР°Р»РµРЅРёРµ 
 void Delete(Vector x)
 {
 	x.size = 0;
 	free(x.V);
 }
 
-//Суммирование 
+//РЎСѓРјРјРёСЂРѕРІР°РЅРёРµ 
 Vector Sum(Vector V1, Vector V2)
 {
 	Vector s;
@@ -64,7 +64,7 @@ Vector Sum(Vector V1, Vector V2)
 }
 
 
-//Вычитание 
+//Р’С‹С‡РёС‚Р°РЅРёРµ 
 Vector Sub(Vector V1, Vector V2)
 {
 	Vector m;
@@ -86,7 +86,7 @@ Vector Sub(Vector V1, Vector V2)
 	}
 }
 
-//Скалярное произведение 
+//РЎРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ 
 Vector scalar(Vector V1, Vector V2)
 {
 	int i;
@@ -108,7 +108,7 @@ Vector scalar(Vector V1, Vector V2)
 	}
 }
 
-//Длина вектора
+//Р”Р»РёРЅР° РІРµРєС‚РѕСЂР°
 float Length(Vector V)
 {
 	float l = 0;
@@ -119,7 +119,7 @@ float Length(Vector V)
 	return l;
 }
 
-//угол между векторами
+//СѓРіРѕР» РјРµР¶РґСѓ РІРµРєС‚РѕСЂР°РјРё
 float Angle(Vector V1, Vector V2)
 {
 	float An = 0, A = 0;
@@ -144,7 +144,7 @@ float Angle(Vector V1, Vector V2)
 	return An;
 }
 
-//Вывод 
+//Р’С‹РІРѕРґ 
 Vector Output(Vector x)
 {
 	int i;
