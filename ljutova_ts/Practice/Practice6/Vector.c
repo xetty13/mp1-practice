@@ -1,4 +1,8 @@
 #include "Vector.h" 
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define P 3.14F
 
 //Выделение памяти под вектор 
 Vector Create(int n)
@@ -9,7 +13,6 @@ Vector Create(int n)
 	x.V = (float*)malloc(sizeof(float)*x.size);
 	for (i = 0; i < n; i++)
 		x.V[i] = 0;
-	printf("Vector is create");
 	return x;
 }
 
@@ -18,24 +21,24 @@ Vector fill()
 {
 	Vector x;
 	int i, n;
-	printf("Enter size of your vector:");
-	scanf("%d", &n);
+	printf("Enter size of your vector: ");
+	scanf_s("%d", &n);
 	x.size = n;
 	x.V = (float*)malloc(sizeof(float)*x.size);
-	printf("Enter coordinats of your vector:");
-	for (i = 0; i < x.size; i++)
+	printf("Enter coordinat: \n");
+	for (i = 0; i < n; i++)
 	{
-		scanf("%d", x.V[i]);
+		scanf_s("%d", &(x.V[i]));
 	}
-	printf("Vector fill");
+	printf("Vector fill with coordinates : ");
 	return x;
 }
 
 //Удаление 
-void Delete(Vector* x)
+void Delete(Vector x)
 {
-	free(x->V);
-	printf("Vector is delete \n");
+	x.size = 0;
+	free(x.V);
 }
 
 //Суммирование 
@@ -50,7 +53,7 @@ Vector Sum(Vector V1, Vector V2)
 		{
 			s.V[i] = V1.V[i] + V2.V[i];
 		}
-		printf("Sum");
+		printf("Sum: ");
 		return s;
 	}
 	else
@@ -73,12 +76,12 @@ Vector Sub(Vector V1, Vector V2)
 		{
 			m.V[i] = V1.V[i] - V2.V[i];
 		}
-		printf("Minus");
+		printf("Difference: ");
 		return m;
 	}
 	else
 	{
-		printf("Error. Different sizes");
+		printf("Error. Different sizes ");
 		return m;
 	}
 }
@@ -95,37 +98,62 @@ Vector scalar(Vector V1, Vector V2)
 		{
 			sc.V[i] = V1.V[i] * V2.V[i];
 		}
-		printf("scalar");
+		printf("Scalar: ");
 		return sc;
 	}
 	else
 	{
-		printf("Error. Different sizes");
+		printf("Error. Different sizes ");
 		return sc;
 	}
 }
 
 //Длина вектора
-int Length(Vector V)
+float Length(Vector V)
 {
-	int i, l;
-
+	float l = 0;
+	int i;
 	for (i = 0; i < V.size; i++)
-		l += V.V[i] * V.V[i];
+		l += (V.V[i] * V.V[i]);
 	l = sqrt(l);
 	return l;
 }
 
+//угол между векторами
+float Angle(Vector V1, Vector V2)
+{
+	float An = 0, A = 0;
+	int i;
+
+	if (V1.size == V2.size)
+	{
+
+		for (i = 0; i < V1.size; i++)
+			A += V1.V[i] * V2.V[i];
+
+		An = A / ((Length(V1) * Length(V2)));
+		An = acos(An) * 180 / P;
+	}
+
+	else
+	{
+		printf("Error. Different sizes ");
+		return An;
+	}
+
+	return An;
+}
 
 //Вывод 
 Vector Output(Vector x)
 {
 	int i;
 	if (x.size == 0)
-		printf("Vector without coordinate");
+		printf("Vector is empty. \n");
 	else
 	{
 		for (i = 0; i < x.size; i++)
-			printf("%d", x.V[i]);
+			printf("%d ", x.V[i]);
+		printf("\n");
 	}
 }

@@ -3,20 +3,27 @@
 void main()
 {
 	Vector v1, v2, v3, s, m, sc;
-	int l;
+	float l;
 	v1 = fill();
 	Output(v1);
-	v1 = fill();
+
+	v2 = fill();
 	Output(v2);
-	v3 = fill();
-	Output(v3);
+
 	s = Sum(v1, v2);
 	Output(s);
+	Delete(s);
+
 	m = Sub(v1, v2);
 	Output(m);
-	l = Length(s);
-	printf("length = ", l);
+	Delete(m);
+
 	sc = scalar(v1, v2);
-	printf("Scalar = ", sc);
-	system("pause");
+	Output(sc);
+	Delete(sc);
+
+	printf("length of your vector1 : %.2f \n", Length(v1));
+	printf("length of your vector2 : %.2f \n", Length(v2));
+
+	printf("the angle between the vectors : %.2f \n", Angle(v1, v2));
 }
