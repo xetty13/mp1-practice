@@ -9,7 +9,7 @@ using namespace std;
 
 void Vector::menu()
 {
-    cout << "\n";
+    cout << "\n         MENU\n";
     cout << " 1) Output of Vectors\n";
     cout << " 2) Multiplication by a const\n";
     cout << " 3) Sum of Vectors\n";
@@ -26,7 +26,7 @@ Vector::Vector(int _size)
 {
     size = _size;
     elements = new int[size];
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < size; i++)
         elements[i] = rand() % 10;
 }
 

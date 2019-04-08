@@ -7,17 +7,20 @@ using namespace std;
 
 void main()
 {
-    Vector A(5), B(5), C(4), Res(5);
+    Vector A(5), B(5), C(6), Res(5);
     int f = 1, _menu;
     int a;
     double res = 0;
 
-    cout << "     Hello, it's multidimensional vector\n";
+    cout << "     Hello, it's multidimensional vector\n\n";
 
     try
     {
+        cout << "  V1 = ";
         A.Output();
+        cout << "  V2 = ";
         B.Output();
+        cout << "  V3 = ";
         C.Output();
 
         A.menu();
@@ -26,8 +29,10 @@ void main()
             do
             {
                 cout << "\n";
+                cout << endl;
                 cout << "  Select options (1 - 10): ";
                 cin >> _menu;
+                cout << endl;
             } while ((_menu >= 9) && (_menu <= 1));
             switch (_menu)
             {
@@ -43,9 +48,11 @@ void main()
             }
             case(2):
             {
-                cout << "Enter the const: ";
+                cout << "  Enter the const: ";
                 cin >> a;
-                cout << "V1 * const = " << A * a;
+                cout << "  V1 * const = " << A * a;
+                cout << "\n  V2 * const = " << B * a;
+                cout << "\n  V3 * const = " << C * a;
                 break;
             }
             case(3):
@@ -77,16 +84,20 @@ void main()
             }
             case(7):
             {
-                cout << "Enter the const: ";
+                cout << "  Enter the const: ";
                 cin >> a;
-                cout << "V1 + const = " << A + a;
+                cout << "  V1 + const = " << A + a;
+                cout << "\n  V2 + const = " << B + a;
+                cout << "\n  V3 + const = " << C + a;
                 break;
             }
             case(8):
             {
-                cout << "Enter the number: ";
+                cout << "  Enter the number: ";
                 cin >> a;
-                cout << "V1[" << a << "] = " << A[a];
+                cout << "  V1[" << a << "] = " << A[a];
+                cout << "\n  V2[" << a << "] = " << B[a];
+                cout << "\n  V3[" << a << "] = " << C[a];
                 break;
             }
             case(9):
