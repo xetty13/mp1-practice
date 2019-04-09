@@ -83,8 +83,12 @@ Vector Vector::operator* (double tmp) const
     return res;
 }
 
-Vector Vector::operator= (const Vector & tmp)
+Vector& Vector::operator= (const Vector & tmp)
 {
+    if (*this == tmp)
+    {
+        return *this;
+    }
     delete[] arr;
     size = tmp.size;
     arr = new double[size];
@@ -109,7 +113,7 @@ double Vector::Lenght() const
     return res;
 }
 
-Vector Vector::operator+= (const Vector & tmp)
+Vector& Vector::operator+= (const Vector & tmp)
 {
     if (size != tmp.size)
         throw "Size";
@@ -118,7 +122,7 @@ Vector Vector::operator+= (const Vector & tmp)
     return *this;
 }
 
-Vector Vector::operator-= (const Vector & tmp)
+Vector& Vector::operator-= (const Vector & tmp)
 {
     if (size != tmp.size)
         throw "Size";
@@ -127,21 +131,21 @@ Vector Vector::operator-= (const Vector & tmp)
     return *this;
 }
 
-Vector Vector::operator+= (double tmp)
+Vector& Vector::operator+= (double tmp)
 {
     for (int i = 0; i < size; i++)
         arr[i] += tmp;
     return *this;
 }
 
-Vector Vector::operator-= (double tmp)
+Vector& Vector::operator-= (double tmp)
 {
     for (int i = 0; i < size; i++)
         arr[i] -= tmp;
     return *this;
 }
 
-Vector Vector::operator*= (double tmp)
+Vector& Vector::operator*= (double tmp)
 {
     for (int i = 0; i < size; i++)
         arr[i] *= tmp;
@@ -174,4 +178,16 @@ void Vector::Fill()
         throw "Size";
     for (int i = 0; i < size; i++)
         cin >> arr[i];
+}
+
+bool Vector::operator==(const Vector & tmp) const
+{
+    if (size != tmp.size) return false;
+    int f = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if (arr[i] != tmp.arr[i]) f = 1;
+    }
+    if (f == 1) return false;
+    return true;
 }
