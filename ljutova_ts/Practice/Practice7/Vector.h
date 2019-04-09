@@ -1,4 +1,5 @@
-﻿
+﻿#ifndef _VECTOR_H_
+#define _VECTOR_H_
 #include <iostream>
 class Vector
 {
@@ -6,16 +7,27 @@ class Vector
 	int* elements;
 public:
 	Vector();
-	Vector(Vector&);
+	Vector(const Vector&);
 	Vector(int);
 	~Vector();
 	void Output();
 	void Input();
 
-	Vector operator=(Vector&);
-	Vector operator+(Vector&);
+	Vector operator+(const Vector&);
 	Vector operator-(Vector&);
-	/* bool operator==(Vector&);
-	int operator[](Vector&); */
-	friend ostream& operator<<(ostream &, const Vector &);
+	bool operator==(const Vector&) const;
+	const Vector& operator=(const Vector&);
+	Vector operator+(int);
+	 Vector operator-(int);
+    int& operator[](int a); 
+	Vector operator*(int);
+	Vector& operator+=(const Vector&);
+	Vector operator-=(Vector&);
+	Vector operator+=(int);
+	Vector operator-=(int);
+	//Vector Lenght(Vector&);
+
+	friend std::ostream& operator<<(std::ostream &, const Vector &);
 };
+
+#endif
