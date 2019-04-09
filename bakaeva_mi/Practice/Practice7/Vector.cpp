@@ -1,10 +1,9 @@
 #include "Exception.h"
 #include <iostream>
-#include <time.h>
+#include <ctime>
 #include <stdlib.h>
 #include <stdio.h>
 #include "Vector.h"
-#include <iostream>
 using namespace std;
 
 void Vector::menu()
@@ -26,6 +25,7 @@ Vector::Vector(int _size)
 {
     size = _size;
     elements = new int[size];
+    srand(time(0));
     for (int i = 0; i < size; i++)
         elements[i] = rand() % 10;
 }
