@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-int main() //catch
+int main() 
 {
     int i;
     double a;
