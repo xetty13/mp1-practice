@@ -1,4 +1,5 @@
 #pragma once
+#include "TaskTypes.h"
 class ToDoList
 {
 private:
