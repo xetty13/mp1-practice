@@ -115,10 +115,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DailyPlanner.h" />
+    <ClInclude Include="Date.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="Time.h" />
+    <ClInclude Include="ToDoList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DailyPlanner.cpp" />
+    <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="ToDoList.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
