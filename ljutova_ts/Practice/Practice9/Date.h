@@ -5,7 +5,7 @@
 
 class Date
 {
-	int d, m, y;
+	unsigned int d, m, y;
 public:
 	Date();
 	Date(int, int, int);

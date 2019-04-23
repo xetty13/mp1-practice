@@ -1,10 +1,18 @@
-﻿#include "Date.h" 
+﻿#include "Time.h" 
 #include "Exception.h" 
 using namespace std;
 int main()
 {
-	int d, m, y;
-	cin >> d >> m >> y;
-	Date date(d, m, y);
-	date.Print();
+	
+	try
+	{
+		int h, min;
+		cin >> h >> min;
+		Time time(h, min);
+		time.Print();
+	}
+	catch (Exception e)
+	{
+		e.Print();
+	}
 }

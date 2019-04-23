@@ -14,21 +14,35 @@ Date::Date()
 Date::Date(int _d, int _m, int _y)
 {
 	if (_y <= 0)
-		throw "This year does not exist";
+	{
+		throw Exception("This year does not exist");
+	}
 	if ((_m <= 0) || (_m > 12))
-		throw "This month does not exist";
+	{
+		throw Exception("This month does not exist");
+	}
 	if ((_d <= 0) || (_d > 31))
-		throw "This day does not exist";
-	if (((_y % 4) == 0) || ((_y % 400) == 0) || ((_y % 100) == 0))
 	{
-		if ((_m <= 0) && (_m > 29))
-			throw "This date does not exist";
+	throw Exception("This day does not exist");
 	}
-	if (((_y % 4) != 0) || ((_y % 400) != 0) || ((_y % 100) != 0))
+	if (_m == 2)
 	{
-		if ((_m <= 0) && (_m > 28))
-			throw "This date does not exist";
+		if (((_y % 4) == 0) || ((_y % 400) == 0) || ((_y % 100) != 0))
+		{
+			if ((_d <= 0) || (_d > 29))
+			{
+				throw Exception("This date does not exist");
+			}
+		}
+		else
+		{
+			if ((_d <= 0) || (_d > 28))
+			{
+				throw Exception("This date does not exist");
+			}
+		}
 	}
+
 
 	d = _d;
 	m = _m;
