@@ -78,16 +78,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
+    <ClInclude Include="TaskTypes.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="ToDoList.h" />
-    <ClInclude Include="ToDoList_Header.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TaskTypes.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="ToDoList.cpp" />
-    <ClCompile Include="ToDoList_Functions_Realisation.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,10 @@ private:
 public:
 	Time();
 	Time(unsigned h, unsigned m);
+	Time(const Time& t);
 	~Time();
-	void PrintTime();
+
+	void PrintTime()const;
+	bool operator == (const Time& t)const;
+	Time& operator = (const Time& t);
 };

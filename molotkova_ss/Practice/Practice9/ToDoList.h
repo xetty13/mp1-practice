@@ -10,5 +10,5 @@ public:
 	ToDoList(int amount_of_tasks);
 	~ToDoList();
 	void Read(const char* a);
-	void Print(Date date);
+	void Print(Date date) const;
 };

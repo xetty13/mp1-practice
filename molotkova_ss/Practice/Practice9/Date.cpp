@@ -28,7 +28,16 @@ bool Date ::operator == (const Date &date1)const
 	else
 		return false;
 }
-void Date::PrintDate()
+void Date::PrintDate()const
 {
 	cout << "Date is: " << day << "." << month << "." << year << endl;
+}
+const Date& Date::operator=(const Date & t)
+{
+	if (*this == t)
+		return *this;
+	day = t.day;
+	month = t.month;
+	year = t.year;
+	return *this;
 }

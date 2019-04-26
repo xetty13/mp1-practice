@@ -17,7 +17,7 @@ ToDoList::ToDoList(int amount_of_tasks)
 	this->amount_of_tasks = amount_of_tasks;
 	tasks = new Tasks*[amount_of_tasks];
 }
-ToDoList ::~ToDoList()
+ToDoList::~ToDoList()
 {
 	for (int i = 0; i < amount_of_tasks; i++)
 		delete[]tasks[i];
@@ -31,10 +31,11 @@ void ToDoList::Read(const char* a)
 	if (!file.is_open())
 		throw "File is not open";
 	file >> buff;
+	tasks = new Tasks*[buff];
 	int type;
 	int day, month, year;
 	unsigned minutes, hours, duration;
-	char* b;
+	char* b = new char[50];
 	for (int i = 0; i < buff; i++)
 	{
 		file >> type;
@@ -53,13 +54,18 @@ void ToDoList::Read(const char* a)
 			tasks[i] = new Type2(b, date, duration, time);
 
 	}
-	file.close;
+	file.close();
 	
 }
-void ToDoList::Print(Date date)
+void ToDoList::Print(Date d)const
 {
 	cout << "Date: ";
-	date.PrintDate();
+	d.PrintDate();
 	for (int i = 0; i < amount_of_tasks; i++)
+		if (tasks[i] -> GetDate() == d)
+	{
 		tasks[i]->Print();
+		cout << endl;
+	}
+		
 }

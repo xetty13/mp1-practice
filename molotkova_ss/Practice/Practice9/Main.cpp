@@ -4,20 +4,29 @@
 #include"ToDoList.h"
 #include"TaskTypes.h"
 #include <fstream>
+#include <cstring>
 using namespace std;
 
-int main()
+void main()
 {
-	setlocale(LC_ALL, "rus"); // корректное отображение Кириллицы
-	char buff[50]; // буфер промежуточного хранения считываемого из файла текста
-	ifstream fin("List.txt"); // открыли файл для чтения
-
-	fin >> buff; // считали первое слово из файла
-	cout << buff << endl; // напечатали это слово
-
-	fin.getline(buff, 50); // считали строку из файла
-	fin.close(); // закрываем файл
-	cout << buff << endl; // напечатали эту строку
-
-	return 0;
+	ToDoList list;
+	char path[50];
+	cin >> path;
+	try
+	{
+		list.Read(path);
+	}
+	catch (const char* a)
+	{
+		cout << a << endl;
+	}
+	int d, m, y;
+	cout << "Day:";
+	cin >> d;
+	cout << "Month: ";
+	cin >> m;
+	cout << "Year: ";
+	cin >> y;
+	Date date = Date(d, m, y);
+	list.Print(date);
 }

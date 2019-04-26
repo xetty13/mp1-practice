@@ -4,28 +4,45 @@
 #include"Date.h"
 #include"Time.h"
 #include <fstream>
+#include <cstring>
 using namespace std;
 
-
-Type1 ::Type1()
+Tasks::Tasks()
 {
 	description = NULL;
-	date = Date();
+	date = Date(0, 0, 0);
 }
-Type1 ::Type1(char* description, Date date)
+Tasks::~Tasks()
 {
-	this->description = description;
+	delete[]description;	
+}
+Type1::Type1()
+{
+	description = NULL;
+}
+Type1::Type1(char* description, Date date)
+{
+	this->description = new char[sizeof(description)];
+	memcpy(this->description, description, sizeof(description));
 	this->date = date;
 }
-Type1 ::~Type1()
+Type1::~Type1()
 {
 	delete[]description;
-	date.~Date();
 }
-void Type1 :: Print()
+void Type1:: Print() const
 {
 	cout << "For all day: " << description << endl;
 }
+const Type1& Type1::operator=(const Type1& t)
+{
+	date = t.date;
+	if (description != NULL) delete[] description;
+	description = new char[50];
+	memcpy(description, t.description, sizeof(t.description));
+	return *this;
+}
+
 Type2 ::Type2()
 {
 	description = NULL;
@@ -33,12 +50,15 @@ Type2 ::Type2()
 	duration = 0;
 	time = Time();
 }
-Type2 ::Type2(char* description, Date date, unsigned duration, Time time)
+Type2 ::Type2(char* des, Date date, unsigned duration, Time time)
 {
-	this->description = description;
 	this->date = date;
+	description = new char[50];
+	for (int i = 0; i < 50; i++)
+		description[i] = des[i];
 	this ->duration = duration;
 	this->time = time;
+
 }
 Type2 ::~Type2()
 {
@@ -47,9 +67,19 @@ Type2 ::~Type2()
 	duration = 0;
 	time.~Time();
 }
-void Type2 :: Print()
+void Type2 :: Print()const
 {
 	cout << "Not for all day: " << endl;
 	time.PrintTime();
 	cout <<description<<"For " << duration << "minutes";
+}
+const Type2& Type2 ::operator= (const Type2& t)
+{
+	date = t.date;
+	delete description;
+	description = new char[50];
+	description = t.description; 
+	time = t.time;
+	duration = t.duration;
+	return *this;
 }
