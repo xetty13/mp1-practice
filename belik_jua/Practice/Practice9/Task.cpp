@@ -1,58 +1,39 @@
 #include "Task.h"
 #include<iostream>
-using namespace std;
 
 Task::Task()
 {
     date = Date();
-    description = NULL;
-}
-
-Task::Task(char* des, Date d)
-{
-    date = d;
-    description = new char[50];
-    for (int i = 0; i < 50; i++)
-        description[i] = des[i];
+    description = "";
 }
 
 Task::~Task()
 {
     date.~Date();
-    description = NULL;
+    description.clear();
 }
 
-void Task::Print()const
+Date Task::GetDate()
 {
-    cout << "All day task: " << description << endl;
-}
-
-Task& Task::operator= (const Task& tmp)
-{
-    date = tmp.date;
-    description = new char[50];
-    description = tmp.description;
-    return *this;
+    return date;
 }
 
 Type1::Type1()
 {
     date = Date();
-    description = NULL;
+    description = "";
 }
 
-Type1::Type1(char* des, Date d)
+Type1::Type1(string des, Date d)
 {
     date = d;
-    description = new char[50];
-    for (int i = 0; i < 50; i++)
-        description[i] = des[i];
+    description = des;
 }
 
 Type1::~Type1()
 {
     date.~Date();
-    description = NULL;
+    description.clear();
 }
 
 void Type1::Print()const
@@ -70,17 +51,15 @@ Type1& Type1::operator= (const Type1& tmp)
 Type2::Type2()
 {
     date = Date();
-    description = NULL;
+    description = "";
     time = Time();
     durations = 0;
 }
 
-Type2::Type2(char* des, Date d, Time t, unsigned dur)
+Type2::Type2(string des, Date d, Time t, unsigned dur)
 {
     date = d; 
-    description = new char[50];
-    for (int i = 0; i < 50; i++)
-        description[i] = des[i];
+    description = des;
     time = t;
     durations = dur;
 }
@@ -88,7 +67,7 @@ Type2::Type2(char* des, Date d, Time t, unsigned dur)
 Type2::~Type2()
 {
     date.~Date();
-    description = NULL;
+    description.clear();
     time.~Time();
     durations = 0;
 }

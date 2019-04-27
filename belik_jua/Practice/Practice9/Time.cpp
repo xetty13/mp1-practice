@@ -28,7 +28,7 @@ Time::~Time()
 
 void Time::Print()const
 {
-    cout << h << ":" << m;
+    cout << h << ":" << m << endl;
 }
 
 bool Time::operator== (const Time& tmp)const
