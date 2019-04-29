@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="Date.h" />
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="Task.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="todolist.h" />
     <ClInclude Include="Type1.h" />
@@ -162,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Task.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="todolist.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
