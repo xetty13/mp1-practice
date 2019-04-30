@@ -9,6 +9,6 @@ public:
 	ToDoList();
 	ToDoList(int amount_of_tasks);
 	~ToDoList();
-	void Read(const char* a);
+	void Read(char* a);
 	void Print(Date date) const;
 };
