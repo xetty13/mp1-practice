@@ -62,27 +62,23 @@ void ToDoList::Read(const char* A)
 
             pos1 = des.find(".");
             pos2 = des.rfind(" ", pos1); // d 21
-            for (int i = 1; i < (pos1 - pos2); i++)
-                ss[i - 1] = des[pos2 + i];
-            d = atoi(ss.c_str());
+            ss = des.substr((pos2 + 1), (pos1 - pos2 - 1));
+            d = atoi(ss.c_str()); 
             ss = "";
 
-            pos2 = des.find(".", pos1); // m 12
-            for (int i = 1; i < (pos2 - pos1); i++)
-                ss[i - 1] = des[pos1 + i];
-            m = atoi(ss.c_str());
+            pos2 = des.find(".", pos1 + 1); // m 12
+            ss = des.substr((pos1 + 1), (pos2 - pos1 - 1));
+            m = atoi(ss.c_str()); 
             ss = "";
 
             pos1 = des.find(" ", pos2); // y 21
-            for (int i = 1; i < (pos1 - pos2); i++)
-                ss[i - 1] = des[pos2 + i];
-            y = atoi(ss.c_str());
+            ss = des.substr((pos2 + 1), (pos1 - pos2 - 1));
+            y = atoi(ss.c_str()); 
             ss = "";
 
             pos2 = des.find("/0", pos1); //des 12
-            for (int i = 1; i < (pos2 - pos1); i++)
-                ss[i - 1] = des[pos1 + i];
-            des = ss;
+            ss = des.substr((pos1 + 1), (pos2 - pos1 - 1));
+            des = ss; 
             ss = "";
 
             Date date = Date(y, m, d);
@@ -95,45 +91,39 @@ void ToDoList::Read(const char* A)
             des = string(c);
             pos1 = des.find(".");
             pos2 = des.rfind(" ", pos1); // d 21
-            for (int i = 1; i < (pos1 - pos2); i++)
-                ss[i - 1] = des[pos2 + i];
+            ss = des.substr((pos2 + 1), (pos1 - pos2 - 1));
             d = atoi(ss.c_str());
             ss = "";
 
-            pos2 = des.find(".", pos1); // m 12
-            for (int i = 1; i < (pos2 - pos1); i++)
-                ss[i] = des[pos1 + i];
+            pos2 = des.find(".", pos1 + 1); // m 12
+            ss = des.substr((pos1 + 1), (pos2 - pos1 - 1));
             m = atoi(ss.c_str());
             ss = "";
 
             pos1 = des.find(" ", pos2); // y 21
-            for (int i = 1; i < (pos1 - pos2); i++)
-                ss[i - 1] = des[pos2 + i];
+            ss = des.substr((pos2 + 1), (pos1 - pos2 - 1));
             y = atoi(ss.c_str());
             ss = "";
 
             pos1 = des.find(":");
             pos2 = des.rfind(" ", pos1); // h 21
-            for (int i = 1; i < (pos1 - pos2); i++)
-                ss[i - 1] = des[pos2 + i];
+            ss = des.substr((pos2 + 1), (pos1 - pos2 - 1));
             h = atoi(ss.c_str());
             ss = "";
 
             pos2 = des.find(" ", pos1); // min 12
-            for (int i = 1; i < (pos2 - pos1); i++)
-                ss[i - 1] = des[pos1 + i];
+            ss = des.substr((pos1 + 1), (pos2 - pos1 - 1));
             min = atoi(ss.c_str());
             ss = "";
 
-            pos1 = des.find(" ", pos2); //dur 21
-            for (int i = 1; i < (pos1 - pos2); i++)
-                ss[i - 1] = des[pos2 + i];
+            pos1 = des.find_first_of("1234567890", pos2); //dur 12
+            pos2 = des.find(" ", pos1);
+            ss = des.substr(pos1, (pos2 - pos1));
             dur = atoi(ss.c_str());
             ss = "";
 
-            pos2 = des.find("/0", pos1); //des 12
-            for (int i = 1; i < (pos2 - pos1); i++)
-                ss[i - 1] = des[pos1 + i];
+            pos1 = des.find("/0", pos2); //des 21
+            ss = des.substr((pos2 + 1), (pos1 - pos2 - 1));
             des = ss;
             ss = "";
 

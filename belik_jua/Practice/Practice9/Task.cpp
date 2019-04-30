@@ -36,6 +36,11 @@ Type1::~Type1()
     description.clear();
 }
 
+Date Type1::GetDate()
+{
+    return date;
+}
+
 void Type1::Print()const
 {
     cout << "All day task: " << description << endl;
@@ -70,6 +75,11 @@ Type2::~Type2()
     description.clear();
     time.~Time();
     durations = 0;
+}
+
+Date Type2::GetDate()
+{
+    return date;
 }
 
 void Type2::Print()const

@@ -12,7 +12,7 @@ protected:
 public:
     Task();
     virtual ~Task();
-    Date GetDate();
+    virtual Date GetDate();
 
     virtual void Print()const = 0;
 };
@@ -23,6 +23,7 @@ public:
     Type1();
     Type1(string des, Date d);
     ~Type1();
+    Date GetDate();
 
     void Print()const;
     Type1& operator= (const Type1& tmp);
@@ -37,6 +38,7 @@ public:
     Type2();
     Type2(string des, Date d, Time t, unsigned dur);
     ~Type2();
+    Date GetDate();
 
     void Print()const;
     Type2& operator= (const Type2& tmp);

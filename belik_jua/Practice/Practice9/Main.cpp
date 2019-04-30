@@ -24,4 +24,4 @@ void main()
     cin >> y;
     Date date = Date(y, m, d);
     t.Print(date);
-}// E:\Progi\test.txt
+}
