@@ -120,9 +120,7 @@
     <ClInclude Include="mContainer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Container.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="mContainer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,10 @@ using namespace std;
 
 void main()
 {
-    Container<int, MAX_SIZE> A = Container<int, MAX_SIZE>(5);
+    int size;
+    cout << "Size = ";
+    cin >> size;
+    mContainer<int, MAX_SIZE> A(size);
     try
     {
         A.Fill();
@@ -73,4 +76,32 @@ void main()
     {
         cout << ER;
     }
+
+    try
+    {
+        cout << "A[1] = " << *A[1];
+    }
+    catch (char* ER)
+    {
+        cout << ER;
+    }
+
+    try
+    {
+        *A[1] = 6;
+        cout << "A[1] = 6" << endl;
+    }
+    catch (char* ER)
+    {
+        cout << ER;
+    }
+    try
+    {
+        A.Print();
+    }
+    catch (char* ER)
+    {
+        cout << ER;
+    }
+    cin >> n;
 }
