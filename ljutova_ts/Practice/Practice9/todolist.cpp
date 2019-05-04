@@ -48,17 +48,19 @@ void Todolist::read()
 void Todolist::print(Date _d)
 {
 	int fl = 0;
-	cout << "Your have some plans";
+	
 	for (int i = 0; i < n; i++)
 	{
+		
 		if (task[i][0].GetDate() == _d)
 		{
+			cout << "Your have some plans: " << endl;
 			task[i][0].Print();
 			fl = 1;
 		}
 	}
 	if (fl == 0)
-		throw Exception("You haven`t got tasks today");
+		throw Exception("You haven`t got tasks on this day");
 }
 
 Todolist::~Todolist()
