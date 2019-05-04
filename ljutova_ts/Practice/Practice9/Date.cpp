@@ -88,3 +88,15 @@ void Date::Print()
 	cout << "Your date: " << endl;
 	cout << d << "." << m << "." << y << endl;
 }
+
+ostream & operator<<(ostream & o, const Date & x)
+{
+	o << x.d << x.m << x.y << " ";
+	return o;
+}
+
+istream & operator>>(istream & o, Date & x)
+{
+	o >> x.d >> x.m >> x.y;
+	return o;
+}

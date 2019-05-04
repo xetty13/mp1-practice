@@ -21,7 +21,7 @@ Type1::~Type1()
 
 void Type1::Print()
 {
-	cout << "Your task is " <<  description << endl;
+	cout << date <<  "Your task is " <<  description << endl;
 }
 
 

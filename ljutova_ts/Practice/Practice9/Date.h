@@ -15,7 +15,8 @@ public:
 
 	bool operator==(const Date& x) const;
 	const Date& operator=(const Date&);
-
+	friend std::ostream& operator<<(std::ostream &, const Date&);
+	friend std::istream& operator>>(std::istream &, Date&);
 };
 
 #endif

@@ -14,7 +14,8 @@ public:
 	void Print();
 
 	const Time& operator=(const Time&);
-
+	friend std::ostream& operator<<(std::ostream &, const Time&);
+	friend std::istream& operator>>(std::istream &, Time&);
 };
 
 #endif

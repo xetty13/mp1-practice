@@ -55,3 +55,15 @@ void Time::Print()
 	cout << "Your time: " << endl;
 	cout << h << ":" << min << endl;
 }
+
+ostream & operator<<(ostream & o, const Time & x)
+{
+	o << x.h << x.min << " ";
+	return o;
+}
+
+istream & operator>>(istream & o, Time & x)
+{
+	o >> x.h >> x.min;
+	return o;
+}
