@@ -22,7 +22,7 @@ void Todolist::read()
 	ifstream f("ToDoList.txt");
 	if (!f.is_open())
 		throw Exception("File is not open");
-	f >> n; //считываем слова из файла
+	f >> n; //считываем слова их
 	task = new Task*[n];
 	for (int i = 0; i < n; i++)
 	{
@@ -30,17 +30,17 @@ void Todolist::read()
 		if (type == 1)
 		{
 			f >> date;
-			getline(f, description);
+			getline(f, description); //считывание
 			task[i] = new Type1(description, date);
 		}
-
-		if (type == 2)
+	
+		else if (type == 2)
 		{
 			f >> date >> t1 >> t2;
 			getline(f, description);
 			task[i] = new Type2(description, date, t1, t2);
 		}
-		throw Exception("You type is not correct");
+		else throw Exception("You type is not correct");
 	}
 	f.close();
 }
@@ -51,9 +51,9 @@ void Todolist::print(Date _d)
 	cout << "Your have some plans";
 	for (int i = 0; i < n; i++)
 	{
-		if (task[i]->GetDate() == _d)
+		if (task[i][0].GetDate() == _d)
 		{
-			task[i]->Print();
+			task[i][0].Print();
 			fl = 1;
 		}
 	}

@@ -1,6 +1,6 @@
-Go to the theatre 18:00 20:30 05.05.2019
-Exam 9:00 12:00 13.06.2019
-Meet whith friends 12:00 19:00 01.05.2019
-My birthday 07.12.2019
-Trip 28.04.2019
-Voyage 12.07.2019
+05.05.2019 18:00 20:30 Go to the theatre
+13.06.2019 9:00 12:00 Exam 
+01.05.2019 12:00 19:00 Meet whith friends
+07.12.2019 My birthday 
+28.04.2019 Trip 
+12.07.2019 Voyage 
