@@ -6,102 +6,59 @@ using namespace std;
 
 void main()
 {
+    cout << "mContainer" << endl;
     int size;
     cout << "Size = ";
     cin >> size;
     mContainer<int, MAX_SIZE> A(size);
-    try
-    {
-        A.Fill();
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
-    try
-    {
-        A.Print();
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
+    A.Fill();
+    A.Print();
     int n;
 
     cout << "Remove ";
     cin >> n;
-    try
-    {
-        A.Remove(n);
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
-    try
-    {
-        A.Print();
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
+    A.Remove(n);
+    A.Print();
 
     cout << "Add ";
     cin >> n;
-    try
-    {
-        A.Add(n);
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
-    try 
-    { 
-        A.Print(); 
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
+    A.Add(n);
+    A.Print(); 
 
     cout << "Find ";
     cin >> n;
-    try
-    {
-        cout << A.Find(n);
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
+    cout << A.Find(n) << endl;
 
-    try
-    {
-        cout << "A[1] = " << *A[1];
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
+    cout << "A[1] = " << *A[1] << endl;
 
-    try
-    {
-        *A[1] = 6;
-        cout << "A[1] = 6" << endl;
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
-    try
-    {
-        A.Print();
-    }
-    catch (char* ER)
-    {
-        cout << ER;
-    }
+    *A[1] = 6;
+    cout << "A[1] = 6" << endl;
+    A.Print();
+
+    cout << "Container" << endl;
+    cout << "Size = ";
+    cin >> size;
+    Container<int, MAX_SIZE> B(size);
+    B.Fill();
+    B.Print();
+
+    cout << "Remove ";
     cin >> n;
+    B.Remove(n);
+    B.Print();
+
+    cout << "Add ";
+    cin >> n;
+    B.Add(n);
+    B.Print();
+
+    cout << "Find ";
+    cin >> n;
+    cout << B.Find(n) << endl;
+
+    cout << "B[1] = " << *B[1] << endl;
+
+    *B[1] = 6;
+    cout << "B[1] = 6" << endl;
+    B.Print();
 }
