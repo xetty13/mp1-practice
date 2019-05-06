@@ -35,6 +35,10 @@ void main()
     cout << "A[1] = 6" << endl;
     A.Print();
 
+    cout << "Sort" << endl;
+    A.Sort();
+    A.Print();
+
     cout << "Container" << endl;
     cout << "Size = ";
     cin >> size;
@@ -60,5 +64,9 @@ void main()
 
     *B[1] = 6;
     cout << "B[1] = 6" << endl;
+    B.Print();
+
+    cout << "Sort" << endl;
+    B.Sort();
     B.Print();
 }

@@ -21,6 +21,7 @@ public:
     void Add(T a);
     void Remove(T a);
     T* operator[](int i);
+    void Sort();
 
     void Print()const;
     void Fill();
@@ -221,6 +222,45 @@ void Container<T, maxsize>::Fill()
         for (int i = 0; i < n; i++)
         {
             cin >> *(arr[i]);
+        }
+    }
+    catch (int i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+}
+
+template <typename T, int maxsize>
+void Container<T, maxsize>::Sort()
+{
+    try
+    {
+        if (this->IsEmpty())
+            throw 1;
+        int i, j, tmp;
+        for (i = 1; i < n; i++)
+        {
+            tmp = *arr[i];
+            j = i - 1;
+            while ((j >= 0) && (*arr[j] > tmp))
+            {
+                *arr[j + 1] = *arr[j];
+                *arr[j] = tmp;
+                j--;
+            }
         }
     }
     catch (int i)
