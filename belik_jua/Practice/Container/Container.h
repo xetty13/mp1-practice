@@ -122,7 +122,7 @@ T* Container<T, maxsize>::operator[](int i)
 template <typename T, int maxsize>
 void Container<T, maxsize>::Print()const
 {
-    if ((*this).IsEmpty())
+    if (this->IsEmpty())
         throw 1;
     for (int i = 0; i < n; i++)
     {
