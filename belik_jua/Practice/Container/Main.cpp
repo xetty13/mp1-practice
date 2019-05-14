@@ -11,62 +11,413 @@ void main()
     cout << "Size = ";
     cin >> size;
     mContainer<int, MAX_SIZE> A(size);
-    A.Fill();
-    A.Print();
+    try
+    {
+        A.Fill();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        A.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
     int n;
 
     cout << "Remove ";
     cin >> n;
-    A.Remove(n);
-    A.Print();
+    try
+    {
+        A.Remove(n);
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        A.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 
     cout << "Add ";
     cin >> n;
-    A.Add(n);
-    A.Print(); 
+    try
+    {
+        A.Add(n);
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        A.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 
     cout << "Find ";
     cin >> n;
     cout << A.Find(n) << endl;
 
-    cout << "A[1] = " << *A[1] << endl;
-
-    *A[1] = 6;
-    cout << "A[1] = 6" << endl;
-    A.Print();
-
-    cout << "Sort" << endl;
-    A.Sort();
-    A.Print();
+    try
+    {
+        cout << "A[1] = " << *A[1] << endl;
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        *A[1] = 6;
+        cout << "A[1] = 6" << endl;
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        A.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 
     cout << "Container" << endl;
     cout << "Size = ";
     cin >> size;
     Container<int, MAX_SIZE> B(size);
-    B.Fill();
-    B.Print();
+    try
+    {
+        B.Fill();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        B.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 
     cout << "Remove ";
     cin >> n;
-    B.Remove(n);
-    B.Print();
+    try
+    {
+        B.Remove(n);
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        B.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 
     cout << "Add ";
     cin >> n;
-    B.Add(n);
-    B.Print();
+    try
+    {
+        B.Add(n);
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
+    try
+    {
+        B.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 
     cout << "Find ";
     cin >> n;
     cout << B.Find(n) << endl;
 
-    cout << "B[1] = " << *B[1] << endl;
+    try
+    {
+        cout << "B[1] = " << *B[1] << endl;
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 
-    *B[1] = 6;
+    try
+    {
+        *B[1] = 6;
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
     cout << "B[1] = 6" << endl;
-    B.Print();
-
-    cout << "Sort" << endl;
-    B.Sort();
-    B.Print();
+    try
+    {
+        B.Print();
+    }
+    catch (int& i)
+    {
+        switch (i)
+        {
+        case 1:
+            cout << "Container is empty" << endl;
+            break;
+        case 2:
+            cout << "Container is full" << endl;
+            break;
+        case 3:
+            cout << "No elem" << endl;
+            break;
+        default:
+            cout << "Error" << endl;
+        }
+    }
 }
