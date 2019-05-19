@@ -19,7 +19,7 @@ void Todolist::read()
 	Date date;
 	Time t1;
 	Time t2;
-	ifstream f("ToDoList.txt");
+	ifstream f("ToDoList.txt"); //Чтение файла
 	if (!f.is_open())
 		throw Exception("File is not open");
 	f >> n; //считываем слова их
