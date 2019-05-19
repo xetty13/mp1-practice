@@ -10,8 +10,8 @@ void main()
 	Container<double, 7> Cont2(arr2, 7);
 	try
 	{
-		cout << "Container 1:" << Cont1 << endl;
-		cout << "Container 2:" << Cont2 << endl;
+		cout << "the contents of the container1: " << Cont1 << endl;
+		cout << "the contents of the container2: " << Cont2 << endl;
 	}
 	catch (Exception e)
 	{
@@ -54,12 +54,12 @@ void main()
 	for (int i = 0; i < 7; i++)
 		arr22[i] = &arr2[i];
 
-	Container<int*, 5> Cont11(arr11, 5);
-	Container<double*, 7> Cont22(arr22, 7);
+	Container<int*, 10> Cont11(arr11, 5);
+	Container<double*, 10> Cont22(arr22, 7);
 	try
 	{
-		cout << "Container 1`:" << Cont11 << endl;
-		cout << "Container 2`:" << Cont22 << endl;
+		cout << "the contents of the container1`: " << Cont11 << endl;
+		cout << "the contents of the container2`: " << Cont22 << endl;
 	}
 	catch (Exception e)
 	{
@@ -68,35 +68,37 @@ void main()
 
 	try
 	{
-		double a = 0.1;
+		double a = 1.1;
 		double *a1 = &a;
 
 		Cont22.Add(a1);
-		cout << "Container 2 + num 9.9: " << Cont22 << endl;
+		cout << "Container 2` + num 1.1: " << Cont22 << endl;
 
-		int b = 9;
+		int b = 1;
 		int *b1 = &b;
 		Cont11.Add(b1);
-		cout << "Container 1 + num 3: " << Cont11 << endl;
+		cout << "Container 1` + num 1: " << Cont11 << endl;
 	}
 	catch (Exception e)
 	{
 		e.Print();
 	}
-
 	try
 	{
+		int b = 2;
+		int *b1 = &b;
 
-		Cont11.Delete1(1);
-		cout <<  "Container 1 - element with Index 1: " << Cont11 << endl;
+		Cont11.Delete1(b1);
+		cout << "Container 1` - num 2: " << Cont11 << endl;
 
+		double a = 2.2;
+		double *a1 = &a;
 
-		Cont22.Delete1(1);
-		cout << "Container 2 - element ith Index 1: " << Cont22 << endl;
+		Cont22.Delete1(a1);
+		cout << "Container 2` - num 2.2: " << Cont22 << endl;
 	}
 	catch (Exception e)
 	{
 		e.Print();
 	}
-
 }
