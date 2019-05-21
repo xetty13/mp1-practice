@@ -4,8 +4,8 @@
 
 void main()
 {
+	double x1, y1, r1, r2, x2, y2, d;
     setlocale(LC_ALL, "Russian");
-    double x1, y1, r1, r2, x2, y2, d;
     printf("Введите координаты центра первой окружности(x,y) и радиус:\n");
     printf("x=");
     scanf("%lf", &x1);
