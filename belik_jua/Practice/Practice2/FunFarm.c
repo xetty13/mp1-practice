@@ -10,14 +10,16 @@ void main()
 	
 	do {
 		printf("0 > n > 10, n = ");
-		scanf("%d",&n);
+		scanf("%d", &n);
 	} while ((n <= 0) || (n > 10));
 
-	i = n;
+    i = n - 1;
+    m = 9.0 / RAND_MAX * rand() + 1;
+    num[0] = m;
+    sam[m] = -1;
 	while (i > 0)
 	{
 		m = 10.0 / RAND_MAX * rand();
-		if (i == n) m = 9.0 / RAND_MAX * rand() + 1;
 		if (sam[m] != -1) 
 		{
 			num[i] = sam[m];
@@ -33,22 +35,22 @@ void main()
 			m = 0;
 			printf("number (no repetitions) = ");
 			scanf("%d", &a);
-			for (i = n; i > 0; i--)
+            for (i = (n - 1); i >= 0; i--)
 			{
 				inp[i] = a % 10;
 				a = a / 10;
 			}
-			for (i = n; i > 0; i--)
+            for (i = (n - 1); i >= 0; i--)
 			{
-				for (j = (i - 1); j > 0; j--)
+				for (j = (i - 1); j >= 0; j--)
 				{
 					if (inp[i] == inp[j]) m++;
 				}
 			}
 		} while (m != 0);
-		for (i = n; i > 0; i--)
+        for (i = (n - 1); i >= 0; i--)
 		{
-			for (j = n; j > 0; j--)
+            for (j = (n - 1); j >= 0; j--)
 			{
 				if ((num[i] == inp[j]) && (i == j)) bull++;
 				if ((num[i] == inp[j]) && (j != i)) cow++;
