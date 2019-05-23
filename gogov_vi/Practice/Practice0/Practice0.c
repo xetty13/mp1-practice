@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <math.h>
 #include <locale.h>
 
@@ -38,7 +38,7 @@ void main()
         printf("Окружности имеют 1 общую точку (внешнее касание) \n");
         return;
     }
-    if (d == r1 - r2)
+    if (d == abs(r1 - r2))
     {
         printf("Окружности имеют 1 общую точку (внутреннее касание) \n");
         return;
