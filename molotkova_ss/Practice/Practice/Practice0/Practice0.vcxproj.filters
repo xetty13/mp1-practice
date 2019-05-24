@@ -7,7 +7,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Circles.c">
+    <ClCompile Include="Practice0.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
