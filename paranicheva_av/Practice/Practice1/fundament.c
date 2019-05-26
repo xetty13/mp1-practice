@@ -2,7 +2,7 @@
 #include <math.h>
 void main()
 {
-	double h, w, d, pder, pdvp, pdsp, m1, m2, m3, m4, m5, M;
+	double h, w, d, pder, pdvp, pdsp, mzst, mbok, mvn, md, mp, M;
 	printf ("Vvedite h, w, d");
 	scanf ("%lf %lf %lf", &h, &w, &d);
 	printf ("Vvedite znacheniya plotnostey dereva, DVP i DSP"); 
@@ -10,12 +10,12 @@ void main()
 	{
 		if ((h >= 1.8) && (h <= 2.2) && (w >= 0.8) && (w <= 1.2) && (d >= 0.5) && (d <= 0.9))
 		{
-                      m1 = (h * w * 0.005 * pdvp);
-	                m2 = (h * d * 0.015 * pdsp);
-	                m3 = (w * d * 0.015 * pdsp);
-		        m4 = (h * w * 0.01 * pder);
-		        m5 = (floor((h - 2 * 0.015) / (0.4 + 0.015)) * (w - 2 * 0.015) * (d - 0.005) * 0.01 * pdsp);
-		        M = (m1 + m2 + m3 + m4 + m5);
+			mzst = (h * w * 0.005 * pdvp);
+			mbok = (h * d * 0.015 * pdsp);
+			mvn = (w * d * 0.015 * pdsp);
+			md = (h * w * 0.01 * pder);
+			mp = (floor((h - 2 * 0.015) / (0.4 + 0.015)) * (w - 2 * 0.015) * (d - 0.005) * 0.015 * pdsp);
+			M = (mzst + mbok + mvn + md + mp);
 	                printf ("Massa shkapha %lf kg", M);
 		}
 		else 
