@@ -9,7 +9,7 @@ void Scan_product(int *ind, int *kolvo,  int *i, char **scan, int *k)
 	printf("Enter the item code\n");
 	scanf("%s", &shtr);
 	j = 0;
-    while (strncmp(scan[j], shtr, 4) != 0)
+	while (strncmp(scan[j], shtr, 4) != 0)
         {
             j++;
         }
