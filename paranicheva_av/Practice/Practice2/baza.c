@@ -11,7 +11,8 @@ void main()
     {
         printf("Vyberete dlinu zagadyvaemogo chisla ");
         scanf("%d", &n);
-    } while ((n < 1) || (n > 10));
+    } 
+    while ((n < 1) || (n > 10));
     for (i = 0; i < n; i++)
     {
         do
@@ -26,7 +27,8 @@ void main()
                 if (m == b[j])
                     k++;
             }
-        } while (k != 0);
+        } 
+        while (k != 0);
         b[i] = m;
     }
     do
@@ -49,7 +51,8 @@ void main()
                         k++;
                 }
             }
-        } while (k != 0);
+        } 
+        while (k != 0);
         for (i = 0; i < n; i++)
         {
             for (j = 0; j < n; j++)
@@ -61,5 +64,6 @@ void main()
             }
         }
         printf("bull = %d, cow = %d \n", bull, cow);
-    } while (bull != n);
+    } 
+    while (bull != n);
 }
