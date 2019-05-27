@@ -16,8 +16,8 @@
 		do
 		{
 			printf ("Vvedite predpolagaemoe chislo \n");
-		    scanf ("%d", &a);
-		    if (a > n)
+			scanf ("%d", &a);
+			if (a > n)
 			{
 				printf ("< \n");
 			}
