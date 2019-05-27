@@ -50,7 +50,8 @@ void Add_item_to_check(int *check, int *ind, int *sch, int *i, int kolvo[], int 
 		sumprice += (price[check[j]] * kolvo[j] * (100 - discount[check[j]])) / 100;
 	}
 	alldiscount = allprice - sumprice;
-	printf ("\nFull price of products is %d  \nAmount of all discounts is %d  \nThe total price is %d\n\n", allprice, alldiscount, sumprice);
+	printf ("\nFull price of products is %d  \nAmount of all discounts is %d", allprice, alldiscount);
+	printf ("\nThe total price is %d\n\n",sumprice)
 }
 void main()
 {
