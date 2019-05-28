@@ -12,7 +12,7 @@ void main() {
     printf(" Vvedite visotu (180sm - 220sm), shirinu (80sm - 120sm) i glubinu (50sm - 90sm) shkafa \n");
     scanf(" %lf %lf %lf", &h, &w, &d);
 
-    if ((h < 180) || (h > 220)) 
+    if ((h < 180) || (h > 220))
     {
         printf(" Error - nekorrektni vvod ");
         return;
@@ -47,7 +47,7 @@ void main() {
     m2 = (2 * dcp * h * d * qdcp);     //Bokovini
     m3 = (2 * dcp * w * d * qdcp);     //Verh i niz
     m4 = (h * w * qder * der);           //Dveri
-    m5 = (h - 2 * qdcp) / (0.4 + qdcp) * (w - 2 * qdcp) * (d - qdvp);    //Polki
+    m5 = (int)((h - 2 * qdcp) / (0.4 + qdcp)) * (w - 2 * qdcp) * (d - qdvp);    //Polki
     m = m1 + m2 + m3 + m4 + m5;
 
     printf(" Massa shkafa = %.2lf kg \n", m);
