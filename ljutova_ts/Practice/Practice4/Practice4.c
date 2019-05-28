@@ -1,31 +1,26 @@
 #include <stdio.h> 
 #define N 10 
 
-int shtrih(int sh1[])
+int shtrih(char sh1[][4])
 {
-	int i, flag = 0, sh, sht2, sht;
+	int i = 0, sht2;
+	char sht[5];
 	printf("Enter shtrih-cod: \n ");
-	scanf("%d", &sht);
-	for (i = 0; i < N; i++)
+	scanf("%s", &(sht[0]));
+	for (i = 0; i < N + 1; i++)
 	{
-		if (sh1[i] == sht)
-		{
-			flag = 1;
-			break;
-		}
+		if (strncmp(sht, sh1[i], 4) == 0) //—равниваютс€ первые 4 символа 
+			{                             //двух строк
+				return i;
+			}
 	}
-	if (flag == 1)
-		return i;
-
 	return -1;
-
 }
 void product(char name[][6], int price[], float sale[], int a)
 {
 	int i;
 	printf("Your product: ");
-	for (i = 0; i < 6; i++)
-		printf("%c", name[a][i]);
+	printf("%s", name[a]);
 	printf("\n\nCost: %d \n", price[a]);
 	printf("\nSale: %0.0f%% \n", sale[a]);
 }
@@ -63,15 +58,16 @@ void output_check(char name[][6], int price[], float sale[], int count[], float 
 }
 void Menu()
 {
-	printf("--------MENU------Ч \n");
-	printf("1. display product information or add one more product\n");
-	printf("2. show check \n");
+	printf("-------MENU------- \n");
+	printf("1. display product information\n");
+	printf("2. add one more product\n");
+	printf("3. show check \n");
 }
 void main()
 {
 	int a;
 	int fill_shtrih[100] = { 0 };
-	int sh[N] = { 1111 , 2222 , 3333 , 4444 , 5555 , 6666 , 7777 , 8888 , 9999 , 1234 };
+	char sh[N][4] = { "1111" , "2222" , "3333" , "4444" , "5555" , "6666" , "7777" , "8888" , "9999" , "1234" };
 	char name[N][6] = { "bread" , "meat" , "fish", "egg" , "milk", "potato", "butter",
 		"apple", "salt", "cheese" };
 	int price[N] = { 20, 34, 54, 12, 65, 52, 76, 46, 19, 95 };
@@ -85,21 +81,31 @@ void main()
 		switch (menu)
 		{
 		case 1:
-		{
-			a = shtrih(sh);
-			if (a == -1)
 			{
-				printf("Your product does not found, try again \n");
+				a = shtrih(sh);
+				if (a == -1)
+				{
+					printf("Your product does not found, try again \n");
+					break;
+				}
+			
+				product(name, price, sale, a);
+				break;
+		case 2: 
+				a = shtrih(sh);
+				if (a == -1)
+				{
+					printf("Your product does not found, try again \n");
+					break;
+				}
+				fill_shtrih[a] = fill_shtrih[a] + 1;
+				product(name, price, sale, a);
+				total += sum(price, sale, a);
+				break;
+		case 3:
+				output_check(name, price, sale, fill_shtrih, total);
 				break;
 			}
-			fill_shtrih[a] = fill_shtrih[a] + 1;
-			product(name, price, sale, a);
-			total += sum(price, sale, a);
-			break;
-		case 2:
-			output_check(name, price, sale, fill_shtrih, total);
-			break;
-		}
 		}
 	} while (1);
 }
