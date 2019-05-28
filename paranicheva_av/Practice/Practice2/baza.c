@@ -13,15 +13,15 @@ void main()
         scanf("%d", &n);
     } 
     while ((n < 1) || (n > 10));
-    for (i = 0; i < n; i++)
+
+	b[0] = 9.0 / RAND_MAX * rand() + 1;
+
+    for (i = 1; i < n; i++)
     {
         do
         {
             k = 0;
-            if (i == 0)
-                m = 9.0 / RAND_MAX * rand() + 1;
-            else
-                m = 10.0 / RAND_MAX * rand();
+            m = 10.0 / RAND_MAX * rand();
             for (j = 0; j < i; j++)
             {
                 if (m == b[j])
