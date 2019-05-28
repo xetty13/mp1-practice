@@ -73,6 +73,7 @@ void Choose_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
         filesIndex[i] = tmp;
     }
 }
+
 void Insert_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 {
     int i, j, tmp;
@@ -88,6 +89,7 @@ void Insert_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
         }
     }
 }
+
 void Bubble_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 {
     int i, j, tmp;
@@ -104,6 +106,7 @@ void Bubble_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
         }
     }
 }
+
 void Counting_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
 {
     int *count = (int*)malloc(MAX_COUNT_OF_FILES * sizeof(int));
@@ -134,6 +137,7 @@ void Counting_sort(ULONGLONG *tmpSize, int *filesIndex, int kolvo)
     }
     free(count);
 }
+
 void Merge(int *filesIndex, ULONGLONG *tmpSize, int ind1, int mid, int ind2) 
 {
     int i, j = mid + 1, h, tmp;
@@ -159,6 +163,7 @@ void Merge_sort(ULONGLONG *tmpSize, int *filesIndex, int ind1, int ind2)
     Merge_sort(filesIndex, tmpSize, mid + 1, ind2);
     Merge(filesIndex, tmpSize, ind1, mid, ind2);
 }
+
 void Quicksplit(int *filesIndex, ULONGLONG *tmpSize, int *i, int *j, ULONGLONG opora)
 {
     int tmp;
@@ -177,6 +182,7 @@ void Quicksplit(int *filesIndex, ULONGLONG *tmpSize, int *i, int *j, ULONGLONG o
         } 
     } while ((*i) < (*j));
 }
+
 void Quick_sort(ULONGLONG *tmpSize, int *filesIndex, int ind1, int ind2)
 {
     int mid = (ind1 + ind2) / 2;
@@ -187,6 +193,7 @@ void Quick_sort(ULONGLONG *tmpSize, int *filesIndex, int ind1, int ind2)
     if (i < ind2)
         Quick_sort(filesIndex, tmpSize, i, ind2); 
 }
+
 int main()
 {
     wchar_t  **fileName;
