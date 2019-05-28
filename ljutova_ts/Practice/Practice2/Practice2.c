@@ -1,4 +1,4 @@
-#include <stdio.h> 
+﻿#include <stdio.h> 
 #include <time.h> 
 #include <stdlib.h> 
 
@@ -32,45 +32,31 @@ void main()
 	}
 	while (bulls != n)
 	{
-		do
-		{
-			i = 0, f = 0;
-			printf("Enter your number: ");
-			scanf("%d", &p);
-			p1 = p;
-			while (p1 != 0)
-			{
-				p1 = p1 / 10;
-				i++;
-			}
-			if (i == n)
-			{
-				for (i = n - 1; i > -1; i--)
-				{
-					b[i] = p % 10;
-					p = p / 10;
-				}
-				for (i = 0; i < n - 1; i++)
-					for (j = i + 1; j < n; j++)
-						if (b[i] == b[j])
-							f = 1;
-			}
-			else f = 1;
-			if (f == 1)
-				printf("Your number is incorrect.Try again.\n");
-		} while (f != 0);
 		cows = 0;
 		bulls = 0;
-		for (int i = 0; i < n; i++)
+		printf("Enter your number: ");
+		scanf("%d", &p);
+		if (p <= 0)
+		{
+			printf("Error. Your number is not correct");
+			break;
+		}
+		for (i = n; i > 0; i--)
+		{
+			b[i - 1] = p % 10;
+			p /= 10;
+		}
+		for (i = 0; i < n; i++)
 			for (int j = 0; j < n; j++)
 				if (b[i] == a[j])
 					cows++;
-		for (int i = 0; i < n; i++)
+		for (i = 0; i < n; i++)
 			if (a[i] == b[i])
 				bulls++;
+		if (cows >= bulls) //Без этого условия при отгадывании сохраняется
+			cows -= bulls; //и число коров, и число быков
 		printf("Cows: %d\n", cows);
 		printf("Bulls: %d\n", bulls);
 	}
 	printf("You win!!!");
 }
-
