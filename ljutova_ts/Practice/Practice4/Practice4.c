@@ -10,9 +10,9 @@ int shtrih(char sh1[][4])
 	for (i = 0; i < N + 1; i++)
 	{
 		if (strncmp(sht, sh1[i], 4) == 0) //Сравниваются первые 4 символа 
-			{                             //двух строк
-				return i;
-			}
+		{                                 //двух строк
+			return i;
+		}
 	}
 	return -1;
 }
@@ -81,31 +81,29 @@ void main()
 		switch (menu)
 		{
 		case 1:
+			a = shtrih(sh);
+			if (a == -1)
 			{
-				a = shtrih(sh);
-				if (a == -1)
-				{
-					printf("Your product does not found, try again \n");
-					break;
-				}
-			
-				product(name, price, sale, a);
-				break;
-		case 2: 
-				a = shtrih(sh);
-				if (a == -1)
-				{
-					printf("Your product does not found, try again \n");
-					break;
-				}
-				fill_shtrih[a] = fill_shtrih[a] + 1;
-				product(name, price, sale, a);
-				total += sum(price, sale, a);
-				break;
-		case 3:
-				output_check(name, price, sale, fill_shtrih, total);
+				printf("Your product does not found, try again \n");
 				break;
 			}
+			
+			product(name, price, sale, a);
+			break;
+		case 2: 
+			a = shtrih(sh);
+			if (a == -1)
+			{
+				printf("Your product does not found, try again \n");
+				break;
+			}
+			fill_shtrih[a] = fill_shtrih[a] + 1;
+			product(name, price, sale, a);
+			total += sum(price, sale, a);
+			break;
+		case 3:
+			output_check(name, price, sale, fill_shtrih, total);
+			break;
 		}
 	} while (1);
 }
