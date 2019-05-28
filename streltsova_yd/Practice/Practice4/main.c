@@ -43,10 +43,7 @@ void main()
         }
         if (mode == 2)
         {
-            printf("Goods - ");
-            for (i = 0; i < L; i++)
-                printf("%c", goods[num][i]);
-            printf("\n");
+            printf("Goods - %s\n", goods[num]);
             printf("Price - %d\n", price[num]);
             printf("Discount - %f\n", discount[num]);
         }
@@ -61,8 +58,7 @@ void main()
             for (i = 0; i < N; i++)
                 if (count[i] != 0)
                 {
-                    for (num = 0; num < L; num++)
-                        printf("%c", goods[i][num]);
+                    printf("%s", goods[i]);
                     printf("  %d              %d          %d\n", price[i], count[i], price[i] * count[i]);
                     sum += price[i] * count[i];
                     sum_dis += count[i] * price[i] * (discount[i] / 100);
