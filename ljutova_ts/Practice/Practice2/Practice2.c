@@ -36,6 +36,11 @@ void main()
 		bulls = 0;
 		printf("Enter your number: ");
 		scanf("%d", &p);
+		if (p <= 0)
+		{
+			printf("Error. Your number is not correct");
+			break;
+		}
 		for (i = n; i > 0; i--)
 		{
 			b[i - 1] = p % 10;
@@ -48,8 +53,8 @@ void main()
 		for (i = 0; i < n; i++)
 			if (a[i] == b[i])
 				bulls++;
-		if (cows >= bulls)
-			cows -= bulls;
+		if (cows >= bulls) //Без этого условия при выигрыше получаем
+			cows -= bulls; //и число быков, и число коров
 		printf("Cows: %d\n", cows);
 		printf("Bulls: %d\n", bulls);
 	}
