@@ -13,7 +13,7 @@ void main()
         scanf("%d", &n);
     } 
     while ((n < 1) || (n > 10));
-  b[0] = 9.0 / RAND_MAX * rand() + 1;
+    b[0] = 9.0 / RAND_MAX * rand() + 1;
 
     for (i = 1; i < n; i++)
     {
