@@ -1,5 +1,6 @@
 ﻿#include <stdio.h>
-void main() {
+void main() 
+{
 	double V1, V2, V3, V4, V5, m1, m2, m3, m4, m5, M;
 	int f;
 	double l1 = 0.005, l2 = 0.015, l3 = 0.01; //толщина в метрах
