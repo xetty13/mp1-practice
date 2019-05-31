@@ -121,20 +121,17 @@ float Angle(Vector V1, Vector V2)
     float angle = 0, _lenght1 = 0, _lenght2 = 0;
     float _scalar = 0;
 
-    if (V1.size == V2.size)
-    {
-        _lenght1 = Lenght(V1);
-        _lenght2 = Lenght(V2);
-        _scalar = Scalar(V1, V2);
-        angle = ((acos(_scalar / (_lenght1 * _lenght2)) * 180) / 3.14);
-        if (angle > 90) angle = 180 - angle;
-        return angle;
-    }
-    else
+    if (V1.size != V2.size)
     {
         angle = ERROR;
         return angle;
     }
+    _lenght1 = Lenght(V1);
+    _lenght2 = Lenght(V2);
+    _scalar = Scalar(V1, V2);
+    angle = ((acos(_scalar / (_lenght1 * _lenght2)) * 180) / 3.14);
+    if (angle > 90) angle = 180 - angle;
+    return angle;
 }
 
 
