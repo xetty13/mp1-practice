@@ -1,4 +1,5 @@
 ﻿#include <stdio.h>
+#include <string.h>
 #include <conio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -10,114 +11,85 @@ char name[N][k] = { "Shower cabin 'Niagara'", "Kitchen sink 'Moidodyr'" , "Cupbo
 "Bath 'Roca Surest'", "Microwave 'Hot days'", "Fridge 'Telamon'" ,
 "Coffee machine 'Ariston'" ,  "Dishwasher 'DeLonghi'" ,
 "Washer 'Andy Aqua'" ,  "Cooker 'Flama'" };
-int id[N + 1][s] = { { 1,2,5,8 },{ 1,5,7,3 },{ 1,8,1,5 },
-{ 1,7,7,8 },{ 2,4,7,7 },
-{ 3,6,2,5 },{ 5,0,7,8 },
-{ 6,4,1,6 },{ 8,2,3,5 },{ 8,5,0,1 }, {0,0,0,0} };
+char id[N + 1][s] = { "1258", "1573", "1815",
+"1778", "2477",
+"3625","5078",
+"6416", "8235", "8501", "0000" };
 int price[N] = { 60000, 20000, 25000, 55999, 30500, 63440, 12700, 29300, 32900, 24000 };
 int sale[N] = { 20, 45, 50, 12, 35, 10, 15, 5, 20, 10 };
-int check[N][s] = { 0 };
+int check[N] = { 0 };
 int count[N] = { 0 };
 int stoim[N] = { 0 };
 int pos;
 
-int scan(int a[][s], int n)
+int scan(char code[][s], int n)
 {
-    int id, id1, leng;
-    int copy[s], i, fl = 0, pos1;
-    do
-    {
-        printf(" Enter your id, please  ");
-        scanf("%d", &id);
-        id1 = id;
-        leng = 0;
+    int i, _pos;
+    char copy[N];
 
-        if (id == 111)
-            return 111;
-        
-        while (id1 != 0)
-        {
-            id1 /= 10;
-            leng++;
-        }
-        if (leng != s) printf("\nId not found, sorry. Try again\n\n");
-        if (leng == s)
-        {
-            id1 = id;
-            for (i = s - 1; i >= 0; i--)
+    printf(" Enter your id, please  ");
+    scanf("%s", &copy);
+
+    if (strlen(copy) != s) //Если код не подходит по длине
+        return -1;
+
+        for (i = 0; i < n + 1; i++)
+            if (strncmp(copy, code[i], 4) == 0)
             {
-                copy[i] = id1 % 10;
-                id1 /= 10;
+                return i;
             }
-
-            for (i = 0; i < s; i++)
-                a[n - 1][i] = copy[i];
-
-            i = 0;
-            while ((a[i][0] != copy[0]) || (a[i][1] != copy[1]) || (a[i][2] != copy[2]) || (a[i][3] != copy[3]))
-                i++;
-
-            if (i == n - 1) pos1 = -1;
-            else pos1 = i;
-        }
-
-    } while ((leng != s) && (pos != -1));
-    return pos1;
+    return -1;
 }
 
-void inform(int pos1, int a[][s], int n, char b[][k], int f_price[], int f_sale[])
+void inform(int pos, char code[][s], int n, char name[][k], int f_price[], int f_sale[])
 {
-    int i = 0;
-    for (i = 0; i < s; i++)
-        printf("%d", a[pos1][i]);
+    printf("%.4s", code[pos]);
     printf("    ");
-    for (i = 0; i < k; i++)
-        printf("%c", b[pos1][i]);
+    printf("%s", name[pos]);
     printf("");
-    printf("%d rub", f_price[pos1]);
+    printf("%d rub", f_price[pos]);
     printf("  ");
-    printf("%d %%", f_sale[pos1]);
+    printf("%d %%", f_sale[pos]);
     printf("\n\n");
 }
 
-void add_check(int a[][s], int n, int b[][s], int pos1, int c[])
+void add_check(int check[], int n, char code[][s], int _pos, int c[])
 {
     int i, j, fl = 0;
-    char otv;
+    char otv[2];
 
     do
     {
         printf("Do you want to add product to check?(+ or -) ");
-        scanf(" %c", &otv);
+        scanf(" %s", &otv);
         printf("\n");
-    } while ((otv != '+') && (otv != '-'));
+    } while ((otv == '+') || (otv == '-'));
 
-    if (otv == '+') 
+    if (otv[0] == '+') 
     {
         for (i = 0; i < n; i++)
         {
-                if (a[i][0] == b[pos1][0] && a[i][1] == b[pos1][1] && a[i][2] == b[pos1][2] && a[i][3] == b[pos1][3])
-                {
-                    fl = 1;
-                    c[i]++;
-                    break;
-                }
+            //Проверка на существование товара в чеке
+            if (check[i] == _pos)
+            {
+                fl = 1;
+                c[i]++;
+                break;
+            }
         }
 
         if (fl == 0)
         { 
             for (i = 0; i < n; i++)
             {
-                if (a[i][0] == 0 && a[i][1] == 0 && a[i][2] == 0 && a[i][3] == 0)
+                if (check[i] == 0)
                 {
-                    for (j = 0; j < s; j++)
-                        a[i][j] = b[pos1][j];
+                    check[i] = _pos;
                     break;
                 }
             }
             c[i]++;
         }
-        
     }
 }
 
@@ -130,18 +102,17 @@ void show_check(int n, char f_name[][k], int f_count[], int f_price[], int f_sal
     {
         if (f_count[i] != 0)
         {
-            for (j = 0; j < k; j++)
-                printf( "%c", f_name[i][j]);
+            printf( "%s", f_name[check[i]]);
             printf("  ");
-            printf("%d %%", f_sale[i]);
+            printf("%d %%", f_sale[check[i]]);
             printf("\n");
             printf("%d", f_count[i]);
             printf(" * ");
-            printf("%d rub", f_price[i]);
+            printf("%d rub", f_price[check[i]]);
             printf("          = ");
-            st = f_count[i] * (1 - (f_sale[i] / 100.0)) * f_price[i];
+            st = f_count[i] * (1 - (f_sale[check[i]] / 100.0)) * f_price[check[i]];
             printf("%.2lf", st);
-            printf("\n\n");
+            printf("\n");
         }
     }
 }
@@ -197,16 +168,14 @@ int get_variant(int count)
     return variant;
 }
 
-void output_id_name(int a[][s], int n, char b[][k])
+void output_id_name(char code[][s], int n, char name[][k])
 {
     int i, j;
     for (i = 0; i < n; i++)
     {
-        for (j = 0; j < s; j++)
-            printf(" %d", a[i][j]);
+            printf(" %.4s", code[i]);
         printf("    ");
-        for (j = 0; j < k; j++)
-            printf("%c", b[i][j]);
+            printf("%s", name[i]);
         printf("\n");
     }
     printf("\n\n");
@@ -220,21 +189,18 @@ void num1()
 
 void num2()
 {
-    int pos;
+    int _pos;
     do
     {
-        printf("\n Go to menu  - 111\n -----------------\n\n");
-        pos = scan(id, N + 1);
-        if (pos == 111)
-            break;
-        if (pos == -1)
+        _pos = scan(id, N + 1);
+        if (_pos == -1)
             printf("\n Id not found, sorry. Try again\n\n");
         else
         {
-            inform(pos, id, N, name, price, sale);
-            add_check(check, N, id, pos, count);
+            inform(_pos, id, N, name, price, sale);
+            add_check(check, N, id, _pos, count);
         }
-    } while (pos != 111);
+    } while (_pos == -1);
 }
 
 void num3()
