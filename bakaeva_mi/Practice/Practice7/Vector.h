@@ -5,15 +5,16 @@ using namespace std;
 
 struct Vector
 {
-    private:
+private:
     int size;
     float *elements;
 
-    public:
+public:
     //Function
     Vector(int);
     Vector(const Vector &);
     ~Vector();
+    void Create(float*);
     void Output() const;
     Vector operator*(int);
     Vector operator+(const Vector &);
@@ -33,7 +34,7 @@ struct Vector
     void operator delete(void*);
 
     friend ostream& operator<<(ostream &, const Vector &);
-
+};
     //Exceptions
     class Exception_sizes : exception
     {
@@ -58,5 +59,4 @@ struct Vector
         }
         const char* what() const { return mes.c_str(); }
     };
-};
 #endif

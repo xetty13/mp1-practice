@@ -10,10 +10,6 @@ Vector::Vector(int _size)
 {
     size = _size;
     elements = new float[size];
-    srand((unsigned)time(0));
-    for (int i = 0; i < size; i++)
-        elements[i] = static_cast <float> (rand())
-        / static_cast <float> (RAND_MAX );
 }
 
 Vector::~Vector()
@@ -38,6 +34,12 @@ Vector Vector::operator+(const Vector & x)
     for (int i = 0; i < size; i++)
         tmp.elements[i] = elements[i] + x.elements[i];
     return tmp;
+}
+
+void Vector::Create(float* tmp)
+{
+    for (int i = 0; i < size; i++)
+        elements[i] = tmp[i];
 }
 
 void Vector::Output() const
@@ -68,15 +70,12 @@ Vector Vector::operator-(const Vector & tmp)
 
 float Vector::Scalar(Vector& V1)
 {
-    if(V1.size != size)
+    if (V1.size != size)
         throw Exception_sizes("Vector sizes are not equal!");
-    else 
-    {
-        float tmp = 0;
-        for (int i = 0; i < V1.size; i++)
-            tmp += (V1.elements[i] * elements[i]);
-        return tmp;
-    }
+    float tmp = 0;
+    for (int i = 0; i < V1.size; i++)
+        tmp += (V1.elements[i] * elements[i]);
+    return tmp;
 }
 
 double Vector::Lenght() const
