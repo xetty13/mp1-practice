@@ -1,8 +1,13 @@
 #include "Vector.h"
-#include "Exception.h"
 #include <iostream>
-#include "conio.h"
+#include <exception>
+#include <stdexcept>
+#include <conio.h>
+#include <locale.h>
+#include <Windows.h>
 using namespace std;
+
+void menu();
 
 void main()
 {
@@ -13,102 +18,69 @@ void main()
 
     cout << "     Hello, it's multidimensional vector\n\n";
 
+    cout << "  V1 = ";
+    A.Output();
+    cout << "  V2 = ";
+    B.Output();
+    cout << "  V3 = ";
+    C.Output();
+    cout << "  V1 = ";
+    A.Output();
+    cout << "  V2 = ";
+    B.Output();
+    cout << "  V3 = ";
+    C.Output();
+
+    cout << "  Enter the const: ";
+    cin >> a;
+    cout << "  V1 + const = " << A + a;
+    cout << "\n  V2 + const = " << B + a;
+    cout << "\n  V3 + const = " << C + a;
+
+    cout << "  V1 * const = " << A * a;
+    cout << "\n  V2 * const = " << B * a;
+    cout << "\n  V3 * const = " << C * a;
+
+    res = A.Lenght();
+    cout << "\n  |V1| = " << res;
+    res = B.Lenght();
+    cout << "\n  |V2| = " << res;
+    res = C.Lenght();
+    cout << "\n  |V3| = " << res;
     try
     {
-        cout << "  V1 = ";
-        A.Output();
-        cout << "  V2 = ";
-        B.Output();
-        cout << "  V3 = ";
-        C.Output();
-
-        A.menu();
-        while (f == 1)
-        {
-            do
-            {
-                cout << "\n";
-                cout << endl;
-                cout << "  Select options (1 - 10): ";
-                cin >> _menu;
-                cout << endl;
-            } while ((_menu >= 9) && (_menu <= 1));
-            switch (_menu)
-            {
-            case(1):
-            {
-                cout << "  V1 = ";
-                A.Output();
-                cout << "  V2 = ";
-                B.Output();
-                cout << "  V3 = ";
-                C.Output();
-                break;
-            }
-            case(2):
-            {
-                cout << "  Enter the const: ";
-                cin >> a;
-                cout << "  V1 * const = " << A * a;
-                cout << "\n  V2 * const = " << B * a;
-                cout << "\n  V3 * const = " << C * a;
-                break;
-            }
-            case(3):
-            {
-                cout << "  V1 + V2 = ";
-                cout << A + B;
-                break;
-            }
-            case(4):
-            {
-                cout << "  V1 - V2 = ";
-                cout << A - B;
-                break;
-            }
-            case(5): {
-                res = A.Scalar(B);
-                cout << "  (V1,V2) = " << res;
-                break;
-            }
-            case(6):
-            {
-                res = A.Lenght();
-                cout << "\n  |V1| = " << res;
-                res = B.Lenght();
-                cout << "\n  |V2| = " << res;
-                res = C.Lenght();
-                cout << "\n  |V3| = " << res;
-                break;
-            }
-            case(7):
-            {
-                cout << "  Enter the const: ";
-                cin >> a;
-                cout << "  V1 + const = " << A + a;
-                cout << "\n  V2 + const = " << B + a;
-                cout << "\n  V3 + const = " << C + a;
-                break;
-            }
-            case(8):
-            {
-                cout << "  Enter the number: ";
-                cin >> a;
-                cout << "  V1[" << a << "] = " << A[a];
-                cout << "\n  V2[" << a << "] = " << B[a];
-                cout << "\n  V3[" << a << "] = " << C[a];
-                break;
-            }
-            case(9):
-            {
-                f = 0;
-                cout << "  Goodbay;)\n";
-            };
-            }
-        }
+        cout << "  V1 + V2 = ";
+        cout << A + B;
+        cout << "  V2 + V3 = ";
+        cout << B + C;
     }
-    catch (Exception exp)
+    catch (Exception_sizes& e)
     {
-        exp.Print();
+        cerr << e.what() << endl;
     }
+    try
+    {
+        cout << "  V1 - V2 = ";
+        cout << A - B;
+
+        res = A.Scalar(C);
+        cout << "  (V1,V3) = " << res;
+    }
+    catch(Exception_sizes& e)
+    {
+        cerr << e.what() << endl;
+    }
+    try 
+    {
+        cout << "  V1[3] = " << A[3];
+        cout << "\n  V2[4] = " << B[4];
+        //exception
+        cout << "\n  V3[10] = " << C[10];
+    }
+    catch (Exception_ind& e)
+    {
+        cerr << e.what() << endl;
+    }
+
+    system("pause");
 }

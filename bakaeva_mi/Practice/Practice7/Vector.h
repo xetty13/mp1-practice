@@ -7,31 +7,56 @@ struct Vector
 {
     private:
     int size;
-    int *elements;
+    float *elements;
 
     public:
     //Function
     Vector(int);
     Vector(const Vector &);
     ~Vector();
-    void menu();
-    void Output();
+    void Output() const;
     Vector operator*(int);
     Vector operator+(const Vector &);
     Vector operator-(const Vector &);
-    int Scalar(Vector&);
-    double Lenght();
+    float Scalar(Vector&);
+    double Lenght() const;
     Vector operator+(int);
-    int operator[](int);
-    Vector operator+=(int);
-    Vector operator*=(int);
-    Vector operator-=(int);
-    Vector operator+=(const Vector &);
-    Vector operator*=(const Vector &);
-    Vector operator-=(const Vector &);
-    void* operatornew(size_t);
-    void operatordelete(void*);
+    float operator[](int) const;
+    float& operator[](int);
+    Vector& operator+=(int);
+    Vector& operator*=(int);
+    Vector& operator-=(int);
+    Vector& operator+=(const Vector &);
+    Vector& operator*=(const Vector &);
+    Vector& operator-=(const Vector &);
+    void* operator new(size_t);
+    void operator delete(void*);
 
     friend ostream& operator<<(ostream &, const Vector &);
+
+    //Exceptions
+    class Exception_sizes : exception
+    {
+    private:
+       const string mes;
+    public:
+        Exception_sizes(string e)
+            : mes(e)
+        {
+        }
+        const char* what() const { return mes.c_str(); }
+    };
+
+    class Exception_ind : exception
+    {
+    private:
+        const string mes;
+    public:
+        Exception_ind(string e)
+            : mes(e)
+        {
+        }
+        const char* what() const { return mes.c_str(); }
+    };
 };
 #endif

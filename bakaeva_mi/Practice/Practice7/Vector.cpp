@@ -1,33 +1,19 @@
-#include "Exception.h"
 #include <iostream>
 #include <ctime>
+#include <exception>
 #include <stdlib.h>
 #include <stdio.h>
 #include "Vector.h"
 using namespace std;
 
-void Vector::menu()
-{
-    cout << "\n         MENU\n";
-    cout << " 1) Output of Vectors\n";
-    cout << " 2) Multiplication by a const\n";
-    cout << " 3) Sum of Vectors\n";
-    cout << " 4) Subtraction of Vectors\n";
-    cout << " 5) Scalar product of vectors\n";
-    cout << " 6) The length of the vectors\n";
-    cout << " 7) Addition with const\n";
-    cout << " 8) Indexing\n";
-    cout << " 9) Exit\n";
-    cout << "\n";
-}
-
 Vector::Vector(int _size)
 {
     size = _size;
-    elements = new int[size];
-    srand(time(0));
+    elements = new float[size];
+    srand((unsigned)time(0));
     for (int i = 0; i < size; i++)
-        elements[i] = rand() % 10;
+        elements[i] = static_cast <float> (rand())
+        / static_cast <float> (RAND_MAX );
 }
 
 Vector::~Vector()
@@ -39,7 +25,7 @@ Vector::~Vector()
 Vector::Vector(const Vector & tmp)
 {
     size = tmp.size;
-    elements = new int[size];
+    elements = new float[size];
     for (int i = 0; i < size; i++)
         elements[i] = tmp.elements[i];
 }
@@ -47,17 +33,14 @@ Vector::Vector(const Vector & tmp)
 Vector Vector::operator+(const Vector & x)
 {
     if (size != x.size)
-        throw Exception("Vector sizes are not equal! Try again");
-    else
-    {
-        Vector tmp(size);
-        for (int i = 0; i < size; i++)
-            tmp.elements[i] = elements[i] + x.elements[i];
-        return tmp;
-    }
+        throw Exception_sizes("Vector sizes are not equal!");
+    Vector tmp(size);
+    for (int i = 0; i < size; i++)
+        tmp.elements[i] = elements[i] + x.elements[i];
+    return tmp;
 }
 
-void Vector::Output()
+void Vector::Output() const
 {
     cout << "( ";
     for (int i = 0; i < size; i++)
@@ -76,30 +59,27 @@ Vector Vector::operator*(int a)
 Vector Vector::operator-(const Vector & tmp)
 {
     if (size != tmp.size)
-        throw Exception("Vector sizes are not equal! Try again");
-    else
-    {
-        Vector res(tmp.size);
+        throw Exception_sizes("Vector sizes are not equal!");
+    Vector res(tmp.size);
         for (int i = 0; i < size; i++)
             res.elements[i] = elements[i] - tmp.elements[i];
         return res;
-    }
 }
 
-int Vector::Scalar(Vector& V1)
+float Vector::Scalar(Vector& V1)
 {
     if(V1.size != size)
-        throw Exception("Vector sizes are not equal! Try again");
+        throw Exception_sizes("Vector sizes are not equal!");
     else 
     {
-        int tmp = 0;
+        float tmp = 0;
         for (int i = 0; i < V1.size; i++)
             tmp += (V1.elements[i] * elements[i]);
         return tmp;
     }
 }
 
-double Vector::Lenght()
+double Vector::Lenght() const
 {
     float lenght = 0;
     for (int i = 0; i < size; i++)
@@ -116,85 +96,75 @@ Vector Vector::operator+(int a)
     return tmp;
 }
 
-int Vector::operator[](int a)
+float Vector::operator[](int a) const
 {
     if ((a < 0) || (a > size))
-        throw Exception("Not correct index!");
-    return elements[a-1];
+        throw Exception_ind("Not correct index!");
+    return elements[a];
 }
 
-Vector Vector::operator+=(int a)
+float& Vector::operator[](int ind)
 {
-    Vector tmp(size);
-    for (int i = 0; i < size; i++)
-        tmp.elements[i] += a;
-    return tmp;
+    if ((ind < 0) || (ind > size))
+        throw Exception_ind("Not correct index!");
+    return elements[ind];
 }
 
-Vector Vector::operator*=(int a)
+Vector& Vector::operator+=(int a)
 {
-    Vector tmp(size);
     for (int i = 0; i < size; i++)
-        tmp.elements[i] *= a;
-    return tmp;
+        elements[i] += a;
+    return *this;
 }
 
-Vector Vector::operator-=(int a)
+Vector& Vector::operator*=(int a)
 {
-    Vector tmp(size);
     for (int i = 0; i < size; i++)
-        tmp.elements[i] -= a;
-    return tmp;
+        elements[i] *= a;
+    return *this;
 }
 
-Vector Vector::operator+=(const Vector & tmp)
+Vector& Vector::operator-=(int a)
+{
+    for (int i = 0; i < size; i++)
+        elements[i] -= a;
+    return *this;
+}
+
+Vector& Vector::operator+=(const Vector & tmp)
 {
     if (size != tmp.size)
-        throw Exception("Vector sizes are not equal! Try again");
-    else
-    {
-        Vector res(tmp.size);
-        for (int i = 0; i < size; i++)
-            res.elements[i] += tmp.elements[i];
-        return res;
-    }
+        throw Exception_sizes("Vector sizes are not equal!");
+    for (int i = 0; i < size; i++)
+        elements[i] += tmp.elements[i];
+    return *this;
 }
 
-Vector Vector::operator*=(const Vector & tmp)
+Vector& Vector::operator*=(const Vector & tmp)
 {
     if (size != tmp.size)
-        throw Exception("Vector sizes are not equal! Try again");
-    else
-    {
-        Vector res(tmp.size);
-        for (int i = 0; i < size; i++)
-            res.elements[i] *= tmp.elements[i];
-        return res;
-    }
+        throw Exception_sizes("Vector sizes are not equal!");
+    for (int i = 0; i < size; i++)
+        elements[i] *= tmp.elements[i];
+    return *this;
 }
 
-Vector Vector::operator-=(const Vector & tmp)
+Vector& Vector::operator-=(const Vector & tmp)
 {
     if (size != tmp.size)
-        throw Exception("Vector sizes are not equal! Try again");
-    else
-    {
-        Vector res(tmp.size);
-        for (int i = 0; i < size; i++)
-            res.elements[i] -= tmp.elements[i];
-        return res;
-    }
+        throw Exception_sizes("Vector sizes are not equal!");
+    for (int i = 0; i < size; i++)
+        elements[i] -= tmp.elements[i];
+    return *this;
 }
 
-void* Vector::operatornew(size_t Size)
+void* Vector::operator new(size_t Size)
 {
     void* tmp = malloc(Size);
-    if (tmp == NULL)
-        throw("Empty vector!");
     return tmp;
 }
 
-void Vector::operatordelete(void* tmp)
+void Vector::operator delete(void* tmp)
 {
     delete (Vector*)tmp;
 }
