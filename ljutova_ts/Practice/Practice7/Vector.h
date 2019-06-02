@@ -11,9 +11,7 @@ public:
     Vector(const Vector&);
     Vector(int);
     ~Vector();
-
-    void Input();
-
+    
     Vector operator+(const Vector&);
     Vector operator-(const Vector&);
     bool operator==(const Vector&) const;
