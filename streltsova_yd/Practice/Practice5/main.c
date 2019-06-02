@@ -189,11 +189,11 @@ void main()
 {
     clock_t start, end;
     float time = 0.0f;
-    int f = 0;
+    int f = 0, mode;
     unsigned long *ind;
     wchar_t *path, **fName;
     ULONGLONG *fSize;
-    unsigned long i = 0, count = -1, mode;
+    unsigned long i = 0, count = -1;
     fName = (wchar_t**)malloc(FMAX * sizeof(wchar_t*));
     fSize = (ULONGLONG*)malloc(FMAX * sizeof(ULONGLONG));
     printf ("          File Manager\n");
