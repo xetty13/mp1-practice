@@ -1,29 +1,30 @@
-struct Vector
+п»їstruct Vector
 {
 private:
     int n;
+    double* x;
 public:
-    double *x;
-    Vector(); //конструктор по умолчанию
-    Vector(int _n); // конструктор с параметром
-    Vector(const Vector& a); // конструктор копирования
-    ~Vector(); // деструктор
-    Vector operator+(const Vector& a) const; // покомпонентное сложение
-    Vector operator-(const Vector& a) const; // покомпонентное вычитание
-    Vector operator+(double a) const; // прибавление константы
-    Vector operator-(double a) const; // вычитание константы
-    Vector operator*(double a) const; // умножение на константу
-    double operator*(const Vector& a) const; // скалярное произведение
-    Vector operator+=(const Vector& a); // покомпонентное сложение
-    Vector operator-=(const Vector& a); // покомпонентное вычитание
-    Vector operator+=(double a); // прибавление константы
-    Vector operator-=(double a); // вычитание константы
-    Vector operator*=(double a); // умножение на константу
-    Vector& operator=(const Vector& a); // присваивание
-    double* operator[](int i) const; // запись и чтение
-    double Length() const; // функция получения дины вектора
-    void *operator new[](size_t n); //выделение памяти
-    void operator delete[](void *p); // освобождение памяти
-    void Add(); // добавление вектора
-    void Print() const;// печать вектора
+    Vector(); // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+    Vector(int _n); // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂРѕРј
+    Vector(const Vector& a); // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+    ~Vector(); // РґРµСЃС‚СЂСѓРєС‚РѕСЂ
+    Vector operator+(const Vector& a) const; // РїРѕРєРѕРјРїРѕРЅРµРЅС‚РЅРѕРµ СЃР»РѕР¶РµРЅРёРµ
+    Vector operator-(const Vector& a) const; // РїРѕРєРѕРјРїРѕРЅРµРЅС‚РЅРѕРµ РІС‹С‡РёС‚Р°РЅРёРµ
+    Vector operator+(double a) const; // РїСЂРёР±Р°РІР»РµРЅРёРµ РєРѕРЅСЃС‚Р°РЅС‚С‹
+    Vector operator-(double a) const; // РІС‹С‡РёС‚Р°РЅРёРµ РєРѕРЅСЃС‚Р°РЅС‚С‹
+    Vector operator*(double a) const; // СѓРјРЅРѕР¶РµРЅРёРµ РЅР° РєРѕРЅСЃС‚Р°РЅС‚Сѓ
+    double operator*(const Vector& a) const; // СЃРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
+    Vector& operator+=(const Vector& a); // РїРѕРєРѕРјРїРѕРЅРµРЅС‚РЅРѕРµ СЃР»РѕР¶РµРЅРёРµ
+    Vector& operator-=(const Vector& a); // РїРѕРєРѕРјРїРѕРЅРµРЅС‚РЅРѕРµ РІС‹С‡РёС‚Р°РЅРёРµ
+    Vector& operator+=(double a); // РїСЂРёР±Р°РІР»РµРЅРёРµ РєРѕРЅСЃС‚Р°РЅС‚С‹
+    Vector& operator-=(double a); // РІС‹С‡РёС‚Р°РЅРёРµ РєРѕРЅСЃС‚Р°РЅС‚С‹
+    Vector& operator*=(double a); // СѓРјРЅРѕР¶РµРЅРёРµ РЅР° РєРѕРЅСЃС‚Р°РЅС‚Сѓ
+    const Vector& operator=(const Vector& a); // РїСЂРёСЃРІР°РёРІР°РЅРёРµ
+    double& operator[](int i);// Р·Р°РїРёСЃСЊ
+    const double& operator[](int i) const; // С‡С‚РµРЅРёРµ
+    double Length() const; // С„СѓРЅРєС†РёСЏ РїРѕР»СѓС‡РµРЅРёСЏ РґРёРЅС‹ РІРµРєС‚РѕСЂР°
+    void* operator new[](size_t n); //РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё
+    void operator delete[](void* p); // РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїР°РјСЏС‚Рё
+    void Add(); // РґРѕР±Р°РІР»РµРЅРёРµ РІРµРєС‚РѕСЂР°
+    void Print() const;// РїРµС‡Р°С‚СЊ РІРµРєС‚РѕСЂР°
 };
