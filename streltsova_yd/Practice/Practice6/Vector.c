@@ -77,7 +77,7 @@ float Length(Vector*a)
     float l = 0;
     for (i = 0; i < a->n; i++)
         l += (a->x[i] * a->x[i]);
-    l = (float)sqrt(l);
+    l = sqrtf(l);
     return l;
 };
 float Angle(Vector *a, Vector *b)
@@ -88,7 +88,7 @@ float Angle(Vector *a, Vector *b)
     l2 = Length(b);
     if ((l1 == 0) || (l2 == 0))
         return 0;
-    A = (float)acos(c / (l1 * l2)); 
-    A = (float)(A / 3.14 * 180);
+    A = acosf(c / (l1 * l2)); 
+    A = A / 3.14 * 180;
     return A;
 };
