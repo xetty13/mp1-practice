@@ -1,4 +1,4 @@
-#include <stdio.h> 
+ï»¿#include <stdio.h> 
 #define N 10 
 
 int shtrih(char sh1[][4])
@@ -9,8 +9,8 @@ int shtrih(char sh1[][4])
 	scanf("%s", &(sht[0]));
 	for (i = 0; i < N + 1; i++)
 	{
-		if (strncmp(sht, sh1[i], 4) == 0) //Ñðàâíèâàþòñÿ ïåðâûå 4 ñèìâîëà 
-		{                                 //äâóõ ñòðîê
+		if (strncmp(sht, sh1[i], 4) == 0) //Ð¡Ñ€Ð°Ð²Ð½Ð¸Ð²Ð°ÑŽÑ‚ÑÑ Ð¿ÐµÑ€Ð²Ñ‹Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð° 
+		{                                 //Ð´Ð²ÑƒÑ… ÑÑ‚Ñ€Ð¾Ðº
 			return i;
 		}
 	}
