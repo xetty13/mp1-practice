@@ -87,16 +87,15 @@ Vector Sub(Vector V1, Vector V2)
 }
 
 //Скалярное произведение 
-Vector scalar(Vector V1, Vector V2)
+float scalar(Vector V1, Vector V2)
 {
 	int i;
-	Vector sc;
-	sc = Create(V1.size);
+	float sc = 0;
 	if (V1.size == V2.size)
 	{
 		for (i = 0; i < V1.size; i++)
 		{
-			sc.V[i] = V1.V[i] * V2.V[i];
+			sc += V1.V[i] * V2.V[i];
 		}
 		printf("Scalar: ");
 		return sc;
@@ -104,7 +103,7 @@ Vector scalar(Vector V1, Vector V2)
 	else
 	{
 		printf("Error. Different sizes ");
-		return sc;
+		return 0;
 	}
 }
 
