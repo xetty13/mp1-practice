@@ -1,5 +1,5 @@
 ﻿#include "Matrix.h"
-#include "Exception.h"
+#include <cstring>
 using namespace std;
 
 //Выделение памяти
@@ -8,9 +8,8 @@ Matrix::Matrix(int _rows, int _cols)
 
 	rows = _rows;
 	cols = _cols;
-	m = new int[rows * cols];
-	for (int i = 0; i < rows * cols; i++)
-		m[i] = 0;
+	m = new double[rows * cols];
+    memset(m, 0, rows * cols * sizeof(double));
 }
 
 //Копирование 
@@ -18,9 +17,8 @@ Matrix::Matrix(const Matrix& x)
 {
 	rows = x.rows;
 	cols = x.cols;
-	m = new int[rows * cols];
-	for (int i = 0; i < rows * cols; i++)
-		m[i] = x.m[i];
+	m = new double[rows * cols];
+    memcpy(m, x.m, rows * cols * sizeof(double));
 }
 
 //Деструктор
@@ -32,30 +30,11 @@ Matrix::~Matrix()
 		delete[] m;
 }
 
-//Вывод
-void Matrix::Output()
-{
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < cols; j++)
-			cout << m[i * cols + j] << " ";
-		cout << endl;
-	}
-
-}
-
-//Ввод
-void Matrix::Input()
-{
-	for (int i = 0; i < rows * cols; i++)
-		cin >> m[i];
-}
-
 Matrix Matrix::operator+(const Matrix&_m)
 {
 	if ((rows != _m.rows) || (cols != _m.cols))
 	{
-		throw Exception("Diferent size");
+		throw Matrix1();
 	}
 	Matrix result(rows, cols);
 	for (int i = 0; i < rows; i++)
@@ -64,7 +43,7 @@ Matrix Matrix::operator+(const Matrix&_m)
 	return result;
 }
 
-Matrix Matrix::operator+(int x)
+Matrix Matrix::operator+(double x)
 {
 	Matrix result(rows, cols);
 	for (int i = 0; i < rows; i++)
@@ -77,7 +56,7 @@ Matrix Matrix::operator-(const Matrix&_m)
 {
 	if ((rows != _m.rows) || (cols != _m.cols))
 	{
-		throw Exception("Error. Different size");
+		throw Matrix1();
 	}
 	Matrix result(rows, cols);
 	for (int i = 0; i < rows; i++)
@@ -85,7 +64,7 @@ Matrix Matrix::operator-(const Matrix&_m)
 			result.m[i * cols + j] = m[i * cols + j] - _m.m[i * cols + j];
 	return result;
 }
-Matrix Matrix::operator-(int x)
+Matrix Matrix::operator-(double x)
 {
 	Matrix result(rows, cols);
 	for (int i = 0; i < rows; i++)
@@ -97,7 +76,7 @@ Matrix Matrix::operator-(int x)
 Matrix Matrix::operator*(const Matrix&_m)
 {
 	if ((rows != _m.cols) || (cols != _m.rows))
-		throw Exception("Different size");
+        throw Matrix1();
 	Matrix result(rows, _m.cols);
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < _m.cols; j++)
@@ -106,20 +85,19 @@ Matrix Matrix::operator*(const Matrix&_m)
 	return result;
 }
 
-Matrix Matrix::operator*(int x)
+Matrix Matrix::operator*(double x)
 {
 	Matrix result(rows, cols);
-	for (int i = 0; i < rows; i++)
-		for (int j = 0; j < cols; j++)
-			for (int k = 0; k < cols; k++)
-				result.m[i * cols + j] += m[i * cols + k] * x;
-	return result;
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < cols; j++)
+            result.m[i * cols + j] = m[i * cols + j] * x;
+    return result;
 }
 
-const int* Matrix::operator[](int _i) const
+const double* Matrix::operator[](int _i) const
 {
 	if ((_i < 0) || (_i > rows * cols))
-		throw Exception("Index do not exist!");
+		throw Matrix2();
 	return(m + cols * _i);
 }
 
@@ -141,3 +119,20 @@ ostream & operator<<(ostream & o, const Matrix & x)
 		o << x.m[i * x.cols + j] << " ";
 	return o;
 };
+
+istream & operator>>(istream & o, const Matrix & x)
+{
+    for (int i = 0; i <x.rows * x.cols; i++)
+        o >> x.m[i];
+    return o;
+};
+
+const char* Matrix1::what() const
+{
+    return what_str.c_str();
+}
+
+const char* Matrix2::what() const
+{
+    return what_str.c_str();
+}
