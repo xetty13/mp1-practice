@@ -18,9 +18,7 @@ void main()
 	Output(m);
 	Delete(m);
 
-	sc = scalar(v1, v2);
-	Output(sc);
-	Delete(sc);
+    printf("Scalar between the vectors : %.2f \n", scalar(v1, v2));
 
 	printf("length of your vector1 : %.2f \n", Length(v1));
 	printf("length of your vector2 : %.2f \n", Length(v2));
