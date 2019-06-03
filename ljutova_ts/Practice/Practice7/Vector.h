@@ -5,31 +5,44 @@
 
 class Vector
 {
-	int size;
-	int* elements;
+    int size;
+    double* elements;
 public:
-	Vector();
-	Vector(const Vector&);
-	Vector(int);
-	~Vector();
-	void Output();
-	void Input();
+    Vector(const Vector&);
+    Vector(int);
+    ~Vector();
+    
+    Vector operator+(const Vector&);
+    Vector operator-(const Vector&);
+    bool operator==(const Vector&) const;
+    const Vector& operator=(const Vector&);
+    Vector operator+(double);
+    Vector operator-(double);
+    double& operator[](int a);
+    const double& operator[](int a) const;
+    Vector operator*(double);
+    double operator*(const Vector&) const;
+    Vector& operator+=(const Vector&);
+    Vector& operator-=(const Vector&);
+    Vector& operator+=(const double);
+    Vector& operator-=(const double);
+    double Lenght(const Vector&) const;
 
-	Vector operator+(const Vector&);
-	Vector operator-(const Vector&);
-	bool operator==(const Vector&) const;
-	const Vector& operator=(const Vector&);
-	Vector operator+(int);
-	Vector operator-(int);
-	int& operator[](int a);
-	Vector operator*(int);
-	Vector& operator+=(const Vector&);
-	Vector& operator-=(const Vector&);
-	Vector& operator+=(const int);
-	Vector& operator-=(const int);
-	double Lenght(Vector&);
-
-	friend std::ostream& operator<<(std::ostream &, const Vector &);
+    friend std::ostream& operator<<(std::ostream &, const Vector &);
+    friend std::istream& operator>>(std::istream &, const Vector &);
 };
+    class Vector1 : std::exception
+    {
+        const std::string what_str = "Different size";
+    public:
+        const char* what() const;
+    };
+
+    class Vector2 : std::exception
+    {
+        const std::string what_str = "Out of bounds";
+    public:
+        const char* what() const;
+    };
 
 #endif
