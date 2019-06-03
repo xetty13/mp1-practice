@@ -16,8 +16,8 @@
 		do
 		{
 			printf ("Vvedite predpolagaemoe chislo \n");
-		    scanf ("%d", &a);
-		    if (a > n)
+			scanf ("%d", &a);
+			if (a > n)
 			{
 				printf ("< \n");
 			}
@@ -26,12 +26,9 @@
 				printf ("> \n");
 			}
 			p++;
-		}
-		while (a != n);
-		{
-			printf ("Vy otgadali \n");
-			printf ("Chislo popytok = %d", p);
-		}
+		}while (a != n);
+		printf ("Vy otgadali \n");
+		printf ("Chislo popytok = %d", p);
 	}
 	if (rezhim == 2)
 	{
@@ -39,29 +36,27 @@
 		{
 			printf ("Zagadaite chislo \n");
 			scanf ("%d", &b);
-		}
-		while ((b > 1000) || (b < 0));
+		}while ((b > 1000) || (b < 0));
 		do
 		{
 			n = ((double) (n2 - n1)) / RAND_MAX * rand() + n1;
 			printf ("Komputer predpolagaet chto eto %d \n", n);
 			printf ("Vvedite podskazku \n");
 			scanf ("%*c%c", &vvod);
-				switch (vvod) 
-				{
-				case '>':
-					n1 = n;
-					break;
-				case '<':
-					n2 = n;
-					break;
-				case '=':
-					break;
-				}
-				p++;
-		}
-		while(n!=b);
-			printf ("Komputer vyigral \n");
-			printf ("Chislo popytok = %d", p);
+			switch (vvod)
+			{
+			case '>':
+				n1 = n;
+				break;
+			case '<':
+				n2 = n;
+				break;
+			case '=':
+				break;
+			}
+			p++;
+		}while(n!=b);
+		printf ("Komputer vyigral \n");
+		printf ("Chislo popytok = %d", p);
 	}
  }
