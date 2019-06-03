@@ -1,56 +1,56 @@
 ﻿#include "Matrix.h"
-#include "Exception.h"
 using namespace std;
 
 int main()
 {
-	int a;
-	try
-	{
-		int x, y;
-		cout << "Enter size of Matrix 1: " << endl;
-		cin >> x >> y;
-		Matrix A(x,y);
+	int x, y, a;
+	cout << "Enter size of Matrix 1: " << endl;
+	cin >> x >> y;
+	Matrix A(x,y);
 
-		cout << "Enter coefficients Matrix 1: " << endl;
-		A.Input();
-		cout << "Your Matrix 1: " << endl;
-		A.Output();
+	cout << "Enter coefficients Matrix 1: " << endl;
+    cin >> A;
+	cout << "Your Matrix 1: " << A << endl;
 
-		cout << "Enter size of Matrix 2: " << endl;
-		cin >> x >> y;
-		Matrix B(x, y);
+	cout << "Enter size of Matrix 2: " << endl;
+	cin >> x >> y;
+	Matrix B(x, y);
 
-		cout << "Enter coefficients Matrix 2: " << endl;
-		B.Input();
-		cout << "Your Matrix 2: " << endl;
-		B.Output();
+	cout << "Enter coefficients Matrix 2: " << endl;
+    cin >> B;
+	cout << "Your Matrix 2: " << B << endl;
 
-		cout << " Multiplication of this matrices: A * B = " << endl;
-		(A * B).Output();
+    cout << " Multiplication of this matrices: A * B = " << (A * B) << endl;
 
-		cout << "Enter const:" << endl;
-		cin >> a;
-		cout << "Matrix1 + const a = " << endl;
-		(A + a).Output();
+    try
+    {
+        cout << "Enter const:" << endl;
+        cin >> a;
+        cout << "Matrix1 + const a = " << (A + a) << endl;
 
-		cout << "Matrix1 - const a = " << endl;
-		(A - a).Output();
+        cout << "Matrix1 - const a = " << (A - a) << endl;
 
-		cout << "Matrix1 * const a = " << endl;
-		(A * a).Output();
-	
-		cout << " Addition of Matrix 1 and Matrix 2:  A + B = " << endl;
-		(A + B).Output();
-
-		cout << " Subtraction of Matrix 1 and Matrix 2: A - B = " << endl;
-		(A - B).Output();
+        cout << "Matrix1 * const a = " << (A * a) << endl;
+    }
+    catch (Matrix1)
+    {
+        cout << "Different size \n";
+    }
+    try
+    {
+        cout << " Addition of Matrix 1 and Matrix 2:  A + B = " << (A + B) << endl;
+    }
+    catch (Matrix1)
+    {
+        cout << "Different size \n";
+    }
+    try
+    {
+        cout << " Subtraction of Matrix 1 and Matrix 2: A - B = " << (A - B) << endl;
 
 	}
-	catch (Exception ex)
-	{
-		ex.Print();
-	}
-
-
+    catch (Matrix1)
+    {
+        cout << "Different size \n";
+    }
 }
