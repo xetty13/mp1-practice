@@ -1,4 +1,4 @@
-﻿#include <stdio.h> 
+#include <stdio.h> 
 #include <time.h> 
 #include <stdlib.h> 
 void main()
@@ -40,7 +40,6 @@ void main()
         p =  c;
         while (p > 0)
         {
-
             f = 0;
             sravn = p % 10;
             p /= 10;
