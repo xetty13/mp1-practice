@@ -4,10 +4,10 @@
 
 void main() {
 
-	setlocale(LC_TYPE, "Russian");
 	float x1, y1, r1;
 	float x2, y2, r2;
 	float sqr_x, sqr_y;
+	setlocale(LC_CTYPE, "Russian");
 	
 	// ¬водим x1, y1, r1 и x2, y2, r2:
 	scanf_s("%f %f %f %f %f %f", &x1, &y1, &r1, &x2, &y2, &r2);
