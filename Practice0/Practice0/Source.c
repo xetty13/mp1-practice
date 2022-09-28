@@ -19,5 +19,6 @@ int main()
 	if ((r1 + r2 > s) && (s > br)) printf("circumferences intersect");
 	if ((s < br) && (smr < (br - s))) printf("one circumference is inside another");
 	if ((s < br) && (smr == (br - s))) printf("one circumference is inside another and they touch");
+	if ((s < br) && (smr > (br - s))) printf("one circumference is inside another and they intersect");
 	return 0;
 }	
