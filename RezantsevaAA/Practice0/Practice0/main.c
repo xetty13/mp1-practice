@@ -1,12 +1,15 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <math.h>
+#include <locale.h>
 int main()
 {
-	int x1, y1, r1, x2, y2, r2, d;
+	setlocale(LC_ALL, "Russian");
+	float x1, y1, r1, x2, y2, r2, d;
 	printf("Введите координаты центра окружности номер 1 и ее радиус");
-	scanf(" % f % f"; &x1, &y1, &r1);
+	scanf(" %f %f %f", &x1, &y1, &r1);
 	printf("Введите координаты центра окружности номер 2 и ее радиус");
-	scanf(" % f % f"; &x2, &y2, &r2);
+	scanf(" %f %f %f", &x2, &y2, &r2);
 	d = sqrt(x2 * x2 - 2 * x2 * x1 + x1 * x1 + y2 * y2 - 2 * y1 * y2 + y1 * y1);
 	if (d > r1 + r2)
 	{
@@ -16,11 +19,11 @@ int main()
 	{
 		printf("Малая окружность лежит внутри большой");
 	}
-	else if (r1 == r2 && d = 0)
+	else if ((r1 == r2) && (d == 0))
 	{
 		printf("Окружности совпадают");
 	}
-	else if (d = abs(r1 - r2))
+	else if (d == abs(r1 - r2))
 	{
 		printf("Внутреннее касание окружностей");
 	}
