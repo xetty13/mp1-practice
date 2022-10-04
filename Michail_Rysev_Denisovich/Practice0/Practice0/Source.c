@@ -1,10 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
 
 int main() {
-	setlocale(LC_ALL, "rus");
 	float x1, y1, r1;
 	float x2, y2, r2;
 	float d;
