@@ -6,17 +6,17 @@
 int main()
 {
 	setlocale(LC_ALL, "Rus"); 
-	float x1, x2, y1, y2, R1, R2, S;
+	float x1, x2, y1, y2, R1, R2, S, tmp;
 	printf("Введите координату х1 ");
 	scanf("%f", &x1);
 	printf("Введите координату y1 ");
 	scanf("%f", &y1);
+	printf("Введите R1 ");
+	scanf("%f", &R1);
 	printf("Введите координату х2 ");
 	scanf("%f", &x2);
 	printf("Введите координату y2 ");
 	scanf("%f", &y2);
-	printf("Введите R1, чтобы R1>R2 ");
-	scanf("%f", &R1);
 	printf("Введите R2 ");
 	scanf("%f", &R2);
 	S = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
@@ -28,11 +28,11 @@ int main()
 		printf("Внешнее касание окружностей ");
 		return 0;
 	}
-	if ((S < R1 + R2) && (S > (R1 - R2))) {
+	if ((S < R1 + R2) && (S > abs(R1 - R2))) {
 		printf("Окружности пересекаются ");
 		return 0;
 	}
-	if ((S == (R1 - R2)) && (x1 != x2)) {
+	if ((S == abs(R1 - R2)) && (x1 != x2)) {
 		printf("Внутреннее касание окружностей ");
 		return 0;
 	}
@@ -40,6 +40,7 @@ int main()
 		printf("Окружности совпадают ");
 		return 0;
 	}
-	printf("Вторая окружность лежит внутри первой ");
+	if (R1>R2) printf("Вторая окружность лежит внутри первой ");
+	else printf("Первая окружности лежит внутри второй ");
 	return 0;
 }
