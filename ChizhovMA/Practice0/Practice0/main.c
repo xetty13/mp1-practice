@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <clocale>
+#include <locale.h>
 #include <math.h>
 
 
