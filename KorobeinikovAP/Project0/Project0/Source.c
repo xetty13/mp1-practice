@@ -7,13 +7,13 @@ int main()
 {
 	setlocale(LC_ALL, "Rus"); 
 	float x1, x2, y1, y2, R1, R2, S, tmp;
-	printf("¬ведите координату х1 ");
+	printf("¬ведите координату x1 ");
 	scanf("%f", &x1);
 	printf("¬ведите координату y1 ");
 	scanf("%f", &y1);
 	printf("¬ведите R1 ");
 	scanf("%f", &R1);
-	printf("¬ведите координату х2 ");
+	printf("¬ведите координату x2 ");
 	scanf("%f", &x2);
 	printf("¬ведите координату y2 ");
 	scanf("%f", &y2);
