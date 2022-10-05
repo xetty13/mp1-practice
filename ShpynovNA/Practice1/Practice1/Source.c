@@ -9,7 +9,7 @@ int main()
 	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90)) //проверка на выход за границы
 	{
 		printf("something went wrong...");
-		return 1; 
+		return 1;
 	}
 	a = h - 1.5;
 	h *= 0.01;
@@ -25,7 +25,7 @@ int main()
 	}
 	shelves = d * (w - 0.03) * 0.015 * 650 * i;
 	doors = h * w * 0.01 * 550;
-	/* 
+	/*
 	промежуточные значения массы каждой из деталей
 	printf("back wall weight: %lf\n", back_wall);
 	printf("side wall weight: %lf\n", side_wall);
