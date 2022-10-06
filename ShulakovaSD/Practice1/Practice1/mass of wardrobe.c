@@ -24,6 +24,6 @@ int main()
 	doors = h * w * 0.01 * 550;
 	shelves = d * (w - 0.015 - 0.015) * 0.015 * 650 * n;
 	m = bw + sw + uw + doors + shelves;
-	printf("mass of wardrobe = %lf", m, "kg\n");
+	printf("mass of wardrobe = %lf", m);
 	return 0;
 }
