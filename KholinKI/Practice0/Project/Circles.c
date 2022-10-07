@@ -2,12 +2,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <conio.h>
-#include <locale.h>
 
 
 int main()
 {
-	setlocale(LC_CTYPE, "Russian");
 	float xc1, yc1, xc2, yc2, xr1, yr1,xr2,yr2,r1,r2,sc,d;
 	printf("Enter the coordinates of the center of the first circle: ");
 	scanf("%f %f", &xc1, &yc1);
