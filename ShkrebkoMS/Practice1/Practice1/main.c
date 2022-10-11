@@ -1,4 +1,4 @@
-//табличные значения для ДСП: 650 кг/м^3, ДВП: 800 кг/м^3, дерева 550 кг/м^3
+
 #include <stdio.h>
 int main()
 {
@@ -7,9 +7,9 @@ int main()
 	double density_DSP = 650;
 	double density_DVP = 850;
 	int i = 0;
-	printf("Enter wardrobe dimensions: height, width, depth: \n"); //запрос габаритов
-	scanf_s("%lf %lf %lf", &h, &w, &d); //ввод габаритов
-	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90)) //проверка на выход за границы
+	printf("Enter wardrobe dimensions: height, width, depth: \n"); 
+	scanf_s("%lf %lf %lf", &h, &w, &d); 
+	if ((h < 180) || (h > 220) || (w < 80) || (w > 120) || (d < 50) || (d > 90)) 
 	{
 		printf("something went wrong...\n");
 		return 1;
