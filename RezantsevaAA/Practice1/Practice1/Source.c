@@ -34,7 +34,7 @@ int main()
 	h = h / 100;
 	w = w / 100;
 	d = d / 100;
-	shelves = (h / 0.415) - 2 * 0.015;
+	shelves = (h / 0.415) - 1;
 	count = (int)shelves;
 	mass_backdoor = h * w * 0.005 * density_DVP;
 	mass_sidewalk = 2 * h * d * 0.015 * density_DSP;
@@ -43,6 +43,5 @@ int main()
 	mass_shelves = count * d * w * density_DSP * 0.015;
 	mass = mass_backdoor + mass_sidewalk + mass_roof + mass_door + mass_shelves;
 	printf("Cabinet weight = %f kg\n", mass);
-	printf("kol-vo polok = %d\n", count);
 	return 0;
 }
