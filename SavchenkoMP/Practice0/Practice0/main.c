@@ -3,12 +3,12 @@
 #include <locale.h>
 
 /*
-1) не касаются
-2) внешнее косание
-3) пересекаются
-4) внутреннее косание
-5) одна окружность внутри другой
-6) окружности совпадают
+1) ne kasayutsya
+2) vneshnee kosanie
+3) peresekayutsya
+4) vnutrennee kosanie
+5) odna okruzhnost' vnutri drugoj
+6) okruzhnosti sovpadayut
 */
 
 void main() {
@@ -34,18 +34,18 @@ void main() {
 	dl = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 
 	if (x1 == x2 && y1 == y2 && r1 == r2)
-		printf("6");
+		printf("6"); // okruzhnosti sovpadayut 1 1 1 1 1 1
 	else {
 		if (dl > (r1 + r2))
-			printf("1"); // не касаются
+			printf("1"); // ne kasayutsya 1 1 1 4 1 1
 		else if (dl == (r1 + r2))
-			printf("2"); // внешнее косание
-		else if ((dl == (r1 + r2)) && (dl > M))
-			printf("3"); // пересекаются
+			printf("2"); // vneshnee kosanie 1 1 1 3 1 1
+		else if ((dl < (r1 + r2)) && (dl > M))
+			printf("3"); // peresekayutsya 0 0 2 2 0 1
 		else if (dl == (M - m))
-			printf("4"); // внутреннее косание
+			printf("4"); // vnutrennee kosanie 1 1 4 4 1 1
 		else if (dl < (M - m))
-			printf("5"); // одна окружность внутри другой
+			printf("5"); // odna okruzhnost' vnutri drugoj 1 1 4 2 1 1
 	}
 
 
