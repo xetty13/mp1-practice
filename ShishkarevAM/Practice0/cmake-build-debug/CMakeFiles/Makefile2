@@ -54,10 +54,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/shkrvoff/Desktop/Practice_0
+CMAKE_SOURCE_DIR = /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/shkrvoff/Desktop/Practice_0/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/SHISHKAREV_AM.dir/clean
 CMakeFiles/SHISHKAREV_AM.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SHISHKAREV_AM.dir/build.make CMakeFiles/SHISHKAREV_AM.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SHISHKAREV_AM.dir/build.make CMakeFiles/SHISHKAREV_AM.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shkrvoff/Desktop/Practice_0/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target SHISHKAREV_AM"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target SHISHKAREV_AM"
 .PHONY : CMakeFiles/SHISHKAREV_AM.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/SHISHKAREV_AM.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shkrvoff/Desktop/Practice_0/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/SHISHKAREV_AM.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shkrvoff/Desktop/Practice_0/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/SHISHKAREV_AM.dir/rule
 
 # Convenience name for target.

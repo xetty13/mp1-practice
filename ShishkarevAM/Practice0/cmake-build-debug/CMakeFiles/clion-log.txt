@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /Users/shkrvoff/Desktop/Practice_0 -B /Users/shkrvoff/Desktop/Practice_0/cmake-build-debug
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0 -B /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug
 -- The C compiler identification is AppleClang 14.0.0.14000029
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
@@ -7,4 +7,4 @@
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/shkrvoff/Desktop/Practice_0/cmake-build-debug
+-- Build files have been written to: /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug

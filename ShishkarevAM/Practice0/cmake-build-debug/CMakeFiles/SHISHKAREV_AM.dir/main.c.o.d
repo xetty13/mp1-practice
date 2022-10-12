@@ -1,5 +1,5 @@
 CMakeFiles/SHISHKAREV_AM.dir/main.c.o: \
-  /Users/shkrvoff/Desktop/Practice_0/main.c \
+  /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/main.c \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/stdio.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/_stdio.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/sys/cdefs.h \

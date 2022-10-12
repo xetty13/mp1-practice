@@ -1,4 +1,4 @@
-# Install script for directory: /Users/shkrvoff/Desktop/Practice_0
+# Install script for directory: /Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/shkrvoff/Desktop/Practice_0/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
