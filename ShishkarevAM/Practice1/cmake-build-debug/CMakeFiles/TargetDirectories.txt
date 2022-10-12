@@ -1,0 +1,3 @@
+/Users/shkrvoff/Desktop/Practice_1/cmake-build-debug/CMakeFiles/untitled.dir
+/Users/shkrvoff/Desktop/Practice_1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/shkrvoff/Desktop/Practice_1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
