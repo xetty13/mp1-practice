@@ -1,14 +1,13 @@
 #include <stdio.h>
-#include <locale.h>
 
 void main() {
 
-	setlocale(LC_ALL, "rus");
 	float h, w, d; // 180 <= h, w <= 220 sm, 50 <= d <= 90 sm
-	float th_DSP = 0.015, th_DVP = 0.005, th_door = 0.010; // mm
-	float back_wall, side_wall, cap, doors, shelves;
+	float th_DSP = 0.015, th_DVP = 0.005, th_door = 0.01; // mm
+	float back_wall, side_walls, caps, doors, shelves;
 	float q_tree = 900.0, q_DSP = 800.0, q_DVP = 800.0; // kg / m^3
-	
+	int n; // amount of shelves
+
 	printf("Input h, w, d: \n");
 	printf("(180 <= h, w <= 220 sm, 50 <= d <= 90 sm)\n");
 	scanf("%f %f %f", &h, &w, &d);
@@ -19,11 +18,21 @@ void main() {
 	}
 	else {
 
+		// amount of shelves
+		n = h / 40;
+
 		// sm > m
-		h = h / 10;
-		w = w / 10;
-		d = d / 10;
+		h = h / 100;
+		w = w / 100;
+		d = d / 100;
 
+		// kg
+		back_wall = q_DVP * h * w * th_DVP;
+		side_walls = q_DSP * h * d * th_DSP * 2;
+		caps = side_walls;
+		doors = q_tree * h * w * th_door;
+		shelves = q_DSP * w * d * th_DSP * n;
+
+		printf("%f", back_wall + side_walls + caps + doors + shelves);
 	}
-
 }
