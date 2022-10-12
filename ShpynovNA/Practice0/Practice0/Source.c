@@ -3,6 +3,7 @@
 int main()
 {
 	float x1, x2, y1, y2, r1, r2, s, br, smr;
+	do {
 		scanf("%f %f %f", &x1, &y1, &r1);
 		scanf("%f %f %f", &x2, &y2, &r2);
 		if ((r1 < 0) || (r2 < 0)) {
@@ -26,7 +27,7 @@ int main()
 		{
 			printf("circumferences touch");
 		}
-		if (r1 + r2 > s)
+		if ((r1 + r2 > s) && (s > br))
 		{
 			printf("circumferences intersect");
 		}
@@ -38,5 +39,6 @@ int main()
 		{
 			printf("one circumference is inside another and they touch");
 		}
+	} while (2);
 	return 0;
 }
