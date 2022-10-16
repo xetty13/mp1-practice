@@ -29,12 +29,12 @@ int main() {
 			}
 			else if (cur_ans < answer) {
 
-				printf("This number < my number. Try again. (Tries: %hd) \n", try_count);
+				printf("This number < than my number. Try again. (Tries: %hd) \n", try_count);
 				try_count++;
 			}
 			else if (cur_ans > answer) {
 
-				printf("This number > my number. Try again. (Tries: %hd) \n", try_count);
+				printf("This number > than my number. Try again. (Tries: %hd) \n", try_count);
 				try_count++;
 			}
 			else if (cur_ans == answer) {
