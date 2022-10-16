@@ -3,8 +3,8 @@
 void main() {
 
 	float h, w, d; // 180 <= h, w <= 220 sm, 50 <= d <= 90 sm
-	float th_DSP = 0.015, th_DVP = 0.005, th_door = 0.01; // mm
-	float back_wall, side_walls, caps, doors, shelves;
+	float th_DSP = 0.015, th_DVP = 0.005, th_door = 0.01; // m
+	float back_wall, side_walls, caps, doors, shelves; // cm
 	float q_tree = 900.0, q_DSP = 800.0, q_DVP = 800.0; // kg / m^3
 	int n; // amount of shelves
 
@@ -31,7 +31,7 @@ void main() {
 		side_walls = q_DSP * h * d * th_DSP * 2;
 		caps = side_walls;
 		doors = q_tree * h * w * th_door;
-		shelves = q_DSP * w * d * th_DSP * n;
+		shelves = q_DSP * (w - 2 * th_DSP) * (d - th_DVP) * th_DSP * n;
 
 		printf("%f", back_wall + side_walls + caps + doors + shelves);
 	}
