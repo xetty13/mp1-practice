@@ -3,12 +3,8 @@
 #define Chipboard 0.0008f
 #define Fiberboard 0.0008f
 #define Wood 0.0009f
+#define _CRT_SECURE_NO_WARNINGS
 
-
-#if defined(_WIN32) || defined(_WIN32_)
-	#define _CRT_SECURE_NO_WARNINGS_
-	#pragma warning(disable:4996)
-#endif
 
 int main()
 {
@@ -17,7 +13,7 @@ int main()
 
 	//Ввод данных 
 	printf("Введите высоту шкафа в сантиметрах (180 <= h <= 220) : ");
-	scanf("%f", &h);
+	scanf_s("%f", &h);
 	if (h > 220 || h < 180) {
 		printf("Вы ввели недопустимое значение высоты");
 		return 0;
@@ -52,7 +48,7 @@ int main()
 	//Масса полок
 	int n;
 	n = h / 40;
-	weight_shelf = (n - 1) * 1.5 * w * d * Chipboard;
+	weight_shelf = (n - 1) * 1.5 * (w - 3) * d * Chipboard;
 
 
 	weight = weight_back + weight_cover + weight_door + weight_shelf + weight_side;
