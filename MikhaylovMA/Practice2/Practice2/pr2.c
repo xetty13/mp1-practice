@@ -15,25 +15,22 @@ int main() {
 		srand((unsigned int)time(NULL));
 		answer = rand() % 1000;
 
-		printf("I chose the number. Try to guess it! (type '-11' for answer) \n");
+		printf("I chose the number. Try to guess it! (type '1001' for answer) \n");
 
 		while (1) {
 			printf("What's your guess? \n");
-			scanf("%hd", &cur_ans);
+			do {
+				scanf("%hd", &cur_ans);
+			} while (cur_ans < 0 || cur_ans > 1001);
 
-			if (cur_ans == -11) {
+			if (cur_ans == 1001) {
 				printf("%hd \n", answer);
 			}
-			else if (cur_ans < 0 || cur_ans > 1000) {
-				printf("Wrong input. \n");
-			}
 			else if (cur_ans < answer) {
-
 				printf("This number < than my number. Try again. (Tries: %hd) \n", try_count);
 				try_count++;
 			}
 			else if (cur_ans > answer) {
-
 				printf("This number > than my number. Try again. (Tries: %hd) \n", try_count);
 				try_count++;
 			}
@@ -43,6 +40,33 @@ int main() {
 			}
 		}
 
+	}
+	if (mode == '2') {
+		short try_count = 1, cur_ans = 500, step = 250;
+		char reply;
+
+		printf("I'm going to guess your number. \n");
+
+		while (1) {
+			printf("Is it %hd? \n", cur_ans);
+			do {
+				scanf("%c", &reply);
+			} while (reply != '<' && reply != '=' && reply != '>');
+
+			if (reply == '=') {
+				printf("Woohoo! I've guessed your number in %hd tries \n", try_count);
+				return 0;
+			}
+			else if (reply == '<') {
+				cur_ans += step;
+			}
+			else if (reply = '>') {
+				cur_ans -= step;
+			}
+			step = (step + 1) / 2;
+			if (step == 0) step = 1;
+			try_count++;
+		}
 	}
 	return 0;
 }
