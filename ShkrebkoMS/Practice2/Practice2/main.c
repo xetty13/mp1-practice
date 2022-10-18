@@ -84,6 +84,6 @@ int main()
 
 	}
 
-	printf("%d %d", count, number);
+	printf("Number of attempts=%d", count);
 	return 0; 
 }
