@@ -34,11 +34,11 @@ int main() {
 	t_shelves = 0.015;
 	m_back    = Qdvp * (t_back * h * w);
 	m_sides   = 2 * (Qdsp * (t_sides * h * d));
-	m_covers  = 2 * (Qdsp * (t_covers * w * d));
+	m_covers  = 2 * (Qdsp * (t_covers * (w-0.03) * d)); 
 	m_door    = Q * (t_door * h * w);
-	k_shelves = h / (0.415) - 1;
+	k_shelves = h / (0.415) - 1.03;
 	count = (int)k_shelves;
-	m_shelves = count * (Qdsp * (t_shelves * w * d)); //не вычитал толщину стенок и крышки, потому что шкафы бывают разные и не поймёшь что вычитать (условия не заданы)
+	m_shelves = count * (Qdsp * (t_shelves * (w-0.03) * d)); 
 	res       = m_back + m_covers + m_door + m_shelves + m_sides;
 	printf ("mass = %f ", res);
 }
