@@ -41,7 +41,7 @@ int main() {
 	m_side = 2 * density_dsp * h * d * t_side;
 	m_top_bottom = 2 * density_dsp * w * d * t_top_bottom;
 	m_door = density_tree * h * w * t_door;
-	count_shelf = h / (distance_shelf + t_shelf)-1;
+	count_shelf = h / 0.415 - 1.015;
 	count = (int)count_shelf;
 	m_shelf = count * density_dsp * w * d * t_shelf;
     m_cabinet = m_zad + m_side + m_top_bottom + m_door + m_shelf;
