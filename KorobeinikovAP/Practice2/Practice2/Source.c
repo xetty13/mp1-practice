@@ -8,11 +8,10 @@ int main() {
 	int X_n = 1 + rand() % (1000), user_n;
 	int min = 1, max = 1000, attempts = 0;
 	char mode, ans;
-	printf("Ñhoose mode 1 or 2 ");
+	printf("Choose mode 1 or 2 ");
 	scanf("%c", &mode);
-
 	switch (mode) {
-	case '1':
+	case '1': 
 		printf("The program made a number from 1 to 1000. Try to guess it)) : ");
 		do {
 			scanf("%d", &user_n);
@@ -42,15 +41,21 @@ int main() {
 				}
 			}
 			attempts++;
-			if (ans == '=')
-				printf("The program guessed the number %d in %d attempts!",X_n, attempts);
-			else if (ans == '>')
+			switch (ans) {
+			case '=':
+				printf("The program guessed the number %d in %d attempts!", X_n, attempts);
+				break;
+			case '>':
 				min = 1 + X_n;
-			else if (ans == '<')
+				break;
+			case '<':
 				max = X_n - 1;
+				break;
+			default: 
+				printf("Incorrect answer. Try again. Input '=' or '>' or '<' \n");			
+			}		
 		}
 		break;
 	}
-
 	return 0;
 }
