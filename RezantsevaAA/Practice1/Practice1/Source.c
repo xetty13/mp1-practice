@@ -34,7 +34,7 @@ int main()
 	h = h / 100;
 	w = w / 100;
 	d = d / 100;
-	shelves = (h / 0.415) - 1;
+	shelves = (h / 0.415) - 1.015;
 	count = (int)shelves;
 	mass_backdoor = h * w * 0.005 * density_DVP;
 	mass_sidewalk = 2 * h * d * 0.015 * density_DSP;
