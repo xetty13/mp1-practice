@@ -47,7 +47,7 @@ int main()
 	do
 	{
 		scanf_s("%c", &zn);
-		getchar();
+		//getchar();
 
 		switch (zn)
 		{
@@ -73,7 +73,7 @@ int main()
 		num++;
 	} while (res != 1);
 	printf("i found the number - %d\n", b);
-	printf("number of attempts - %d", num);
+	printf("number of attempts - %d", num\2);
 	}
 	}
 
