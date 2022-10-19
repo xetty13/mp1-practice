@@ -42,12 +42,7 @@ int main()
         while (answer!='=') {
             printf("Number %d\n", option_number);
             printf("What is the number?(=,<,>)\n ");
-            scanf("%c", &answer);
-            if (scanf("%c", &answer) != 1) {
-                while ((answer = getchar()) != '\n' && answer != EOF) {
-                    ;
-                }
-            }
+            scanf(" %c", &answer);
 
             count++;
             if (answer == '>') {
