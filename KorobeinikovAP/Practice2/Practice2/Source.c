@@ -12,9 +12,14 @@ int main() {
 	scanf("%c", &mode);
 	switch (mode) {
 	case '1': 
-		printf("The program made a number from 1 to 1000. Try to guess it)) : ");
+		printf("The program made a number from 1 to 1000. Try to guess it : \n");
 		do {
-			scanf("%d", &user_n);
+			printf("Input number from 1 to 1000 ");
+			scanf ("%d", &user_n);
+			while ((user_n > 1000) || (user_n < 1)) {
+				printf("Incorrect data. Try again. ");
+				scanf ("%d", &user_n); 
+			}
 			if (user_n == X_n)
 				printf("Congratulations, you guessed the number in %d attempts!", attempts);
 			else if (user_n < X_n) {
@@ -30,7 +35,7 @@ int main() {
 	case '2':
 		printf("Enter a number from 1 to 1000. The program will try to guess it: ");
 		do {
-			scanf("%d", &user_n);
+			scanf ("%d", &user_n);
 			if (user_n > 1000 || user_n < 1) {
 				printf("Incorrect data. Try again: ");
 			}
@@ -38,7 +43,7 @@ int main() {
 		while (user_n != X_n) {
 			X_n = min + rand() % (max - min + 1);
 			printf("Is this the number %d ? ", X_n);
-			scanf("%c", &ans);
+			scanf ("%c", &ans);
 			if (scanf("%c", &ans) != 1) {  // != 1 means scanf failed
 				while ((ans = getchar()) != '\n' && ans != EOF) {
 					;
@@ -60,6 +65,7 @@ int main() {
 			}		
 		}
 		break;
+	default: printf("Incorrect data, try again");
 	}
 	return 0;
 }
