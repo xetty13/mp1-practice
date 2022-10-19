@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pr_0.c">
+    <ClCompile Include="Practice0.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
