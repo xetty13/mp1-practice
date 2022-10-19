@@ -9,7 +9,7 @@ int main()
 	printf("Insert second circle's metrics (coordinates and radius)\n");
 	scanf("%f %f %f", &x2, &y2, &r2);
 
-	L = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+	L = sqrt((x1 - x2)*(x1 - x2)+ (y1 - y2)* (y1 - y2));
 
 	if (x1 == x2 && y1 == y2)
 	{
