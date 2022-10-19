@@ -26,9 +26,9 @@ void main()
 
 		m_z = h * (w - 2 * th_DSP) * th_DVP * p_DVP;
 		m_b = h * d * th_DSP * p_DSP * 2;
-		m_k = (w - 2 * th_DSP) * d * th_DSP * p_DSP * 2;
-		m_d = h * w * th_Tree * p_Tree;
-		m_p = (w - 2 * th_DSP) * d * th_DSP * p_DSP * n;
+		m_k = (w - 2 * th_DSP) * (d -(th_Tree + th_DVP)) * th_DSP * p_DSP * 2;
+		m_d = h * (w - 2 * th_DSP) * th_Tree * p_Tree;
+		m_p = (w - 2 * th_DSP) * (d - (th_Tree + th_DVP)) * th_DSP * p_DSP * n;
 		weight_carcas = m_z + m_b + m_k + m_d + m_p;
 
 		printf("Weight of wardrobe %f", weight_carcas);
