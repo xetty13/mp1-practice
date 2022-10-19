@@ -18,8 +18,8 @@ int main() {
 		printf("I chose the number. Try to guess it! (type '1001' for answer) \n");
 
 		while (1) {
-			printf("What's your guess? \n");
 			do {
+				printf("What's your guess? \n");
 				scanf("%hd", &cur_ans);
 			} while (cur_ans < 0 || cur_ans > 1001);
 
@@ -48,8 +48,8 @@ int main() {
 		printf("I'm going to guess your number. \n");
 
 		while (1) {
-			printf("Is it %hd? \n", cur_ans);
 			do {
+				printf("Is it %hd? \n", cur_ans);
 				scanf("%c", &reply);
 			} while (reply != '<' && reply != '=' && reply != '>');
 
