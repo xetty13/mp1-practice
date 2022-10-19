@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Practice0.c">
+    <ClCompile Include="Souce.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
