@@ -1,7 +1,7 @@
 #include <stdio.h>
 int main()
 {
-	double h, w, d, bw, sw, uw, shelves, doors, m;
+	double a, h, w, d, bw, sw, uw, shelves, doors, m;
 	int n = 0;
 	printf("enter height, width, depth (in cm): ");
 	scanf_s("%lf %lf %lf", &h, &w, &d);
@@ -10,14 +10,16 @@ int main()
 		printf("error");
 		return 1;
 	}
-	while (h >= 40)
-	{
-		h = h - 40;
-		n++;
-	}
+	a = h - 3;
 	h = h * 0.01;
 	w = w * 0.01;
 	d = d * 0.01;
+
+	while (a >= 40)
+	{
+		a = a - 40;
+		n++;
+	}
 	bw = h * w * 0.005 * 800;
 	sw = h * d * 0.015 * 650 * 2;
 	uw = w * d * 0.015 * 650 * 2;
