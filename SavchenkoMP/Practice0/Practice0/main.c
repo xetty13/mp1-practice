@@ -15,12 +15,10 @@ void main() {
 	
 	setlocale(LC_ALL, "rus");
 	float x1, y1, r1, x2, y2, r2, M, m, dl;
-	//printf("Circle 1 (x1, y1, r1) = ");
-	//scanf_s("%f %f %f", &x1, &y1, &r1);
-	//printf("Circle 2 (x2, y2, r2) = ");
-	//scanf_s("%f %f %f", &x2, &y2, &r2);
-	setlocale(LC_ALL, "rus");
-	scanf_s("%f %f %f %f %f %f", &x1, &y1, &r1, &x2, &y2, &r2);
+	printf("Circle 1 (x1, y1, r1) = ");
+	scanf("%f %f %f", &x1, &y1, &r1);
+	printf("Circle 2 (x2, y2, r2) = ");
+	scanf("%f %f %f", &x2, &y2, &r2);
 
 	if (r1 > r2) {
 		M = r1;
@@ -47,7 +45,4 @@ void main() {
 		else
 			printf("6) Crossing at 2 points ");		// 0 0 2 2 0 1
 	}
-
-
-
 }
