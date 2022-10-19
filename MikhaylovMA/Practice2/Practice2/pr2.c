@@ -60,7 +60,7 @@ int main() {
 			else if (reply == '<') {
 				cur_ans += step;
 			}
-			else if (reply = '>') {
+			else if (reply == '>') {
 				cur_ans -= step;
 			}
 			step = (step + 1) / 2;
