@@ -16,11 +16,15 @@ int main() {
 		do {
 			scanf("%d", &user_n);
 			if (user_n == X_n)
-				printf("Congratulations, you guessed the number!");
-			else if (user_n < X_n)
+				printf("Congratulations, you guessed the number in %d attempts!", attempts);
+			else if (user_n < X_n) {
 				printf("The hidden number is greater than your number. Try again: ");
-			else
+				attempts++;
+			}
+			else {
 				printf("The hidden number is less than your number. Try again: ");
+				attempts++;
+			}
 		} while (user_n != X_n);
 		break;
 	case '2':
