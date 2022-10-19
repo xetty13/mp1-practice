@@ -3,12 +3,9 @@
 #include <time.h>
 
 int r(int a, int b) {
-
 	int n;
-	srand((unsigned int)time(NULL));
 	n = rand() % (b - a + 1) + a;
 	return n;
-
 }
 
 void mode1() {
@@ -40,7 +37,7 @@ void mode2() {
 	scanf("%d", &num);
 	if (num < 1 || num > 1000) {
 		printf("The hidden number must be 1 <= num <= 1000\n");
-		return mode2();
+		mode2();
 	}
 	else {
 
@@ -64,6 +61,7 @@ void mode2() {
 void main() {
 
 	int m;
+	srand((unsigned int)time(NULL));
 	printf("Choose mode #1 or mode #2:\n");
 	scanf("%d", &m);
 	switch (m) {
