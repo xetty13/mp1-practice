@@ -23,20 +23,20 @@ void main()
 		{
 			printf("Enter your number ");
 			scanf("%d", &player_num);
+			k++;
 			if (player_num > random_num)
 			{
 				printf("The hidden number is less\n");
-				k++;
+				
 			}
 			else if (player_num < random_num)
 			{
 				printf("The hidden number is greater\n");
-				k++;
+			
 			}
 		}
 		k++;
 		printf("Congratulations! You guessed the number\nThe number of your attempts: %d", k);
-		return 1;
 	}
 	else if (mode_game == 2)
 	{
