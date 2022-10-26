@@ -1,3 +1,0 @@
-/Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug/CMakeFiles/SHISHKAREV_AM.dir
-/Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/shkrvoff/Git/mp1-practice/ShishkarevAM/Practice0/cmake-build-debug/CMakeFiles/rebuild_cache.dir

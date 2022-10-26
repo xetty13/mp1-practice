@@ -1,1 +1,0 @@
-CMakeLists.txt not found in /Users/shkrvoff/Документы/GitHub/SHISHKAREV_AM/untitled Select CMakeLists.txt
