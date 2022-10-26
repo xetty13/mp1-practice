@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 
 int r(int l, int r) {
 	return rand() % (r - l + 1) + l;
@@ -9,11 +8,13 @@ int r(int l, int r) {
 
 void main() {
 
+	int N, i, j, x, k_cow, k_bull;	//main
+	int ans, k, t;					//additional
+	int num[5], a_num[5], digits[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };//arrays
+	
 	srand((unsigned int)time(NULL));
-
-	int N, i, j, x, k_cow, k_bull, ans;
-	int num[5], a_num[5], digits[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
+	
+	printf("BULLS & COWS\n\n");
 	printf("Choose the length of the hidden number (from 2 to 5):\n");
 	do {
 		scanf("%d", &N);
@@ -34,18 +35,24 @@ void main() {
 		digits[x] = -1;
 	}
 
-	// test of gen number
-	//for (i = 0; i < N; i++) printf("%d", num[i]); printf("\n");
+	// Generated number for debugging
+	for (i = 0; i < N; i++) printf("%d", num[i]); printf("\n");
 
 	// Search for a number
 	printf("Try to guess an %d-digit number:\n\n", N);
 	do {
 		do {
 			scanf("%d", &x);
-			if (x < pow(10, N - 1) || x > pow(10, N) - 1)
-				printf("Incorrect length. Choose another:\n\n");
+			t = x;
+			k = 0;
+			while (t > 0) {
+				t /= 10;
+				k++;
+			}
+			if (k != N)
+				printf("Incorrect lenght, try another:\n\n");
 		}
-		while (x < pow(10, N - 1) || x > pow(10, N) - 1);
+		while (k != N);
 
 		ans = x;
 		i = N - 1;
