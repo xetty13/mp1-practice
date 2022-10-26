@@ -56,7 +56,7 @@ int main()
 
 	if (r1 > r2)
 	{
-		if (abs(x1 - x2) + r2 == r1)
+		if (abs(x1 - x2) + r2 <= r1)
 		{
 			printf("Одна окружность внутри другой");
 			return;
@@ -65,7 +65,7 @@ int main()
 
 	if (r1 < r2)
 	{
-		if (abs(x1 - x2) + r1 == r2)
+		if (abs(x1 - x2) + r1 <= r2)
 		{
 			printf("Одна окружность внутри другой");
 			return;
