@@ -40,7 +40,6 @@ int main() {
 			}
 		}
 		printf("The End");
-		return 0;
 	}
 	else {
 		int l = 0, r = 1000, try_num, c = 0;;
@@ -75,6 +74,6 @@ int main() {
 			}
 		}
 		printf("The End");
-		return 0;
 	}
+	return 0;
 }
