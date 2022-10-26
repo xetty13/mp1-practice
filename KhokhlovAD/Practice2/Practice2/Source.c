@@ -38,7 +38,6 @@ int main()
 			scanf_s("%d", &p_number);
 		}
 		printf("number of attempts=%d\n", i);
-		return 0;
 	}
 	else
 	{
@@ -67,6 +66,6 @@ int main()
 				printf("input error");
 			}
 		}
-		return 0;
 	}
+	return 0;
 }
