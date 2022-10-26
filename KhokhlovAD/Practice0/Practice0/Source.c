@@ -29,23 +29,23 @@ int main()
 	d = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 	if (d>(r1+r2))
 	{
-		printf("1");   //не пересекаются
+		printf("ne_peresekautsa");   //не пересекаются
 	}
 	else if (d == (r1+r2))
 	{
-		printf("2");   //внешнее косание
+		printf("vneshnee kasanie");   //внешнее косание
 	}
 	else if ((d<(r1+r2))&&(d>max))
 	{
-		printf("3");   //пересекаются
+		printf("peresekautsa");   //пересекаются
 	}
 	else if (d==(max-min))
 	{
-		printf("4");   //внутреннее косание
+		printf("vnutrennee kasanie");   //внутреннее косание
 	}
 	else if (d<(max-min))
 	{
-		printf("5");  // одна окружность внутри другой и не косаются
+		printf("1 okruj vnutri drugoi");  // одна окружность внутри другой и не косаются
 	}
-	else	printf("6"); //окружности совпадают
+	else	printf("okrujnosti sovpadaut"); //окружности совпадают
 }
