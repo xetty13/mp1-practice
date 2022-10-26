@@ -13,7 +13,7 @@ int main()
 
 	//Ввод данных 
 	printf("Введите высоту шкафа в сантиметрах (180 <= h <= 220) : ");
-	scanf_s("%f", &h);
+	scanf("%f", &h);
 	if (h > 220 || h < 180) {
 		printf("Вы ввели недопустимое значение высоты");
 		return 0;
@@ -33,6 +33,8 @@ int main()
 		printf("Вы ввели недопустимое значение глубины");
 		return 0;
 	}
+
+
 	//Масса задней стенки из ДВП
 	weight_back = 0.5 * w * h * Fiberboard;
 
@@ -40,7 +42,7 @@ int main()
 	weight_side = 2 * h * d * 1.5 * Chipboard;
 
 	//Масса накладных крышек
-	weight_cover = 2 * w * d * 1.5 * Wood;
+	weight_cover = 2 * (w-3) * d * 1.5 * Chipboard;
 
 	//Масса двух дверей
 	weight_door = h * w * Wood;
