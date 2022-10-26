@@ -23,9 +23,9 @@ int main() {
 
 	back_wall_mass = DVP_DENSITY * (h * w * 0.5);
 	door_mass = WOOD_DENSITY * (h * w * 1);
-	sidewalls_mass = 2 * DSP_DENSITY * (h * (d - 1.5) * 1.5); //Subtract the thickness of the overhead doors and the back wall
-	upper_and_lower_cover_mass = 2 * DSP_DENSITY * ((w - 0.3) * (d - 1.5) * 1.5);
-	shelves_mass = shelf_count * DSP_DENSITY * ((w - 0.3) * (d - 1.5) * 1.5);
+	sidewalls_mass = 2 * DSP_DENSITY * h * d * 1.5; //Subtract the thickness of the overhead doors and the back wall
+	upper_and_lower_cover_mass = 2 * DSP_DENSITY * d * (w - 3) * 1.5;
+	shelves_mass = DSP_DENSITY * shelf_count * (w - 3) * d * 1.5;
 
 	wardrobe_mass = back_wall_mass + door_mass + sidewalls_mass + upper_and_lower_cover_mass + shelves_mass;
 
