@@ -27,9 +27,10 @@ int main()
 		printf("%d ", a[i]);
 
 	
-	printf("\nEnter non-repeating digits of the same length\n");
+	printf("\nEnter a number of non-repeating digits with a length of %d\n", n);
 	scanf("%d", &x);
-
+	
+	
 	while (x > 0)
 	{
 		for (i = n - 1; i >= 0; i--)
@@ -38,9 +39,7 @@ int main()
 			x = x / 10;
 		}
 	}
-	for (i = 0; i < n; i++)
-		printf("%d ", b[i]);
-
+	
 	while (true)
 	{
 		for (i = 0; i < n; i++)
@@ -64,9 +63,9 @@ int main()
 			break;
 		}
 		else
-			printf("\n%d cow(s) and %d bull(s) were found\n", cow, bull);
+			printf("%d cow(s) and %d bull(s) were found\n", cow, bull);
 
-		printf("Enter a new number\n");
+		printf("\nEnter a new number of non-repeating digits with a length of %d\n", n);
 		scanf("%d", &x);
 
 		while (x > 0)
@@ -88,18 +87,18 @@ int main()
 int Check(int *arr)
 {
 	int Un_index = 0, Cur_index;
-	int flag = 1;
+
 	for (Cur_index = 0; Cur_index < n; Cur_index++)
 	{
-		if ((Cur_index != Un_index) && (arr[Cur_index] != arr[Un_index]))
+		if ((Cur_index != Un_index) && (arr[Cur_index] == arr[Un_index]))
+			return 0;
+		if (Cur_index == n-1 && Un_index != n-1)
 		{
 			Un_index++;
 			Cur_index = 0;
-			flag = 1;
 		}
-		else
-			flag = 0;
+			
 	}
 
-	return flag;
+	return 1;
 }
