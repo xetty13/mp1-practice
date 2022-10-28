@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <locale.h>
 #define Chipboard 0.0008f
 #define Fiberboard 0.0008f
 #define Wood 0.0009f
@@ -8,53 +7,52 @@
 
 int main()
 {
-	setlocale(LC_ALL, "rus");
 	float h, w, d, weight, weight_back, weight_side, weight_cover, weight_door, weight_shelf;
 
-	//Ввод данных 
-	printf("Введите высоту шкафа в сантиметрах (180 <= h <= 220) : ");
+	//Input data
+	printf("Input a height of the wardrope (180 <= h <= 220) : ");
 	scanf("%f", &h);
 	if (h > 220 || h < 180) {
-		printf("Вы ввели недопустимое значение высоты");
+		printf("You inputed uncorrect height ");
 		return 0;
 	}
 
 
-	printf("Введите ширину материалов в сантиметрах (80 <= w <= 120) : ");
+	printf("Input a width of the wardrope(80 <= w <= 120) : ");
 	scanf("%f", &w);
 	if (w < 80 || w > 120) {
-		printf("Вы ввели недопустимое значение ширины");
+		printf("You inputed uncorrect height");
 		return 0;
 	}
 
-	printf("Введите глубину шкафа в сантиметрах (50 <= d <= 90) : ");
+	printf("Input a deep of the wardrope (50 <= d <= 90) : ");
 	scanf("%f", &d);
 	if (d > 90 || d < 50) {
-		printf("Вы ввели недопустимое значение глубины");
+		printf("You inputed uncorrect deep");
 		return 0;
 	}
 
 
-	//Масса задней стенки из ДВП
+	//Weight of the back wall
 	weight_back = 0.5 * w * h * Fiberboard;
 
-	//Масса двух боковин
+	//Weigh of the side walls
 	weight_side = 2 * h * d * 1.5 * Chipboard;
 
-	//Масса накладных крышек
+	//Weight of the overhead cover
 	weight_cover = 2 * (w-3) * d * 1.5 * Chipboard;
 
-	//Масса двух дверей
+	//Weight of the doors
 	weight_door = h * w * Wood;
 
-	//Масса полок
+	//Weight of the shelfs
 	int n;
 	n = h / 40;
 	weight_shelf = (n - 1) * 1.5 * (w - 3) * d * Chipboard;
 
 
 	weight = weight_back + weight_cover + weight_door + weight_shelf + weight_side;
-	printf("Масса шкафа в килограммах по выбранным параметрам будет составлять:  ");
+	printf("The weight of the  wardrobe is (kg) :  ");
 	printf("%.2f", weight);
 
 
