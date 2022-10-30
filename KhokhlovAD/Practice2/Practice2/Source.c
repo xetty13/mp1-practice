@@ -13,10 +13,10 @@ int main()
 	if (game_variant == 1)
 	{
 		int r_number=rand()%1001, p_number, i=0;
-		printf("enter a number\n");
-		scanf_s("%d", &p_number);
-		while (r_number != p_number)
+		do
 		{
+			printf("enter a number\n");
+			scanf_s("%d", &p_number);
 			i++;
 			if ((p_number > 1000) || (p_number < 0))
 			{
@@ -34,9 +34,8 @@ int main()
 			{
 				printf("random number guessed\n");
 			}
-			printf("enter a number\n");
-			scanf_s("%d", &p_number);
-		}
+			
+		} while (r_number != p_number);
 		printf("number of attempts=%d\n", i);
 	}
 	else
@@ -44,7 +43,7 @@ int main()
 		int r_numb, i = 0, k=0, upper_limit=1001, lower_limit=0, answer;
 		while (k != 1)
 		{
-			r_numb = rand() % (upper_limit - lower_limit+1) + lower_limit;
+			r_numb = rand() % (upper_limit - lower_limit + 1) + lower_limit;
 			printf("hidden number = %d?\n", r_numb);
 			scanf_s("%d", &answer);         //0 - hidden number lower     1 - higher      2 - guessed 
 			i++;
