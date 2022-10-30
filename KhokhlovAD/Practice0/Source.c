@@ -7,9 +7,9 @@ int main() {
 	int x1, y1, r1, x2, y2, r2;
 	double distance;
 	printf("¬ведите координаты центра и радиус первой окружности: ");
-	scanf("%i%i%i", &x1, &y1, &r1);
+	scanf_s("%i%i%i", &x1, &y1, &r1);
 	printf("¬ведите координаты центра и радиус второй окружности: ");
-	scanf("%i%i%i", &x2, &y2, &r2);
+	scanf_s("%i%i%i", &x2, &y2, &r2);
 	distance = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 	if (x1 == x2 && y1 == y2 && r1 == r2)
 		printf("—овпадают полностью");
