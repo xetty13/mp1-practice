@@ -48,10 +48,10 @@ int main() {
 
 	// calculation
 	mass_of_backdoor = (0.005 * h * w) * density_of_dvf;
-	mass_of_side_walls = 2 * (0.015 * d * h) * density_of_dsp;
+	mass_of_side_walls = 2 * (0.015 * d * (h-0.03)) * density_of_dsp;
 	mass_of_overhead_lids = 2 * (0.015 * d * w) * density_of_tree;
 	mass_of_frontdoors = (0.01 * h * w) * density_of_tree;
-	mass_of_shelves = counting_shelves * (0.0015 * d * w) * density_of_dsp;
+	mass_of_shelves = counting_shelves * (0.0015 * d * (w-0.03)) * density_of_dsp;
 
 
 	control_mass = mass_of_backdoor + mass_of_overhead_lids + mass_of_side_walls + mass_of_frontdoors + mass_of_shelves;
