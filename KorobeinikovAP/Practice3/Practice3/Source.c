@@ -14,14 +14,12 @@ int main() {
 	int flag, flag1, tmp;
 	int bulls, cows, attempts;
 
-
 	printf("Input k ");
 	scanf ("%d", &k);
 	while ((k<2) ||(k>5)) {
 		printf("Incorrect data. Try again. Input 2 < k < 5 ");
 		scanf ("%d", &k);
 	}
-
 
 	srand((unsigned int)time(NULL));
 	a[0] = 1 + rand() % 9;
@@ -42,8 +40,6 @@ int main() {
 	for (i = 0; i < k; i++) {
 		ind[ a[i] ] = i+1;
 	}
-	printf("\n ");
-
 	st = 1;
 	number = 0;
 	for (i = k - 1; i >= 0; i--) {
@@ -51,22 +47,22 @@ int main() {
 		st *= 10;
 	}
 
-
 	flag = 1;
 	attempts = 0;
 	while (flag == 1) {
-		attempts += 1;
+		
+
 		printf("Guess the hidden number \n");
 		scanf("%d", &user_n);
 		while ((user_n < 10) || (user_n > 99999)) {
 			printf("Incorrect data. Try again. Input 9 < number < 1000000. ");
 			scanf("%d ", &user_n);
 		}
+
 		for (i = k - 1; i > -1; i--) {
 			u_a[i] = user_n % 10;
 			user_n /= 10;
 		}
-
 
 		flag1 = 0;
 		for (i = 0; i <= k - 1; i++) {
@@ -94,16 +90,17 @@ int main() {
 						bulls += 1;
 					else 
 						cows += 1;
+
 		if (bulls == k) {
+			attempts += 1;
 			printf("Congratulations! You guessed the number in %d attempts!", attempts);
 			flag = 0;
 		}
 		else {
+			attempts += 1;
 			printf("bulls = %d, cows = %d \n", bulls, cows);
 		}
 	}
-
-
-
+	   
 	return 0;
 }
