@@ -7,7 +7,7 @@
 #define N 5
 int main()
 {
-	int   len, i, a, number, k, d, j, fl, s, get, buk, korova, check;
+	int   len, i, a, k, d, j, fl, s, get, buk, korova, check;
     int arr[N] = { 0 };
     int b[N] = { 0 };
     srand((unsigned int)time(NULL));
@@ -41,13 +41,6 @@ int main()
                 break;
             }
         }
-    }
-    d = 1;
-    number = 0;
-    for (i = len-1; i>=0; i--)
-    {
-        number = number + arr[i] * d;
-        d = d * 10;
     }
     get = 0;
     buk = 0;
