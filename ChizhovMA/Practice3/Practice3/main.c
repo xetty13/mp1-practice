@@ -4,16 +4,18 @@
 #include<stdbool.h>
 
 int n;
+int Check(int* arr);
 
 int main()
 {
-	int i, x, j, cow=0, bull=0;
+	int i, x, j, cow=0, bull=0, k;
 	int a[5];
 	int b[5];
-	printf("Enter the length of the number (2-5) ");
+	
 	do {
+		printf("Enter the length of the number (2-5) ");
 		scanf("%d", &n);
-	} while (n < 0 || n > 5);
+	} while ((n < 0) || (n > 5));
 	
 
 	do {
@@ -21,24 +23,30 @@ int main()
 		for (i = 0; i < n; i++)
 			a[i] = rand() % 10;
 
-	} while (Check(a)==0);
+	} while (Check(a)==0 || a[0]==0);
 
 	for (i = 0; i < n; i++)
 		printf("%d ", a[i]);
 
 	
-	printf("\nEnter a number of non-repeating digits with a length of %d\n", n);
-	scanf("%d", &x);
-	
-	
-	while (x > 0)
-	{
-		for (i = n - 1; i >= 0; i--)
+	do {
+		printf("\nEnter a number of non-repeating digits with a length of %d\n", n);
+		scanf("%d", &x);
+
+		
+		
+		while(x > 0)
 		{
-			b[i] = x % 10;
-			x = x / 10;
+			k = n;
+			for (i = n - 1; i >= 0; i--)
+			{
+				b[i] = x % 10;
+				x = x / 10;
+				k--;
+			}
 		}
-	}
+		
+	} while (Check(b)==0 || k!=0 || b[0]==0);
 	
 	while (true)
 	{
@@ -65,17 +73,24 @@ int main()
 		else
 			printf("%d cow(s) and %d bull(s) were found\n", cow, bull);
 
-		printf("\nEnter a new number of non-repeating digits with a length of %d\n", n);
-		scanf("%d", &x);
+		do {
+			printf("\nEnter a number of non-repeating digits with a length of %d\n", n);
+			scanf("%d", &x);
 
-		while (x > 0)
-		{
-			for (i = n - 1; i >= 0; i--)
+
+
+			while (x > 0)
 			{
-				b[i] = x % 10;
-				x = x / 10;
+				k = n;
+				for (i = n - 1; i >= 0; i--)
+				{
+					b[i] = x % 10;
+					x = x / 10;
+					k--;
+				}
 			}
-		}
+
+		} while (Check(b) == 0 || k != 0 || b[0] == 0);
 		cow = 0;
 		bull = 0;
 	}
@@ -84,7 +99,7 @@ int main()
 }
 
 
-int Check(int *arr)
+int Check(int* arr)
 {
 	int Un_index = 0, Cur_index;
 
