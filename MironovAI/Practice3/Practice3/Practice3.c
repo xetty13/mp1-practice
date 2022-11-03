@@ -1,11 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #define max_length 5
+
+int pow(int arg1, int arg2) {
+    int s = 1;
+    for (int i = 0; i < arg2; i++)
+        s *= arg1;
+    return s;
+}
+
+
 
 int check_input_data(int num, int n) {
     int c = 0, f = 0;
     int a[max_length];
+    int l = pow(10, n-1), r = pow(10, (n));
+
+    //Checking length
+    if ((l > num) || (num > r)) return 1;
 
     while (num > 0) {
         a[n - c - 1] = num % 10;
@@ -13,8 +25,8 @@ int check_input_data(int num, int n) {
         num = num / 10;
     }
 
-    //Checking length
-    if (c != n) return 1;
+    
+    
 
     //checking unique digits
     for (int i = 0; i < n; i++) {
@@ -109,11 +121,9 @@ int main() {
         printf("Input a number with unique digits length %d: ", n);
         scanf("%d", &number);
 
-        if (check_input_data(number, n) == 1) {
-            while (check_input_data(number, n) == 1) {
-                printf("Pls be sure that u writed a right number. \n The number must have %d unique digits. Pls try to guess again:  ", n);
-                scanf("%d", &number);
-            }
+        while (check_input_data(number, n) == 1) {
+            printf("Pls be sure that u writed a right number. \n The number must have %d unique digits. Pls try to guess again:  ", n);
+            scanf("%d", &number);
         }
 
         //Win
