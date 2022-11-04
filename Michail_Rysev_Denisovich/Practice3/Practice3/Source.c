@@ -59,8 +59,8 @@ int main() {
 	do {
 		scanf_s("%d", &n);
 	} while (n < 2 || n > 5);
-	random_num(n); // for tasting
-	printf("%d\n", HiddenNumber);
+	random_num(n);
+	printf("%d\n", HiddenNumber); // for tasting
 	do {
 		int AnswerMas[5] = {0};
 		do {
