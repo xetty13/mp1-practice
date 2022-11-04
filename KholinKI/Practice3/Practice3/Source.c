@@ -10,17 +10,15 @@
 
 int unique_number()
 {
-	int l, i, n = 0,q=9.9, multi, k, j, m[N], p = 0, unique = 1, old_n,mass[N];
+	int l, i, n = 0,q=9.9, multi, k, j, m[N], p = 0, unique = 1, old_n,mass[N],digit;
 	printf("Input length of riddled number: \n");
 	do {
 		scanf("%d", &l);
 	} while (l < 2 || l > 5);
 	do {
-		for (i = 2, q = 9.9, multi = 10; i <= 5; i++, multi *= 10) {
-			if (l == i) {
-				n = multi + rand() % (q * multi - multi + 1);
-				break;
-			}
+		for (i = 1; i <= l; i++) {
+			digit = 0 + rand() % (9 - 0 + 1);
+			n = 10 * n + digit;
 		}
 		old_n = n;
 		i = 0;
