@@ -17,7 +17,7 @@ int unique_number()
 	} while (l < 2 || l > 5);
 	do {
 		for (i = 1; i <= l; i++) {
-			digit = 0 + rand() % (9 - 0 + 1);
+			digit = 0 + rand() % (9 - 0 + 1);		//generator sifr
 			n = 10 * n + digit;
 		}
 		old_n = n;
@@ -28,7 +28,7 @@ int unique_number()
 			if (mass[i] < 0) {
 				mass[i] = 0;
 			}
-			n = n / 10;
+			n = n / 10;					//obrabotka massiva...
 			i++;
 		}
 		for(i = 0; i < N; i++) {
@@ -46,11 +46,11 @@ int unique_number()
 		unique = 1;
 		for (i = 0; i < N; i++) {
 			for (j = i + 1; j < N; j++) {
-				if (mass[i] == 0) { //Iskluchenie nuley
+				if (mass[i] == 0) { 
 					break;
 				}
 				else if (mass[i] == mass[j]) {
-					unique = 0;
+					unique = 0;						//proverka na unikalnost
 					break;
 				}
 			}
@@ -65,7 +65,7 @@ int unique_number()
 	printf("\n");
 
 	for (i = 0; i < N; i++) {
-		p = 10 * p + mass[i];
+		p = 10 * p + mass[i]; //preobrazovanie massiva v chislo
 	}
 	return p;
 }
@@ -74,8 +74,7 @@ int main() {
 	srand(time(NULL));
 	int pc_n,user_n,cows=0,bulls=0, k, pc_mass[N], m_pc[N], i = 0, j, m_user[N], user_mass[N], k1,signal=1,kolvo=0,saved_pc_n,flag=0,i_saved=0,mark1=0,significanse=2,id=0;		
 	pc_n = unique_number();
-	printf("PC %d\n", pc_n);
-	do{ //*pobedniy do...while
+	do{ //
 		do{ //* unikalnost chisla
 			printf("Input unique number: ");
 			scanf_s("%d", &user_n);
@@ -164,6 +163,8 @@ int main() {
 			}
 			for (i = 0; i < N; i++) {
 				pc_mass[i] = 0;
+				m_pc[i] = 0;
+				m_user[i] = 0;
 			}
 		}
 	} while (bulls != kolvo);
