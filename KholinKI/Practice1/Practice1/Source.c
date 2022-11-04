@@ -5,7 +5,7 @@
 
 
 int main() {
-	float h, w, d, d_dvp = 850, d_dsp = 550, d_tree = 650;
+	float h, w, d, d_dvp = 800, d_dsp = 450, d_tree = 900;
 	float m, m1, m2, m3, m4, m5;
 	float tn1 = 5, tn2 = 15, tn3 = 10;
 	int n;
