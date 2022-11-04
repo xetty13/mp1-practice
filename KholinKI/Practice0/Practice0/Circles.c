@@ -6,47 +6,45 @@
 
 int main()
 {
-	float xc1, yc1, xc2, yc2, xr1, yr1,xr2,yr2,r1,r2,sc,d;
+	float xc1, yc1, xc2, yc2,r1,r2,sc,d;
 	printf("Enter the coordinates of the center of the first circle: ");
 	scanf("%f %f", &xc1, &yc1);
 	printf("Enter the coordinates of the center of the second circle: ");
 	scanf("%f %f", &xc2, &yc2);
-	printf("Enter the coordinates of the radius of the first circle: ");
-	scanf("%f %f", &xr1, &yr1);
-	printf("Enter the coordinates of the radius of the second circle: ");
-	scanf("%f %f", &xr2, &yr2);
-	r1 = sqrt(pow(xr1 - xc1, 2) + pow(yc1 - yr1, 2));
-	r2 = sqrt(pow(xr2 - xc2, 2) + pow(yr2 - yc2, 2));
-	sc = sqrt(pow(xc2 - xc1, 2) + pow(yc2 - yc1, 2));
+	printf("Enter the radius of the first circle: ");
+	scanf("%f", &r1);
+	printf("Enter the radius of the second circle: ");
+	scanf("%f", &r2);
+	sc = sqrt(((xc2 - xc1)*(xc2-xc1)) + ((yc2 - yc1)*(yc2 - yc1)));
 	d = sc - (r1 + r2);
 
 	if (sc == 0 && r1 == r2)
 	{
-		printf("the circles are congruent");
+		printf("the circles are congruent\n");
 	}
 
 	else if (d== 0)
 	{
-		printf("the circles are touching");
+		printf("the circles are touching\n");
 	}
 
 	else if (d > 0)
 	{
-		printf("The circles are distant from each other");
+		printf("The circles are distant from each other\n");
 	}
 
 	else if (sc < abs(r1 - r2))
 	{
-		printf("One circle inside another");
+		printf("One circle inside another\n");
 	}
 
 	else if (sc == abs(r1-r2))
 	{
-		printf("The circles have one common point");
+		printf("The circles have one common point\n");
 	}
 	else 
 	{
-		printf("The circles intersect at two points");
+		printf("The circles intersect at two points\n");
 	}
 	getchar();
 	return 0;
