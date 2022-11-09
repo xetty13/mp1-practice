@@ -39,8 +39,18 @@ int discount[N_ARR] = {
 int cost_d[N_ARR] = {
 	33, 38, 60, 63, 85, 94, 98, 104, 140, 1650
 };
-int counters[10] = { 0 };
+int counters[N_ARR] = { 0 };
 
+int chr_int(char x) {
+	int a;
+	a = (int)x - 48;
+	if (0 <= a && a <= 9)
+		return a;
+	else
+		return -1;
+}
+
+/*
 int chr_int(char x) {
 	switch (x) {
 	case '0': {return 0; break; }
@@ -55,7 +65,7 @@ int chr_int(char x) {
 	case '9': {return 9; break; }
 	default: return -1;
 	}
-}
+}*/
 
 int check(char* c) { // 1 - in array; 0 - NOT in array
 	if (!strcmp(c, code0) || !strcmp(c, code1) || !strcmp(c, code2) || !strcmp(c, code3) || !strcmp(c, code4) ||
@@ -75,7 +85,7 @@ void print_item(int item[]) {
 }
 
 int main() {
-	int S, S_d, k, num = 0;
+	int S, S_d, k, num = 0, flag = 1;
 	int item[N_CODE];
 	char* inp;
 
@@ -85,19 +95,22 @@ int main() {
 
 	printf("| NAME   | COST | DISC. | COST_DISC. |\n");
 
-	inp = (char*)malloc(5);
+	
 	do {
+		inp = (char*)malloc(10);
 		gets(inp);
+		flag = strcmp(inp, "0");
 		if (check(inp)) {
 			for (i = 0; i < N_CODE; i++)
 				item[i] = chr_int(*(inp + i)); // 0 - id_name, 1 - id_cost, 2 - id_disc, 3 - id_cost_d;
 			print_item(item);
 		}
-		else if (strcmp(inp, "0"))
+		else if (flag)
 			printf("There is no such code, try another one.\n");
 
-	} while (strcmp(inp, "0"));
-	free(inp);
+		free(inp);
+	} while (flag);
+	
 
 	//The_check:
 	printf("\n\n=====================================================================\n");
