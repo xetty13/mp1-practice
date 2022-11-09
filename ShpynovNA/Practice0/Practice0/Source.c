@@ -27,7 +27,7 @@ int main()
 		{
 			printf("circumferences touch");
 		}
-		if ((r1 + r2 > s) && (s > br))
+		if ((r1 + r2 > s) && (s >= br))
 		{
 			printf("circumferences intersect");
 		}
