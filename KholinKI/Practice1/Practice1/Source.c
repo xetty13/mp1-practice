@@ -29,9 +29,9 @@ int main() {
 						/*PODSCHOT CHASTEY*/
 		m1 = h * w * tn1 * d_dvp; /*Nakladnaya stenka*/
 		m2 = 2 * (h * d * tn2 * d_dsp); /*Dve bokovini*/
-		m3 = 2 * (tn2 * w * d * d_dsp); /*Nakladnie krishki*/
-		m4 = 2 * (h * w * tn3 * d_tree); /*dve nakladnie dveri*/
-		m5 = n * (d * w * tn2 * d_dsp); /*vnutrennie polki*/
+		m3 = 2 * (tn2 * (w - 2*tn2) * d * d_dsp); /*Nakladnie krishki*/
+		m4 = h * w * tn3 * d_tree; /*dve nakladnie dveri*/
+		m5 = n * (d * (w - 2*tn2) * tn2 * d_dsp); /*vnutrennie polki*/
 
 
 						/*RESULTAT*/
