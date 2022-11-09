@@ -84,17 +84,25 @@ int number_generator(int length) {
         }
         a[i] = num;
     }
+    int k=0;
+    if (length == 5) {
+        k = 10000;
+    }
+    else if (length == 4) {
+        k = 1000;
+    }
+    else if (length == 3) {
+        k = 100;
+    }
+    else {
+        k = 10;
+    }
 
-    int s=0, k = length-1;
+    int s=0;
     for (int i = 0; i < length; i++) {
-
         
-        int s1 = 1;
-        for (int j = 0; j < k; j++) {
-           s1 *= 10;
-        }
-        s += a[i] * s1;
-        k--;
+        s += a[i] * k;
+        k = k / 10 ;
     }
     return s;
 }
