@@ -39,6 +39,8 @@ int random_digits() {
 
 
 int number_generator(int length) {
+
+
     int a[max_length] = { -1,-1,-1,-1,-1 };
     for (int i = 0; i < length; i++) {
         int num = random_digits();
@@ -71,10 +73,16 @@ int number_generator(int length) {
         a[i] = num;
     }
 
-    int s=0, k = 1;
+    int s=0, k = length-1;
     for (int i = 0; i < length; i++) {
-        s += a[i] * pow(10, length - k);
-        k++;
+
+        
+        int s1 = 1;
+        for (int j = 0; j < k; j++) {
+           s1 *= 10;
+        }
+        s += a[i] * s1;
+        k--;
     }
     return s;
 }
