@@ -1,217 +1,180 @@
 #include <stdio.h>
-int cabbage[4] = { 1, 1, 1, 1 };
-int carrot[4] = { 1, 2, 1, 2 };
-int candies[4] = { 2, 3, 1, 1 };
-int spaghetti[4] = { 3, 1, 1, 2 };
-int zucchini[4] = { 2, 4, 3, 1 };
-int cheese[4] = { 2, 3, 1, 4 };
-int tomato[4] = { 3, 3, 3, 3 };
-int bacon[4] = { 4, 4, 4, 4 };
-int lettuce[4] = { 3,4,3,4 };
-int chicken[4] = {4, 2, 1, 2};
-int muffin[4] = {5, 4, 3, 2};
-int pickles[4] = {5, 5, 4, 4};
-int products[12] = { 0 };
-int barcodes[12] = { 1111, 1212, 2311, 3112, 2431, 2314, 3333, 4444, 3434, 4212, 5432, 5544 };
-double prices[12] = { 54.99, 9.99 ,89.99 ,79.99 ,49.99 ,239.99 ,14.99 , 149.99,  29.99,199.99 ,74.99,319.99 };
-int discounts[12] = { 19, 23, 45, 48, 33, 15, 19, 25, 37, 7, 40, 39 };
-int tmp = 0, recently_added = 0;
-double cost = 0, cost_without_discounts = 0;
+#include <stdlib.h>
+#include <Windows.h>
+
+#define GOODS_AMOUNT  (sizeof(prod) / sizeof(prod[0]))
+
+struct goods_t
+{
+	const char* name;
+	const char* description;
+	double price;
+	const char* barcode;
+	int discount;
+};
+struct goods_t prod[] = { 
+	{"cabbage", "This is an average head of an average cabbage", 54.99, "1613", 46},
+	{"carrot", "A carrot. Just a carrot...", 9.99, "5144", 4},
+	{"candies", "Sweet! Some candies!",89.99 ,"3134", 28},
+	{"spaghetti", "Veri spaghetti italiani",79.99 ,"4114", 8},
+	{"zucchini", "Zucchini, it's like a squash, but italian",49.99 ,"6613", 5},
+	{"cheese", "Cheese, not cheeze",239.99 ,"1117", 21},
+	{"tomato", "Tomato is like an apple but better",14.99 ,"1335", 25},
+	{"bacon", "Bacon - cool part of a cool pig",149.99 ,"0552", 2},
+	{"lettuce", "Lettuce - when cabbage is not an option",29.99 ,"3333", 16},
+	{"chicken", "Chicken... KFC...",199.99 ,"2015", 17},
+	{"muffin", "Muffin - Delitious small piece of a cake",74.99 ,"4497", 16},
+	{"pickles", "Pickles are just forgotten cucumbers in a jar...",319.99 ,"2395", 14},
+};
+
+
+char products[GOODS_AMOUNT] = {0};
+
+double cost = 0;
+double cost_without_discounts = 0;
+
+void fancy_print(const char* text)
+{
+	static int c = 0;
+	for (int j = 0; j < strlen(text); j++)
+	{
+		printf("%c", text[j]);
+		if (++c % 2)
+			Sleep(1);
+	}
+}
 void introduction()
 {
-	printf("1 - scan a new item\n");
-	printf("2 - get an information about scanned item\n");
-	printf("3 - add last scanned item to your groccery check\n");
-	printf("4 - print your check\n");
-	printf("5 - sum up and show final cost\n");
+	fancy_print("all items will be automatically scanned");
+	printf("\n");
+	fancy_print("to print your current check enter 'c'");
+	printf("\n");
+	fancy_print("to sum up and get final cost enter 'f'");
+	printf("\n");
+	fancy_print("all barcodes:");
+	printf("\n");
+	for (int i = 0; i < GOODS_AMOUNT; i++) {
+		fancy_print(prod[i].name);
+		fancy_print(": ");
+		fancy_print(prod[i].barcode);
+		printf("\n");
+	}
+	printf("\n");
 }
-void scan()
+void add_to_check( int index ) 
 {
-	int n;
-	if (tmp == 0) {
-		printf("enter barcode\n");
-		scanf("%d", &n);
-		for (int i = 0; i < 12; i++) {
-			if (barcodes[i] == n) {
-				tmp = 2;
-				products[i]++;
-				recently_added = i;
-			}
+	fancy_print(prod[index].description);
+	do
+	{
+		char confirm[2];
+
+		fancy_print("\nConfirm ([Y]es/No)? ");
+		fgets(confirm, sizeof(confirm), stdin);
+		fseek(stdin, 0, SEEK_END);
+
+		switch(confirm[0])
+		{
+		case '\n':
+			printf("Yes\n");
+		case 'y':
+		case 'Y':
+			products[index]++;
+			fancy_print("Added\n");
+		case 'n':
+		case 'N':
+			return;
 		}
-		if (tmp != 0) {
-			printf("beep! Item scanned succesfully!\n");
-	}
-	else if (tmp == 0) {
-			printf("\n");
-			printf("Oops, I couldn't find this barcode, please, try again\n");
-			scan();
-		}
-		return 0;
-	}
-	else if (tmp != 0) {
-		printf("looks like an item is already beeing picked. Please, add it to your check first\n");
-	}
+		
+	} while (1);
 }
-void add_to_check() 
-{
-	if (tmp == 0) {
-		printf("nothing scanned\n");
-	}
-	else {
-		tmp = 0;
-		printf("Item was successfully added to your check\n");
-	}
-}
-void info() 
-{
-	if (tmp != 0) {
-		switch (recently_added) {
-		case 0:
-			printf("\nThis is an average head of an average cabbage\n");
-			break;
-		case 1:
-			printf("\nA carrot. Just a carrot...\n");
-			break;
-		case 2:
-			printf("\nSweet! Some candies!\n");
-			break;
-		case 3:
-			printf("\nVeri spaghetti italiani\n");
-			break;
-		case 4:
-			printf("\nZucchini, it's like a squash, but italian\n");
-			break;
-		case 5:
-			printf("\nCheese, not cheeze\n");
-			break;
-		case 6:
-			printf("\nTomato is like an apple but better\n");
-			break;
-		case 7:
-			printf("\nBacon - cool part of a cool pig\n");
-			break;
-		case 8:
-			printf("\nLettuce - when cabbage is not an option\n");
-			break;
-		case 9:
-			printf("\nChicken... KFC...\n");
-			break;
-		case 10:
-			printf("\nMuffin - Delitious small piece of a cake\n");
-			break;
-		case 11:
-			printf("\nPickles are just forgotten cucumbers in a jar...\n");
-			break;
-		}
-	}
-	else {
-		printf("nothing scanned\n");
-	}
-}
+
 void make_check()
 {
 	cost_without_discounts = 0;
 	cost = 0;
-	if (tmp == 0) {
-		int i;
-		printf("\n");
-		for (i = 0; i < 50; i++) {
-			printf("_");
+	char buffer[80];
+	int i;
+	printf("\n");
+	for (i = 0; i < 61; i++) {
+		fancy_print("-");
+	};
+	snprintf(buffer, sizeof(buffer),
+		"\n|   %-20s  |  %8s | %5s |  %9s  |\n",
+		"Name", "Price", "Count", "Total");
+	fancy_print(buffer);
+	for (i = 0; i < 61; i++) {
+		fancy_print("-");
+	};
+	fancy_print("\n");
+	for (int i = 0; i < GOODS_AMOUNT; i++)
+	{
+		
+		if (products[i] > 0) {
+			snprintf(buffer, sizeof(buffer),
+				"|   %-20s  |  %8.2lf |  %4d |  %9.2lf  |\n",
+				prod[i].name,
+				prod[i].price,
+				products[i],
+				(double)products[i] * prod[i].price
+			);
+
+			fancy_print(buffer);
+			cost_without_discounts += (double)products[i] * prod[i].price;
+			cost += (double)products[i] * prod[i].price * (1.0 - ((double)(prod[i].discount))/100);
 		}
-		printf("\n");
-		for (int i = 0; i < 12; i++)
-		{
-			if (products[i] > 0) {
-				printf("   |   ");
-				switch (i) {
-				case 0:
-					printf("cabbage - 54.99");
-					break;
-				case 1:
-					printf("carrot - 9.99");
-					break;
-				case 2:
-					printf("candies - 89.99");
-					break;
-				case 3:
-					printf("spaghetti - 79.99");
-					break;
-				case 4:
-					printf("zucchini - 49.99");
-					break;
-				case 5:
-					printf("cheese - 239.99");
-					break;
-				case 6:
-					printf("tomato - 14.99");
-					break;
-				case 7:
-					printf("bacon - 149.99");
-					break;
-				case 8:
-					printf("lettuce - 29.99");
-					break;
-				case 9:
-					printf("chicken - 199.99");
-					break;
-				case 10:
-					printf("muffin - 74.99");
-					break;
-				case 11:
-					printf("pickles - 319.99");
-					break;
-				}
-				cost_without_discounts += (double)products[i] * prices[i];
-				cost += (double)products[i] * prices[i] * (1.0 - (double)discounts[i]/100);
-				printf(" - %d", products[i]);
-				printf(" - %lf\n", (double)products[i] * prices[i]);
-			}
-		}
-		printf("overall price without discounts: %lf\n", cost_without_discounts);
 	}
-	else {
-		printf("looks like an item is already beeing picked. Please, add it to your check first\n");
+	for (i = 0; i < 61; i++) {
+		fancy_print("-");
 	}
+	fancy_print("\noverall price without discounts: ");
+	printf("%.2lf\n\n", cost_without_discounts);
 }
 void final_cost()
 {
-	if (cost_without_discounts != 0) {
-		printf("total price: %lf", cost);
-		tmp = 3;
-	}
-	else { printf("please, create your check first\n"); }
+	fancy_print("total price: ");
+	printf("%.2lf", cost);
 }
-void next_move()
+int find_barcode(char * barcode)
 {
-	char ch;
-	printf("choose an action\n");
-	do {
-		scanf("%c", &ch);
-	} while ((ch != '1') && (ch != '2') && (ch != '3') && (ch != '4') && (ch != '5'));
-	switch (ch) {
-		case '1':
-			scan();
-			break;
-		case '2':
-			info();
-			break;
-		case '3':
-			add_to_check();
-			break;
-		case '4':
-			make_check();
-			break;
-		case '5':
-			final_cost();
-			break;
-		default:
-			printf("no such command\n");
-	}
+	for ( int i = 0; i < GOODS_AMOUNT; ++i)
+		if (!strcmp(barcode, prod[i].barcode)) 
+			return i;
+	
+	return -1;
 }
+int move()
+{
+	char last_scan[5];
+
+	fancy_print("enter your barcode (4 digits)/ print check (c)/ final cost (f): ");
+
+	fgets(last_scan, sizeof(last_scan), stdin);
+	fseek(stdin, 0, SEEK_END);
+		
+	switch (last_scan[0])
+	{
+	case 'f':
+		final_cost();
+		return -1;
+	case 'c':
+		make_check();
+		break;
+	default:
+		{
+			int index = find_barcode(last_scan);
+			if (index < 0)
+				fancy_print("couldn't find this barcode. Please, try again\n");
+			else
+			{
+				add_to_check(index);
+			}
+		}
+	}
+	return 0;
+}
+
 int main() 
 {
 	introduction();
-	do {
-		next_move();
-	} while (tmp != 3);
+	while (!move());
 }
