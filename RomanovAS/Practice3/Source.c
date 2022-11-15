@@ -1,37 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define N 11
+#define N 10
 int main()
 {
-	int a[N], b[5] = { 0 }, c[5] = { 0 }, i, n = 0, k = 0, x, y = 0, cow = 0, bull = 0, o, p = 0, s, j;
+	int b[N], c[5] = { 0 }, a[5] = { 0 }, i, n = 0, cow = 0, bull = 0, p = 0, s, j, k = 0, d = 1, x = 0, o;
 	printf("Vvedite skolki znachnim budet ygadivaemoe chislo (ot 2 do 5)");
 	do
 	{
 		scanf("%d", &n);
 	} while ((n < 2) || (n > 5));
-	for (i = 0; i < N; i++)
-	{
-		a[i] = k;
-		k++;
-	}
 	srand(time(NULL));
-	for (x = 0; x < n; x++)
+	while (k < n)
 	{
 		i = rand() % 10;
-		if (a[i] == 10)
+		if (b[i] != 1)
 		{
-			while (a[i] == 10)
-			{
-				i -= 1;
-			}
+			x += i * d;
+			b[i] = 1;
+			k++;
+			d *= 10;
 		}
-		b[y] = a[i];
-		for (i; i < N - 1; i++)
-		{
-			a[i] = a[i + 1];
-		}
-		y++;
+	} 
+	for (i = 0; i < n; i++)
+	{
+		a[i] = x % 10;
+		x /= 10;
 	}
 	do
 	{
@@ -49,11 +43,11 @@ int main()
 		{
 			for (o = 0; o < n; o++)
 			{
-				if ((c[i] == b[o]) && (i != o))
+				if ((c[i] == a[o]) && (i != o))
 				{
 					cow++;
 				}
-				if ((c[i] == b[o]) && (i == o))
+				if ((c[i] == a[o]) && (i == o))
 				{
 					bull++;
 				}
