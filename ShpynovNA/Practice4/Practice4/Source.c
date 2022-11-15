@@ -1,9 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <Windows.h>
 
 #define GOODS_AMOUNT  (sizeof(prod) / sizeof(prod[0]))
-
 struct goods_t
 {
 	const char* name;
@@ -25,10 +23,10 @@ struct goods_t prod[] = {
 	{"chicken", "Chicken... KFC...",199.99 ,"2015", 17},
 	{"muffin", "Muffin - Delitious small piece of a cake",74.99 ,"4497", 16},
 	{"pickles", "Pickles are just forgotten cucumbers in a jar...",319.99 ,"2395", 14},
+	{"mushroom", "Mushroom - \"it's me, Mario!\"", 29.99, "0000", 38},
 };
 
-
-char products[GOODS_AMOUNT] = {0};
+int products[GOODS_AMOUNT] = {0};
 
 double cost = 0;
 double cost_without_discounts = 0;
@@ -68,7 +66,7 @@ void add_to_check( int index )
 	{
 		char confirm[2];
 
-		fancy_print("\nConfirm ([Y]es/No)? ");
+		fancy_print("\nBuy one ([Y]es/No)? ");
 		fgets(confirm, sizeof(confirm), stdin);
 		fseek(stdin, 0, SEEK_END);
 
@@ -80,14 +78,15 @@ void add_to_check( int index )
 		case 'Y':
 			products[index]++;
 			fancy_print("Added\n");
+			break;
 		case 'n':
 		case 'N':
+			fancy_print("done\n");
 			return;
 		}
 		
 	} while (1);
 }
-
 void make_check()
 {
 	cost_without_discounts = 0;
@@ -131,6 +130,7 @@ void make_check()
 }
 void final_cost()
 {
+	make_check();
 	fancy_print("total price: ");
 	printf("%.2lf", cost);
 }
