@@ -14,9 +14,9 @@ struct goods_t prod[] = {
 	{"cabbage", "This is an average head of an average cabbage", 54.99, "1613", 46},
 	{"carrot", "A carrot. Just a carrot...", 9.99, "5144", 4},
 	{"candies", "Sweet! Some candies!",89.99 ,"3134", 28},
-	{"spaghetti", "Veri spaghetti italiani",79.99 ,"4114", 8},
-	{"zucchini", "Zucchini, it's like a squash, but italian",49.99 ,"6613", 5},
-	{"cheese", "Cheese, not cheeze",239.99 ,"1117", 21},
+	{"spaghetti", "Spaghetti italiani",79.99 ,"4114", 8},
+	{"zucchini", "Zucchini - schiacciare italiane",49.99 ,"6613", 5},
+	{"cheese", "CheeSe, not cheeZe",239.99 ,"1117", 21},
 	{"tomato", "Tomato is like an apple but better",14.99 ,"1335", 25},
 	{"bacon", "Bacon - cool part of a cool pig",149.99 ,"0552", 2},
 	{"lettuce", "Lettuce - when cabbage is not an option",29.99 ,"3333", 16},
@@ -136,7 +136,7 @@ void final_cost()
 	fancy_print("\nTotal price: ");
 	printf("%.2lf", cost);
 }
-int find_barcode(char * barcode)
+int find_barcode(char* barcode)
 {
 	for ( int i = 0; i < GOODS_AMOUNT; ++i)
 		if (!strcmp(barcode, prod[i].barcode)) 
