@@ -7,7 +7,7 @@
 #define N 5
 int main()
 {
-	int   len, i, a, k, d, j, fl, s, get, buk, korova, check;
+	int   len, i, a, k, d, j, fl, s, get, buk, korova, check, m;
     int arr[N] = { 0 };
     int b[N] = { 0 };
     srand((unsigned int)time(NULL));
@@ -45,7 +45,11 @@ int main()
     get = 0;
     buk = 0;
     korova = 0;
-    check = pow(10, len-1);
+    check = 10;
+    for (i = 1; i < len - 1; i++)
+    {
+        check = check * 10;
+    }
     while (buk != len)
     {
         printf("Try to guess the number: ");
@@ -53,6 +57,17 @@ int main()
             scanf(" %d", &get);
             if ((get < check) || (get >= check*10)) {
                 printf("Incorrect number entered. Try again: ");
+            }
+            else {
+                m = get;
+                while (m > 0) {
+                    if ((m % 10) == (m / 10 % 10))
+                    {
+                        printf("Incorrect number entered. Try again: ");
+                        break;
+                    }
+                    m = m / 10;
+                }
             }
         } while ((get < check) || (get >= check * 10));
         i = len - 1;
