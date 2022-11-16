@@ -38,7 +38,7 @@ int main()
 		printf("The circles are equal ");
 		return 0;
 	}
-	if (R1>R2) printf("The second circle is inside the first one");
+	if (R1 > R2) printf("The second circle is inside the first one");
 	else printf("The first circle is inside the second ");
 	return 0;
 }
