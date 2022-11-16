@@ -48,14 +48,21 @@ int main()
         d = d * 10;
     }
     bulls = 0;
-    LIMIT = (int)pow(10, len - 1);
+    
     while ( bulls != len )
     {
         printf("Try to guess the number: \n");
         do {
             scanf("%d", &TryNumber);
             f = 1;
-            if (( LIMIT > TryNumber) || (TryNumber >= LIMIT * 10)) {
+            LIMIT = 0;
+            tmp = TryNumber;
+            while (tmp > 0)
+            {
+                tmp /= 10;
+                LIMIT++;
+            }
+            if (LIMIT!=len) {
                 printf("Incorrect number entered. Try again: \n");
             }
             tmp = TryNumber;
@@ -81,7 +88,7 @@ int main()
             {
                 chekar[i] = 0;
             }
-        } while ( (TryNumber < LIMIT) || (TryNumber >= LIMIT * 10) || (f==0));
+        } while ((LIMIT!=len) || (f == 0));
         i = len - 1;
         while (TryNumber > 0)
         {
