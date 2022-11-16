@@ -39,11 +39,11 @@ int main() {
 	distance_shelf = 0.4;
 	m_zad = density_dvp * h * w * t_zad;
 	m_side = 2 * density_dsp * h * d * t_side;
-	m_top_bottom = 2 * density_dsp * w * d * t_top_bottom;
+	m_top_bottom = 2 * density_dsp * (w-0.03) * d * t_top_bottom;
 	m_door = density_tree * h * w * t_door;
 	count_shelf = h / 0.415 - 1.015;
 	count = (int)count_shelf;
-	m_shelf = count * density_dsp * w * d * t_shelf;
+	m_shelf = count * density_dsp * (w-0.03) * d * t_shelf;
     m_cabinet = m_zad + m_side + m_top_bottom + m_door + m_shelf;
 	printf("Cabinet weight : %f", m_cabinet);
 	return 0;
