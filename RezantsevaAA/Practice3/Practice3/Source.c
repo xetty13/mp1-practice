@@ -9,7 +9,7 @@ void main()
     int number[N] = { 0 };
     int arr[N] = { 0 }; 
     int tries = 0;
-    int n, i, raz, flag, j, r, p_num, cow,bull, proverka;
+    int n, i, raz, flag, j, r, p_num, cow,bull, proverka, k;
 	printf("Enter the number of digits in the number from 2 to 5 ");
     do {
         scanf("%d", &n);
@@ -44,16 +44,26 @@ void main()
     }
     cow = 0;
     bull = 0;
-    proverka = pow(10, n - 1);
     while(bull != n)
     {
         printf("Try to guess the number: ");
         do {
             scanf(" %d", &p_num);
-            if ((p_num < proverka) || (p_num >= proverka * 10)) {
+            i = n - 1;
+            k = 0;
+            while (p_num > 0)
+            {
+                arr[i] = p_num % 10;
+                p_num = p_num / 10;
+                i--;
+                k++;
+            }
+            if ((k < n) || (k > n))
+            {
                 printf("Incorrect number entered. Try again: ");
             }
-        } while ((p_num < proverka) || (p_num >= proverka * 10));
+        } while (( k < n) || k>= n));
+
         i = n - 1;
         while (p_num > 0)
         {
