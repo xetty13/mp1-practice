@@ -131,7 +131,9 @@ void make_check()
 void final_cost()
 {
 	make_check();
-	fancy_print("total price: ");
+	fancy_print("Discount: ");
+	printf("%.2lf", cost_without_discounts - cost);
+	fancy_print("\nTotal price: ");
 	printf("%.2lf", cost);
 }
 int find_barcode(char * barcode)
