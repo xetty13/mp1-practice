@@ -58,7 +58,7 @@ int main()
 		{
 			printf("Scan the product: ");
 				scanf(" %4s", barcode);
-				if (strcmp(barcode, "1") == 0)
+				if (strcmp(barcodes, barcode) == 0)
 				{
 					break;
 				}
