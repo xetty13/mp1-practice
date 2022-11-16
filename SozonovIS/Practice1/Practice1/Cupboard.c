@@ -15,7 +15,7 @@ int main()
 	}
 	backwall = h * w * 0.5 * 0.8;
 	sidewall = 2 * h * d * 1.5 * 0.65;
-	lids = 2 * w * d * 1.5 * 0.65;
+	lids = 2 * (w-3) * d * 1.5 * 0.65;
 	doors = h * w * 0.55;
 	shelves_height = 41.5;
 	while (shelves_height < h)
