@@ -6,23 +6,29 @@ int main() {
 	int an[5] = { -1, -1, -1, -1, -1 }, n = 0, len, i, gN, cDi = 0, endOfGame = 1;
 	srand(time(NULL));
 
-	printf("Let's play in Bull-n-cow game!\nChoose length of number (form 2 to 5) [2, 5]:\n");
+	printf("Let's play in Bull-n-cow game!\nChoose length of number (from 2 to 5) [2, 5]:\n");
 
+	// ask the user the length of number
 	do {
 		scanf_s("%d", &len);
+		if (len < 2 || len >5) {
+			printf("Your choice is incorrect! Try again choose length only in [2, 5]\n");
+		}
 	} while (len < 2 || len >5);
 
+
+	// generation random number
 	i = 0;
 	while (i < len) {
 		int newN, flag = 1, j;
-		newN = rand() % 10;
+		newN = 1 + rand() % 9; // first digit can't be 0
 
-		for (j = 0; j < len; j++) {
+		for (j = 0; j < len; j++) { // check that there are no repeat of digits
 			if (an[j] == newN)
 				flag = 0;
 		}
 
-		if (flag && !(i == 0 && newN == 0)) {
+		if (flag) { // if everything is OK -- save digit
 			an[i] = newN;
 			i++;
 		}
@@ -38,17 +44,34 @@ int main() {
 
 	// основной цикл игры
 	while (endOfGame) {
-		int c_Bull = 0, c_Cow = 0, copy, cDi, gNarr[5], i, j;
+		int c_Bull = 0, c_Cow = 0, copy, cDi, gNarr[5], i, j, flag = 1;
 
 		do {
+			int c_of_dig[10] = { 0 }, i;
 			cDi = 0;
 			scanf_s("%d", &gN);
 			copy = gN;
 			while (copy > 0) {
+				c_of_dig[copy % 10] += 1; // accumulating count of all digits
 				cDi++;
 				copy /= 10;
 			}
-		} while (cDi != len);
+
+			for (i = 0; i < 10; i++) {
+				if (c_of_dig[i] > 1) {
+					flag = 0;
+				}
+			}
+
+			if (!flag) {
+				printf("there are some repeating digits in your number! \n");
+			}
+
+			if (cDi != len) {
+				printf("I have chosen some number, which length is  %d!!! You have entered number with some other length!\n", len);
+			}
+
+		} while (cDi != len || !flag);
 
 		copy = gN;
 		for (i = len - 1; i >= 0; i--) {
