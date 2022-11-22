@@ -7,16 +7,16 @@ void main()
 {
     srand(time(NULL));
     int number[N] = { 0 };
-    int arr[N] = { 0 }; 
+    int arr[N] = { 0 };
     int tries = 0;
-    int n, i, raz, flag, j, r, p_num, cow,bull, check, d;
-	printf("Enter the number of digits in the number from 2 to 5 ");
+    int n, i, raz, flag, j, r, p_num, cow, bull, check, d;
+    printf("Enter the number of digits in the number from 2 to 5 ");
     do {
         scanf("%d", &n);
         if ((n > 5) || (n < 2)) {
             printf("Invalid number entered. Try again\n");
         }
-    } while ((n > 5) || (n< 2));
+    } while ((n > 5) || (n < 2));
     number[0] = 1 + rand() % (9);
     r = 0;
     flag = 1;
@@ -39,21 +39,21 @@ void main()
                 number[i] = r;
                 break;
             }
-        } 
+        }
     }
     cow = 0;
     bull = 0;
     check = 10;
-    for (i = 1; i < n - 1; i++) 
+    for (i = 1; i < n - 1; i++)
     {
         check = check * 10;
     }
-    while(bull != n)
+    while (bull != n)
     {
         printf("Try to guess the number: ");
         do {
             scanf(" %d", &p_num);
-            if ((p_num < check) || (p_num >= check * 10)) 
+            if ((p_num < check) || (p_num >= check * 10))
             {
                 printf("Incorrect number entered. Try again: ");
             }
