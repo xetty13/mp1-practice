@@ -14,13 +14,13 @@ int main() {
 	}
 
 	int k = h / 40;
-	float m1 = k * d * w * dsp * 0.55;
+	float m1 = k * d * (w - 2 * dsp) * dsp * 0.55;
 
 	float m2 = h * w * dvp * 0.8;
 
 	float m3 = 2 * h * d * dsp * 0.55;
 
-	float m4 = 2 * w * d * dsp * 0.55;
+	float m4 = 2 * (w - 2 * dsp) * d * dsp * 0.55;
 
 	float m5 = w * h * 1.5;
 
