@@ -17,9 +17,8 @@ int main()
 		scanf("%d", &n);
 	} while ((n < 0) || (n > 5));
 	
-
+	srand((unsigned int)time(NULL));
 	do {
-		srand((unsigned int)time(NULL));
 		for (i = 0; i < n; i++)
 			a[i] = rand() % 10;
 
@@ -32,9 +31,6 @@ int main()
 	do {
 		printf("\nEnter a number of non-repeating digits with a length of %d\n", n);
 		scanf("%d", &x);
-
-		
-		
 		while(x > 0)
 		{
 			k = n;
@@ -45,7 +41,6 @@ int main()
 				k--;
 			}
 		}
-		
 	} while (Check(b)==0 || k!=0 || b[0]==0);
 	
 	while (true)
