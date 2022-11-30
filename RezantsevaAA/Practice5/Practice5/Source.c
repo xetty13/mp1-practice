@@ -2,100 +2,89 @@
 //#include <windows.h>
 #include <stdio.h>
 #define N 10
-void scan(int* a);
-void output(int* a);
-void swap(int* a);
-void ChoiceSortMin(int* a);
-//void ChoiceSortMax(int* a);
-void BubbleSort(int* a);
-void InsertSort(int* a);
+void scan(float* a);
+void output(float* a);
+void QuikSort(float* a);
+void BubbleSort(float* a);
+void InsertSort(float* a);
 int main()
 {
-	int arr[N];
-	char mode;
+	float arr[N];
+	int mode;
 	scan(arr);
-	printf("Ñhoose sorting method: 1 - selection sort, 2 - baubble sort, 3 - insertion sort ");
-	scanf("%c", &mode);
+	printf(" Choose sorting method: 1 - quik sort, 2 - baubble sort, 3 - insertion sort ");
+	scanf("%d", &mode);
 	switch (mode)
 	{
 
-	case '1':
+	case 1:
 	{
-		ChoiceSortMax(arr);
+		QuikSort(arr);
 		output(arr);
+		break;
 	}
-	case '2':
+	case 2:
 	{
 		BubbleSort(arr);
 		output(arr);
+		break;
 	}
-	case '3':
+	case 3:
 	{
 		InsertSort(arr);
 		output(arr);
+		break;
 	}
 	}
 
 }
-void scan(int* a)
+void scan(float* a)
 {
 	for (int i = 0; i < N; i++)
 	{
-		scanf(" %d", &(a[i]));
+		scanf(" %f", &(a[i]));
 	}
 }
-void output(int* a)
+void output(float* a)
 {
 	for (int i = 0; i < N; i++)
 	{
 		printf(" %d", a[i]);
 	}
 }
-void swap(int* a)
+void QuikSort(float* a)
 {
-	int tmp, idx, i;
-	tmp = a[idx];
-	a[idx] = a[i];
-	a[i] = tmp;
-}
-void ChoiceSortMin(int* a)
-{
-	int i, idx, min, tmp, j;
-	for (i = 0; i < N; i++)
+	int tmp, i = 0, j = N - 1, mid = (i + j) / 2;
+	float pivot = a[mid];
+	while (i > j)
 	{
-		min = a[i];
-		idx = i;
-		for (j = 1 + i; j < N; j++)
+		while (a[i] < pivot)
 		{
-			if (a[j] < min)
-			{
-				min = a[j];
-				idx = j;
-			}
+			i++;
 		}
-		swap(a[idx], a[i]);
+		while (a[j] > pivot)
+		{
+			j++;
+		}
+		if (i < j)
+		{
+			tmp = a[i];
+			a[i] = a[j];
+			a[j] = tmp;
+			i++;
+			j--;
+		}
+	}
+	if (j > 0)
+	{
+		QuikSort(a, j);
+	}
+	if (i < N - 1)
+	{
+		QuikSort(a + i, N - 1 - i);
 	}
 }
-//èñïðàâèòü
-void ChoiceSortMax(int* a)
-{
-	int i, idx, max, tmp, j;
-	for (i = 0; i < N; i++)
-	{
-		max = a[i];
-		idx = i;
-		for (j = 1 + i; j < N; j++)
-		{
-			if (a[j] > max)
-			{
-				max = a[j];
-				idx = j;
-			}
-		}
-		swap(a[idx], a[i]);
-	}
-}
-void BubbleSort(int* a)
+void BubbleSort(float* a)
 {
 	int i, j, tmp;
 	for (i = 0; i < N; i++)
@@ -104,12 +93,14 @@ void BubbleSort(int* a)
 		{
 			if (a[j + 1] < a[j])
 			{
-				swap(a[j + 1], a[j]);
+				tmp = a[j + 1];
+				a[j + 1] = a[j];
+				a[j] = tmp;
 			}
 		}
 	}
 }
-void InsertSort(int* a)
+void InsertSort(float* a)
 {
 	int i, j, tmp;
 	for (i = 0; i < N; i++)
