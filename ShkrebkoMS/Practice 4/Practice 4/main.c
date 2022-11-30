@@ -10,6 +10,7 @@ float discout[N] = { 0.15, 0.20, 0.0, 0.25, 0.10, 0.35, 0.39, 0.0, 0.0, 0.0 };
 void scan(int* arr)
 {
 	int i,f;
+	float cost;
 	char* a[1];
 	
 	printf("Good day!\n Enter the barcodes of your products\n If you have entered all your products, then write 0\n");
@@ -22,11 +23,12 @@ void scan(int* arr)
 			if (strcmp(barcodes[i], a) == 0)
 			{
 				arr[i]++;
-				printf("| %s | Price is %d rubles  | Discout is %.0f%% |\n", names[i], price[i], discout[i]*100);//Вывод информации о товаре
+				cost = price[i] - discout[i] * price[i];
+				printf("| %s | Price is %d rubles  | Discout is %.0f%% | Total cost is %.2f rubles\n\n", names[i], price[i], discout[i]*100,cost);//Вывод информации о товаре
 				f = 1;
 			}
 		}
-		if (f == 0)
+		if ((f == 0) && (strcmp(a, "0")!=0))
 		{
 			printf("There is no such barcode, check the correctness of the input\n\n");
 		}
@@ -49,12 +51,12 @@ void receipt_print (int *arr)
 			r_price = (price[i] - price[i] * discout[i])*arr[i];
 			total_sum = total_sum + r_price;
 			sum_discout=sum_discout+ (price[i] * discout[i])*arr[i];
-			printf("| %s | COST=%d | COUNT=%d | TOTAL COST=%.2f |\n", names[i], price[i], arr[i],  r_price);
+			printf("|%10s\t|\tCOST=%d\t|\tCOUNT=%d\t|\tTOTAL COST=%.2f\t|\n", names[i], price[i], arr[i],  r_price);
 		}
 	}
-	printf("The cost of all goods=%d rubles\n", sum);
-	printf("Total discount=%f rubles\n", sum_discout);
-	printf("Total cost of all goods=%f rubles\n", total_sum);
+	printf("\n\tThe cost of all goods=%d rubles\n", sum);
+	printf("\tTotal discount=%.2f rubles\n", sum_discout);
+	printf("\tTotal cost of all goods=%.2f rubles\n", total_sum);
 }
 
 
