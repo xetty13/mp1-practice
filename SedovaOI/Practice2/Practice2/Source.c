@@ -3,7 +3,7 @@
 #include <time.h>
 int main()
 {
-	short a;
+	char a;
 	printf("Vuberite igru 1, 2: ");
 	do {
 		scanf("%c", &a);
@@ -13,7 +13,6 @@ int main()
 		int n, i = 0, a;
 		srand((unsigned int)time(NULL));
 		n = rand() % 1000;
-		printf("Zagadanoe chislo: %d\n", n);
 		printf("vedite vashe predpologenie: ");
 		do {
 			i++;
