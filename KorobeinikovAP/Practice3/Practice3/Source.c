@@ -7,11 +7,9 @@
 
 int main() {
 	int a[N] = { 0 };
-	int ind[M] = { 0 };
 	int u_a[N] = { 0 };
-	int u_ind[M] = { 0 };
-	int k, i, j,  number, st, user_n;
-	int flag, flag1, tmp;
+	int k, i, j, user_n;
+	int flag, flag1, tmp, check_t, check_d;
 	int bulls, cows, attempts;
 
 	printf("Input k ");
@@ -37,26 +35,25 @@ int main() {
 				a[i] = tmp;
 		}		
 	}
-	for (i = 0; i < k; i++) {
-		ind[ a[i] ] = i+1;
-	}
-	st = 1;
-	number = 0;
-	for (i = k - 1; i >= 0; i--) {
-		number += a[i] * st;
-		st *= 10;
-	}
 
 	flag = 1;
 	attempts = 0;
+	check_t = 1;
+	for (i = 0; i < k; i++) {
+		check_t = check_t * 10;
+	}
+	check_d = 1;
+	for (i = 0; i < k-1; i++) {
+		check_d = check_d * 10;
+	}
 	while (flag == 1) {
 		
 
 		printf("Guess the hidden number \n");
 		scanf("%d", &user_n);
-		while ((user_n < 10) || (user_n > 99999)) {
-			printf("Incorrect data. Try again. Input 9 < number < 1000000. ");
-			scanf("%d ", &user_n);
+		while ((user_n < check_d) || (user_n > check_t)) {
+			printf("Incorrect data. Try again. Input %d < number < %d. \n", check_d, check_t);
+			scanf("%d", &user_n);
 		}
 
 		for (i = k - 1; i > -1; i--) {
@@ -78,15 +75,12 @@ int main() {
 		if (flag1 == 1) 
 			continue;
 		
-		for (i = 0; i < k; i++) {
-			u_ind[ u_a[i] ] = i + 1;
-		}
 		bulls = 0;
 		cows = 0;
 		for (i = 0; i <= k - 1; i++)
 			for (j = 0; j <= k - 1; j++)
 				if (u_a[i] == a[j])
-					if (u_ind[a[j]] == ind[a[j]]) 
+					if (i == j) 
 						bulls += 1;
 					else 
 						cows += 1;
