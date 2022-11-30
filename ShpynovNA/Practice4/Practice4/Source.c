@@ -43,14 +43,10 @@ void fancy_print(const char* text)
 }
 void introduction()
 {
-	fancy_print("all items will be automatically scanned");
-	printf("\n");
-	fancy_print("to print your current check enter 'c'");
-	printf("\n");
-	fancy_print("to sum up and get final cost enter 'f'");
-	printf("\n");
-	fancy_print("all barcodes:");
-	printf("\n");
+	fancy_print("all items will be automatically scanned\n");
+	fancy_print("to print your current check enter 'c'\n");
+	fancy_print("to sum up and get final cost enter 'f'\n");
+	fancy_print("all barcodes:\n");
 	for (int i = 0; i < GOODS_AMOUNT; i++) {
 		fancy_print(prod[i].name);
 		fancy_print(": ");
