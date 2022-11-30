@@ -11,7 +11,7 @@ void scan(int* arr)
 {
 	int i,f;
 	float cost;
-	char* a[1];
+	char a[5];
 	
 	printf("Good day!\n Enter the barcodes of your products\n If you have entered all your products, then write 0\n");
 	do {
@@ -65,13 +65,7 @@ int main()
 	int i;
 	int count[N] = { 0 };
 	scan(count);
-	/*for (i = 0; i < N; i++)
-	{
-		printf("%d ", count[i]);
-	}*/
 	printf("YOUR RECEIPT\n\n");
 	receipt_print(count);
-
-
 	return 0;
 }
