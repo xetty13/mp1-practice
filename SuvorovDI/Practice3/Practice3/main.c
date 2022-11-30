@@ -34,12 +34,6 @@ int main() {
 		}
 	}
 
-	// вывод загаданного числа
-	/*for (i = 0; i < len; i++) {
-		printf("' %d '", an[i]);
-	}
-	printf("\n");*/
-
 	printf("I choose some number with length %d\nTry to guess:\n", len);
 
 	// основной цикл игры
