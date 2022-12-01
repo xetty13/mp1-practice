@@ -4,13 +4,13 @@
 #define N 10
 #define _CRT_SECURE_NO_WARNINGS
 
-char names[N][15] = { "Water", "Chocolate", "Milk", "Bread", "Fries", "Soup", "Tea", "Coffee", "Cookies", "Sugar" };
-char barcodes[N][5] = { "0001","0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009", "0010", };
+char names[N][16] = { "Water", "Chocolate", "Milk", "Bread", "Fries", "Soup", "Tea", "Coffee", "Cookies", "Sugar" };
+char barcodes[N][6] = { "0001","0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009", "0010", };
 int sales[N] = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };
 int coasts[N] = { 20, 50, 50, 35, 40, 90, 90, 300, 150, 50 };
 int cart[N] = { 0 };
 
- 
+
 int index(char user_code[5]) {
 	for (int i = 0; i < 10; i++) {
 		if (strcmp(&(barcodes[i]), user_code) == 0) {
@@ -21,8 +21,8 @@ int index(char user_code[5]) {
 
 void product_information(char user_code[5]) {
 	int i = index(user_code);
-	printf("You choose %s \n ", names[i]);
-	printf("the price per unit with a discount is: %d \n", coasts[i] - (coasts[i] * sales[i] / 100));
+	printf("You choose %s\n ", names[i]);
+	printf("The price per unit with a discount is: %d \n", coasts[i] - (coasts[i] * sales[i] / 100));
 }
 
 
@@ -56,10 +56,10 @@ void list() {
 }
 
 void removed() {
-	
+
 	printf("Choose a barcode of this product: \n");
 	for (int i = 0; i < N; i++) {
-		if (cart[i] != 0){
+		if (cart[i] != 0) {
 			printf("Name: %s Barcode: %s Count: %d \n", names[i], barcodes[i], cart[i]);
 		}
 	}
@@ -68,7 +68,7 @@ void removed() {
 	int i = index(tmp);
 	if (cart[i] == 0) {
 		printf("You cant remove this product. Try again \n ");
-		
+
 	}
 	else
 	{
@@ -86,13 +86,15 @@ void removed() {
 }
 
 void basket() {
-	int c1 = 0, s1 = 0;
+	int c1 = 0, s1 = 0, f = 0;;
 	for (int i = 0; i < N; i++) {
 		if (cart[i] != 0) {
-			printf("Name: %s Barcode: %s, Unit_price: %d Count: %d Total_price: %d \n", names[i], barcodes[i], (coasts[i] - coasts[i] * sales[i] / 100), cart[i], cart[i] * (coasts[i] - coasts[i] * sales[i] / 100));
+			f++;
+			printf("Name: %s Barcode: %s, Unit_price: %d Count: %d Total_cost: %d \n", names[i], barcodes[i], (coasts[i] - coasts[i] * sales[i] / 100), cart[i], cart[i] * (coasts[i] - coasts[i] * sales[i] / 100));
 		}
 	}
-
+	if (f == 0) printf("Cart is empty \n");
+	else printf("Total cost of goods: %d\n ", amount_summ());
 }
 
 
@@ -100,8 +102,8 @@ void basket() {
 void pay() {
 	int as = amount_summ();
 
-	int tmp=0;
-	while (10>9) {
+	int tmp = 0;
+	while (10 > 9) {
 		printf("Write %d for to pay for the goods \n", as);
 		scanf("%d", &tmp);
 		if (tmp == as) {
@@ -135,18 +137,18 @@ void gen_of_receipt() {
 int scanning_funtion() {
 	int flag = 1, count;
 
-	
+
 	while (flag != 0) {
 		printf("You always can input 'stop' if u wanna kill it ");
 
 
 		//Scanning barcode
-		char user_code[5];
+		char user_code[10];
 		printf("Scan your barcode: \n");
-		scanf("%s", &user_code);
-		
+		scanf("%s", user_code);
+
 		//exit 
-		if (user_code[0] == 's' && user_code[1] == 't' && user_code[2] == 'o' && user_code[3] == 'p') {
+		if (strcmp(user_code, "stop") == 0) {
 			flag = 0;
 			return 0;
 		}
@@ -154,8 +156,7 @@ int scanning_funtion() {
 		//check input barcode
 		int product_index = check_user_code(user_code);
 		while (product_index == -1) {
-			char *user_code;
-			user_code = (char*)malloc(4);
+			
 			printf("Pls, scan a right barcode: ");
 			scanf("%s", &user_code);
 			product_index = check_user_code(user_code);
@@ -168,10 +169,10 @@ int scanning_funtion() {
 		if (count != 0) {
 			cart[product_index] += count;
 			printf("Done! %d products '%s' have been added to the cart \n", count, names[product_index]);
-			break;
+			continue;
 
 		}
-		
+
 	}
 
 	int s = amount_summ();
@@ -191,12 +192,14 @@ int scanning_funtion() {
 int main() {
 	int c = 0, user;
 
+	list();
+
 	while (c == 0) {
 
-		printf("\n Also u can: \n Input 1 for add a products to cart \n Input 2 for know more about product. \n Input 3 for total amount \n Input 4 for generate a receipt \n Input 5 for remove last product from a cart \n Input 6 for print shopping cart \n ");
+		printf("\n Also u can: \n Input 1 for add a products to cart \n Input 2 for know more about product. \n Input 3 for total cost \n Input 4 for generate a receipt \n Input 5 for remove last product from a cart \n Input 6 for print shopping cart \n ");
 		scanf("%d", &user);
 
-		list();
+
 		//Box office
 		if (user == 1) scanning_funtion();
 		else if (user == 2) list();
@@ -214,7 +217,7 @@ int main() {
 
 		else if (user == 6) basket();
 
-		else printf("Choose a operation and write a digit from 1 to 5 pls. \n");
+		else printf("Choose a operation and write a digit from 1 to 6 pls. \n");
 
 
 
@@ -226,17 +229,10 @@ int main() {
 
 
 
-int check_user_code(char *user_code) {
-	int product_index = -1;
+int check_user_code(char* user_code) {
+	int product_index = -1, f=0;
 	for (int i = 0; i < N; i++) {
-		int f = 0;
-		for (int j = 0; j < 4; j++) {
-			if (barcodes[i][j] != user_code[j]) {
-				f++;
-				break;
-			}
-		}
-		if (f == 0) {
+		if (strcmp(barcodes[i], user_code) == 0) {
 			product_index = i;
 			break;
 		}
@@ -244,6 +240,7 @@ int check_user_code(char *user_code) {
 
 	return product_index;
 }
+
 
 int random_digit() {
 	int n;
