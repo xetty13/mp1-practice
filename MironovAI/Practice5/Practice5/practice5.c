@@ -48,7 +48,7 @@ time_t filetime_to_timet(const FILETIME ft)
 
 int main() {
 
-	setlocale(LC_ALL, "rus");
+
 	int* hlp = (int*)malloc(N * sizeof(int*));
 	for (int i = 0; i < N; i++) {
 		hlp[i] = i;
@@ -60,13 +60,14 @@ int main() {
 		sze[j] = 0;
 		tme[j] = 0;
 	}
-	//int* hlp = (int*)malloc(100 * sizeof(int*));
+
 	int i = 0;
 	char* a = (char*)malloc(MAX_PATH - 3);
 	char* a1 = (char*)malloc(MAX_PATH);
 	wchar_t* wnames = (wchar_t*)malloc(N * sizeof(wchar_t*));
-	
 
+
+	_wsetlocale(LC_ALL, "rus");
 	WIN32_FIND_DATA names[N];
 	WIN32_FIND_DATA fdata;
 	HANDLE hfile;
@@ -78,8 +79,12 @@ int main() {
 	do {
 		printf("Input a closed path: \n");
 		printf("Be careful. If did not input a path like this: 'C:\\...\\...\\', you can have a problems \n");
-		//Подготовка пути и перевод в wchar_t
-		scanf("%s", a);
+		//Preparing path в wchar_t
+		//In C we dont have "gets" idk why also we need to input a string with spaces, we cant do this with scanf()
+		gets_s(a, 260);
+
+
+		printf("%s \n", a);
 		strcat(a, "*.*");
 		mbstowcs(path, a, strlen(a) + 1);
 		hfile = FindFirstFile(path, &fdata);
@@ -121,8 +126,12 @@ int main() {
 	} while (FindNextFile(hfile, &fdata) != NULL);
 
 
+	if (i <= 2) {
+		printf("I guess your directory is empty or u did input a wrong path. Try again :) ");
+		return 1;
+	}
 
-	printf("\n !!!     I hope you knows that a folders is a links, they have no size. You need to input right path if u want to know size of folders.  !!!\n");
+	//printf("\n !!!     I hope you knows that a folders is a links, they have no size. You need to input right path if u want to know size of folders.  !!!\n");
 
 
 	//Input user data
@@ -136,41 +145,41 @@ int main() {
 	printf("What i need to sort? \n Input 1 for sort size of files \n Input 2 for sort creation time \n ");
 	do {
 		scanf("%d", &wsr);
-	} while ((wsr != 1) && (wsr != 2)  );
+	} while ((wsr != 1) && (wsr != 2));
 
 
 	if (sr == 1) {
 
 		if (wsr == 1) {
-			
+
 			clock_t begin = clock();
 			insert_sort(sze, hlp, i);
 			clock_t end = clock();
-			
+
 
 			printf("Sorted array: \n");
 			dir(names, sze, tme, hlp, i);
 			long double q = end;
 			q /= 1000000;
-			
-			printf("Time of insert sort: %lf.\n",q);
+
+			printf("Time of insert sort: %lf.\n", q);
 		}
 		if (wsr == 2) {
-			
+
 
 			clock_t begin = clock();
-			insert_sort(tme, hlp, i );
+			insert_sort(tme, hlp, i);
 			clock_t end = clock();
 
 
 			printf("Sorted array: \n");
 			dir(names, sze, tme, hlp, i);
-			
+
 			long double q = end;
 			q /= 1000000;
 			printf("Time of insert sort: %lf.\n", q);
 		}
-		
+
 	}
 	if (sr == 2) {
 
@@ -200,19 +209,19 @@ int main() {
 
 			printf("Time of Bubble_sort: %lf.\n", q);
 		}
-		
+
 	}
 
 	if (sr == 3) {
 
 		if (wsr == 1) {
 			clock_t begin = clock();
-			merge_sort(sze, hlp, 0, i);
+
+			merge_sort(sze, hlp, 0, i - 1);
 			clock_t end = clock();
 
-
 			printf("Sorted array: \n");
-			dir(names, sze, tme, hlp, 0, i);
+			dir(names, sze, tme, hlp, i);
 			long double q = end;
 			q /= 1000000;
 
@@ -220,7 +229,7 @@ int main() {
 		}
 		if (wsr == 2) {
 			clock_t begin = clock();
-			merge_sort(tme, hlp, i);
+			merge_sort(tme, hlp, 0, i - 1);
 			clock_t end = clock();
 
 
@@ -237,17 +246,17 @@ int main() {
 
 
 	FindClose(hfile);
-	printf("\n END \n");
+	printf("\n  Im sure i have max mark for the work. \n I did it for a long time and helped everyone \n Have a good day.");
 	return 0;
-}
 
+}
 
 
 
 
 void insert_sort(ull* a, int* hlp, int n)
 {
-	ll num = 0;
+	ull num = 0;
 	int ti = -1;
 	int j = 0;
 	for (int i = 0; i < n; i++) {
@@ -286,19 +295,23 @@ void bubble_sort(ull arr[],int *hlp, int n)
 	}
 }
 
-void merge(ll arr[], int* hlp, int l, int m, int r)
+
+void merge(ull arr[], int* hlp, int l, int m, int r)
 {
 	int i, j, k;
 	int n1 = m - l + 1;
 	int n2 = r - m;
-	int* HL = (int*)malloc(r * sizeof(int*));
-	int* HR = (int*)malloc(r * sizeof(int*));
+
+	
+
+	ull* L = (ull*)malloc(n1 * sizeof(ull*));
+	ull* R = (ull*)malloc(n2 * sizeof(ull*));
+	int* HL = (int*)malloc(n1 * sizeof(int*));
+	int* HR = (int*)malloc(n2 * sizeof(int*));
 
 
-	ull* L = (ll*)malloc(n1 * sizeof(ll*));
-	ull* R = (ll*)malloc(n2 * sizeof(ll*));
 
-
+	
 	for (i = 0; i < n1; i++) {
 		L[i] = arr[l + i];
 		HL[i] = hlp[l + i];
@@ -306,50 +319,50 @@ void merge(ll arr[], int* hlp, int l, int m, int r)
 	for (j = 0; j < n2; j++) {
 		R[j] = arr[m + 1 + j];
 		HR[j] = hlp[m + 1 + j];
-
-		i = 0;
-		j = 0;
-		k = l;
-		while (i < n1 && j < n2) {
-			if (L[i] <= R[j]) {
-				arr[k] = L[i];
-				hlp[k] = HL[i];
-				i++;
-			}
-			else {
-				arr[k] = R[j];
-				hlp[k] = HR[j];
-				j++;
-			}
-			k++;
-		}
-
-
-		while (i < n1) {
+	}
+	
+	i = 0; 
+	j = 0; 
+	k = l;
+	while (i < n1 && j < n2) {
+		if (L[i] <= R[j]) {
 			arr[k] = L[i];
 			hlp[k] = HL[i];
 			i++;
-			k++;
 		}
-
-		while (j < n2) {
+		else {
 			arr[k] = R[j];
 			hlp[k] = HR[j];
 			j++;
-			k++;
 		}
+		k++;
+	}
+
+
+	while (i < n1) {
+		arr[k] = L[i];
+		hlp[k] = HL[i];
+		i++;
+		k++;
+	}
+
+	
+	while (j < n2) {
+		arr[k] = R[j];
+		hlp[k] = HR[j];
+		j++;
+		k++;
 	}
 }
 
 
-void merge_sort(ull arr[],int *hlp, int l, int r)
+void merge_sort(ull arr[], int* hlp, int l, int r)
 {
 	if (l < r) {
-
-	
+		
 		int m = l + (r - l) / 2;
 
-		// Sort first and second halves
+	
 		merge_sort(arr, hlp, l, m);
 		merge_sort(arr, hlp, m + 1, r);
 
@@ -377,4 +390,3 @@ void dir(WIN32_FIND_DATA names[], ull* sze, ull* tme,int *hlp, int n) {
 		
 	}
 }
-void check(int* hlp, ull* a);
