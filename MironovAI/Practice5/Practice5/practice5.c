@@ -131,124 +131,134 @@ int main() {
 		return 1;
 	}
 
-	//printf("\n !!!     I hope you knows that a folders is a links, they have no size. You need to input right path if u want to know size of folders.  !!!\n");
+	printf("\n !!!     I hope you knows that a folders is a links, they have no size. You need to input right path if u want to know size of folders.  !!!\n");
+
+	while (1) {
 
 
-	//Input user data
-	int sr;
-	printf("Input a sorted method: \n Input 1 for  insert sort \n Input 2 for bubble sort \n Input 3 for merge sort \n ");
-	do {
-		scanf("%d", &sr);
-	} while ((sr != 1) && (sr != 2) && (sr != 3));
-
-	int wsr;
-	printf("What i need to sort? \n Input 1 for sort size of files \n Input 2 for sort creation time \n ");
-	do {
-		scanf("%d", &wsr);
-	} while ((wsr != 1) && (wsr != 2));
 
 
-	if (sr == 1) {
 
-		if (wsr == 1) {
+		//Input user data
+		int sr;
+		printf("Input a sorted method: \n Input 1 for  insert sort \n Input 2 for bubble sort \n Input 3 for merge sort \n ");
+		do {
+			scanf("%d", &sr);
+		} while ((sr != 1) && (sr != 2) && (sr != 3));
 
-			clock_t begin = clock();
-			insert_sort(sze, hlp, i);
-			clock_t end = clock();
+		int wsr;
+		printf("What i need to sort? \n Input 1 for sort size of files \n Input 2 for sort creation time \n ");
+		do {
+			scanf("%d", &wsr);
+		} while ((wsr != 1) && (wsr != 2));
 
 
-			printf("Sorted array: \n");
-			dir(names, sze, tme, hlp, i);
-			long double q = end;
-			q /= 1000000;
+		if (sr == 1) {
 
-			printf("Time of insert sort: %lf.\n", q);
+			if (wsr == 1) {
+
+				clock_t begin = clock();
+				insert_sort(sze, hlp, i);
+				clock_t end = clock();
+
+
+				printf("Sorted array: \n");
+				dir(names, sze, tme, hlp, i);
+				long double q = end;
+				q /= 1000000;
+
+				printf("Time of insert sort: %lf.\n", q);
+			}
+			if (wsr == 2) {
+
+
+				clock_t begin = clock();
+				insert_sort(tme, hlp, i);
+				clock_t end = clock();
+
+
+				printf("Sorted array: \n");
+				dir(names, sze, tme, hlp, i);
+
+				long double q = end;
+				q /= 1000000;
+				printf("Time of insert sort: %lf.\n", q);
+			}
+
 		}
-		if (wsr == 2) {
+		if (sr == 2) {
+
+			if (wsr == 1) {
+				clock_t begin = clock();
+				bubble_sort(sze, hlp, i);
+				clock_t end = clock();
 
 
-			clock_t begin = clock();
-			insert_sort(tme, hlp, i);
-			clock_t end = clock();
+				printf("Sorted array: \n");
+				dir(names, sze, tme, hlp, i);
+				long double q = end;
+				q /= 1000000;
+
+				printf("Time of Bubble_sort: %lf.\n", q);
+			}
+			if (wsr == 2) {
+				clock_t begin = clock();
+				bubble_sort(tme, hlp, i);
+				clock_t end = clock();
 
 
-			printf("Sorted array: \n");
-			dir(names, sze, tme, hlp, i);
+				printf("Sorted array: \n");
+				dir(names, sze, tme, hlp, i);
+				long double q = end;
+				q /= 1000000;
 
-			long double q = end;
-			q /= 1000000;
-			printf("Time of insert sort: %lf.\n", q);
+				printf("Time of Bubble_sort: %lf.\n", q);
+			}
+
+		}
+
+		if (sr == 3) {
+
+			if (wsr == 1) {
+				clock_t begin = clock();
+
+				merge_sort(sze, hlp, 0, i - 1);
+				clock_t end = clock();
+
+				printf("Sorted array: \n");
+				dir(names, sze, tme, hlp, i);
+				long double q = end;
+				q /= 1000000;
+
+				printf("Time of Bubble_sort: %lf.\n", q);
+			}
+			if (wsr == 2) {
+				clock_t begin = clock();
+				merge_sort(tme, hlp, 0, i - 1);
+				clock_t end = clock();
+
+
+				printf("Sorted array: \n");
+				dir(names, sze, tme, hlp, i);
+				long double q = end;
+				q /= 1000000;
+
+				printf("Time of Bubble_sort: %lf.\n", q);
+			}
+
+		}
+		printf("Input 'stop' if u wanna kill it, anything for continue\n");
+		char user_code[10];
+		scanf("%s", user_code);
+		if (strcmp(user_code, "stop") == 0) {
+			break;
 		}
 
 	}
-	if (sr == 2) {
-
-		if (wsr == 1) {
-			clock_t begin = clock();
-			bubble_sort(sze, hlp, i);
-			clock_t end = clock();
-
-
-			printf("Sorted array: \n");
-			dir(names, sze, tme, hlp, i);
-			long double q = end;
-			q /= 1000000;
-
-			printf("Time of Bubble_sort: %lf.\n", q);
-		}
-		if (wsr == 2) {
-			clock_t begin = clock();
-			bubble_sort(tme, hlp, i);
-			clock_t end = clock();
-
-
-			printf("Sorted array: \n");
-			dir(names, sze, tme, hlp, i);
-			long double q = end;
-			q /= 1000000;
-
-			printf("Time of Bubble_sort: %lf.\n", q);
-		}
-
-	}
-
-	if (sr == 3) {
-
-		if (wsr == 1) {
-			clock_t begin = clock();
-
-			merge_sort(sze, hlp, 0, i - 1);
-			clock_t end = clock();
-
-			printf("Sorted array: \n");
-			dir(names, sze, tme, hlp, i);
-			long double q = end;
-			q /= 1000000;
-
-			printf("Time of Bubble_sort: %lf.\n", q);
-		}
-		if (wsr == 2) {
-			clock_t begin = clock();
-			merge_sort(tme, hlp, 0, i - 1);
-			clock_t end = clock();
-
-
-			printf("Sorted array: \n");
-			dir(names, sze, tme, hlp, i);
-			long double q = end;
-			q /= 1000000;
-
-			printf("Time of Bubble_sort: %lf.\n", q);
-		}
-
-	}
-
-
-
-	FindClose(hfile);
-	printf("\n  Im sure i have max mark for the work. \n I did it for a long time and helped everyone \n Have a good day.");
-	return 0;
-
+		FindClose(hfile);
+		printf("\nIm sure i have max mark for the work. \n I did it for a long time and helped everyone \n Have a good day.");
+		return 0;
+	
 }
 
 
