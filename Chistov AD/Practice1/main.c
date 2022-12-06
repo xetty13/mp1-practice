@@ -9,7 +9,7 @@ int main() {
 	printf("Characteristics of the second cicrle: ");
 	scanf("%lf%lf%lf", &x2, &y2, &r2);
 	d = sqrt(x2 * x2 - 2 * x2 * x1 + x1 * x1 + y2 * y2 - 2 * y1 * y2 + y1 * y1);
-	if ((r1 == r2) && (x1== x2) && (y1 == y2))
+	if ((r1 == r2) && (x1 == x2) && (y1 == y2))
 	{
 		printf("circles are equal.");
 		return 0;
@@ -43,7 +43,7 @@ int main() {
 	if ((d > fabs(r1 - r2)) && (d < (r1 + r2)))
 	{
 		printf("circles have two points of intersection.");
-			return 0;
+		return 0;
 	}
 	return 0;
 }
