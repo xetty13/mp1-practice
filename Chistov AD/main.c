@@ -40,7 +40,7 @@ int main() {
 	int j[N] = { 4,5,6,7 };
 	int o[N] = { 5,6,7,8 };
 	int p[N] = { 2,4,5,7 };
-	int r[N] = { 7,8,9,0 };
+	int r[N] = { 0,8,9,0 };
 	int breads = 0;
 	int milks = 0;
 	int cheeses = 0;
@@ -467,7 +467,7 @@ void barcode(int* a) {
 		r /= 10;
 		counter++;
 	}
-	if (counter != 4)
+	if (counter > 4)
 	{
 		do {
 			counter = 0;
@@ -479,7 +479,7 @@ void barcode(int* a) {
 				r /= 10;
 				counter++;
 			}
-		} while (counter != 4);
+		} while (counter > 4);
 	}
 	while (q > 0) {
 		for (i = 3; i >= 0; i--) {
