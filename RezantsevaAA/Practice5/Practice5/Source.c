@@ -1,17 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 //#include <windows.h>
 #include <stdio.h>
-#define N 10
-void scan(float* a);
-void output(float* a);
-void QuikSort(float* a);
-void BubbleSort(float* a);
-void InsertSort(float* a);
+//#define N 10
+void scan(int* a);
+void output(int* a);
+void QuikSort(int* a);
+void BubbleSort(int* a);
+void InsertSort(int* a);
 int main()
 {
-	float arr[N];
+	long N = 10;
+	int arr[10];
 	int mode;
-	scan(arr);
+	scan(arr, N);
 	printf(" Choose sorting method: 1 - quik sort, 2 - baubble sort, 3 - insertion sort ");
 	scanf("%d", &mode);
 	switch (mode)
@@ -19,44 +20,44 @@ int main()
 
 	case 1:
 	{
-		QuikSort(arr);
-		output(arr);
+		QuikSort(arr,N);
+		output(arr, N);
 		break;
 	}
 	case 2:
 	{
-		BubbleSort(arr);
-		output(arr);
+		BubbleSort(arr, N);
+		output(arr, N);
 		break;
 	}
 	case 3:
 	{
-		InsertSort(arr);
-		output(arr);
+		InsertSort(arr, N);
+		output(arr, N);
 		break;
 	}
 	}
 
 }
-void scan(float* a)
+void scan(int* a, long N)
 {
 	for (int i = 0; i < N; i++)
 	{
-		scanf(" %f", &(a[i]));
+		scanf(" %d", &(a[i]));
 	}
 }
-void output(float* a)
+void output(int* a, long N)
 {
 	for (int i = 0; i < N; i++)
 	{
 		printf(" %d", a[i]);
 	}
 }
-void QuikSort(float* a)
+void QuikSort(int* a, long N)
 {
 	int tmp, i = 0, j = N - 1, mid = (i + j) / 2;
-	float pivot = a[mid];
-	while (i > j)
+	int pivot = a[mid];
+	while (i <= j)
 	{
 		while (a[i] < pivot)
 		{
@@ -64,7 +65,7 @@ void QuikSort(float* a)
 		}
 		while (a[j] > pivot)
 		{
-			j++;
+			j--;
 		}
 		if (i < j)
 		{
@@ -77,14 +78,14 @@ void QuikSort(float* a)
 	}
 	if (j > 0)
 	{
-		QuikSort(a, j);
+		QuikSort(a, j + 1);
 	}
 	if (i < N - 1)
 	{
-		QuikSort(a + i, N - 1 - i);
+		QuikSort(a + i, N - i - 1);
 	}
 }
-void BubbleSort(float* a)
+void BubbleSort(int* a, long N)
 {
 	int i, j, tmp;
 	for (i = 0; i < N; i++)
@@ -100,7 +101,7 @@ void BubbleSort(float* a)
 		}
 	}
 }
-void InsertSort(float* a)
+void InsertSort(int* a, long N)
 {
 	int i, j, tmp;
 	for (i = 0; i < N; i++)
@@ -112,6 +113,6 @@ void InsertSort(float* a)
 			a[j + 1] = a[j];
 			j--;
 		}
-		a[j] = tmp;
+		a[j+1] = tmp;
 	}
 }
