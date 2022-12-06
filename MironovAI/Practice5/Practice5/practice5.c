@@ -5,7 +5,6 @@
 #include <time.h>
 #include <string.h>
 #include <corecrt_wstring.h>
-
 #define N 100
 typedef unsigned long long ull;
 typedef long long ll;
@@ -15,9 +14,10 @@ void insert_sort(ull a[],int *hlp, int n[]);
 void bubble_sort(ull a[], int *hlp, int n[]);
 void merge(ull a[], int *hlp, int l, int r, int m);
 void merge_sort(ull a[],int *hlp, int n);
-void dir(WIN32_FIND_DATA* names, ull* sze, ull* tme,int *hlp, int n);
-void check(int* hlp, ull *a);
-
+void dir(wchar_t** wnames, ull* sze, time_t* tme1,int *hlp, int n);
+int indir(wchar_t** wnames, WIN32_FIND_DATA* names, ull* sze, time_t* tme, ull* tme1, wchar_t* first_path, wchar_t* first_name, wchar_t* path, int last_free_place, int *hlp);
+time_t filetime_to_timet(const FILETIME ft);
+wchar_t* newpath(wchar_t* copypath, wchar_t* name);
 
 time_t filetime_to_timet(const FILETIME ft)
 {
@@ -27,28 +27,12 @@ time_t filetime_to_timet(const FILETIME ft)
 	return ll.QuadPart / 10000000ULL - 11644473600ULL;
 }
 
-/*wchar_t file_check(wchar_t* path, DWORD sz) {
-
-	if (sz != 0) return 0;
-
-
-	wchar_t* path1 = (wchar_t*)malloc(MAX_PATH);
-
-	for (int i = 0; i < MAX_PATH; i++) {
-		path1[i] = path[i];
-	}
-
-
-	return path1;
-
-}
-*/
 
 
 
 int main() {
 
-
+	time_t* tme1 = (char*)malloc(N * sizeof(char*));
 	int* hlp = (int*)malloc(N * sizeof(int*));
 	for (int i = 0; i < N; i++) {
 		hlp[i] = i;
@@ -61,18 +45,23 @@ int main() {
 		tme[j] = 0;
 	}
 
-	int i = 0;
+	int i = 0, k = 0;
 	char* a = (char*)malloc(MAX_PATH - 3);
 	char* a1 = (char*)malloc(MAX_PATH);
-	wchar_t* wnames = (wchar_t*)malloc(N * sizeof(wchar_t*));
+	
 
 
-	_wsetlocale(LC_ALL, "rus");
+	setlocale(LC_ALL, "rus");
+	wchar_t **wnames = (wchar_t**)malloc(N*sizeof(wchar_t**));
+	for (int i = 0; i < N; i++) {
+		wnames[i] = (wchar_t*)malloc(N * sizeof(wchar_t));
+		wnames[i] = L"Empty";
+	}
 	WIN32_FIND_DATA names[N];
 	WIN32_FIND_DATA fdata;
 	HANDLE hfile;
 	wchar_t* path = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
-
+	wchar_t* cpypath = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
 
 
 	//check input path
@@ -84,33 +73,55 @@ int main() {
 		gets_s(a, 260);
 
 
+		
 		printf("%s \n", a);
+		mbstowcs(cpypath, a, strlen(a) + 1);
 		strcat(a, "*.*");
 		mbstowcs(path, a, strlen(a) + 1);
+		wprintf(path);
+		printf("  [--------------PATH------------]\n");
+		wprintf(cpypath);
+		printf("  [----------CPYPATH------------] \n");
 		hfile = FindFirstFile(path, &fdata);
+		
+
+
 
 	} while (hfile == INVALID_HANDLE_VALUE);
 
 	printf("Your path : %s \n", a);
 	printf("Data in your directory: \n");
-
+	wchar_t* temp_path = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t*));
 	do {
 		if (i == 0 || i == 1) {
 			i++;
 			continue;
 		}
-
-
-
 		names[i] = fdata;
+
+
+
+		
+		
+		//wprintf(temp_path);
+		if (names[i].nFileSizeLow == 0) {
+			temp_path = newpath(cpypath, names[i].cFileName);
+			int c = indir(wnames, names, sze, tme,tme1,cpypath,names[i].cFileName, temp_path, i + k, hlp);
+			if (c > 0) k += c;
+			continue;
+			
+		}
+		
 		//File name
 		printf("Name:    ");
 
-		wprintf(names[i].cFileName);
-		wnames[i] = names[i].cFileName;
+		
+		wnames[i+k] = names[i].cFileName;
+		wprintf(wnames[i + k]);
+
 		//File size
 		printf(" %10c    Size (bites): %u        ", ' ', names[i].nFileSizeLow);
-		sze[i] = names[i].nFileSizeLow;
+		sze[i+k] = names[i].nFileSizeLow;
 		//File creation time
 		time_t* time1 = filetime_to_timet(names[i].ftCreationTime);
 		printf("%10c Created time:  %s     \n", ' ', ctime(&time1));
@@ -119,20 +130,22 @@ int main() {
 		ull b = names[i].ftCreationTime.dwLowDateTime;
 		ull tm = a << 32 | b;
 		tm /= 10000000;
-		tme[i] = tm;
+		tme[i+k] = tm;
 
+		tme1[i + k] = time1;
 
 		i++;
 	} while (FindNextFile(hfile, &fdata) != NULL);
 
 
-	if (i <= 2) {
+	if (i+k <= 2) {
 		printf("I guess your directory is empty or u did input a wrong path. Try again :) ");
 		return 1;
 	}
 
 	printf("\n !!!     I hope you knows that a folders is a links, they have no size. You need to input right path if u want to know size of folders.  !!!\n");
-
+	
+	
 	while (1) {
 
 
@@ -152,33 +165,32 @@ int main() {
 			scanf("%d", &wsr);
 		} while ((wsr != 1) && (wsr != 2));
 
-
+		
 		if (sr == 1) {
 
 			if (wsr == 1) {
-
+				
 				clock_t begin = clock();
-				insert_sort(sze, hlp, i);
+				insert_sort(sze, hlp, i+k);
 				clock_t end = clock();
 
-
-				printf("Sorted array: \n");
-				dir(names, sze, tme, hlp, i);
+				
+				dir(wnames, sze, tme1, hlp, i+k);
 				long double q = end;
 				q /= 1000000;
-
+				
 				printf("Time of insert sort: %lf.\n", q);
 			}
 			if (wsr == 2) {
 
 
 				clock_t begin = clock();
-				insert_sort(tme, hlp, i);
+				insert_sort(tme, hlp, i+k);
 				clock_t end = clock();
 
 
 				printf("Sorted array: \n");
-				dir(names, sze, tme, hlp, i);
+				dir(wnames, sze, tme1, hlp, i+k);
 
 				long double q = end;
 				q /= 1000000;
@@ -190,12 +202,12 @@ int main() {
 
 			if (wsr == 1) {
 				clock_t begin = clock();
-				bubble_sort(sze, hlp, i);
+				bubble_sort(sze, hlp, i+k);
 				clock_t end = clock();
 
 
 				printf("Sorted array: \n");
-				dir(names, sze, tme, hlp, i);
+				dir(wnames, sze, tme1, hlp, i+k);
 				long double q = end;
 				q /= 1000000;
 
@@ -203,12 +215,12 @@ int main() {
 			}
 			if (wsr == 2) {
 				clock_t begin = clock();
-				bubble_sort(tme, hlp, i);
+				bubble_sort(tme, hlp, i+k);
 				clock_t end = clock();
 
 
 				printf("Sorted array: \n");
-				dir(names, sze, tme, hlp, i);
+				dir(wnames, sze, tme1, hlp, i);
 				long double q = end;
 				q /= 1000000;
 
@@ -222,11 +234,12 @@ int main() {
 			if (wsr == 1) {
 				clock_t begin = clock();
 
-				merge_sort(sze, hlp, 0, i - 1);
+				merge_sort(sze, hlp, 0, i + k - 1);
 				clock_t end = clock();
-
+				
+				
 				printf("Sorted array: \n");
-				dir(names, sze, tme, hlp, i);
+				dir(wnames, sze, tme1, hlp, i+k);
 				long double q = end;
 				q /= 1000000;
 
@@ -234,12 +247,12 @@ int main() {
 			}
 			if (wsr == 2) {
 				clock_t begin = clock();
-				merge_sort(tme, hlp, 0, i - 1);
+				merge_sort(tme, hlp, 0, i + k - 1);
 				clock_t end = clock();
 
 
 				printf("Sorted array: \n");
-				dir(names, sze, tme, hlp, i);
+				dir(wnames, sze, tme1, hlp, i + k);
 				long double q = end;
 				q /= 1000000;
 
@@ -255,9 +268,10 @@ int main() {
 		}
 
 	}
-		FindClose(hfile);
-		printf("\nIm sure i have max mark for the work. \n I did it for a long time and helped everyone \n Have a good day.");
-		return 0;
+	FindClose(hfile);
+	printf("\nIm sure i have max mark for the work. \n I did it for a long time and helped everyone \n Have a good day.");
+	scanf("%d", i);
+	return 0;
 	
 }
 
@@ -269,7 +283,7 @@ void insert_sort(ull* a, int* hlp, int n)
 	ull num = 0;
 	int ti = -1;
 	int j = 0;
-	for (int i = 0; i < n; i++) {
+	for (int i = 2; i < n; i++) {
 		num = a[i];
 		ti = hlp[i];
 		j = i - 1;
@@ -382,21 +396,95 @@ void merge_sort(ull arr[], int* hlp, int l, int r)
 
 
 
-void dir(WIN32_FIND_DATA names[], ull* sze, ull* tme,int *hlp, int n) {
-
+void dir(wchar_t** wnames, ull* sze, time_t* tme1, int* hlp, int n) {
+	printf("[---------------------START---------------------] \n");
 	for (int i = 2; i < n; i++) {
+
 		//File name
-		printf("%d.   ", i-1);
+		printf("%d.   ", i - 1);
 		printf("Name:    ");
 		int j = hlp[i];
-		wprintf(names[j].cFileName);
+		wprintf(wnames[j]);
 		//File size
-		printf(" %10c    Size (bites): %u        ", ' ', names[j].nFileSizeLow);
-		sze[j] = names[j].nFileSizeLow;
+		printf(" %10c    Size (bites): %u        ", ' ', sze[j]);
+
 		//File creation time
-		time_t* time1 = filetime_to_timet(names[j].ftCreationTime);
+		printf("%10c Created time:  %s     \n", ' ', ctime(&(tme1[j])));
+
+	}
+	printf("-------------------------END-----------------------]");
+}
+int indir( wchar_t** wnames, WIN32_FIND_DATA* names, ull* sze, time_t* tme, ull* tme1,wchar_t *first_path,wchar_t* first_name, wchar_t* path, int last_free_place, int* hlp) {
+	
+	if (wcslen(path) < 3) return 0;
+	WIN32_FIND_DATA names1[N];
+	WIN32_FIND_DATA fdata1;
+	HANDLE hfile1;
+
+	int i = 0;
+	hfile1 = FindFirstFile(path, &fdata1);
+	
+	if (hfile1 == INVALID_HANDLE_VALUE) return 0;
+	wchar_t* cpypath = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
+	
+	
+	
+	
+	do {
+		if (i == 0 || i == 1) {
+			i++;
+			continue;
+		}
+		names1[i] = fdata1;
+		wchar_t* temp_path = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t*));
+		if (names1[i].nFileSizeLow == 0) {
+			wcscpy(cpypath, first_path);
+			wcscat(cpypath, first_name);
+			wcscat(cpypath, L"\\");
+			temp_path = newpath(cpypath, names1[i].cFileName);
+			printf("\n");
+			int c = indir(wnames, names1, sze, tme, tme1,cpypath,names1[i].cFileName, temp_path, last_free_place, hlp);
+			last_free_place += c;
+			i += c;
+			continue;
+
+		}
+		
+		
+		//File name
+		printf("Name:    ");
+		//int *k = &last_free_place;
+		wnames[last_free_place] = names1[i].cFileName;
+		wprintf(wnames[last_free_place]);
+		//File size
+		printf(" %10c    Size (bites): %u        ", ' ', names1[i].nFileSizeLow);
+		sze[last_free_place] = names1[i].nFileSizeLow;
+		//File creation time
+		printf("  hlp:    %d      ", hlp[last_free_place]);
+		time_t* time1 = filetime_to_timet(names1[i].ftCreationTime);
 		printf("%10c Created time:  %s     \n", ' ', ctime(&time1));
 
 		
-	}
+		ull a = names1[i].ftCreationTime.dwHighDateTime;
+		ull b = names1[i].ftCreationTime.dwLowDateTime;
+		ull tm = a << 32 | b;
+		tm /= 10000000;
+		tme[last_free_place] = tm;
+		tme1[last_free_place] = time1;
+		last_free_place++;
+		i++;
+	} while (FindNextFile(hfile1, &fdata1) != NULL);
+	
+
+
+	if (i > 2) return i - 2;
+	return 0;
+
+}
+wchar_t *newpath(wchar_t* copypath, wchar_t* name) {
+	wchar_t* newpath1 = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t*));
+	wcscpy(newpath1, copypath);
+	wcscat(newpath1, name);
+	wcscat(newpath1, L"\\*.*");
+	return newpath1;
 }
