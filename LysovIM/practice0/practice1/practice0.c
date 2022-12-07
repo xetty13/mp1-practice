@@ -24,24 +24,25 @@ int main()
 		printf("External Tangency of circles");
 		return 0;
 	}
-	if (rasti == difference_between_radius)
-	{
-		printf("Internal Tangency of circles");
-		return 0;
-	}
 	if ((rasti > difference_between_radius) && (summa_between_radius > rasti))
 	{
 		printf("circles intersect");
 		return 0;
 	}
-	if ((rasti > 0) && (difference_between_radius > rasti))
+	if ((rasti >=0) && (difference_between_radius > rasti))
 	{
 		printf("No matual points.One cercle in incribed in another");
 		return 0;
 	}
-	if ((r1 == r2) && (x1 == x2) && (y1 = y2));
+	if ((r1 == r2) && (x1 == x2) && (y1 == y2))
 	{
 		printf("Circles Coincide");
 		return 0;
 	}
+	if (rasti == difference_between_radius)
+	{
+		printf("Internal Tangency of circles");
+		return 0;
+	}
+	
 }
