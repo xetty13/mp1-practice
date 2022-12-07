@@ -29,7 +29,7 @@ int main()
 		printf("circles intersect");
 		return 0;
 	}
-	if ((rasti >=0) && (difference_between_radius > rasti))
+	if ((rasti >= 0) && (difference_between_radius > rasti))
 	{
 		printf("No matual points.One cercle in incribed in another");
 		return 0;
@@ -44,5 +44,5 @@ int main()
 		printf("Internal Tangency of circles");
 		return 0;
 	}
-	
+
 }
