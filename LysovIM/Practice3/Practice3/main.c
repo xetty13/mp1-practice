@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <math.h>
-using namespace std;
 
 #define MIN_DIGITS_NUM 2 //Задание размером массива
 #define MAX_DIGITS_NUM 5
@@ -55,7 +54,7 @@ int process(int n, int* needed, int cur, int playing) {
 
 int read(int n) {//функция считывания числа и проверка на то подходит ли введенное число под критерии n-значного числа.
 	int temp = -1;
-	while (true) {
+	while (1) {
 		printf("\n Please, input your num: ");
 		scanf("%d", &temp);
 		if (pow(10, n - 1) <= temp && pow(10, n) > temp)
@@ -99,7 +98,7 @@ int introduction() {//Вступление
 	printf(" You have to quess the num I've made.  You should  tell\n");
 	printf(" me how many digits there'll be in the made num (2 - 5)\n");
 	printf(" Number length: ");
-	while (true) { //Бесконечный цикл
+	while (1) { //Бесконечный цикл
 		 // считываем длину числа
 		scanf("%d", &n);
 		// проверяем на корректность
