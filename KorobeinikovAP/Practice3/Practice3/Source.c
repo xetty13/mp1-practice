@@ -9,7 +9,7 @@ int main() {
 	int a[N] = { 0 };
 	int u_a[N] = { 0 };
 	int k, i, j, user_n;
-	int flag, flag1, tmp, check_t, check_d;
+	int flag, flag1, flag2, tmp;
 	int bulls, cows, attempts;
 
 	printf("Input k ");
@@ -38,27 +38,29 @@ int main() {
 
 	flag = 1;
 	attempts = 0;
-	check_t = 1;
-	for (i = 0; i < k; i++) {
-		check_t = check_t * 10;
-	}
-	check_d = 1;
-	for (i = 0; i < k - 1; i++) {
-		check_d = check_d * 10;
-	}
 	while (flag == 1) {
-
+		flag2 = 0;
 
 		printf("Guess the hidden number \n");
 		scanf("%d", &user_n);
-		while ((user_n < check_d) || (user_n > check_t)) {
-			printf("Incorrect data. Try again. Input %d < number < %d. \n", check_d, check_t);
-			scanf("%d", &user_n);
-		}
 
 		for (i = k - 1; i > -1; i--) {
+			if (user_n == 0) {
+				printf("Incorrect data. Number is too small. Try again. \n");
+				flag2 = 1;
+				break;
+			}
 			u_a[i] = user_n % 10;
 			user_n /= 10;
+		}
+
+
+		if (user_n > 0) {
+			printf("Incorrect data. Number is too large. Try again.\n");
+			flag2 = 1;
+		}
+		if (flag2 == 1) {
+			continue;
 		}
 
 		flag1 = 0;
