@@ -109,10 +109,9 @@ int main()
         {
             for (j = 0; j < len; j++)
             {
-                if (arr[i] == AR[j])
+                if ( ( arr[i] == AR[j] ) && (i != j) )
                 {
-                    if (i != j)
-                        cows++;
+                    cows++;
                 }
             }
         }
