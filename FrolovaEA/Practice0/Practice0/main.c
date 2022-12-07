@@ -4,9 +4,9 @@
 
 int main() {
 
-	setlocale(LC_ALL, "rus");
-
 	float x1, x2, y1, y2, r1, r2, dl;
+
+	setlocale(LC_ALL, "rus");
 
 	printf("Enter x1: ");
 	scanf_s("%f", &x1);
