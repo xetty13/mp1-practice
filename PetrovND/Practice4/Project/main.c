@@ -8,7 +8,7 @@ float price[N] = { 79.90, 49.00, 120.50, 210.90, 75.00, 99.00, 230.00, 125.50, 6
 float discount[N] = { 5.9, 4, 12.5, 15, 5, 8, 19, 11.50, 9.99, 4.90 };
 
 void scan(int* ct) {
-	char* bc[1];
+	char bc[5] = "";
 	int count[10] = { 0 };
 	printf("Enter barcodes...\n");
 	while (strcmp(bc, "q")) {
