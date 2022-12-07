@@ -2,7 +2,7 @@
 #include <stdlib.h>
 int main()
 {
-	int a[5] = { 0 }, b[5] = { 0 }, i = 0, ii = 0, n = 0, k, l, f = 1, n1, n2, bull = 0, cow = 0;
+	int a[5] = { 0 }, b[5] = { 0 }, i = 0, ii = 0, n = 0, k, tmp, l, f = 1, n1, n2, bull = 0, cow = 0;
 	time_t t;
 	srand((unsigned)time(&t));
 	printf("vvedite dlinu chisla: ");
@@ -33,7 +33,20 @@ int main()
 			b[i] = l % 10;
 			l /= 10;
 		}
-		ii++;
+		tmp = 0;
+		for (i = 0; i < n; i++) {
+			for (int k1 = i + 1; k1 < n; k1++) {
+				if ((b[i] == b[k1]) || (b[k1] == 0)) {
+					tmp = 1;
+					break;
+				}
+			}
+		}
+		if (tmp == 1) {
+			printf("wrong number");
+		}
+    } while (tmp == 1);
+	ii++;
 		for (n1 = 0; n1 < n; n1++) {
 			for (n2 = 0; n2 < n; n2++) {
 				if ((n1 == n2) && (a[n1] == b[n2])) {
@@ -53,5 +66,6 @@ int main()
 		}
 		cow = 0;
 		bull = 0;
-	} while (1);
+	 while(1);
 }
+
