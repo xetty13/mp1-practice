@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <windows.h>
 #define LENGTH 50
-#define N 50
 int size[LENGTH];
 char names[LENGTH][LENGTH];
+CHAR path[MAX_PATH];
+void findfiles(CHAR* path);
+void merge(int* a, int left, int mid, int right);
+void mergeSort(int* a, int left, int right);
+void BubbleSort(int a[LENGTH]);
+void qsortx(int* a, size_t low, size_t high);
+
 void findfiles(CHAR* path)
 {
 	int i = 0;
@@ -23,45 +29,53 @@ void findfiles(CHAR* path)
 }
 void main()
 {
-	findfiles("C:\\Киношка\\После\\*");
+    printf("Enter directoria:");
+    scanf("%s", &path);
+    findfiles(path);
 
 }
-void sortMerge(int* a, int left, int mid, int right)
+void merge(int* a, int left, int mid, int right)
 {
-    int b[N], i=0, i1=0, i2=0;
-    while ((left + i1 <= mid) && (mid + 1 + i2 <= right)) {
-        if (a[left + i1] < a[mid + 1 + i2]) {
-            b[i] = a[left + i1];
+    int i=0, i1=0, i2=0;
+    int* b = (int*)malloc(sizeof(int) * (N - left));
+    while ((left + i1 < mid) && (mid + i2 <= right)) {
+        if (a[left + i1] < a[mid + i2]) {
+            b[i1+i2] = a[left + i1];
             i1++;
-            i++;
         }
         else {
-            b[i] = a[mid + 1 + i2];
+            b[i1+i2] = a[mid + i2];
             i2++;
-            i++;
         }
     }
-    while (left + i1 <= mid) {
-        b[i] = a[left + i1];
+    while (left + i1 < mid) {
+        b[i1+i2] = a[left + i1];
         i1++;
-        i++;
     }
-    while (mid + i2 + 1 <= right) {
-        b[i] = a[mid + 1 + i2];
+    while (mid + i2 < right) {
+        b[i1+i2] = a[mid + i2];
         i2++;
-        i++;
     }
-    for (i = 0; i < i1 + i2 - 1; i++) {
+    for (i = 0; i < i1 + i2; i++) {
         a[left + i] = b[i];
     }
 
 }
-
-void BubbleSort(int a[N])
+void mergeSort(int* a, int left, int right)
+{
+    int mid;
+    if (left >= right)
+        return;
+    mid = (left + right) / 2;
+    mergeSort(a, left, mid);
+    mergeSort(a, mid+1, right);
+    merge(a, left, mid, right);
+}
+void BubbleSort(int a[LENGTH])
 {
 	int i, j, tmp;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N - i - 1; j++) {
+    for (i = 0; i < LENGTH; i++) {
+        for (j = 0; j < LENGTH - i - 1; j++) {
 			if (a[j + 1] > a[j])
 			{
 				tmp = a[j + 1];
@@ -106,3 +120,15 @@ void qsortx(int* a, size_t low, size_t high) {
         qsortx(a, low, j);
     }
 }
+
+
+/* for (i = 0; i < LENGTH; i++) {
+    for (i1 = 0; i < LENGTH; i1++) {
+        if b[i] == size[i1]{
+            print("% %",names[i1],b[i]);
+        i++; }
+        else {
+            i1++;
+        }
+    }
+}*/
