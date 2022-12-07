@@ -93,7 +93,7 @@ int main() {
 				bulls++;
 			}
 		}
-		printf("Cows: %d\n", cows);
+		printf("Cows: %d\n", cows-bulls);
 		printf("Bulls: %d\n", bulls);
 	}
 	printf("Congratulations, you win!");
