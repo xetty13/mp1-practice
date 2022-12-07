@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 void bubble_sort(int* arr, int n);
-void merge(int* arr, int left, int mid, int right, int N);
-void mergeSort(int* arr, int left, int right, int N);
+void merge(int* arr, int left, int mid, int right);
+void mergeSort(int* arr, int left, int right);
 void qSort(int* arr, int N);
 
 int main()
@@ -17,7 +17,7 @@ int main()
 	{
 		scanf_s("%d", arr + i);
 	}
-	mergeSort(arr,0, N-1, N);
+	mergeSort(arr,0, N);
 	for (int i = 0; i < N; i++)
 	{
 		printf("%d ", arr[i]);
@@ -43,11 +43,11 @@ void bubble_sort(int* arr, int n)
 	}
 }
 
-void merge(int* arr, int left, int mid, int right, int N)
+void merge(int* arr, int left, int mid, int right)
 {
 	int i=0, i1 = 0, i2 = 0;
-	int* b = (int*)malloc(sizeof(int) * (N-left));
-	while ((left + i1 < mid) && (mid + i2 <= right))
+	int* b = (int*)malloc(sizeof(int) * (right-left));
+	while ((left + i1 < mid) && (mid + i2  <  right))
 	{
 		if (arr[left + i1] < arr[mid + i2])
 		{
@@ -75,62 +75,22 @@ void merge(int* arr, int left, int mid, int right, int N)
 	{
 		arr[left + i] = b[i];
 	}
-	
+	free(b);
 }
 
-void mergeSort(int* arr, int left, int right, int N)
+void mergeSort(int* arr, int left, int right)
 {
 	int mid ;
 	if (left+1 >= right)
 		return;
 	mid = (left + right) / 2;
-	mergeSort(arr, left, mid, N);
-	mergeSort(arr, mid, right, N);
-	merge(arr, left, mid, right, N);
+	mergeSort(arr, left, mid);
+	mergeSort(arr, mid, right);
+	merge(arr, left, mid, right);
 }
 
 
-//void mergeSort(int* arr, int left, int right, int N)
-//{
-//	int mid;
-//	mid = (left + right) / 2;
-//	if (left == right)
-//	{
-//		return;
-//	}
-//
-//	mergeSort(arr, left, mid, N);
-//	mergeSort(arr, mid + 1, right, N);
-//	merge(arr, left, mid, right, N);
-//}
-//
-//
-//void merge(int* arr, int left, int mid, int right, int N)
-//{
-//	int i, j, k;
-//	
-//	i = left;
-//	j = mid + 1;
-//	int* m_arr = (int*)malloc(sizeof(int) * N);
-//	for (k = left; k < right; k++)
-//	{
-//		if ((i < mid) && (j < right))
-//			if (arr[i] <= arr[j])
-//				m_arr[k] = arr[i++];
-//			else
-//				m_arr[k] = arr[j++];
-//		else
-//			if (i == mid)
-//				m_arr[k] = arr[j++];
-//			else
-//				m_arr[k] = arr[i++];
-//	}
-//	for (i = left; i <= right; i++)
-//	{
-//		arr[i] = m_arr[i];
-//	}
-//	free(m_arr);
-//}
+
 
 
 void qSort(int* arr, int N)
