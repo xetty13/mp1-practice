@@ -43,40 +43,47 @@ void main()
     }
     cow = 0;
     bull = 0;
-    check = 10;
-    for (i = 1; i < n - 1; i++)
-    {
-        check = check * 10;
-    }
+    check = 0;
     while (bull != n)
     {
         printf("Try to guess the number: ");
         do {
             scanf(" %d", &p_num);
-            if ((p_num < check) || (p_num >= check * 10))
-            {
-                printf("Incorrect number entered. Try again: ");
-            }
-            else
-            {
                 d = p_num;
+                check = 0;
+                flag = 1;
                 while (d > 0)
                 {
+                    check ++;
                     if ((d % 10) == (d / 10 % 10))
                     {
                         printf("Incorrect number entered. Try again: ");
+                        flag = 0;
                         break;
                     }
                     d = d / 10;
                 }
-            }
-        } while ((p_num < check) || (p_num >= check * 10));
+                if (((check ) != n) && (flag == 1))
+                {
+                    printf("Incorrect number entered. Try again: ");
+                }
+        } while (check != n);
         i = n - 1;
         while (p_num > 0)
         {
             arr[i] = p_num % 10;
             p_num = p_num / 10;
             i--;
+            check++;
+            if (arr[i + 1] == arr[i])
+            {
+                printf("Incorrect number entered. Try again: ");
+                break;
+            }
+        }
+        if ((check) != n)
+        {
+            printf("Incorrect number entered. Try again: ");
         }
         bull = 0;
         cow = 0;
