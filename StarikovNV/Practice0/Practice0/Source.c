@@ -12,6 +12,11 @@ int main()
 	printf("Enter r1,r2\n");
 	scanf("%f %f", &r1, &r2);
 	d = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+	if ((x1 == x2) && (y1 == y2) && (r1 == r2))
+	{
+		printf("Circles coincide");
+		return 0;
+	}
 	if (d > r1 + r2)
 	{
 		printf("No common points");
@@ -35,11 +40,6 @@ int main()
 	if (d == r1 - r2)
 	{
 		printf("Inner touch");
-		return 0;
-	}
-	if ((x1 == x2) && (y1 == y2) && (r1 == r2))
-	{
-		printf("Circles coincide");
 		return 0;
 	}
 	return 0;
