@@ -11,6 +11,7 @@ int main() {
 
 	int a[N], mycomp[B];
 	int b, size = 0, cows = 0, bulls = 0, digits = 0, buff = 0, no_equal = 0;
+	char c;
 
 	printf("enter the number of digits of the number(from 2 to 5) or q for quit ");
 	scanf_s("%d", &size);
@@ -48,17 +49,12 @@ int main() {
 	printf("\n");
 	printf("\nEnter %d digits or q for quit\n", size);
 	bulls = cows = digits = 0;
-	char c = ' ';
-
+	
+	c = getc(stdin);
 	while (c != 'q' && c != 'Q') {
-		if (isdigit(c = _getch())) // контроль ввода данных isdigit (является ли десятичной цифрой)
-			//		if (is_valid(enter, digits, c))
-			//		{
-			printf("%c", c);
-
 		for (int i = 0; i < size; i++) {
 
-			if (mycomp[i] == c - 48) {
+			if (mycomp[i] == ((int)c)) {
 				if (i == digits)
 					bulls++;
 				else
