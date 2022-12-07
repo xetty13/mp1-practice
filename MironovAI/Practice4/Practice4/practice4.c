@@ -86,15 +86,16 @@ void removed() {
 }
 
 void basket() {
-	int c1 = 0, s1 = 0, f = 0;;
+	int c1 = 0, sl = 0, f = 0;;
 	for (int i = 0; i < N; i++) {
 		if (cart[i] != 0) {
 			f++;
-			printf("Name: %s Barcode: %s, Unit_price: %d Count: %d Total_cost: %d \n", names[i], barcodes[i], (coasts[i] - coasts[i] * sales[i] / 100), cart[i], cart[i] * (coasts[i] - coasts[i] * sales[i] / 100));
+			printf("Name: %s Barcode: %s, Unit_price: %d  Discount %d  Count: %d Total_cost: %d \n", names[i], barcodes[i],coasts[i], (coasts[i] * sales[i] / 100), cart[i], cart[i] * (coasts[i] - (coasts[i] * sales[i] / 100)));
+			sl += coasts[i] - coasts[i] * sales[i]/100;
 		}
 	}
 	if (f == 0) printf("Cart is empty \n");
-	else printf("Total cost of goods: %d\n ", amount_summ());
+	else printf("Total cost of goods: %d      Total discount of goods: %d\n ", amount_summ(), sl);
 }
 
 
