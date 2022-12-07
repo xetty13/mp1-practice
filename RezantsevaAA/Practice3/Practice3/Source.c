@@ -5,12 +5,12 @@
 #define N 5
 void main()
 {
-    srand(time(NULL));
     int number[N] = { 0 };
     int arr[N] = { 0 };
     int tries = 0;
     int n, i, raz, flag, j, r, p_num, cow, bull, check, d;
     printf("Enter the number of digits in the number from 2 to 5 ");
+    srand(time(NULL));
     do {
         scanf("%d", &n);
         if ((n > 5) || (n < 2)) {
