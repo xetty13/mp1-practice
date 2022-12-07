@@ -12,19 +12,18 @@ void scan_pr(char* a);
 int ind_pr(char* b);
 void info_pr(int ind, double* a, double* b);
 void f_cheque(int* k, double* a, double* b);
-
+void f_total(double a, double b, double c, int* k, double* arrA, double* arrB);
 
 int main() {
 	char pr[4];
 	int i, flag = 0;
 	int ind;
 	int counter;
-	int sum = 0, total_sum = 0;
 	int k_pr[10] = { 0 };
-	int total_not_sale = 0, total_sale = 0, total_with_sale = 0;
-	int  cost_sale[10] = { 0 };	
-	int sale_r[10] = { 0 };
-	int total_cost[10] = { 0 };
+	double total_not_sale = 0, total_sale = 0, total_with_sale = 0;
+	double  cost_sale[10] = { 0 };	
+	double sale_r[10] = { 0 };
+	double total_cost[10] = { 0 };
 
 	for (i = 0; i < 10; i++) {
 		cost_sale[i] = cost[i] * (1 - sale[i]);
@@ -58,7 +57,6 @@ int main() {
 	}
 
 	f_cheque(k_pr, cost_sale, total_cost);
-
 	f_total(total_not_sale, total_sale, total_with_sale, k_pr, sale_r, cost_sale);
 	
 	return 0;
@@ -123,12 +121,15 @@ void f_cheque(int* k, double* a, double* b) {
 	}
 }
 
-void f_total(int a, int b, int c, int* k, int* arrA, int* arrB) {
-	int i;
+void f_total(double a, double b, double c, int* k, double* arrA, double* arrB) {
+	int i, a1, b1, c1;
 	for (i = 0; i < 10; i++) {
 		a += k[i] * cost[i];
 		b += k[i] * arrA[i];
 		c += k[i] * arrB[i];
 	}
-	printf("Cost without discount = %d \nThe amount of discounts = %d\nCost including discounts = %d", a, b, c);
+	a1 = (int)a;
+	b1 = (int)b;
+	c1 = (int)c;
+	printf("Cost without discount = %d \nThe amount of discounts = %d\nCost including discounts = %d", a1, b1, c1);
 }
