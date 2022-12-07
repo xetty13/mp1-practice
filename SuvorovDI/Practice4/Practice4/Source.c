@@ -29,11 +29,11 @@ void print_cheque(int count[], double curr_price_whoutDisc, double t_curr_price)
 		if (count[i] > 0) {
 			double price_disc = prices[i] * (1 - (double)discounts[i] / 100.0);
 			double total_pr = price_disc * count[i];
-			printf("Product: %s   ||   Price with discount: %.*lf   ||   Count: %d   ||   Total price is  %.*lf\n\n", names[i], 2, price_disc, count[i], 2, total_pr);
+			printf("Product: %s   ||   Price with discount: %.2lf   ||   Count: %d   ||   Total price is  %.2lf\n\n", names[i], price_disc, count[i], total_pr);
 		}
 	}
 	printf("------------------------------------------------------------------------------\n");
-	printf("\nTotal cost without discount:  %.*lf ,  BUT in general you have saved %.*lf rubles (i.e. %.*lf percent)\n", 2, curr_price_whoutDisc, 2, economy, 2, perc_economy);
+	printf("\nTotal cost without discount:  %.2lf ,  BUT in general you have saved %.2lf rubles (i.e. %.*lf percent)\n", 2, curr_price_whoutDisc, economy, perc_economy);
 	printf("To be paid:  %.*lf  reubles\n", 2, t_curr_price);
 }
 
@@ -47,20 +47,20 @@ void product_processing(int id, int count[], double* cost_without, double* total
 
 void print_prod_info(int bar) {
 	double price_disc = prices[bar] * (1 - (double)discounts[bar] / 100.0);
-	printf("Product:  %s  ||  Price per piece:  %d rubles  ||   Discount:  %d%%  ||   price with discount:   %.*lf rubles\n\n", names[bar], prices[bar], discounts[bar], 2, price_disc);
+	printf("Product:  %s  ||  Price per piece:  %d rubles  ||   Discount:  %d%%  ||   price with discount:   %.2lf rubles\n\n", names[bar], prices[bar], discounts[bar], price_disc);
 }
 
 int get_and_check_barcode() {
 	char curr_bar[5], clean, count_of_ch = 0, c_extra_ch = 0, ind_prod = -1;
 	int i, n = TOTAL_N;
 	printf("Enter barcode or 'C'\n");
-	fgets(curr_bar, 5, stdin);
-	while ((clean = getchar()) != '\n') {
+	gets(curr_bar);
+	/*while ((clean = getchar()) != '\n') {
 		c_extra_ch++;
-	}
+	}*/
 
 	// User wants to get cheque
-	if (curr_bar[0] == 'C' && curr_bar[1] == '\n') {
+	if (!strcmp(curr_bar, "0")) {
 		return -2;
 	}
 
