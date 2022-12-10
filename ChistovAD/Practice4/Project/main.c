@@ -29,7 +29,7 @@ struct product {
 int main() {
 	int k;
 	int a[N] = { 0,0,0,0 };
-	int b[N] = { 1, 2, 3, 4 };
+	int b[N] = { 0, 2, 3, 4 };
 	int c[N] = { 4, 0, 5, 1 };
 	int m[N] = { 8, 9, 5, 0 };
 	int s[N] = { 2,4,5,6 };
@@ -40,7 +40,7 @@ int main() {
 	int j[N] = { 4,5,6,7 };
 	int o[N] = { 5,6,7,8 };
 	int p[N] = { 2,4,5,7 };
-	int r[N] = { 0,8,9,0 };
+	int r[N] = { 7,8,9,0 };
 	int breads = 0;
 	int milks = 0;
 	int cheeses = 0;
