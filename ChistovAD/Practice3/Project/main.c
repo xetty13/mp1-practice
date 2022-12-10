@@ -12,6 +12,7 @@ int main()
 	int num_of_bulls = 0;
 	int num_of_cows = 0;
 	int k;
+	int answer;
 	printf("GAME:Bulls and cows\n");
 	printf("Are you  ready?\n");
 	system("pause");
@@ -51,16 +52,48 @@ int main()
 	}
 	while (num_of_bulls != k)
 	{
+		int q=0;
 		num_of_bulls = 0;
 		num_of_cows = 0;
 		printf("input the number: ");
 		scanf("%d", &a);
+		int tmp = a;
+		while (tmp > 0) {
+			tmp /= 10;
+			q++;
+		}
+		if (k != q) {
+			printf("You have specified a different number length (%d)\n", k);
+			printf ("Do you want to try again ? (yes-1;no-2): ");
+			scanf("%d", &answer);
+			switch (answer) {
+			case 1: {system("cls");  main(); }
+			case 2: return 0;
+			}
+		}
+		tmp = a;
+		int b[5];
+		for (i = 0; i < 5; i++) b[i] = 0;
+		while (tmp) {
+			b[tmp% 10] ++;
+			tmp /= 10;
+		}
+		for (i = 0; i < 10; i++) {
+			if (b[i] > 1) {
+				printf("Digits in a number cannot be repeated\n");
+				printf("Do you want to try again ? (yes-1;no-2) :");
+				scanf("%d", &answer);
+				switch (answer) {
+				case 1: {system("cls");  main(); }
+				case 2: return 0;
+				};
+			}
+		}
 		for (i = k - 1; i >= 0; i--)
 		{
 			razr_a[i] = a % 10;
 			a /= 10;
 		}
-
 		for (i = 0; i < k; i++)
 		{
 			for (j = 0; j < k; j++)
