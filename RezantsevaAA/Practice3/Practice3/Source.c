@@ -7,8 +7,7 @@ void main()
 {
     int number[N] = { 0 };
     int arr[N] = { 0 };
-    int tries = 0;
-    int n, i, raz, flag, j, r, p_num, cow, bull, check, d;
+    int n, i, flag, j, r, p_num, cow, bull, check,p;
     printf("Enter the number of digits in the number from 2 to 5 ");
     srand(time(NULL));
     do {
@@ -41,32 +40,31 @@ void main()
             }
         }
     }
-    cow = 0;
     bull = 0;
-    check = 0;
+    
     while (bull != n)
     {
         printf("Try to guess the number: ");
         do {
             scanf(" %d", &p_num);
-                d = p_num;
-                check = 0;
-                flag = 1;
-                while (d > 0)
+            check = 0;
+            p = p_num;
+            flag = 1;
+            while (p > 0)
+            {
+                if ((p % 10) == (p / 10 % 10))
                 {
-                    check ++;
-                    if ((d % 10) == (d / 10 % 10))
-                    {
-                        printf("Incorrect number entered. Try again: ");
-                        flag = 0;
-                        break;
-                    }
-                    d = d / 10;
-                }
-                if (((check ) != n) && (flag == 1))
-                {
+                    flag = 0;
                     printf("Incorrect number entered. Try again: ");
+                    break;
                 }
+                p = p / 10;
+                check++;
+            }
+            if ((flag == 1)&&(check != n))
+            {
+                printf("Invalid number entered. Try again: ");
+            }
         } while (check != n);
         i = n - 1;
         while (p_num > 0)
@@ -74,18 +72,7 @@ void main()
             arr[i] = p_num % 10;
             p_num = p_num / 10;
             i--;
-            check++;
-            if (arr[i + 1] == arr[i])
-            {
-                printf("Incorrect number entered. Try again: ");
-                break;
-            }
         }
-        if ((check) != n)
-        {
-            printf("Incorrect number entered. Try again: ");
-        }
-        bull = 0;
         cow = 0;
         for (i = 0; i < n; i++)
         {
@@ -104,9 +91,8 @@ void main()
                         cow++;
                 }
             }
-            tries++;
         }
         printf("Number of bulls: %d. Number of cows: %d\n", bull, cow);
     }
-    printf("Congratulations! You guessed the number in %d attempts", tries);
+    printf("Congratulations! You guessed the number!");
 }
