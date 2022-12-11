@@ -57,7 +57,7 @@ int main() {
 
 		if (user_n > 0) {
 			printf("Incorrect data. Number is too large. Try again.\n");
-			flag2 = 1;
+			continue;
 		}
 		if (flag2 == 1) {
 			continue;
