@@ -24,29 +24,30 @@ int main()
 		f *= 10;
 	}
 	do {
-		printf("\nvvedite svou dogadky: ");
-
 		do {
-			scanf("%d", &l);
-		} while ((l < f) && (l > 10 * f - 1));
-		for (i = n - 1; i >= 0; i--) {
-			b[i] = l % 10;
-			l /= 10;
-		}
-		tmp = 0;
-		for (i = 0; i < n; i++) {
-			for (int k1 = i + 1; k1 < n; k1++) {
-				if ((b[i] == b[k1]) || (b[k1] == 0)) {
-					tmp = 1;
-					break;
+			printf("\nvvedite svou dogadky: ");
+
+			do {
+				scanf("%d", &l);
+			} while ((l < f) && (l > 10 * f - 1));
+			for (i = n - 1; i >= 0; i--) {
+				b[i] = l % 10;
+				l /= 10;
+			}
+			tmp = 0;
+			for (i = 0; i < n; i++) {
+				for (int k1 = i + 1; k1 < n; k1++) {
+					if ((b[i] == b[k1]) || (b[k1] == 0)) {
+						tmp = 1;
+						break;
+					}
 				}
 			}
-		}
-		if (tmp == 1) {
-			printf("wrong number");
-		}
-    } while (tmp == 1);
-	ii++;
+			if (tmp == 1) {
+				printf("wrong number");
+			}
+		} while (tmp == 1);
+		ii++;
 		for (n1 = 0; n1 < n; n1++) {
 			for (n2 = 0; n2 < n; n2++) {
 				if ((n1 == n2) && (a[n1] == b[n2])) {
@@ -55,7 +56,6 @@ int main()
 				else if ((n1 != n2) && (a[n1] == b[n2])) {
 					cow++;
 				}
-				else {}
 			}
 		}
 		printf("bulls: %d", bull);
@@ -66,6 +66,6 @@ int main()
 		}
 		cow = 0;
 		bull = 0;
-	 while(1);
+	} while (1);
 }
 
