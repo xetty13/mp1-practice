@@ -1,7 +1,6 @@
 #include <stdlib.h> //ѕодключение Ѕиблиотек
 #include <stdio.h>
 #include <time.h>
-#include <math.h>
 
 #define MIN_DIGITS_NUM 2 //«адание размером массива
 #define MAX_DIGITS_NUM 5
@@ -35,7 +34,8 @@ int process(int n, int* needed, int cur, int playing) {
 	// реверсируем полученный массив
 	reverse(n, recieved);
 	int cows = 0, bulls = 0, i, j;  // инициализируем счетчики и итераторы
-	for (i = 0; i < n; i++)
+	
+for (i = 0; i < n; i++)
 		// подсчет быков
 		if (needed[i] == recieved[i]) bulls++;
 		else
@@ -50,19 +50,34 @@ int process(int n, int* needed, int cur, int playing) {
 		return 0;
 	}
 	// ¬ывод количества быков и коров
-	printf(" There're %d bulls and %d cows", bulls, cows);
+	printf(" There're %d bulls and %d cows\n", bulls, cows);
 }
 
-//int read(int n) {//функци€ считывани€ числа и проверка на то подходит ли введенное число под критерии n-значного числа.
-//	int temp = -1;
-//	while (1) {
-//		printf("\n Please, input your num: ");
-//		scanf("%d", &temp);
-//		if (pow(10, n - 1) <= temp && pow(10, n) > temp)
-//			return temp;
-//		printf("Something went wrong.. Try again\n");
-//	}
-//}
+int read(int n) {//функци€ считывани€ числа и проверка на то подходит ли введенное число под критерии n-значного числа.
+	int temp = 0;
+	int c = 0;
+	char ch = 'a';
+	while (c < n) {
+		ch = getchar();
+		switch (ch) {
+			case'0':
+			case'1':
+			case'2':
+			case'3':
+			case'4':
+			case'5':
+			case'6':
+			case'7':
+			case'8':
+			case'9': {
+				temp = temp * 10 + atoi(&ch);
+				c++;
+				break;
+			}
+		}
+	}
+	return temp;
+}
 
 void shuffle(int* array) { // перемешивает массив 
 	 // устанавливаем текущее врем€ в качестве семени дл€ генератора псевдослучайных чисел
@@ -79,6 +94,18 @@ void shuffle(int* array) { // перемешивает массив
 
 }
 
+void check(int* array) { // перемешивает массив 
+	 // устанавливаем текущее врем€ в качестве семени дл€ генератора псевдослучайных чисел
+	int j, temp;
+	for (int i = NUM_OF_DIGITS - 1; i >= 1; i--) {
+		// выбираем случайной индекс, не превосход€щий i
+		j = rand() % (i + 1);
+		// мен€ем значени€ в массиве местами
+		temp = array[j];
+		array[j] = array[i];
+		array[i] = temp;
+	}
+}
 int* gen(int n) { // генерирует случайное число-массив заданной длинны
 	int digits[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	// перемешиваем созданный выше массив до тех пор, пока перва€ цифра не будет отлична от нул€
