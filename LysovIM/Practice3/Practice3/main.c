@@ -16,6 +16,7 @@ void reverse(int n, int* array) { // реверсирование массива
 	}
 }
 
+
 int is_win(int n, int* needed, int* cur) { // проверка, совпадает ли загаданное число с введенным 
 	for (int i = 0; i < n; i++) 
 		if (needed[i] != cur[i])
