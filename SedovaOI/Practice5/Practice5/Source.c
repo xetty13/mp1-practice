@@ -1,134 +1,181 @@
 #include <stdio.h>
 #include <windows.h>
+#include <stdlib.h>
 #define LENGTH 50
 int size[LENGTH];
+int size_copy[LENGTH];
+int i = 0;
+
 char names[LENGTH][LENGTH];
 CHAR path[MAX_PATH];
+
+long long int count = 0;
+
 void findfiles(CHAR* path);
 void merge(int* a, int left, int mid, int right);
 void mergeSort(int* a, int left, int right);
-void BubbleSort(int a[LENGTH]);
-void qsortx(int* a, size_t low, size_t high);
+void BubbleSort(int* a, int len);
+void QuickSort(int* a, size_t low, size_t high);
+void copy_arr(int* source, int* rep, int len)
+{
+    for (int j = 0; j < len; j++) {
+        rep[j] = source[j];
+    }
+}
+void StartTimer()
+{
+    LARGE_INTEGER A;
+    QueryPerformanceCounter(&A);
+    count = A.QuadPart;
+
+}
+void StopTimer()
+{
+    LARGE_INTEGER A;
+    QueryPerformanceCounter(&A);
+    printf("and spent %.2lf ms\n", (double)(A.QuadPart - count) / 1000);
+}
+void print_files()
+{
+    for (int j = 0; j < i; j++) {
+        for (int g = 0; g < i; g++) {
+            if (size[g] == size_copy[j]) {
+                printf("%s, %d bytes\n", names[g], size[g]);
+                break;
+            }
+        }
+    }
+}
 
 void findfiles(CHAR* path)
 {
-	int i = 0;
-	WIN32_FIND_DATAA files;
-	HANDLE lastfile;
-	lastfile = FindFirstFileA(path, &files);
-	FindNextFileA(lastfile, &files);
-	if (lastfile != INVALID_HANDLE_VALUE) {
-		while (FindNextFileA(lastfile, &files)){
-			strcpy(names[i], files.cFileName);
-			size[i] = files.nFileSizeLow;
-			printf("%s, %d bytes\n",names[i], size[i]);
-			i++;
-		}
-	}
-	FindClose(lastfile);
+    i = 0;
+    WIN32_FIND_DATAA files;
+    HANDLE lastfile;
+    lastfile = FindFirstFileA(path, &files);
+    FindNextFileA(lastfile, &files);
+    if (lastfile != INVALID_HANDLE_VALUE) {
+        while (FindNextFileA(lastfile, &files)) {
+            strcpy(names[i], files.cFileName);
+            size[i] = files.nFileSizeLow;
+            printf("%s, %d bytes\n", names[i], size[i]);
+            i++;
+        }
+    }
+    FindClose(lastfile);
 }
-void main()
+int main()
 {
-    printf("Enter directoria:");
+    int n;
+    printf("Enter directory:");
     scanf("%s", &path);
     findfiles(path);
+    do {
+        printf("choose a sort\n");
+        scanf("%d", &n);
+        copy_arr(size, size_copy, i);
+        StartTimer();
+        if (n == 1) {
+            mergeSort(size_copy, 0, i - 1);
+            printf("MergeSort did this:\n");
+        }
+        else if (n == 2) {
+            BubbleSort(size_copy, i);
+            printf("BubbleSort did this:\n");
+        }
+        else if (n == 3) {
+            QuickSort(size_copy, 0, i - 1);
+            printf("QuickSort did this:\n");
+        }
+        else if (n == 0) {
+            return 0;
+        }
+        print_files();
+        StopTimer();
 
+    } while (1);
 }
 void merge(int* a, int left, int mid, int right)
 {
-    int i=0, i1=0, i2=0;
-    int* b = (int*)malloc(sizeof(int) * (N - left));
-    while ((left + i1 < mid) && (mid + i2 <= right)) {
-        if (a[left + i1] < a[mid + i2]) {
-            b[i1+i2] = a[left + i1];
-            i1++;
+    int i0 = 0, i1 = 0, i2 = left;
+    int b[LENGTH];
+    while ((i0 < (mid - left + 1)) && (i1 < (right - mid))) {
+        if (a[left + i0] <= a[mid + i1 + 1]) {
+            b[i2] = a[left + i0];
+            i0++;
         }
         else {
-            b[i1+i2] = a[mid + i2];
-            i2++;
+            b[i2] = a[mid + i1 + 1];
+            i1++;
         }
-    }
-    while (left + i1 < mid) {
-        b[i1+i2] = a[left + i1];
-        i1++;
-    }
-    while (mid + i2 < right) {
-        b[i1+i2] = a[mid + i2];
         i2++;
     }
-    for (i = 0; i < i1 + i2; i++) {
-        a[left + i] = b[i];
+    while (i0 < (mid - left + 1)) {
+        b[i2] = a[left + i0];
+        i0++;
+        i2++;
     }
-
+    while (i1 < (right - mid)) {
+        b[i2] = a[mid + i1 + 1];
+        i1++;
+        i2++;
+    }
+    for (int j = left; j < i2; j++) {
+        a[j] = b[j];
+    }
 }
 void mergeSort(int* a, int left, int right)
 {
-    int mid;
-    if (left >= right)
-        return;
-    mid = (left + right) / 2;
-    mergeSort(a, left, mid);
-    mergeSort(a, mid+1, right);
-    merge(a, left, mid, right);
+    if (left < right) {
+        int mid;
+        mid = (left + right) / 2;
+        mergeSort(a, left, mid);
+        mergeSort(a, mid + 1, right);
+        merge(a, left, mid, right);
+    }
 }
-void BubbleSort(int a[LENGTH])
+void BubbleSort(int* a, int len)
 {
-	int i, j, tmp;
-    for (i = 0; i < LENGTH; i++) {
-        for (j = 0; j < LENGTH - i - 1; j++) {
-			if (a[j + 1] > a[j])
-			{
-				tmp = a[j + 1];
-				a[j + 1] = a[j];
-				a[j] = tmp;
-			}
-		}
-	}
+    int tmp;
+    for (int g = 0; g < len; g++) {
+        for (int j = 0; j < len - g - 1; j++) {
+            if (a[j + 1] < a[j])
+            {
+                tmp = a[j + 1];
+                a[j + 1] = a[j];
+                a[j] = tmp;
+            }
+        }
+    }
 }
-void qsortx(int* a, size_t low, size_t high) {
-    size_t i, j;
-    int tmp, pivot;
-
-    i = low;
-    j = high;
+void QuickSort(int* a, int low, int high) {
+    int tmp, pivot, j = high, g = low;
 
     pivot = a[(low + (high - low) / 2)];
     do {
-        while (a[i] < pivot) {
-            i++;
+        while (a[g] < pivot) {
+            g++;
         }
         while (a[j] > pivot) {
             j--;
         }
-        if (i <= j) {
-            if (a[i] > a[j]) {
-                tmp = a[i];
-                a[i] = a[j];
+        if (g <= j) {
+            if (a[g] > a[j]) {
+                tmp = a[g];
+                a[g] = a[j];
                 a[j] = tmp;
             }
-            i++;
-            if(j > 0) {
+            g++;
+            if (j > 0) {
                 j--;
             }
         }
-    } while (i <= j);
+    } while (g <= j);
 
-    if(i < high) {
-        qsortx(a, i, high);
+    if (g < high) {
+        QuickSort(a, g, high);
     }
     if (j > low) {
-        qsortx(a, low, j);
+        QuickSort(a, low, j);
     }
 }
-
-
-/* for (i = 0; i < LENGTH; i++) {
-    for (i1 = 0; i < LENGTH; i1++) {
-        if b[i] == size[i1]{
-            print("% %",names[i1],b[i]);
-        i++; }
-        else {
-            i1++;
-        }
-    }
-}*/
