@@ -52,16 +52,16 @@ int process(int n, int* needed, int cur, int playing) {
 	printf(" There're %d bulls and %d cows", bulls, cows);
 }
 
-int read(int n) {//функция считывания числа и проверка на то подходит ли введенное число под критерии n-значного числа.
-	int temp = -1;
-	while (1) {
-		printf("\n Please, input your num: ");
-		scanf("%d", &temp);
-		if (pow(10, n - 1) <= temp && pow(10, n) > temp)
-			return temp;
-		printf("Something went wrong.. Try again\n");
-	}
-}
+//int read(int n) {//функция считывания числа и проверка на то подходит ли введенное число под критерии n-значного числа.
+//	int temp = -1;
+//	while (1) {
+//		printf("\n Please, input your num: ");
+//		scanf("%d", &temp);
+//		if (pow(10, n - 1) <= temp && pow(10, n) > temp)
+//			return temp;
+//		printf("Something went wrong.. Try again\n");
+//	}
+//}
 
 void shuffle(int* array) { // перемешивает массив 
 	 // устанавливаем текущее время в качестве семени для генератора псевдослучайных чисел
