@@ -1,118 +1,161 @@
 #define _CRT_SECURE_NO_WARNINGS
-//#include <windows.h>
+#include <windows.h>
 #include <stdio.h>
-//#define N 10
-void scan(int* a);
-void output(int* a);
-void QuikSort(int* a);
-void BubbleSort(int* a);
-void InsertSort(int* a);
-int main()
-{
-	long N = 10;
-	int arr[10];
-	int mode;
-	scan(arr, N);
-	printf(" Choose sorting method: 1 - quik sort, 2 - baubble sort, 3 - insertion sort ");
-	scanf("%d", &mode);
-	switch (mode)
+#include<tchar.h>
+#include<strsafe.h>
+#include<time.h>
+int size = 0;
+//void scan(int* a);
+//void output(int* a);
+void QuickSort(WIN32_FIND_DATA arr[], int left, int right);
+void BubbleSort(WIN32_FIND_DATA arr[]);
+void InsertSort(WIN32_FIND_DATA arr[]);
+int main() {
+	int left = 0;
+	int right = size - 1;
+	TCHAR path[100];
+	StringCbGets(path, 100);
+	_tprintf(TEXT("\nTarget directory is %s\n\n"), path);
+	WIN32_FIND_DATA ffd;
+	TCHAR szDir[MAX_PATH];
+	HANDLE hFind = INVALID_HANDLE_VALUE;
+	DWORD dwError = 0;
+	printf_s("Please: Enter the path: ");
+	StringCchCopy(szDir, MAX_PATH, path);
+	StringCchCat(szDir, MAX_PATH, TEXT("\\*"));
+	hFind = FindFirstFile(szDir, &ffd);
+	if (INVALID_HANDLE_VALUE == hFind)
 	{
-
-	case 1:
-	{
-		QuikSort(arr,N);
-		output(arr, N);
-		break;
+		printf("Error in FindFirstFile\n");
+		return -1;
 	}
-	case 2:
+	WIN32_FIND_DATA arr[200];
+	WIN32_FIND_DATA a[200];
+	printf_s("There is your files:\n");
+	do
 	{
-		BubbleSort(arr, N);
-		output(arr, N);
-		break;
-	}
-	case 3:
-	{
-		InsertSort(arr, N);
-		output(arr, N);
-		break;
-	}
-	}
-
-}
-void scan(int* a, long N)
-{
-	for (int i = 0; i < N; i++)
-	{
-		scanf(" %d", &(a[i]));
-	}
-}
-void output(int* a, long N)
-{
-	for (int i = 0; i < N; i++)
-	{
-		printf(" %d", a[i]);
-	}
-}
-void QuikSort(int* a, long N)
-{
-	int tmp, i = 0, j = N - 1, mid = (i + j) / 2;
-	int pivot = a[mid];
-	while (i <= j)
-	{
-		while (a[i] < pivot)
+		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
-			i++;
+			_tprintf(TEXT(" %s <DIR>\n"), ffd.cFileName);
 		}
-		while (a[j] > pivot)
+		else
 		{
+			_tprintf(TEXT(" %s %ld bytes\n"), ffd.cFileName, ffd.nFileSizeLow);
+			a[size++] = ffd;
+		}
+	} while (FindNextFile(hFind, &ffd) != 0);
+	int choose;
+	while (TRUE)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			arr[i] = a[i];
+		}
+		choose = 0;
+		printf("Choose sort:\n1-InsertionSort\n2-QuickSort\n3-BubbleSort\n");
+		do {
+			printf("Input correct data:");
+			scanf_s("%d", &choose);
+		} while (choose > 2 || choose < 1);
+		long double time_spent = 0.0;
+		clock_t begin;
+		clock_t end;
+		switch (choose)
+		{
+		case 1:
+			begin = clock();
+			InsertSort(arr);
+			end = clock();
+			time_spent += (long double)(end - begin) / CLOCKS_PER_SEC;
+			printf(" InsertSort took %.20llf seconds", time_spent);
+			break;
+		case 2:
+			begin = clock();
+			//QuickSort(arr);
+			end = clock();
+			time_spent += (long double)(end - begin) / CLOCKS_PER_SEC;
+			printf("QuickSort took %.20llf seconds", time_spent);
+			break;
+		case 3:
+			begin = clock();
+			BubbleSort(arr);
+			end = clock();
+			time_spent += (long double)(end - begin) / CLOCKS_PER_SEC;
+			printf("BubbleSort took %.20llf seconds\n", time_spent);
+			break;
+		}
+		for (int i = 0; i < size; ++i)
+		{
+			_tprintf(TEXT(" %s %ld bytes\n"), arr[i].cFileName, arr[i].nFileSizeLow);
+		}
+		getchar();
+		printf("Do you want to choose sort? 1-Yes 2-No\n");
+		int kk;
+		scanf_s("%d", &kk);
+		if (kk == 2)
+			return 0;
+	}
+	dwError = GetLastError();
+	if (dwError != ERROR_NO_MORE_FILES)
+	{
+		printf("GetLastError\n");
+		return -1;
+	}
+	FindClose(hFind);
+}
+/*void QuickSort(WIN32_FIND_DATA arr[], int left, int right) {
+	int i = left;
+	int j = right;
+	WIN32_FIND_DATA pivot = arr[left + int(rand() % (right - left))];
+	WIN32_FIND_DATA temp;
+	while (i <= j) {
+		while (arr[i].nFileSizeLow < pivot.nFileSizeLow)
+			i++;
+		while (arr[j].nFileSizeLow > pivot.nFileSizeLow)
+			j--;
+		if (i <= j) {
+			temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+			i++;
 			j--;
 		}
-		if (i < j)
-		{
-			tmp = a[i];
-			a[i] = a[j];
-			a[j] = tmp;
-			i++;
-			j--;
-		}
 	}
-	if (j > 0)
-	{
-		QuikSort(a, j + 1);
-	}
-	if (i < N - 1)
-	{
-		QuikSort(a + i, N - i - 1);
-	}
-}
-void BubbleSort(int* a, long N)
+	if (j > left)
+		QuickSort(arr, left, j);
+	if (i < right)
+		QuickSort(arr, i, right);
+}*/
+void BubbleSort(WIN32_FIND_DATA arr[])
 {
+	int n = size;
 	int i, j, tmp;
-	for (i = 0; i < N; i++)
+	for (i = 1; i < n; i++)
 	{
-		for (j = 0; j < N - 1; j++)
+		for (j = 0; j < n - i; j++)
 		{
-			if (a[j + 1] < a[j])
+			if (arr[j + 1].nFileSizeLow < arr[j].nFileSizeLow)
 			{
-				tmp = a[j + 1];
-				a[j + 1] = a[j];
-				a[j] = tmp;
+				tmp = arr[j + 1].nFileSizeLow;
+				arr[j + 1].nFileSizeLow = arr[j].nFileSizeLow;
+				arr[j].nFileSizeLow = tmp;
 			}
 		}
 	}
 }
-void InsertSort(int* a, long N)
+void InsertSort(WIN32_FIND_DATA arr[])
 {
-	int i, j, tmp;
-	for (i = 0; i < N; i++)
+	int newElement, location;
+	int n = size;
+	for (int i = 1; i < n; i++)
 	{
-		tmp = a[i];
-		j = i - 1;
-		while ((j >= 0) && (a[j] > tmp))
+		newElement = arr[i].nFileSizeLow;
+		location = i - 1;
+		while (location >= 0 && arr[location].nFileSizeLow > newElement)
 		{
-			a[j + 1] = a[j];
-			j--;
+			arr[location + 1] = arr[location];
+			location = location - 1;
 		}
-		a[j+1] = tmp;
+		arr[location + 1].nFileSizeLow = newElement;
 	}
 }
