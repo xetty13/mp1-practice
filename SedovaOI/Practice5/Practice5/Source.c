@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <windows.h>
 #include <stdlib.h>
+#include "merge.h"
+#include "qsort.h"
+#include "bubblesort.h"
 #define LENGTH 50
 int size[LENGTH];
 int size_copy[LENGTH];
@@ -95,7 +98,7 @@ int main()
 
     } while (1);
 }
-void merge(int* a, int left, int mid, int right)
+/*void merge(int* a, int left, int mid, int right)
 {
     int i0 = 0, i1 = 0, i2 = left;
     int b[LENGTH];
@@ -148,7 +151,7 @@ void BubbleSort(int* a, int len)
         }
     }
 }
-void QuickSort(int* a, int low, int high) {
+/*void QuickSort(int* a, int low, int high) {
     int tmp, pivot, j = high, g = low;
 
     pivot = a[(low + (high - low) / 2)];
@@ -178,4 +181,4 @@ void QuickSort(int* a, int low, int high) {
     if (j > low) {
         QuickSort(a, low, j);
     }
-}
+}*/
