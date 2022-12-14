@@ -7,7 +7,7 @@ void main()
 {
     int number[N] = { 0 };
     int arr[N] = { 0 };
-    int n, i, flag, j, r, p_num, cow, bull, check,p;
+    int n, i, flag, j, r, p_num, cow, bull, check,p,flag1;
     printf("Enter the number of digits in the number from 2 to 5 ");
     srand(time(NULL));
     do {
@@ -49,19 +49,19 @@ void main()
             scanf(" %d", &p_num);
             check = 0;
             p = p_num;
-            flag = 1;
+            flag1 = 1;
             while (p > 0)
             {
                 if ((p % 10) == (p / 10 % 10))
                 {
-                    flag = 0;
+                    flag1 = 0;
                     printf("Incorrect number entered. Try again: ");
                     break;
                 }
                 p = p / 10;
                 check++;
             }
-            if ((flag == 1)&&(check != n))
+            if ((flag1 == 1)&&(check != n))
             {
                 printf("Invalid number entered. Try again: ");
             }
@@ -73,6 +73,7 @@ void main()
             p_num = p_num / 10;
             i--;
         }
+        bull = 0;
         cow = 0;
         for (i = 0; i < n; i++)
         {
@@ -92,7 +93,7 @@ void main()
                 }
             }
         }
-        printf("Number of bulls: %d. Number of cows: %d\n", bull, cow);
+        printf("Number of bulls: %d. Number of cows: %d\n", bull, cow); 
     }
     printf("Congratulations! You guessed the number!");
 }
