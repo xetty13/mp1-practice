@@ -26,9 +26,7 @@ void merge(int get[], wchar_t** name[], int l, int mid, int r);
 
 int main()
 {
-	printf("19  \n");
-	clock_t start, end;
-	double elapsed;
+	printf("21  \n");
 	int i = 0, N = 0, number, flag = 1;
 	char* a = (char*)malloc(MAX_PATH);
 	int* size = (int*)malloc(MAX_PATH * sizeof(int));
@@ -54,6 +52,7 @@ int main()
 	
 	int* size_copy = (int*)malloc(MAX_PATH * sizeof(int));
 	wchar_t** name_copy = (wchar_t**)malloc(MAX_PATH * sizeof(wchar_t*));
+	long long time1, time2;
 	do
 	{
 		for (i = 0; i < N; i++)
@@ -64,7 +63,7 @@ int main()
 		printf("Choose the type of sorting: 1-selection sorting, 2-insertion sorting, 3-merge sorting  ");
 		scanf("%d", &number);
 
-		start = clock();
+		QueryPerformanceCounter(&time1);
 		if ((number < 1) || (number > 3))
 		{
 			printf("Invalid number.  \n");
@@ -82,11 +81,10 @@ int main()
 		{
 			merge_sort(size_copy, name_copy, N);
 		}
-		end = clock();
+		QueryPerformanceCounter(&time2);
 		if ((number>=1) || (number<=3))
 			output(size_copy, name_copy, N);
-		elapsed = ((double)(end - start)) / CLOCKS_PER_SEC;
-		printf("\nTime: %.10f seconds\n", elapsed);
+		printf("\nThe time it took to sort the bubble = %lld milliseconds\n\n", time2 - time1);
 		printf("\n");
 		printf("If you want to finish, write 0, if not - 1:  ");
 		scanf("%d", &flag);
@@ -163,61 +161,38 @@ void merge(int get[], wchar_t** name[], int l, int mid, int r)   //функция слиян
 	int k = 0, i = 0, j = 0;
 	int N = mid - l;
 	int M = r - mid + 1;
-	int* a = (int*)malloc((N) * sizeof(int));
-	for (i = l; i < mid; i++)
-	{
-		a[i-l] = get[i];
-	}
-	int* b = (int*)malloc((M) * sizeof(int));
-	for (i = mid; i < r+1; i++)
-	{
-		b[i - mid] = get[i];
-	}
-	int* c = (int*)malloc((r-l+1) * sizeof(int));
 
-	
-	wchar_t** name_a = (wchar_t**)malloc(N * sizeof(wchar_t*));
-	for (i = l; i < mid; i++)
-	{
-		name_a[i - l] = name[i];
-
-	}
-	
-	wchar_t** name_b = (wchar_t**)malloc(M * sizeof(wchar_t*));
-	for (i = mid; i < r + 1; i++)
-	{
-		name_b[i - mid] = name[i];
-	}
+	int* c = (int*)malloc((r - l + 1) * sizeof(int));
 	wchar_t** name_c = (wchar_t**)malloc((r - l + 1) * sizeof(wchar_t*));
-	
-	i = 0;
-	while ((i < N) && (j < M))
+	i = l;
+	j = mid;
+	while (((i-l) < N) && ((j-mid)< M))
 	{
-		if (a[i] < b[j]) {
-			c[k] = a[i];
-			name_c[k] = name_a[i];
+		if (get[i] < get[j]) {
+			c[k] = get[i];
+			name_c[k] = name[i];
 			k++;
 			i++;
 		}
 		else
 		{
-			c[k] = b[j];
-			name_c[k] = name_b[j];
+			c[k] = get[j];
+			name_c[k] = name[j];
 			k++;
 			j++;
 		}
 	}
-	while (i < N)
+	while ((i-l) < N)
 	{
-		c[k] = a[i];
-		name_c[k] = name_a[i];
+		c[k] = get[i];
+		name_c[k] = name[i];
 		k++;
 		i++;
 	}
-	while (j < M)
+	while ((j - mid) < M)
 	{
-		c[k] = b[j];
-		name_c[k] = name_b[j];
+		c[k] = get[j];
+		name_c[k] = name[j];
 		k++;
 		j++;
 	}
