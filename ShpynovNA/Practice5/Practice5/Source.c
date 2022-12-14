@@ -98,7 +98,7 @@ void work_it_Willis(a)
         result("QuickSort did this:\n", a);
         fancy_print("and spent ");
         printf("%.2lf ", ((double)(time.QuadPart - ms) / frq));
-        fancy_print("nanoseconds\n");
+        fancy_print("milliseconds\n");
         work_it_Willis(a);
     case 'C':
     case 'c':
@@ -107,7 +107,7 @@ void work_it_Willis(a)
         result("ChooseSort did this:\n",a);
         fancy_print("and spent ");
         printf("%.2lf ", ((double)(time.QuadPart - ms) / frq));
-        fancy_print("nanoseconds\n");
+        fancy_print("milliseconds\n");
         work_it_Willis(a);
     case 'm':
     case 'M':
@@ -116,7 +116,7 @@ void work_it_Willis(a)
         result("MergeSort did this:\n", a);
         fancy_print("and spent ");
         printf("%.2lf ", ((double)(time.QuadPart - ms) / frq));
-        fancy_print("nanoseconds\n");
+        fancy_print("milliseconds\n");
         work_it_Willis(a);
     case 'e':
     case 'E':
