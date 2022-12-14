@@ -51,7 +51,11 @@ int unique_number()
 
 int main() {
 	srand(time(NULL));
-	int pc_n,user_n,cows=0,bulls=0, k, pc_mass[N], m_pc[N], i = 0, j, m_user[N], user_mass[N], k1,signal=1,kolvo=0,saved_pc_n,flag=0,i_saved=0,mark1=0,significanse=2,id=0;		
+	int pc_n,user_n,cows=0,bulls=0, k, pc_mass[N], m_pc[N], m_user[N], user_mass[N]; //aux_arrays and arrays_work		
+	int i = 0, j,kolvo=0; //counters
+	int signal = 1, mark1 = 0, flag = 0, significanse = 2; // marks and signals;
+	int k1, id = 0; //arithmetic vars
+	int saved_pc_n, i_saved = 0; //saved vars
 	pc_n = unique_number();
 	printf("%d\n", pc_n);
 	do{ //
@@ -129,7 +133,7 @@ int main() {
 				}
 				if (user_mass[j] == pc_mass[i] && j == i) {
 					bulls += 1;
-				}																		//METHOD KHOLIN KIRILL`S: Avoiding nulls
+				}																		//METHOD KHOLIN: Avoiding nulls
 				if ((user_mass[j] == pc_mass[i]) && j != i) {
 					cows += 1;
 				}
