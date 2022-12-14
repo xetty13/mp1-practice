@@ -1,79 +1,97 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#include<conio.h>
-#include<ctype.h>
+#include<locale.h>
 #define N 5
-#define B 5
 
-
-int main() {
-
-	int a[N], mycomp[B];
-	int b, size = 0, cows = 0, bulls = 0, digits = 0, buff = 0, no_equal = 0;
-	char c;
-
-	printf("enter the number of digits of the number(from 2 to 5) or q for quit ");
-	scanf_s("%d", &size);
-	//	printf("size= %d", size);
-	while ((size < 2) || (size > 5))
-	{
-		printf("enter the number of digits of the number");
-		scanf_s("%d", &size);
-		//
-	}
-	//	printf("size= %d", size);
-
-
+void main()
+{
+	int size, comp[N], buff, num, prov, user[N], j = 0;
+	int count = 0;
+	int bulls = 0, cows = 0;
+	setlocale(LC_ALL, "rus");
 	srand((unsigned int)time(NULL));
-	mycomp[0] = 1 + rand() % 9;
-	//	printf("%d\n", array[0]);
+
+	do {
+		printf("введите количество цифр в числе от 2 до 5 :");//ввод количества разрядов числа контроль ввода
+		scanf_s("%d", &size);
+	} while ((size < 2) || (size > 5));
+
+	//генерация числа
+	int digits = 0, equal;
+	comp[0] = 1 + rand() % 9;
 	digits++;
 	while (digits < size) {
+
 		buff = rand() % 10;
-		//		printf("buff=%d, digits=%d\n", buff, digits);
-		no_equal = digits;
-
+		equal = digits;
 		for (int i = 0; i < digits; i++)
-			if (buff != mycomp[i]) no_equal--;
-
-		if (no_equal == 0) {
-			mycomp[digits] = buff;
+			if (buff != comp[i])
+				equal--;
+		if (equal == 0) {
+			comp[digits] = buff;
 			digits++;
 		}
+		//		digits++;
 	}
-
-	//printf("\nEnter %d digits or q for quit\n", size);
 	for (int i = 0; i < size; i++)
-		printf("%d", mycomp[i]);
+		printf("%d", comp[i]);
 	printf("\n");
-	printf("\nEnter %d digits or q for quit\n", size);
-	bulls = cows = digits = 0;
-	
-	c = getc(stdin);
-	while (c != 'q' && c != 'Q') {
-		for (int i = 0; i < size; i++) {
+	//пользователь угадывает число
 
-			if (mycomp[i] == ((int)c)) {
-				if (i == digits)
-					bulls++;
-				else
-					cows++;
+
+	do {
+		bulls = cows = j = 0;
+		do {
+			count = 0;
+			printf("введите ваше число :");
+
+			//			bulls = 0, cows = 0;
+			scanf_s("%d", &num);
+
+			prov = num;
+
+			for (int i = size - 1; i >= 0; --i) {
+				user[i] = num % 10;
+				num /= 10;
 			}
-		}
-		digits++;
-		if (digits == size)
+
+			//		for (int i = 0; i < size; i++) {
+			//			printf("user[%d]=%d\n", i, user[i]);
+			//		}
+			do {
+				prov /= 10;
+				j++;
+			} while (prov != 0);
+
+			for (int i = 0; i < size; i++) {
+				for (int l = i + 1; l < size; l++) {
+					if (user[i] == user[l]) {
+						count++;
+						break;
+					}
+				}
+			}
+			if (count != 0)
+				printf("неправильно введеные данные\n");
+		} while ((count != 0));
+
+		//		printf("j=%d, size=%d\n", j, size);
+
+		if (j == size)
 		{
-			printf("\t\tbulls=%d cows=%d\n", bulls, cows);
-			if (bulls == size) {
-				printf("YOU WON!");
-				break;
+			for (int i = 0; i < size; i++) {
+				if (user[i] == comp[i]) bulls++;
+				else {
+					for (int l = 0; l < size; l++) {
+						if (user[i] == comp[l]) cows++;
+					}
+				}
 			}
-			bulls = cows = digits = 0;
+			printf("bulls=%d, cows=%d\n", bulls, cows);
 		}
-	}
+		else printf("неверно введена длина числа\n");
 
-	return 0;
+	} while (bulls != size);
+	printf("!!! You win !!!");
 }
-
-
