@@ -52,14 +52,11 @@ void print_prod_info(int bar) {
 }
 
 int get_and_check_barcode() {
-	char curr_bar[5], clean, count_of_ch = 0, c_extra_ch = 0, ind_prod = -1;
+	char curr_bar[5], clean, count_of_ch = 0, ind_prod = -1;
 	int i, n = TOTAL_N, len;
 	printf("Enter barcode or 'C'\n");
 	gets(curr_bar);
 	len = strlen(curr_bar);
-	/*while ((clean = getchar()) != '\n') {
-		c_extra_ch++;
-	}*/
 
 	// User wants to get cheque
 	if (strcmp(curr_bar, "C") == 0) {
@@ -74,11 +71,6 @@ int get_and_check_barcode() {
 			return -1;
 		}
 	}
-
-	//if (c_extra_ch > 0) { // the barcode is too long -- it's bad
-	//	printf("You have been entered wrong-length barcode, you should enter barcode which length is 4!!!\n\n");
-	//	return -1;
-	//}
 
 	ind_prod = check_exists_bar(curr_bar); // -1 if such a barcode doesn't exist
 	if (ind_prod == -1) {
