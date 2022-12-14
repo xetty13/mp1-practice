@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <Windows.h>
+#include <profileapi.h>
 #include "Sorts.h"
 char name[MAX_PATH][MAX_PATH];
 int size[MAX_PATH];
 int size_copy[MAX_PATH];
+int nums[MAX_PATH];
 
 
 CHAR path[MAX_PATH];
@@ -25,15 +27,10 @@ void result(char* text, int a)
 {
     fancy_print(text);
     for (int j = 0; j < a; j++) {
-        for (int g = 0; g < a; g++) {
-            if (size[g] == size_copy[j]) {
-                fancy_print(name[g]);
-                fancy_print(", ");
-                printf("%d", size[g]);
-                fancy_print(" bytes\n");
-                break;
-            }
-        }
+        fancy_print(name[nums[j]]);
+        fancy_print(", ");
+        printf("%d", size[nums[j]]);
+        fancy_print(" bytes\n");
     }
 }
 int FindFiles(LPCSTR directory)
@@ -80,9 +77,11 @@ void work_it_Willis(a)
         size_copy[j] = size[j];
     if (t == 0) {
         t++;
-        QuickSort(size_copy, 0, a);
+        QuickSort(size_copy, 0, a, nums);
         work_it_Willis(a);
     }
+    for (int j = 0; j < a; j++)
+        nums[j] = j;
     str = getc(stdin);
     fseek(stdin, 0, SEEK_END);
     QueryPerformanceFrequency(&freq);
@@ -93,30 +92,30 @@ void work_it_Willis(a)
     {
     case 'Q':
     case 'q':
-        QuickSort(size_copy, 0, a);
+        QuickSort(size_copy, 0, a, nums);
         QueryPerformanceCounter(&time);
         result("QuickSort did this:\n", a);
         fancy_print("and spent ");
-        printf("%.2lf ", ((double)(time.QuadPart - ms) / frq));
-        fancy_print("milliseconds\n");
+        printf("%.02lf ", ((double)((time.QuadPart - ms) * 10.0) / frq));
+        fancy_print("nanoseconds\n");
         work_it_Willis(a);
     case 'C':
     case 'c':
-        ChooseSort(size_copy, a);
+        ChooseSort(size_copy, a, nums);
         QueryPerformanceCounter(&time);
         result("ChooseSort did this:\n",a);
         fancy_print("and spent ");
-        printf("%.2lf ", ((double)(time.QuadPart - ms) / frq));
-        fancy_print("milliseconds\n");
+        printf("%.02lf ", ((double)((time.QuadPart - ms) * 10.0) / frq));
+        fancy_print("nanoseconds\n");
         work_it_Willis(a);
     case 'm':
     case 'M':
-        mergeSort(size_copy, 0, a - 1, a);
+        mergeSort(size_copy, 0, a - 1, a, nums);
         QueryPerformanceCounter(&time);
         result("MergeSort did this:\n", a);
         fancy_print("and spent ");
-        printf("%.2lf ", ((double)(time.QuadPart - ms) / frq));
-        fancy_print("milliseconds\n");
+        printf("%.02lf ", ((double)((time.QuadPart - ms)) / frq));
+        fancy_print("nanoseconds\n");
         work_it_Willis(a);
     case 'e':
     case 'E':
@@ -126,10 +125,10 @@ void work_it_Willis(a)
 }
 
 void main() {
-
+    int a;
     fancy_print("choose a directory:\n");
     scanf("%s", &path);
-    int a = FindFiles(path);
+    a = FindFiles(path);
     fancy_print("Choose, how you want these files to be sorted or exit file manager\n");
     fancy_print("QuickSort, MergeSort, ChooseSort, exit: \n");
     work_it_Willis(a);

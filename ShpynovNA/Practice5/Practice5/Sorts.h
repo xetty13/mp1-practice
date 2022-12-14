@@ -1,4 +1,9 @@
-void ChooseSort(int* arr, int len);
-void merge(int* arr, int beg, int mid, int end);
-void mergeSort(int* arr, int beg, int end);
-void QuickSort(int* arr, int beg, int end);
+#ifndef _SORT_H
+#define _SORT_H
+
+void ChooseSort(int*, int len, int*);
+void merge(int*, int, int, int, int*);
+void mergeSort(int*, int, int, int*);
+void QuickSort(int*, int, int, int*);
+
+#endif
