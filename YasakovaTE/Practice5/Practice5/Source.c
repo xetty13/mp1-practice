@@ -26,7 +26,6 @@ void merge(int get[], wchar_t** name[], int l, int mid, int r);
 
 int main()
 {
-	printf("21  \n");
 	int i = 0, N = 0, number, flag = 1;
 	char* a = (char*)malloc(MAX_PATH);
 	int* size = (int*)malloc(MAX_PATH * sizeof(int));
