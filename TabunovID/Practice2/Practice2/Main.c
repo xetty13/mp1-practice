@@ -55,7 +55,7 @@ int main() {
 
 		while (1 > 0) {
 			printf("is this your number?\n");
-			printf("%d", num_of_machine);
+			printf("%d ", num_of_machine);
 			scanf_s("%c", &znak);
 
 			if (znak == '=') {
