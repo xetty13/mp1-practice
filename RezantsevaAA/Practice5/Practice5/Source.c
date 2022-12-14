@@ -5,8 +5,6 @@
 #include<strsafe.h>
 #include<time.h>
 int size = 0;
-//void scan(int* a);
-//void output(int* a);
 void QuickSort(WIN32_FIND_DATA arr[], int left, int right);
 void BubbleSort(WIN32_FIND_DATA arr[]);
 void InsertSort(WIN32_FIND_DATA arr[]);
@@ -67,14 +65,14 @@ int main() {
 			InsertSort(arr);
 			end = clock();
 			time_spent += (long double)(end - begin) / CLOCKS_PER_SEC;
-			printf(" InsertSort took %.20llf seconds", time_spent);
+			printf(" InsertSort took %.20llf seconds \n", time_spent);
 			break;
 		case 2:
 			begin = clock();
-			//QuickSort(arr);
+			QuickSort(arr,left,right);
 			end = clock();
 			time_spent += (long double)(end - begin) / CLOCKS_PER_SEC;
-			printf("QuickSort took %.20llf seconds", time_spent);
+			printf("QuickSort took %.20llf seconds \n", time_spent);
 			break;
 		case 3:
 			begin = clock();
@@ -103,10 +101,10 @@ int main() {
 	}
 	FindClose(hFind);
 }
-/*void QuickSort(WIN32_FIND_DATA arr[], int left, int right) {
+void QuickSort(WIN32_FIND_DATA arr[], int left, int right) {
 	int i = left;
 	int j = right;
-	WIN32_FIND_DATA pivot = arr[left + int(rand() % (right - left))];
+	WIN32_FIND_DATA pivot = arr[left + (rand() % (right - left))];
 	WIN32_FIND_DATA temp;
 	while (i <= j) {
 		while (arr[i].nFileSizeLow < pivot.nFileSizeLow)
@@ -125,12 +123,12 @@ int main() {
 		QuickSort(arr, left, j);
 	if (i < right)
 		QuickSort(arr, i, right);
-}*/
+}
 void BubbleSort(WIN32_FIND_DATA arr[])
 {
 	int n = size;
 	int i, j, tmp;
-	for (i = 1; i < n; i++)
+	for (i = 0; i < n; i++)
 	{
 		for (j = 0; j < n - i; j++)
 		{
