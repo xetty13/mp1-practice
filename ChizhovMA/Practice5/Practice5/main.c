@@ -35,6 +35,30 @@ void Input()
 	printf("Your path: %s \n", a);
 }
 
+int PrintFile(int size[], int size1[], wchar_t** fname[])
+{
+	int i = 0;
+	printf("Data in your directory: \n");
+	printf("Names: %50c Size(Bytes):\n", ' ');
+	do {
+		if ((i == 0) || (i == 1)) {
+			i++;
+			continue;
+		}
+		names[i] = File;
+		fname[i] = names[i].cFileName;
+		size[i] = names[i].nFileSizeLow;
+		size1[i] = names[i].nFileSizeLow;//size of file
+		printf("\n%-60S", fname[i]);//name of file
+		if (size[i] == 0)
+			printf("This is a folder, the size is undefined\n");
+		else
+			printf("%d  \n", (size[i]));
+		i++;
+	} while (FindNextFileW(hfile, &File) != NULL);
+	return i;
+}
+
 void Sorting(int a[], int b[], wchar_t** fname[], int i)
 {
 	int k, n, r, index;
@@ -58,8 +82,6 @@ void Sorting(int a[], int b[], wchar_t** fname[], int i)
 				Insert(a, i);
 			else if (n == 3)
 				Quicksort(a, 0, i - 1);
-			for (k = 0; k < i; k++)
-				printf("%d  %d\n", k, a[k]);
 
 			do
 			{
@@ -136,7 +158,7 @@ void Index(int c[], int v[], int size, int check[])
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	int i = 0, k;
+	int i, k;
 	int* size = (int*)malloc(MAX_PATH * sizeof(int));
 	int* size1 = (int*)malloc(MAX_PATH * sizeof(int));
 	wchar_t** fname = (wchar_t**)malloc(MAX_PATH * sizeof(wchar_t*));
@@ -147,24 +169,7 @@ int main()
 
 	Input();
 
-	printf("Data in your directory: \n");
-	printf("Names: %50c Size(Bytes):\n", ' ');
-	do {
-		if ((i == 0) || (i == 1)) {
-			i++;
-			continue;
-		}
-		names[i] = File;
-		fname[i] = names[i].cFileName;
-		size[i] = names[i].nFileSizeLow;
-		size1[i] = names[i].nFileSizeLow;//size of file
-		printf("\n%-60S", fname[i]);//name of file
-		if (size[i] == 0)
-			printf("This is a folder, the size is undefined\n");
-		else
-			printf("%d  \n", (size[i]));
-		i++;
-	} while (FindNextFileW(hfile, &File) != NULL);
+	i = PrintFile(size, size1, fname);
 
 	Sorting(size1, size, fname, i);
 
