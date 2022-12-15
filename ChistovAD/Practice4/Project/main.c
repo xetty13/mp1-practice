@@ -26,7 +26,7 @@ void scan(int* amount) {
 					scanf("%d", &answer1);
 					if (answer1 == 0)return;
 				}
-				if (flag == 0) { printf("This product code does not exist, please try another one\n"); return; }
+				if (flag == 0) { printf("This product code does not exist, please try another one\n");  system("pause"); system("cls"); }
 			}
 		}
 	}
