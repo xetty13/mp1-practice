@@ -16,6 +16,7 @@ void Choice(int a[], int N);
 void Insert(int b[], int N);
 void Quicksort(int c[], int low, int high);
 void swap(int* a, int* b);
+void Index(int a[], int b[], int size, int check[]);
 
 void Input()
 {
@@ -23,7 +24,7 @@ void Input()
 	wchar_t* path = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
 
 	do {
-		printf("Enter the open path of the directory with the files: \n");
+		printf("Enter the open path to the existing directory with the files: \n");
 		//translating the path to wchar_t
 		scanf("%s", a);
 		strcat(a, "\\*.*");
@@ -37,6 +38,7 @@ void Input()
 void Sorting(int a[], int b[], wchar_t** fname[], int i)
 {
 	int k, n, r, index;
+	int* check = (int*)malloc(MAX_PATH * sizeof(int));
 	clock_t start, end;
 	double elapsed;
 
@@ -56,6 +58,8 @@ void Sorting(int a[], int b[], wchar_t** fname[], int i)
 				Insert(a, i);
 			else if (n == 3)
 				Quicksort(a, 0, i - 1);
+			for (k = 0; k < i; k++)
+				printf("%d  %d\n", k, a[k]);
 
 			do
 			{
@@ -64,12 +68,13 @@ void Sorting(int a[], int b[], wchar_t** fname[], int i)
 				if (r == 1)
 				{
 					printf("Names: %50c Size(Bytes):\n", ' ');
+					Index(a, b, i, check);
 					for (k = 0; k < i; k++)
 					{
 						if (a[k] <= 0)
 							continue;
 						else {
-							index = Index(a, b, i, k);
+							index = check[k];
 							printf("\n%-60S", fname[index]);
 							printf("%d  \n", (a[k]));
 						}
@@ -78,12 +83,13 @@ void Sorting(int a[], int b[], wchar_t** fname[], int i)
 				else if (r == 2)
 				{
 					printf("Names: %50c Size(Bytes):\n", ' ');
+					Index(a, b, i, check);
 					for (k = i; k > 0; k--)
 					{
 						if (a[k] <= 0)
 							continue;
 						else {
-							index = Index(a, b, i, k);
+							index = check[k];
 							printf("\n%-60S", fname[index]);
 							printf("%d  \n", (a[k]));
 						}
@@ -106,13 +112,25 @@ void Sorting(int a[], int b[], wchar_t** fname[], int i)
 
 }
 
-int Index(int c[], int v[], int size, int k)
+void Index(int c[], int v[], int size, int check[])
 {
-	int i, j, ind;
-	for (i = 0; i < size; i++)
-		if (c[k] == v[i])
-			ind = i;
-	return ind;
+	int i, j, l, flag;
+	for (i = 0; i < size; i++) 
+		for (j = 0; j < size; j++) {
+			flag = 0;
+			if (c[i] == v[j]) {
+				for (l = 0; l < size; l++)
+					if (check[l] == j) {
+						flag = 1;
+						break;
+					}
+				if (flag == 0)
+					check[i] = j;
+				else
+					continue;
+				break;
+			}
+		}
 }
 
 int main()
