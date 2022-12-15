@@ -9,7 +9,7 @@ double price[N] = { 39.00, 80.00, 300.00, 5000.00, 75.00, 100.0, 2300.00, 25.00,
 double discount[N] = { 20, 40, 5, 15, 5, 5, 10, 30, 10, 20,20,12 };
 char* description[N] = { "Wonderful\n","natural\n","yellow, no holes\n","Natural meat (not from dogs), honestly\n","from in the oceans, lakes and rivers, bred on special farms.\n","round, chicken\n","Sour, Russian\n","Liquid\n","Berry\n","Vampires are afraid of it\n","potato\n","made in China\n" };
 
-void scan(int* amount) {
+int  scan(int* amount) {
 	int flag = 0;
 	char barcode[6] = " ";
 	printf("Enter product  code:");
@@ -24,9 +24,9 @@ void scan(int* amount) {
 					printf("Do you want to add something else?(1-yes,0-no)");
 					int answer1 = 1;
 					scanf("%d", &answer1);
-					if (answer1 == 0)return;
+					if (answer1 == 0)return 0;
 				}
-				if (flag == 0) { printf("This product code does not exist, please try another one\n"); return; }
+				if (flag == 0) { printf("This product code does not exist, please try another one\n");  return 1; }
 			}
 		}
 	}
@@ -46,6 +46,8 @@ void finalcheck(int* amount) {
 
 int main() {
 	int count[N] = { 0 };
-	scan(count);
-	finalcheck(count);
+	int scan(count);
+	if (scan(count) == 0) {
+		finalcheck(count);
+	}
 }
