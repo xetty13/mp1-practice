@@ -12,22 +12,23 @@ char* description[N] = { "Wonderful\n","natural\n","yellow, no holes\n","Natural
 int  scan(int* amount) {
 	int flag = 0;
 	char barcode[6] = " ";
-	printf("Enter product  code:");
+	printf("Enter a 4-digit code (or exit if you want to generate a final check):");
 	while (strcmp(barcode, "0")) {
 		gets(barcode);
+		flag = 0;
 		if (strcmp(barcode, "0")) {
 			for (int i = 0; i < N; i++) {
 				if (strcmp(barcodes[i], barcode) == 0) {
 					printf("name:%s\nprice:%.2f rubles\ndiccount:%.2fpercent\ndescription :%s\n", products[i], price[i], discount[i], description[i]);
 					amount[i] += 1;
 					flag = 1;
-					printf("Do you want to add something else?(1-yes,0-no)");
-					int answer1 = 1;
-					scanf("%d", &answer1);
-					if (answer1 == 0)return 0;
 				}
-				if (flag == 0) { printf("This product code does not exist, please try another one\n");  return 1; }
+				if (strcmp(barcode, "exit") == 0) {
+					return 0;
+				}
 			}
+				if (flag == 0) { printf("This product code does not exist, please try another one\n");  return 1; }
+				printf("barcode:");
 		}
 	}
 }
