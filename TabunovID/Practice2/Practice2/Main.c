@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int main() {
-	
+
 	int a;
 
 	printf("select game mode 1 or 2\n");
@@ -43,44 +43,33 @@ int main() {
 
 	else if (a == 2) {
 
-		int num_of_machine;
-		int num;
-		char znak;
-		srand(time(NULL));
-		num_of_machine = 1 + rand() % 1000;
-		int counter = 0;
-		int x = 0, y = 1000;
-
-		printf("enter = , + , - \n");
-
-		while (1 > 0) {
-			printf("is this your number?\n");
-			printf("%d ", num_of_machine);
-			scanf_s("%c", &znak);
-
-			if (znak == '=') {
-				printf("the robot guessed it, well done!");
-				return 0;
+		int start = 0, end = 1000;
+		int count = 0;
+		char ch;
+		printf("write more(+) or less(-), if equal then(=)\n");
+		do {
+			printf("pc thinks it is: %d\n", (start + end) / 2);
+			while (ch = getchar() != '\n');
+			scanf_s("%c", &ch, 1);
+			while (ch != '-' && ch != '+' && ch != '=') {
+				while (ch = getchar() != '\n');
+				printf("invalid input\n");
+				scanf_s("%c", &ch, 1);
 			}
-
-			if (znak == '-') {
-				y = num_of_machine;
-				num_of_machine = x + rand() % (1000 - y + 1);
-			}
-
-			if (znak == '+') {
-				x = num_of_machine;
-				num_of_machine = x + rand() % (1000 - y + 1);
-			}
-
-			counter++;
-		}
+			if (ch == '+')
+				start = (start + end) / 2 + 1;
+			else if (ch == '-')
+				end = (start + end) / 2 - 1;
+			else
+				printf("gg wp! Number of attempts: %d", count);
+			count++;
+		} while (ch != '=');
 	}
 
 	else {
 		printf("select game mode 1 or 2");
 	}
-	
+
 
 	return 0;
 }
