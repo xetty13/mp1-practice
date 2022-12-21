@@ -48,7 +48,6 @@ int main()
 				{
 					cow++;
 				}
-				else {}
 			}
 		}
 		printf("bulls: %d", bull);
@@ -56,9 +55,10 @@ int main()
 		if (bull == n) 
 		{
 			printf("You guessed it! Number of attempts: %d", ii);
-			return 0;
+			break;
 		}
 		cow = 0;
 		bull = 0;
 	} while (1);
+	return 0;
 }
