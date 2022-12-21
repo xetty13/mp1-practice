@@ -1,12 +1,8 @@
 #include <stdio.h>
 #include <windows.h>
 #include <profileapi.h>
-#include "input.h"
-#include "output.h"
-#include "famount.h"
 #include "sort.h"
-#include "fill.h"
-#include "choice.h"
+#include "utils.h"
 
 WIN32_FIND_DATA FindFileData;
 HANDLE hf;
@@ -27,27 +23,12 @@ int main() {
         char** fileNames = (char**)malloc(count * sizeof(char*));
         unsigned long* sizes = (unsigned long*)malloc(count * sizeof(unsigned long));
         hf = FindFirstFile(path, &FindFileData);
-        if (hf != INVALID_HANDLE_VALUE) {
-            do {
-                if (wcscmp(FindFileData.cFileName, L".") != 0 && wcscmp(FindFileData.cFileName, L"..") != 0) {
-                    fileNames[j] = (char*)malloc(MAX_PATH * sizeof(char));
-                    wcstombs(fileNames[j], FindFileData.cFileName, MAX_PATH);
-                    sizes[j] = FindFileData.nFileSizeLow;
-                    j++;
-
-                }
-
-            } while (FindNextFile(hf, &FindFileData) != 0);
-        }
-
-        printf("\nFiles amount in the directory: %d\n\n", count);
-        for (i = 0; i < count; i++) {
-            printf("%s size: %d B\n", fileNames[i], sizes[i]);
-        }
+        fill(hf, FindFileData, fileNames, sizes);
+        info(count, fileNames, sizes);
 
         do {
             unsigned long* size_copy = (unsigned long*)malloc(count * sizeof(unsigned long));
-            int* index = (int*)malloc(count * sizeof(int));
+            unsigned long* index = (int*)malloc(count * sizeof(int));
             unsigned long* tmp = (unsigned long*)malloc(count * sizeof(unsigned long));
             unsigned long* itmp = (unsigned long*)malloc(count * sizeof(unsigned long));
             add(size_copy, index, sizes, count);
@@ -57,8 +38,7 @@ int main() {
                     msort(size_copy, tmp, 0, (count - 1), index, itmp);
                     QueryPerformanceCounter(&end);
                     output(fileNames, size_copy, index, count, (end - start));
-                    free(tmp);
-                    free(itmp);
+                    memFree(tmp, itmp);
                     break;
                 case 2:
                     QueryPerformanceCounter(&start);
@@ -80,15 +60,9 @@ int main() {
                 default:
                     break;
             }
-            free(size_copy);
-            free(index);
+            memFree(size_copy, index);
         } while (Flag == 1);
-        free(userStr);
-        for (i = 0; i < count; i++)
-            free(fileNames[i]);
-        free(fileNames);
-        free(path);
-        free(sizes);
+        memFreeMulti(userStr, fileNames, path, sizes, count);
     } while (Flag == 0);
     FindClose(hf);
     return 0;
