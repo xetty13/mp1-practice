@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <math.h>
-int main()													
+int main()
+{
 	{
-		int a[5] = { 0 }, b[5] = { 0 }, n = 0, i = 0, tries = 0, k, l, f = 1, n1, n2, bull = 0, cow = 0;
+		int a[5] = { 0 }, b[5] = { 0 }, n = 0, i = 0, tries = 0, k, l, f = 1, n1, n2, bull = 0, cow = 0, tmp = 0;
 		time_t t;
 		srand((unsigned)time(&t));
 		printf("Enter the length of the number (from 2 to 5): "); 
@@ -53,10 +54,11 @@ int main()
 			printf("bulls: %d\n", bull);
 			printf("cows: %d\n", cow);
 			if (bull == n) {
-				printf("Congrats! Total attemts count: %d", tries);
-				return 0;
+					printf("Congrats! Total attemts count: %d", tries);
+					return 0;
 			}
 			cow = 0;
 			bull = 0;
 		} while (1);
 }
+
