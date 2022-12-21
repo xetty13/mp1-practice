@@ -14,7 +14,7 @@ int main()
 	{
 		do {
 			k = (rand() % 9) + 1;
-			if ((a[0] != k) && (a[1] != k) && (a[2] != k) && (a[3] != k) && (a[4] != k)) 
+			if ((a[0] != k) && (a[1] != k) && (a[2] != k) && (a[3] != k) && (a[4] != k))
 			{
 				a[i] = k;
 			}
@@ -29,14 +29,14 @@ int main()
 
 		do {
 			scanf("%d", &l);
-		} while ((l < f) && (l > 10 * f - 1));
-		for (i = n - 1; i >= 0; i--) 
+		} while ((l < f) && (l > 10 * f - 1));//proverka vvedennogo znachenia
+		for (i = n - 1; i >= 0; i--) //chislo prevrashaem v massiv
 		{
 			b[i] = l % 10;
 			l /= 10;
 		}
 		ii++;
-		for (n1 = 0; n1 < n; n1++) 
+		for (n1 = 0; n1 < n; n1++) //hodim po 2d massivy i sravnivaem s polz. vvodom
 		{
 			for (n2 = 0; n2 < n; n2++) 
 			{
