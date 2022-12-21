@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <windows.h>
 #include <stdlib.h>
-#include "merge.h"
-#include "qsort.h"
-#include "bubblesort.h"
-#define LENGTH 50
+#include"bubblesort.h"
+#include"merge.h"
+#include"qsort.h"
+#define LENGTH 1000
 int size[LENGTH];
 int size_copy[LENGTH];
 int i = 0;
@@ -151,7 +151,7 @@ void BubbleSort(int* a, int len)
         }
     }
 }
-/*void QuickSort(int* a, int low, int high) {
+void QuickSort(int* a, int low, int high) {
     int tmp, pivot, j = high, g = low;
 
     pivot = a[(low + (high - low) / 2)];

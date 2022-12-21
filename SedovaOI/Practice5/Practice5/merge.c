@@ -2,16 +2,6 @@
 #define LENGTH 50
 int size[LENGTH];
 int size_copy[LENGTH];
-void mergeSort(int* a, int left, int right)
-{
-    if (left < right) {
-        int mid;
-        mid = (left + right) / 2;
-        mergeSort(a, left, mid);
-        mergeSort(a, mid + 1, right);
-        merge(a, left, mid, right);
-    }
-}
 void merge(int* a, int left, int mid, int right)
 {
     int i0 = 0, i1 = 0, i2 = left;
@@ -39,5 +29,15 @@ void merge(int* a, int left, int mid, int right)
     }
     for (int j = left; j < i2; j++) {
         a[j] = b[j];
+    }
+}
+void mergeSort(int* a, int left, int right)
+{
+    if (left < right) {
+        int mid;
+        mid = (left + right) / 2;
+        mergeSort(a, left, mid);
+        mergeSort(a, mid + 1, right);
+        merge(a, left, mid, right);
     }
 }
