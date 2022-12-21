@@ -5,9 +5,9 @@
 #define N 10
 
 char* codes[N] = { "1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009" };
-int price[N] = { 62, 100, 50, 35, 80, 73, 27, 94, 15, 30};
-float discount[N] = { 0.1, 0.25, 0.15, 0.5, 0.0, 0.5, 0.1, 0.2, 0.0, 0.0};
-char* products[N] = {"Milk", "Lemon", "Tomato", "Potato", "Eggs", "Apples", "Onion", "Cheese", "Bread", "Oil"};
+int price[N] = { 62, 100, 50, 35, 80, 73, 27, 94, 15, 30 };
+float discount[N] = { 0.1, 0.25, 0.15, 0.5, 0.0, 0.5, 0.1, 0.2, 0.0, 0.0 };
+char* products[N] = { "Milk", "Lemon", "Tomato", "Potato", "Eggs", "Apples", "Onion", "Cheese", "Bread", "Oil" };
 
 void scan(int* arr)
 {
@@ -64,5 +64,3 @@ int main()
 	print_check(count);
 	return 0;
 }
-
-	
