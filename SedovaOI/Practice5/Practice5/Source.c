@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <stdlib.h>
-#include"bubblesort.h"
-#include"merge.h"
-#include"qsort.h"
-#define LENGTH 1000
-int size[LENGTH];
-int size_copy[LENGTH];
-int i = 0;
+#include"Sorts.h"
 
 char names[LENGTH][LENGTH];
 CHAR path[MAX_PATH];
@@ -15,16 +9,22 @@ CHAR path[MAX_PATH];
 long long int count = 0;
 
 void findfiles(CHAR* path);
-void merge(int* a, int left, int mid, int right);
-void mergeSort(int* a, int left, int right);
-void BubbleSort(int* a, int len);
-void QuickSort(int* a, size_t low, size_t high);
-void copy_arr(int* source, int* rep, int len)
-{
-    for (int j = 0; j < len; j++) {
-        rep[j] = source[j];
+
+file_t* cpy_arr(file_t* files, int len, int* lensNames) {
+    int i;
+    file_t* copy_files;
+    copy_files = (file_t*)malloc(len * sizeof(file_t));
+    for (i = 0; i < len; i++) {
+        copy_files[i].name = (char*)malloc((lensNames[i] + 1) * sizeof(char));
     }
+    for (i = 0; i < len; i++) {
+        strcpy(copy_files[i].name, files[i].name);
+        copy_files[i].l = files[i].l;
+    }
+
+    return copy_files;
 }
+
 void StartTimer()
 {
     LARGE_INTEGER A;
@@ -38,147 +38,112 @@ void StopTimer()
     QueryPerformanceCounter(&A);
     printf("and spent %.2lf ms\n", (double)(A.QuadPart - count) / 1000);
 }
-void print_files()
-{
-    for (int j = 0; j < i; j++) {
-        for (int g = 0; g < i; g++) {
-            if (size[g] == size_copy[j]) {
-                printf("%s, %d bytes\n", names[g], size[g]);
-                break;
-            }
-        }
+void print_files(file_t* files, int len) {
+    int i;
+    for (i = 0; i < len; i++) {
+        printf("%s %d\n", files[i].name, files[i].l);
     }
 }
 
-void findfiles(CHAR* path)
+
+void findfiles(CHAR* path, file_t* filess)
 {
-    i = 0;
+    int i = 0;
     WIN32_FIND_DATAA files;
     HANDLE lastfile;
     lastfile = FindFirstFileA(path, &files);
     FindNextFileA(lastfile, &files);
     if (lastfile != INVALID_HANDLE_VALUE) {
         while (FindNextFileA(lastfile, &files)) {
-            strcpy(names[i], files.cFileName);
-            size[i] = files.nFileSizeLow;
-            printf("%s, %d bytes\n", names[i], size[i]);
+            strcpy(filess[i].name, files.cFileName);
+            filess[i].l = files.nFileSizeLow;
             i++;
         }
     }
     FindClose(lastfile);
 }
+
+int l_files(CHAR* path)
+{
+    int c = 0;
+    WIN32_FIND_DATAA files;
+    HANDLE lastfile;
+    lastfile = FindFirstFileA(path, &files);
+    FindNextFileA(lastfile, &files);
+    if (lastfile != INVALID_HANDLE_VALUE) {
+        while (FindNextFileA(lastfile, &files)) {
+            c++;
+        }
+    }
+    FindClose(lastfile);
+
+    return c;
+}
+
+int* l_names_files(CHAR* path, int count_files)
+{
+    int i = 0;
+    int* lens_names = (int*)malloc(count_files * sizeof(int));
+    WIN32_FIND_DATAA files;
+    HANDLE lastfile;
+    lastfile = FindFirstFileA(path, &files);
+    FindNextFileA(lastfile, &files);
+    if (lastfile != INVALID_HANDLE_VALUE) {
+        while (FindNextFileA(lastfile, &files)) {
+            lens_names[i] = strlen(files.cFileName);
+            i++;
+        }
+    }
+    FindClose(lastfile);
+
+    return lens_names;
+}
+
 int main()
 {
-    int n;
+    int n, i, count_files;
+    int* lensNames;
+    file_t* files;
     printf("Enter directory:");
     scanf("%s", &path);
-    findfiles(path);
+    count_files = l_files(path);
+    lensNames = l_names_files(path, count_files);
+
+    files = (file_t*)malloc(count_files * sizeof(file_t));
+    for (i = 0; i < count_files; i++) {
+        files[i].name = (char*)malloc((lensNames[i] + 1) * sizeof(char));
+    }
+
+    printf("%d\n", count_files);
+    findfiles(path, files);
     do {
+        file_t* copy;
         printf("choose a sort\n");
         scanf("%d", &n);
-        copy_arr(size, size_copy, i);
+        copy = cpy_arr(files, count_files, lensNames);
         StartTimer();
         if (n == 1) {
-            mergeSort(size_copy, 0, i - 1);
+            mergeSort(copy, 0, i - 1);
             printf("MergeSort did this:\n");
         }
         else if (n == 2) {
-            BubbleSort(size_copy, i);
+            BubbleSort(copy, i);
             printf("BubbleSort did this:\n");
         }
         else if (n == 3) {
-            QuickSort(size_copy, 0, i - 1);
+            QuickSort(copy, 0, i - 1);
             printf("QuickSort did this:\n");
         }
         else if (n == 0) {
             return 0;
         }
-        print_files();
+        print_files(copy, count_files);
         StopTimer();
 
     } while (1);
-}
-/*void merge(int* a, int left, int mid, int right)
-{
-    int i0 = 0, i1 = 0, i2 = left;
-    int b[LENGTH];
-    while ((i0 < (mid - left + 1)) && (i1 < (right - mid))) {
-        if (a[left + i0] <= a[mid + i1 + 1]) {
-            b[i2] = a[left + i0];
-            i0++;
-        }
-        else {
-            b[i2] = a[mid + i1 + 1];
-            i1++;
-        }
-        i2++;
-    }
-    while (i0 < (mid - left + 1)) {
-        b[i2] = a[left + i0];
-        i0++;
-        i2++;
-    }
-    while (i1 < (right - mid)) {
-        b[i2] = a[mid + i1 + 1];
-        i1++;
-        i2++;
-    }
-    for (int j = left; j < i2; j++) {
-        a[j] = b[j];
-    }
-}
-void mergeSort(int* a, int left, int right)
-{
-    if (left < right) {
-        int mid;
-        mid = (left + right) / 2;
-        mergeSort(a, left, mid);
-        mergeSort(a, mid + 1, right);
-        merge(a, left, mid, right);
-    }
-}
-void BubbleSort(int* a, int len)
-{
-    int tmp;
-    for (int g = 0; g < len; g++) {
-        for (int j = 0; j < len - g - 1; j++) {
-            if (a[j + 1] < a[j])
-            {
-                tmp = a[j + 1];
-                a[j + 1] = a[j];
-                a[j] = tmp;
-            }
-        }
-    }
-}
-void QuickSort(int* a, int low, int high) {
-    int tmp, pivot, j = high, g = low;
 
-    pivot = a[(low + (high - low) / 2)];
-    do {
-        while (a[g] < pivot) {
-            g++;
-        }
-        while (a[j] > pivot) {
-            j--;
-        }
-        if (g <= j) {
-            if (a[g] > a[j]) {
-                tmp = a[g];
-                a[g] = a[j];
-                a[j] = tmp;
-            }
-            g++;
-            if (j > 0) {
-                j--;
-            }
-        }
-    } while (g <= j);
-
-    if (g < high) {
-        QuickSort(a, g, high);
+    for (i = 0; i < count_files; i++) {
+        free(files[i].name);
     }
-    if (j > low) {
-        QuickSort(a, low, j);
-    }
-}*/
+    free(files);
+}
