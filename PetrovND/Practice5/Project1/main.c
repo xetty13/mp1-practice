@@ -93,5 +93,3 @@ int main() {
     FindClose(hf);
     return 0;
 }
-//C:\Users\nikit\Desktop\AdminPanel\.idea\libraries
-//C:\Windows\Cursors
