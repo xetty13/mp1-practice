@@ -64,4 +64,3 @@ int main()
 	print_check(count);
 	return 0;
 }
-
