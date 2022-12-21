@@ -55,7 +55,7 @@ void scan(char *basket, int count[]) {
 			}
 		}
 		else {
-			strcpy(&basket[i*5], t);
+			strcpy(&basket[i * 5], t);
 			flag = 0;
 		}
 	} while (flag != 0);
@@ -91,7 +91,7 @@ int main() {
 	int count[10] = {0};
 	
 	products();
-	scan(&(basket[0][0]), count);
+ 	scan(&(basket[0][0]), count);
 	print(&(basket[0][0]), count);
 
 	return 0;
