@@ -13,27 +13,26 @@ HANDLE hf;
 
 int main() {
     long long start, end;
-    int Flag = 1;
+    int Flag;
     int count;
     do{
-        int flag = 1;
         Flag = 1;
         int i = 0;
         int j = 0;
 
-        char* a = (char*)malloc(MAX_PATH * sizeof(char));
+        char* userStr = (char*)malloc(MAX_PATH * sizeof(char));
         wchar_t* path = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
-        userInput(a, path, hf, FindFileData);
+        userInput(userStr, path, hf, FindFileData);
         count = filesAmount(path, hf, FindFileData);
-        char** fname = (char**)malloc(count * sizeof(char*));
-        unsigned long* size = (unsigned long*)malloc(count * sizeof(unsigned long));
+        char** fileNames = (char**)malloc(count * sizeof(char*));
+        unsigned long* sizes = (unsigned long*)malloc(count * sizeof(unsigned long));
         hf = FindFirstFile(path, &FindFileData);
         if (hf != INVALID_HANDLE_VALUE) {
             do {
                 if (wcscmp(FindFileData.cFileName, L".") != 0 && wcscmp(FindFileData.cFileName, L"..") != 0) {
-                    fname[j] = (char*)malloc(MAX_PATH * sizeof(char));
-                    wcstombs(fname[j], FindFileData.cFileName, MAX_PATH);
-                    size[j] = FindFileData.nFileSizeLow;
+                    fileNames[j] = (char*)malloc(MAX_PATH * sizeof(char));
+                    wcstombs(fileNames[j], FindFileData.cFileName, MAX_PATH);
+                    sizes[j] = FindFileData.nFileSizeLow;
                     j++;
 
                 }
@@ -41,10 +40,9 @@ int main() {
             } while (FindNextFile(hf, &FindFileData) != 0);
         }
 
-        printf("File amount: %d\n", count);
-        for (int i = 0; i < count; i++) {
-            printf("%s", fname[i]);
-            printf(" size: %d bit\n", size[i]);
+        printf("\nFiles amount in the directory: %d\n\n", count);
+        for (i = 0; i < count; i++) {
+            printf("%s size: %d B\n", fileNames[i], sizes[i]);
         }
 
         do {
@@ -52,13 +50,13 @@ int main() {
             int* index = (int*)malloc(count * sizeof(int));
             unsigned long* tmp = (unsigned long*)malloc(count * sizeof(unsigned long));
             unsigned long* itmp = (unsigned long*)malloc(count * sizeof(unsigned long));
-            add(size_copy, index, size, count);
+            add(size_copy, index, sizes, count);
             switch (choice()) {
                 case 1:
                     QueryPerformanceCounter(&start);
                     msort(size_copy, tmp, 0, (count - 1), index, itmp);
                     QueryPerformanceCounter(&end);
-                    output(fname, size_copy, index, count, (end - start));
+                    output(fileNames, size_copy, index, count, (end - start));
                     free(tmp);
                     free(itmp);
                     break;
@@ -66,16 +64,15 @@ int main() {
                     QueryPerformanceCounter(&start);
                     quicksort(size_copy, 0, (count - 1), index);
                     QueryPerformanceCounter(&end);
-                    output(fname, size_copy, index, count, (end - start));
+                    output(fileNames, size_copy, index, count, (end - start));
                     break;
                 case 3:
                     QueryPerformanceCounter(&start);
-                    bubbleSort(size_copy, count, index, fname);
+                    bubbleSort(size_copy, count, index, fileNames);
                     QueryPerformanceCounter(&end);
-                    output(fname, size_copy, index, count, (end - start));
+                    output(fileNames, size_copy, index, count, (end - start));
                     break;
                 case 4:
-                    flag = 0;
                     Flag = 0;
                     break;
                 case 5:
@@ -85,13 +82,13 @@ int main() {
             }
             free(size_copy);
             free(index);
-        } while (flag == 1);
-        free(a);
-        for (int i = 0; i < count; i++)
-            free(fname[i]);
-        free(fname);
+        } while (Flag == 1);
+        free(userStr);
+        for (i = 0; i < count; i++)
+            free(fileNames[i]);
+        free(fileNames);
         free(path);
-        free(size);
+        free(sizes);
     } while (Flag == 0);
     FindClose(hf);
     return 0;
