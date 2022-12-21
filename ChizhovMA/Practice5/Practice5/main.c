@@ -61,7 +61,8 @@ int PrintFile(int size[], int size1[], wchar_t** fname[])
 
 void Sorting(int a[], int b[], wchar_t** fname[], int i)
 {
-	int k, n, r, index;
+	int k, n, r, index, c;
+	int* d = (int*)malloc(MAX_PATH * sizeof(int));
 	int* check = (int*)malloc(MAX_PATH * sizeof(int));
 	clock_t start, end;
 	double elapsed;
@@ -73,15 +74,19 @@ void Sorting(int a[], int b[], wchar_t** fname[], int i)
 	} while ((n < 0) || (n > 3));
 	while (n != 0)
 	{
+		
+			
 		if (n != 0)
 		{
+			for (c = 0; c < i; c++)
+				d[c] = a[c];
 			start = clock();
 			if (n == 1)
-				Choice(a, i);
+				Choice(d, i);
 			else if (n == 2)
-				Insert(a, i);
+				Insert(d, i);
 			else if (n == 3)
-				Quicksort(a, 0, i - 1);
+				Quicksort(d, 0, i - 1);
 
 			do
 			{
@@ -90,30 +95,30 @@ void Sorting(int a[], int b[], wchar_t** fname[], int i)
 				if (r == 1)
 				{
 					printf("Names: %50c Size(Bytes):\n", ' ');
-					Index(a, b, i, check);
+					Index(d, b, i, check);
 					for (k = 0; k < i; k++)
 					{
-						if (a[k] <= 0)
+						if (d[k] <= 0)
 							continue;
 						else {
 							index = check[k];
 							printf("\n%-60S", fname[index]);
-							printf("%d  \n", (a[k]));
+							printf("%d  \n", (d[k]));
 						}
 					}
 				}
 				else if (r == 2)
 				{
 					printf("Names: %50c Size(Bytes):\n", ' ');
-					Index(a, b, i, check);
+					Index(d, b, i, check);
 					for (k = i; k > 0; k--)
 					{
-						if (a[k] <= 0)
+						if (d[k] <= 0)
 							continue;
 						else {
 							index = check[k];
 							printf("\n%-60S", fname[index]);
-							printf("%d  \n", (a[k]));
+							printf("%d  \n", (d[k]));
 						}
 					}
 				}
