@@ -19,6 +19,8 @@ int merge_sort(file* ptr, unsigned int count, int type);
 
 int count_files(wchar_t* path);
 
+void menu(file* ptrf, unsigned int count, int type_sort);
+
 int find(wchar_t* path, unsigned int count, int type_sort);
 
 int main() {
@@ -114,29 +116,7 @@ int find(wchar_t* path, unsigned int count, int type_sort)
                 i++;
             }
         }
-        switch (type_sort) {
-        case 1: printf("Select sort. Sort by ascending size.\n");
-            select_sort(ptrf, count, 1);
-            break;
-        case 2: printf("Select sort. Sort by dicending size.\n");
-            select_sort(ptrf, count, 2);
-            break;
-        case 3: printf("Insert sort. Sort by ascending size.\n");
-            insert_sort(ptrf, count, 1);
-            break;
-        case 4: printf("Insert sort. Sort by dicending size.\n");
-            insert_sort(ptrf, count, 2);
-            break;
-        case 5: printf("Merge sort. Sort by ascending size.\n");
-            merge_sort(ptrf, count, 1);
-            break;
-        case 6: printf("Merge sort. Sort by dicending size.\n");
-            merge_sort(ptrf, count, 2);
-            break;
-        default:for (unsigned int j = 0; j < count; j++)
-            printf("%d\t%ls\t %llu\n", j, ptrf[j].name_file, ptrf[j].size_file);
-            printf("Sort type from 1 to 6\n");
-        }
+        menu(ptrf, count, type_sort);
         free(ptrf);
         FindClose(hf);
         system("pause");
@@ -146,6 +126,34 @@ int find(wchar_t* path, unsigned int count, int type_sort)
         return 0;
     }
     return 1;
+}
+
+void menu(file* ptrf, unsigned int count, int type_sort) {
+
+    switch (type_sort) {
+    case 1: printf("Select sort. Sort by ascending size.\n");
+        select_sort(ptrf, count, 1);
+        break;
+    case 2: printf("Select sort. Sort by dicending size.\n");
+        select_sort(ptrf, count, 2);
+        break;
+    case 3: printf("Insert sort. Sort by ascending size.\n");
+        insert_sort(ptrf, count, 1);
+        break;
+    case 4: printf("Insert sort. Sort by dicending size.\n");
+        insert_sort(ptrf, count, 2);
+        break;
+    case 5: printf("Merge sort. Sort by ascending size.\n");
+        merge_sort(ptrf, count, 1);
+        break;
+    case 6: printf("Merge sort. Sort by dicending size.\n");
+        merge_sort(ptrf, count, 2);
+        break;
+    default:for (unsigned int j = 0; j < count; j++)
+        printf("%d\t%ls\t %llu\n", j, ptrf[j].name_file, ptrf[j].size_file);
+        printf("Sort type from 1 to 6\n");
+    }
+
 }
 
 int merge_sort(file* ptr, unsigned int count, int type) {
