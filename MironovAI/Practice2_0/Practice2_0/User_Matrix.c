@@ -20,13 +20,14 @@ void fill_matrix(CMatrix* data)
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             printf("Input a number from %d column and %d row ", i+1, j+1);
-            scanf("%f", &(data->matrix[i][j]));
+            scanf("%f", &data->matrix[i][j]);
         }
     }
 }
 
 void mprint(CMatrix* data)
 {
+    printf("\n");
     int n = data->size;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -34,10 +35,10 @@ void mprint(CMatrix* data)
         }
         printf("\n");
     }
-    
+   
 }
 
-void free_vector(CMatrix** data)
+void free_matrix(CMatrix** data)
 {
     int size = (*data)->size;
    
@@ -60,6 +61,7 @@ CMatrix* add_const(CMatrix* data, float c)
 
         }
     }
+
     return res;
 }
 
@@ -72,7 +74,7 @@ CMatrix* multi_const(CMatrix* data, float c)
     for (; i < k; i++)
     {
         for (int j = 0; j < k; j++) {
-            res->matrix[i][j] = k * c;
+            res->matrix[i][j] = data->matrix[i][j] * c;
         }
     }
     return res;
@@ -80,10 +82,10 @@ CMatrix* multi_const(CMatrix* data, float c)
 
 
 
-{
+CMatrix *add_matrix(CMatrix *matrix1, CMatrix *matrix2) {
     CMatrix* res;
     int i = 0;
-    int k1 = matrix1->size, k2 = matrix2->size;
+    int k1 =  matrix1->size, k2 = matrix2->size;
     if (k1 != k2)
     {
         printf("ERROR: Vectors should have the same lenght.\n");
@@ -102,7 +104,7 @@ CMatrix* multi_const(CMatrix* data, float c)
 
 
 
-CMatrix* multi_vector(CMatrix* matrix1, CMatrix* matrix2)
+CMatrix* multi_matrix(CMatrix* matrix1, CMatrix* matrix2)
 {
     CMatrix* res;
     int i = 0;
