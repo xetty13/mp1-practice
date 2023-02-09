@@ -91,9 +91,9 @@ Matrix* multi_matrix(Matrix* matrix1, Matrix* matrix2)
     for (i = 0; i < res->n; i++)
         for (j = 0; j < res->n; j++) 
         {
-            res->x[i * res->n + j] = 0;
+            res->x[i * res->n + j] = 0.0;
             for (k = 0; k < res->n; k++)
-                res->x[i * res->n + j] += matrix1->x[i * k] * matrix2->x[k * res->n + j];
+                res->x[i * res->n + j] += matrix1->x[i * res->n + k] * matrix2->x[k * res->n + j];
         }
             
     return res;
