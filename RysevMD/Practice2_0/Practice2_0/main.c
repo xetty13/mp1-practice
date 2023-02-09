@@ -3,16 +3,29 @@
 #include "matrix.h"
 
 int main() {
-	Matrix *matrix, *res_md;
+	Matrix *res, *m1, *m2, *res_dt;
 
-	allocate_matrix(&matrix, 3);
-	fill_matrix(matrix, 3);
+	allocate_matrix(&m1, 3);
+	allocate_matrix(&m2, 3);
+	fill_matrix(m1, 3);
+	fill_matrix(m2, 3);
+	
 
-	res_md = multiple_dot(matrix, 2);
-	print_matrix(res_md, 3);
-	free_matrix(&res_md);
+	res_dt = multiple_dot(m1, 2.0f);
+	print_matrix(res_dt, 3);
+	free_matrix(&res_dt);
 
-	free_matrix(&matrix);
+	res = add_matrix(m1, m2);
+	print_matrix(res, 3);
+	free_matrix(&res);
+
+	printf("\n");
+	res = multiple_matrix(m1, m2);
+	print_matrix(res, 3);
+	free_matrix(&res);
+
+	free_matrix(&m1);
+	free_matrix(&m2);
 
 	return 0;
 }
