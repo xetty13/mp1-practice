@@ -32,6 +32,9 @@ int main() {
 	free_matrix(&res);
 
 	// 4. Multiplication a matrix to another matrix
+	res = multi_matrix(m1, m2);
+	print_matrix(res);
+	free_matrix(&res);
 
 	return 0;
 }

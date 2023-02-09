@@ -90,3 +90,26 @@ TMatrix* add_matrix(TMatrix* m1, TMatrix* m2) {
 	}
 	return res;
 }
+
+TMatrix* multi_matrix(TMatrix* m1, TMatrix* m2) {
+	TMatrix* res;
+	int i, j, k;
+
+	if (m1->n != m2->n)
+	{
+		printf("ERROR: Incorrect vector sizes.\n");
+		return NULL;
+	}
+
+	alloc_matrix(&res, m1->n);
+
+	for (i = 0; i < res->n; i++) {
+		for (j = 0; j < res->n; j++) {
+			res->elems[i][j] = 0;
+			for (k = 0; k < res->n; k++) {
+				res->elems[i][j] += m1->elems[i][k] * m2->elems[k][j];
+			}
+		}
+	}
+	return res;
+}

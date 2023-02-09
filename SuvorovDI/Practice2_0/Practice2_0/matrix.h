@@ -17,5 +17,6 @@ TMatrix* add_scalar(TMatrix* matrix, double c);
 TMatrix* multi_scalar(TMatrix* matrix, double c);
 
 TMatrix* add_matrix(TMatrix* v1, TMatrix* v2);
+TMatrix* multi_matrix(TMatrix* m1, TMatrix* m2);
 
 #endif
