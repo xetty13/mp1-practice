@@ -4,8 +4,8 @@
 #include <locale.h>
 int main()
 {
-	setlocale(LC_ALL, "Russian");
 	float x1, y1, r1, x2, y2, r2, d;
+	setlocale(LC_ALL, "Russian");
 	printf("¬ведите координаты центра окружности номер 1 и ее радиус");
 	scanf(" %f %f %f", &x1, &y1, &r1);
 	printf("¬ведите координаты центра окружности номер 2 и ее радиус");
