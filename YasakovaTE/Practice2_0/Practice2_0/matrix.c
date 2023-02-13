@@ -43,7 +43,7 @@ void free_matrix(TMatrix** matrix)
     free(*matrix);
 }
 
-TMatrix* add_vector(TMatrix* matrix1, TMatrix* matrix2)
+TMatrix* add_matrix(TMatrix* matrix1, TMatrix* matrix2)
 {
     TMatrix* res;
     int i = 0;
@@ -75,16 +75,11 @@ TMatrix* add_const(TMatrix* matrix, float c)
 }
 
 
-TMatrix* multi_vector(TMatrix* matrix1, TMatrix* matrix2)
+TMatrix* multi_matrix(TMatrix* matrix1, TMatrix* matrix2)
 {
     TMatrix* res;
     allocate_matrix(&res, matrix1->n);
     int i = 0;
-    if (matrix1->n != matrix2->n)
-    {
-        printf("ERROR: Matrix should have the same lenght.\n");
-        return 0.0f;
-    }
     for (; i < matrix1->n; i++)
     {
         int j = 0;
