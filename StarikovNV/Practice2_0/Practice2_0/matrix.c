@@ -41,3 +41,60 @@ void print_matrix(TMatrix* matrix)
 	printf("\n");
 }
 
+TMatrix* add_matrix(TMatrix* matrix1, TMatrix* matrix2) 
+{
+	TMatrix* res;
+	int i = 0;
+	if (matrix1->n != matrix2->n)
+	{
+		printf("ERROR: Matrix should have the same lenght.\n");
+		return NULL;
+	}
+	alloc_matrix(&res, matrix1->n);
+	for (; i < res->n * res->n; i++)
+	{
+		res->x[i] = matrix1->x[i] + matrix2->x[i];
+	}
+	return res;
+}
+
+TMatrix* add_constant(TMatrix* matrix, float c) 
+{
+	TMatrix* res;
+	int i = 0;
+	alloc_matrix(&res, matrix->n);
+	for (; i < res->n * res->n; i++)
+	{
+		res->x[i] = matrix->x[i] + c;
+	}
+	return res;
+}
+
+TMatrix* multi_constant(TMatrix* matrix, float c) 
+{
+	TMatrix* res;
+	int i = 0;
+	alloc_matrix(&res, matrix->n);
+	for (; i < res->n * res->n; i++)
+	{
+		res->x[i] = matrix->x[i] * c;
+	}
+	return res;
+}
+
+TMatrix* multi_matrix(TMatrix* matrix, TMatrix* matrix2)
+{
+	TMatrix* res;
+	int i, j, k;
+	alloc_matrix(&res, matrix->n);
+	for (i = 0; i < res->n; i++)
+	{
+		for (j = 0; j < res->n; j++)
+		{
+			res->x[i * res->n + j] = 0;
+			for (k = 0; k < res->n; k++)
+				res->x[i * res->n + j] += matrix->x[i * res->n + k] * matrix2->x[k * res->n + j];
+		}
+	}
+	return res;
+}
