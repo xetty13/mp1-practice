@@ -1,57 +1,35 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "vector.h"
+#include "matrix.h"
 
-int main()
+int main() 
 {
-    int i = 0;
-    TVector vector;
-    TVector* vector_dynamic, * v1, * v2, * res;
-    double dot_product;
+    TMatrix* m1, * m2, * res;
 
-    /*
-    vector.n = 4;
-    vector.x = (double*)malloc(sizeof(double) * vector.n);
-    for (; i < vector.n; i++)
-    {
-        scanf("%lf", &(vector.x[i]));
-    }
-    for (i = 0; i < vector.n; i++)
-    {
-        printf("%.3lf ", vector.x[i]);
-    }
-    printf("\n");
-    free(vector.x);
-    */
+    alloc_matrix(&m1, 3);
+    alloc_matrix(&m2, 3);
 
-    /*
-    alloc_vector(&vector_dynamic, 4);
-    fill_vector(vector_dynamic);
-    print_vector(vector_dynamic);
-    free_vector(&vector_dynamic);
-    */
+    fill_matrix(m1);
+    fill_matrix(m2);
 
-    alloc_vector(&v1, 4);
-    alloc_vector(&v2, 4);
-    fill_vector(v1);
-    fill_vector(v2);
+    print_matrix(m1);
+    print_matrix(m2);
 
-    res = add_vector(v1, v2);
-    print_vector(res);
-    free_vector(&res);
+    res = add_scalar(m1, 1);
+    print_matrix(res);
+    free_matrix(&res);
 
-    res = add_scalar(v1, 2.5);
-    print_vector(res);
-    free_vector(&res);
+    res = multi_scalar(m1, 10);
+    print_matrix(res);
+    free_matrix(&res);
 
-    dot_product = multi_vector(v1, v2);
-    printf("%.3lf\n", dot_product);
+    res = add_matrix(m1, m2);
+    print_matrix(res);
+    free_matrix(&res);
 
-    res = multi_scalar(v1, 2.0);
-    print_vector(res);
-    free_vector(&res);
+    res = multi_matrix(m1, m2);
+    print_matrix(res);
+    free_matrix(&res);
 
-    free_vector(&v1);
-    free_vector(&v2);
     return 0;
 }
