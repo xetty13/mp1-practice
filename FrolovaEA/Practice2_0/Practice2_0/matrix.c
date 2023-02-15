@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include "matrix.h"
 
-void allocate_matrix(Matrix** matrix, int n)
+void allocate_matrix(TMatrix** matrix, int n)
 {
-    (*matrix) = (Matrix*)malloc(sizeof(Matrix) * 1);
+    (*matrix) = (TMatrix*)malloc(sizeof(TMatrix) * 1);
     (*matrix)->n = n;
     (*matrix)->x = (float*)malloc(sizeof(float) * n * n);
 }
 
-void fill_matrix(Matrix* matrix)
+void fill_matrix(TMatrix* matrix)
 {
     int i, j;
     for (i = 0; i < matrix->n; i++)
@@ -17,7 +17,7 @@ void fill_matrix(Matrix* matrix)
             scanf("%f", &(matrix->x[i * matrix->n + j]));
 }
 
-void print_matrix(Matrix* matrix)
+void print_matrix(TMatrix* matrix)
 {
     int i, j;
     for (i = 0; i < matrix->n; i++)
@@ -29,19 +29,19 @@ void print_matrix(Matrix* matrix)
     }
 }
 
-void free_matrix(Matrix** matrix)
+void free_matrix(TMatrix** matrix)
 {
     free((*matrix)->x);
     free(*matrix);
 }
 
-Matrix* addition_matrix(Matrix* matrix1, Matrix* matrix2)
+TMatrix* addition_matrix(TMatrix* matrix1, TMatrix* matrix2)// сложение матриц
 {
-    Matrix* res;
+    TMatrix* res;
     int i, j;
     if (matrix1->n != matrix2->n)
     {
-        printf("ERROR: Vectors should have the same lenght.\n");
+        printf("ERROR:matrices should have the same size.\n");
         return NULL;
     }
     allocate_matrix(&res, matrix1->n);
@@ -52,11 +52,49 @@ Matrix* addition_matrix(Matrix* matrix1, Matrix* matrix2)
     return res;
 }
 
+TMatrix* addition_const(TMatrix* matrix, float c)//сложение с конечным числом
+{
+    TMatrix* res;
+    int i, j;
+    allocate_matrix(&res, matrix->n);
+    for (i = 0; i < res->n; i++)
+        for (j = 0; j < res->n; j++)
+            res->x[i * res->n + j] = matrix->x[i * res->n + j] + c;
+
+    return res;
+}
+
+TMatrix* multi_const(TMatrix* matrix, float c)//умножение матрицы на константу
+{
+    TMatrix* res;
+    int i, j;
+    allocate_matrix(&res, matrix->n);
+    for (i = 0; i < res->n; i++)
+        for (j = 0; j < res->n; j++)
+            res->x[i * res->n + j] = matrix->x[i * res->n + j] * c;
+
+    return res;
+}
+
+TMatrix* multi_matrix(TMatrix* matrix1, TMatrix* matrix2)// перемножение матриц
+{
+    TMatrix* res;
+    int i, j, k;
+    if (matrix1->n != matrix2->n)
+    {
+        printf("ERROR: matrices should have the same size.\n");
+        return NULL;
+    }
 
 
+    allocate_matrix(&res, matrix1->n);
+    for (i = 0; i < res->n; i++)
+        for (j = 0; j < res->n; j++)
+        {
+            res->x[i * res->n + j] = 0.0;
+            for (k = 0; k < res->n; k++)
+                res->x[i * res->n + j] += matrix1->x[i * res->n + k] * matrix2->x[k * res->n + j];
+        }
 
-
-
-
-
+    return res;
 }
