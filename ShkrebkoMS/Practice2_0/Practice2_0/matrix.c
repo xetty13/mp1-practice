@@ -5,7 +5,7 @@
 
 void alloc_matrix(TMatrix** matrix, int n)
 {
-	*matrix = (TMatrix*)malloc(sizeof(TMatrix) * n);
+	*matrix = (TMatrix*)malloc(sizeof(TMatrix) * 1);
 	(*matrix)->n = n;
 	(*matrix)->element = (float*)malloc(sizeof(float) * n*n);
 }

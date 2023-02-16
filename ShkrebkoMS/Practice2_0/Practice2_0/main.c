@@ -4,7 +4,7 @@
 
 int main()
 {
-	TMatrix* matrix_dynamic, *m1, *m2, *res;
+	TMatrix* m1, *m2, *res;
 	alloc_matrix(&m1, 2);
 	alloc_matrix(&m2, 2);
 	fill_matrix(m1);
