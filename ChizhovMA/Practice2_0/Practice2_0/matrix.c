@@ -41,7 +41,7 @@ Matrix* addition_matrix(Matrix* matrix1, Matrix* matrix2)
     int i,j;
     if (matrix1->n != matrix2->n)
     {
-        printf("ERROR: Vectors should have the same lenght.\n");
+        printf("ERROR: Matrices should have the same size.\n");
         return NULL;
     }
     allocate_matrix(&res, matrix1->n);
@@ -82,7 +82,7 @@ Matrix* multi_matrix(Matrix* matrix1, Matrix* matrix2)
     int i, j, k;
     if (matrix1->n != matrix2->n)
     {
-        printf("ERROR: Vectors should have the same lenght.\n");
+        printf("ERROR: Matrices should have the same size.\n");
         return NULL;
     }
         
