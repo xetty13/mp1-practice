@@ -39,6 +39,7 @@ int main() {
 	res = matrix_multi_matrix(m1, m2);
 	print_matrix(res);
 	free_matrix(&res);
-
+	free_matrix(&m1);
+	free_matrix(&m2);
 	return 0;
 }
