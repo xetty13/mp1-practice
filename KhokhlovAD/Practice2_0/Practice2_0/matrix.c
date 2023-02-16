@@ -80,19 +80,19 @@ TMatrix* multi_const(TMatrix* matrix, int n)
 TMatrix* multi_matrix(TMatrix* matrix1, TMatrix* matrix2, int n)
 {
 	TMatrix* res;
-	int count = 0, k = 0, l = 0;
+	int  k = 0;
 	allocate_matrix(&res, matrix1->n);
-	while (count < matrix1->n)
+	int i = 0, j = 0, flag = 0;
+	for (i = 0; i < n; i++)
 	{
-		int i = 0, j = 0, flag = 0;
-		while (flag < n)
+		for (j = 0; j < n; j++)
 		{
-			res->x[count] += matrix1->x[k * n + i++] * matrix2->x[j++ * n + l];   //i dont know why it isnt working
-			flag++;
+			res->x[i*n+j] = 0;
+			for (k = 0; k < n; k++)
+			{
+				res->x[i*n+j] += matrix1->x[i * n + k] * matrix2->x[k * n + j];
+			}
 		}
-		k++;
-		l++;
-		count++;
 	}
 	return res;
 }
