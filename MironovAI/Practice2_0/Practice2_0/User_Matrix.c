@@ -38,14 +38,14 @@ void mprint(CMatrix* data)
    
 }
 
-void free_matrix(CMatrix** data)
+void free_matrix(CMatrix* data)
 {
-    int size = (*data)->size;
+    int size = data->size;
    
     for (int i = 0; i < size; i++) {
-        free((*data)->matrix[i]);
+        free(data->matrix[i]);
     }
-    free((*data)->matrix);
+    free(data->matrix);
 }
 
 CMatrix* add_const(CMatrix* data, float c)
@@ -88,7 +88,7 @@ CMatrix *add_matrix(CMatrix *matrix1, CMatrix *matrix2) {
     int k1 =  matrix1->size, k2 = matrix2->size;
     if (k1 != k2)
     {
-        printf("ERROR: Vectors should have the same lenght.\n");
+        printf("ERROR: Matrix should have the same lenght.\n");
         return NULL;
     }
     
@@ -111,7 +111,7 @@ CMatrix* multi_matrix(CMatrix* matrix1, CMatrix* matrix2)
     int k1 = matrix1->size, k2 = matrix2->size;
     if (k1 != k2)
     {
-        printf("ERROR: Vectors should have the same lenght.\n");
+        printf("ERROR: Matrix should have the same lenght.\n");
         return NULL;
     }
 

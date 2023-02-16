@@ -17,6 +17,7 @@ int choice(CMatrix* matrix1) {
 
             CMatrix* ans = add_const(matrix1, user_const);
             mprint(ans);
+            free_matrix(ans);
         }
         if (choice == 2) {
             int user_const;
@@ -25,7 +26,7 @@ int choice(CMatrix* matrix1) {
 
             CMatrix* ans = multi_const(matrix1, user_const);
             mprint(ans);
-
+            free_matrix(ans);
         }
         if (choice == 3) {
 
@@ -50,7 +51,8 @@ int choice(CMatrix* matrix1) {
             }
             printf("Answer: ");
             mprint(ans);
-         
+            free_matrix(ans);
+            free_matrix(matrix2);
             
         }
         if (choice == 4) {
@@ -75,7 +77,8 @@ int choice(CMatrix* matrix1) {
             }
             printf("\n Answer: ");
             mprint(ans);
- 
+            free_matrix(ans);
+            free_matrix(matrix2);
         }
         if (choice == 0) {
             return 0;
@@ -85,21 +88,17 @@ int choice(CMatrix* matrix1) {
 
 int main()
 {
-
     CMatrix* matrix1, * matrix2;
     int size1;
 
     //input data + memory 
     printf("Input a size of the first square matrix: ");
     scanf("%d", &size1);
-
-
+    
     //first matrix  // ћожно было сделать main в 1 строку, но как-то не красиво
     allocate_matrix(&matrix1, size1);
     fill_matrix(matrix1);
-
     mprint(matrix1);
-
     choice(matrix1);
     free_matrix(&matrix1);
 }
