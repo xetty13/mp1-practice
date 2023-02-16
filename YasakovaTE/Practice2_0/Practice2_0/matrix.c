@@ -85,8 +85,9 @@ TMatrix* multi_matrix(TMatrix* matrix1, TMatrix* matrix2)
         int j = 0;
         for (; j < matrix1->n; j++)
         {
-            res->x[i * matrix1->n + j] = 0;
             int k = 0;
+            res->x[i * matrix1->n + j] = 0;
+            
             for (; k < matrix1->n; k++)
             {
                 res->x[i* matrix1->n+j] += matrix1->x[i* matrix1->n+k] * matrix2->x[k* matrix2->n+j];
