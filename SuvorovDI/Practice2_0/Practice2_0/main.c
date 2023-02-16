@@ -36,5 +36,8 @@ int main() {
 	print_matrix(res);
 	free_matrix(&res);
 
+	free_matrix(&m1);
+	free_matrix(&m2);
+
 	return 0;
 }
