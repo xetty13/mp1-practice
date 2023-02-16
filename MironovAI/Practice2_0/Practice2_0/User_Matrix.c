@@ -38,14 +38,14 @@ void mprint(CMatrix* data)
    
 }
 
-void free_matrix(CMatrix* data)
+void free_matrix(CMatrix** data)
 {
-    int size = data->size;
+    int size = (*data)->size;
    
     for (int i = 0; i < size; i++) {
-        free(data->matrix[i]);
+        free((*data)->matrix[i]);
     }
-    free(data->matrix);
+    free((*data)->matrix);
 }
 
 CMatrix* add_const(CMatrix* data, float c)

@@ -17,7 +17,7 @@ int choice(CMatrix* matrix1) {
 
             CMatrix* ans = add_const(matrix1, user_const);
             mprint(ans);
-            free_matrix(ans);
+            free_matrix(&ans);
         }
         if (choice == 2) {
             int user_const;
@@ -26,7 +26,7 @@ int choice(CMatrix* matrix1) {
 
             CMatrix* ans = multi_const(matrix1, user_const);
             mprint(ans);
-            free_matrix(ans);
+            free_matrix(&ans);
         }
         if (choice == 3) {
 
@@ -51,8 +51,8 @@ int choice(CMatrix* matrix1) {
             }
             printf("Answer: ");
             mprint(ans);
-            free_matrix(ans);
-            free_matrix(matrix2);
+            free_matrix(&ans);
+            free_matrix(&matrix2);
             
         }
         if (choice == 4) {
@@ -77,8 +77,9 @@ int choice(CMatrix* matrix1) {
             }
             printf("\n Answer: ");
             mprint(ans);
-            free_matrix(ans);
-            free_matrix(matrix2);
+            free_matrix(&ans);
+            free_matrix(&matrix2);
+ 
         }
         if (choice == 0) {
             return 0;
