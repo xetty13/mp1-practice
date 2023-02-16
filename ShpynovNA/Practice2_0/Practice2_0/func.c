@@ -56,9 +56,10 @@ SMatrix* multiply_matrix(SMatrix* m1, SMatrix* m2)
     {
         for(int j = 0; j < m1->size; j++)
         {
+            res->num[i][j] = 0;
             for(int g = 0; g < m1->size; g++)
             {
-                res->num[i][j] = m1->num[i][g] * m2->num[g][j];
+                res->num[i][j] += m1->num[i][g] * m2->num[g][j];
             }
         }
     }
