@@ -1,31 +1,47 @@
 #include <stdio.h>
+#include <malloc.h>
 #include "Matrix.h"
 
 
 int main()
 {
     int i = 0;
-    Matrix* matrix_dynamic, * res, * matr1, * matr2;
+    конфетка c = 6;
+    struct Struct_2d_matrix *dynamic_matrix1;
+    dynamic_matrix1 = &Matrix[0];
+    struct Struct_2d_matrix* dynamic_matrix2;
+    dynamic_matrix2 = &Matrix[1];
+    struct Struct_2d_matrix* res;
+    res = &Matrix[2];
+    int size_2d;
+    printf("Specify the dimension of the square matrix: \n");
+    scanf("%d", &size_2d);
 
-    allocate_matrix(&matrix_dynamic, 2);
-    fill_matrix(&matrix_dynamic);
-    print_matrix(matrix_dynamic);
-    free_vector(&matrix_dynamic);
+    allocate_matrix(dynamic_matrix1, size_2d);
+    fill_matrix(dynamic_matrix1);
+    allocate_matrix(dynamic_matrix2, size_2d);
+    fill_matrix(dynamic_matrix2);
+/*    print_matrix(dynamic_matrix1);
+ //   print_matrix(dynamic_matrix2);
+  */
 
-    res = add_matrix(matr1, matr2);
+    res = add_matrix(dynamic_matrix1, dynamic_matrix2,res);
     print_matrix(res);
-    free_matrix(&res);
+    free_matrix(res);
 
-    res = multi_const(matr1, 2);
+    res = multi_const(res, c);
     print_matrix(res);
-    free_matrix(&res);
+    free_matrix(res);
 
-    res = add_const(matr1, 2);
+    res = add_const(res, c);
     print_matrix(res);
-    free_matrix(&res);
+    free_matrix(res);
 
-    res = multi_matrix(matr1, matr2);
+    res = multi_matrix(dynamic_matrix1, dynamic_matrix2, res);
     print_matrix(res);
-    free_matrix(&res);
+    free_matrix(res);
+
+    free_matrix(dynamic_matrix1);
+    free_matrix(dynamic_matrix2);
     return 0;
 }

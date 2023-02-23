@@ -1,91 +1,118 @@
 #include <stdio.h>
+#include <malloc.h>
 #include "Matrix.h"
 
-void allocate_matrix(Matrix** matr, int size)
+void allocate_matrix(struct Struct_2d_matrix *struct_p, int size)
 {
-    (*matr) = (Matrix*)malloc(sizeof(Matrix) * 1);
-    (*matr)->size = size;
-    (*matr)->arr = (float*)malloc(sizeof(float*) * size*size);
+
+    int i = 0;
+    (*struct_p).size = size;
+    struct_p->arr_2d = (float**)malloc(sizeof(float*) * struct_p->size);
+    for (i = 0; i < struct_p->size; i++) {
+        struct_p->arr_2d[i] = (float*)malloc(sizeof(float) * struct_p->size);
+    }
 }
 
-void fill_matrix(Matrix* matr)
+void fill_matrix(struct Struct_2d_matrix *struct_p)
 {
+    printf("Fill the matrix: \n");
     int i = 0;
     int j = 0;
-    for (i=0 ; i < matr->size; i++)
+    for (i=0 ; i < struct_p->size; i++)
     {
 
-        for (j = 0; j < matr->size; j++) {
-            scanf("%f", &(matr->arr[matr->size * i + j]));
+        for (j = 0; j < struct_p->size; j++) {
+            scanf("%f", &(struct_p->arr_2d[i][j]));
         }
     }
 }
 
-void print_matrix(Matrix* matr)
+void print_matrix(struct Struct_2d_matrix *struct_p)
 {
+    printf("Two-demension matrix: \n");
     int i = 0;
     int j = 0;
-    for (i=0; i < matr->size; i++)
+    for (i=0; i < struct_p->size; i++)
     {
-        for (j = 0; j < matr->size; j++) {
-            printf("%f ", (matr->arr[matr->size * i + j]));
+        printf("\n");
+        for (j = 0; j < struct_p->size; j++) {
+            printf("%f ", struct_p->arr_2d[i][j]);
         }
     }
     printf("\n");
 }
 
-void free_matrix(Matrix** matr,int size)
+void free_matrix(struct Struct_2d_matrix  *struct_p)
 {
-    free((*matrix)->arr);
-    free(*matr);
+    int i = 0;
+    for (i = 0; i < struct_p->size;i++) {
+        free(struct_p->arr_2d[i]);
+    }
+    free(struct_p->arr_2d);
 }
 
-Matrix* add_matrix(Matrix* matr1, Matrix* matr2)
+struct Matrix* add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2,struct Struct_2d_matrix* res)
 {
-    Matrix* res;
     int i = 0;
-    if (matr1->size != matr1->size)
+ /*   if (matr1->size != matr2->size)
     {
         printf("ERROR: Vectors should have the same lenght.\n");
         return NULL;
     }
-    allocate_matrix(&res, matr1->size);
-    for (i=0; i < res->size*res->size; i++)
+ */
+    allocate_matrix(res, Matrix[0].size);
+    for (i=0; i < res->size; i++)
     {
-        for (int j = 0; j < matr1->size; j++) {
-            res->arr[i] = matr1->arr[i] + matr2->arr[i]
+        for (int j = 0; j < res->size; j++) {
+            res->arr_2d[i][j] = matr1->arr_2d[i][j] + matr2->arr_2d[i][j];
         }
     }
     return res;
 }
 
- int multi_const(Matrix* matr1, float c)
+struct Matrix* multi_const(struct Struct_2d_matrix* res, float c)
 {
     int i = 0;
-    allocate_matrix(&res, matr->size);
-    if (matr1->size != matr2->size)
+    allocate_matrix(res, Matrix[0].size);
+    fill_matrix(res);
+    for (i = 0; i < res->size; i++)
     {
-        printf("ERROR: Vectors should have the same lenght.\n");
-        return 0;
-    }
-    for (i=0; i < res->size; i++)
-    {
-        res->arr[i] = matr->arr[i] * c;
+        for (int j = 0; j < res->size; j++) {
+            res->arr_2d[i][j] = res->arr_2d[i][j] * c;
+        }
     }
     return res;
 }
- Matrix* multi_matrix(Matrix* matr1, Matrix* matr2) {
-     Matrix* res;
-     int i, j, q;
-     allocate_m(&res, matr->size);
-     for (i = 0; i < res->size; i++) {
-         for (j = 0; j < res->size; j++) {
-             res->arr[i * res->size + j] = 0;
-             for (q = 0; q < res->size; q++)
-                 res->arr[i * res->size + j] += matr1->arr[i * res->size + q] * matr2->x[q * res->size + j];
-         }
-     }
-     return res;
- }
+struct Matrix* add_const(struct Struct_2d_matrix* res, float c)
+{
+    int i = 0;
+    allocate_matrix(res, Matrix[0].size);
+    fill_matrix(res);
+    for (i = 0; i < res->size; i++)
+    {
+        for (int j = 0; j < res->size; j++) {
+            res->arr_2d[i][j] = res->arr_2d[i][j] + c;
+        }
+    }
+    return res;
+}
 
+struct Matrix* multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res)
+{
+    int i = 0;
+    /*   if (matr1->size != matr2->size)
+       {
+           printf("ERROR: Vectors should have the same lenght.\n");
+           return NULL;
+       }
+    */
+    allocate_matrix(res, Matrix[0].size);
+    for (i = 0; i < res->size; i++)
+    {
+        for (int j = 0; j < res->size; j++) {
+            res->arr_2d[i][j] = matr1->arr_2d[i][j] * matr2->arr_2d[i][j];
+        }
+    }
+    return res;
+}
 
