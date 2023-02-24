@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <windows.h>
 
 /*Обеспечить поиск безработных
 с высшим образованием и вычислить процент таковых от общего числа безработных.*/
@@ -17,11 +18,11 @@ typedef struct worker {
 int main() {
 	int answer;
 	do {
-		printf("MENU:");
-		printf("\n1.Add a new worker ");
-		printf("\n2.All employees with higher education");
-		printf("\n3.Exit");
-		printf("\nEnter your choice:");
+		printf("MENU:\n");
+		printf("1.Add a new worker\n");
+		printf("2.All employees with higher education\n");
+		printf("3.Exit\n");
+		printf("Enter your choice:");
 		scanf("%d", &answer);
 		switch (answer) {
 		case 1: adding(); break;
@@ -33,10 +34,9 @@ int main() {
 
 int adding() {
 	worker* w;
-	char str[1000];
 	FILE* file;
 	int n;
-	file = fopen("label exchange.txt", "a+");
+	file = fopen("label exchange.txt", "w+");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	printf("How many workers do you want to add:");
 	scanf("%d", &n);
@@ -44,11 +44,11 @@ int adding() {
 	for (int i = 0; i < n; i++)
 	{
 		printf("Enter id:\n");
-		scanf("%s", w[i].id);
-		printf("Enter profession:\n");
-		scanf("%s", w[i].profession);
+		gets(w[i].id);
+		/*printf("Enter profession:\n");
+		scanf("%s", w[i].profession);	*/	
 		printf("Enter education:\n");
-		scanf("%s", w[i].education);
+		gets(w[i].education);
 		/*
 		printf("Enter last job:\n");
 		scanf("%s", w[i].last_job);
@@ -75,15 +75,15 @@ int workers() {
 	printf("All employees with higher education from the database:\n");
 	while (fread(&w, sizeof(worker), 1, file)) {
 		if (strcmp(w.education, "no") != 0) {
-			printf("%s: %s", w.id, w.education);
+			printf("%-5s%-20s\n", w.id, w.education);
 			counter++;
 		}
 	}
-	printf("Percentage of employees with higher education:%f", (float)(counter / N));
+	printf("Percentage of employees with higher education:%f\n ", (float)(counter / N)*100);
 	fclose(file);
 }
 
-int  count() {
+int amount() {
 	worker w1;
 	FILE* file;
 	file = fopen("label exchange.txt", "r");
