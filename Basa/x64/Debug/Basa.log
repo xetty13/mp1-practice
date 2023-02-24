@@ -1,0 +1,10 @@
+﻿  main.c
+C:\Users\alexe\source\repos\Basa\Basa\main.c(25,11): warning C4013: adding: нет определения; предполагается "extern" с возвратом типа "int"
+C:\Users\alexe\source\repos\Basa\Basa\main.c(26,11): warning C4013: workers: нет определения; предполагается "extern" с возвратом типа "int"
+C:\Users\alexe\source\repos\Basa\Basa\main.c(40,15): warning C4013: calloc: нет определения; предполагается "extern" с возвратом типа "int"
+C:\Users\alexe\source\repos\Basa\Basa\main.c(40,40): warning C4312: приведение типов: преобразование из "int" в "worker *" большего размера
+C:\Users\alexe\source\repos\Basa\Basa\main.c(34,7): warning C4101: str: неиспользованная локальная переменная
+C:\Users\alexe\source\repos\Basa\Basa\main.c(72,7): warning C4013: strcmp: нет определения; предполагается "extern" с возвратом типа "int"
+C:\Users\alexe\source\repos\Basa\Basa\main.c(67,7): warning C4101: str: неиспользованная локальная переменная
+C:\Users\alexe\source\repos\Basa\Basa\main.c(78): warning C4716: workers: должна возвращать значение
+  Basa.vcxproj -> C:\Users\alexe\source\repos\Basa\x64\Debug\Basa.exe
