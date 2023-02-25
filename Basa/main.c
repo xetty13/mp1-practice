@@ -30,7 +30,7 @@ int main() {
 	} while (answer != 3);
 }
 
-int adding(Worker **w) {
+int adding() {
 	worker* w;
 	FILE* file;
 	int n;
@@ -59,6 +59,7 @@ int adding(Worker **w) {
 		*/
 		fwrite(&w[i], sizeof(worker), 1, file);
 	}
+	system("cls");
 	fclose(file);
 }
 
@@ -67,7 +68,7 @@ int workers() {
 	worker w;
 	char str[1000];
 	FILE* file;
-	float  N = amount () ;
+	float  N = amount();
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	printf("All employees with higher education from the database:\n");
@@ -77,14 +78,15 @@ int workers() {
 			counter++;
 		}
 	}
-	printf("Percentage of employees with higher education:%f\n ", (counter/ N) *100);
+	printf("Percentage of employees with higher education:%f\n ", (counter / N) * 100);
 	fclose(file);
 }
 
-int amount() {
+int amount( ) {
 	FILE* file;
 	file = fopen("label exchange.txt", "r");
 	fseek(file, 0, SEEK_END);
 	int n = ftell(file) / sizeof(worker);
 	return n;
 }
+
