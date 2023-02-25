@@ -1,9 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <windows.h>
-
-/*Обеспечить поиск безработных
-с высшим образованием и вычислить процент таковых от общего числа безработных.*/
+#include <stdlib.h>
+#define LINE 50
 
 typedef struct worker {
 	char id[20];
@@ -26,29 +24,29 @@ int main() {
 		scanf("%d", &answer);
 		switch (answer) {
 		case 1: adding(); break;
-		case 2: workers(); break;
+		case 2: workers(); system("pause"); break;
 		case 3: return 0;
 		}
 	} while (answer != 3);
 }
 
-int adding() {
+int adding(Worker **w) {
 	worker* w;
 	FILE* file;
 	int n;
-	file = fopen("label exchange.txt", "w+");
-	if (file == NULL) { printf("Can't open file"); return 1; }
 	printf("How many workers do you want to add:");
 	scanf("%d", &n);
+	file = fopen("label exchange.txt", "a+");
+	if (file == NULL) { printf("Can't open file"); return 1; }
 	w = (worker*)calloc(n, sizeof(worker));
 	for (int i = 0; i < n; i++)
 	{
 		printf("Enter id:\n");
-		gets(w[i].id);
+		scanf("%s", w[i].id);
 		/*printf("Enter profession:\n");
-		scanf("%s", w[i].profession);	*/	
+		scanf("%s", w[i].profession);	*/
 		printf("Enter education:\n");
-		gets(w[i].education);
+		scanf("%s", w[i].education);
 		/*
 		printf("Enter last job:\n");
 		scanf("%s", w[i].last_job);
@@ -65,11 +63,11 @@ int adding() {
 }
 
 int workers() {
-	int counter = 0;
+	float counter = 0;
 	worker w;
 	char str[1000];
 	FILE* file;
-	int N = count();
+	float  N = amount () ;
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	printf("All employees with higher education from the database:\n");
@@ -79,7 +77,7 @@ int workers() {
 			counter++;
 		}
 	}
-	printf("Percentage of employees with higher education:%f\n ", (float)(counter / N)*100);
+	printf("Percentage of employees with higher education:%f\n ", (counter/ N) *100);
 	fclose(file);
 }
 
@@ -89,5 +87,8 @@ int amount() {
 	file = fopen("label exchange.txt", "r");
 	fseek(file, 0, SEEK_END);
 	int n = ftell(file) / sizeof(worker);
+	return n;
+}
+
 	return n;
 }
