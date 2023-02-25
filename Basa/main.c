@@ -66,7 +66,6 @@ int adding() {
 int workers() {
 	float counter = 0;
 	worker w;
-	char str[1000];
 	FILE* file;
 	float  N = amount();
 	file = fopen("label exchange.txt", "r");
