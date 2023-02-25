@@ -82,7 +82,6 @@ int workers() {
 }
 
 int amount() {
-	worker w1;
 	FILE* file;
 	file = fopen("label exchange.txt", "r");
 	fseek(file, 0, SEEK_END);
