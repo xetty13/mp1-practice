@@ -89,6 +89,3 @@ int amount() {
 	int n = ftell(file) / sizeof(worker);
 	return n;
 }
-
-	return n;
-}
