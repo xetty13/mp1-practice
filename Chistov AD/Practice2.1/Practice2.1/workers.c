@@ -61,4 +61,6 @@ float amount() {
 	fseek(file, 0, SEEK_END);
 	float n = ftell(file) / sizeof(worker);
 	return n;
+	fclose(file);
 }
+
