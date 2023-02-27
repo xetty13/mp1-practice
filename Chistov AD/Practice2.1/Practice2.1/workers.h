@@ -13,6 +13,6 @@ typedef struct {
 }worker;
 
 int adding();
-int amount();
+float amount();
 int workers();
 #endif 
