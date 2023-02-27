@@ -8,13 +8,15 @@ int main() {
 		printf("MENU:\n");
 		printf("1.Add a new worker\n");
 		printf("2.All employees with higher education\n");
-		printf("3.Exit\n");
+		printf("3.Number of employees in the database:\n");
+		printf("4.Exit\n");
 		printf("Enter your choice:");
 		scanf("%d", &answer);
 		switch (answer) {
 		case 1: adding(); break;
 		case 2: workers(); system("pause"); break;
-		case 3: return 0;
+		case 3: {int n = amount(); printf("%d", n); }
+		case 4: return 0;
 		}
-	} while (answer != 3);
+	} while (answer != 4);
 }
