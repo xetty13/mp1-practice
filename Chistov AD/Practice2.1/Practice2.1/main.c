@@ -15,7 +15,7 @@ int main() {
 		switch (answer) {
 		case 1: adding(); break;
 		case 2: workers(); system("pause"); break;
-		case 3: {float n = amount(); printf("%f", n); }
+		case 3: {float n = amount(); printf("%f\n", n); system("pause"); break; }
 		case 4: return 0;
 		}
 	} while (answer != 4);
