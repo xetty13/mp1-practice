@@ -31,8 +31,8 @@ int adding() {
 		scanf("%s", w[i].contact_info);
 		*/
 		fwrite(&w[i], sizeof(worker), 1, file);
-		free(w);
 	}
+	free(w);
 	system("cls");
 	fclose(file);
 }
