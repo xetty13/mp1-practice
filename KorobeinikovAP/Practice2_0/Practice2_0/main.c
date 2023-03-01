@@ -12,8 +12,8 @@ int main() {
 	free_matrix(&matrix_d);
 	
 
-	allocate_m(&m1, 3);
-	allocate_m(&m2, 3);
+	allocate_m(&m1, 2);
+	allocate_m(&m2, 2);
 	fill_matrix(m1);
 	fill_matrix(m2);
 
