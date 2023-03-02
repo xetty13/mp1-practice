@@ -12,8 +12,10 @@ typedef struct {
 } TPolynom;
 
 void allocate_polynom(TPolynom** polynom, int degree);
+TPolynom* allocate_polynom_copy(TPolynom** p, TPolynom** tmp);
 void free_polynom(TPolynom** polynom);
 
+void read_file(TPolynom*** p, FILE** file, int* n);
 void fill_polynom(TPolynom* p, FILE* file);
 void print_polynom(TPolynom* p);
 
@@ -22,8 +24,7 @@ TPolynom* multi_polynom(TPolynom* p1, TPolynom* p2);
 TPolynom* minus_polynom(TPolynom* p1, TPolynom* p2);
 TPolynom* diff_polynom(TPolynom* p);
 
-float power(float x, int n);
-float value_polynome(TPolynom* p, float x);
+float value_polynome(TPolynom* p, float _x);
 
 
 #endif // !_POLYNOM_H

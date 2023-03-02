@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <Windows.h>
 #include <locale.h>
 #include "polynom.h"
 #include "display.h"
@@ -26,22 +25,7 @@ int main() {
 	TPolynom* res;
 	TPolynom** p; // массив полиномов
 
-	file = fopen("data.txt", "r");
-	fscanf(file, "%d", &n);
-
-	// Конструкция полиномов
-	//------------------------------------------------------
-	p = (TPolynom**)malloc(sizeof(TPolynom*) * n); // массив полиномов
-	for (i = 0; i < n; i++) {
-		// Инициализация
-		fscanf(file, "%d", &dgr);
-		allocate_polynom(&(p[i]), dgr);
-	}
-	for (i = 0; i < n; i++) {
-		// Заполнение
-		fill_polynom(p[i], file);
-	}
-	//------------------------------------------------------
+	read_file(&p, &file, &n);
 
 	while (ans) {
 		system("cls");
@@ -141,6 +125,5 @@ int main() {
 		free_polynom(&p[i]);
 	}
 	free(p);
-	fclose(file);
 	return 0;
 }

@@ -8,25 +8,66 @@ void allocate_polynom(TPolynom** polynom, int degree) {
 	(*polynom)->coeff = (float*)malloc(sizeof(float) * (degree + 1));
 }
 
+TPolynom* allocate_polynom_copy(TPolynom** p, TPolynom** tmp) {
+	int i, tmp_dgr = 0;
+	for (i = (*tmp)->degree; i >= 0; i--)
+		if ((*tmp)->coeff[i] != 0) {
+			tmp_dgr = i;
+			break;
+		}
+
+	allocate_polynom(p, tmp_dgr);
+	for (i = (*p)->degree; i >= 0; i--)
+		(*p)->coeff[i] = (*tmp)->coeff[i];
+	free_polynom(tmp);
+
+	return *p;
+}
+
 void free_polynom(TPolynom** polynom) {
 	free((*polynom)->coeff);
 	free(*polynom);
 }
 
+
+void read_file(TPolynom*** p, FILE** file, int* n) {
+	/*
+	Чтение происходит из файла "data.txt"
+	-В первой строке - количество полиномов
+	-В второй строке перечисленны степени каждого полинома
+	-В последующих строках перечисленны коэффициенты полиномов
+
+	!!!Предполагается, что введенные данные верны!!!
+	*/
+	int i, dgr;
+	*(file) = fopen("data.txt", "r");
+	fscanf(*(file), "%d", n);
+
+	*(p) = (TPolynom**)malloc(sizeof(TPolynom*) * *(n)); // массив полиномов
+	for (i = 0; i < *(n); i++) {
+		// Инициализация
+		fscanf(*(file), "%d", &dgr);
+		allocate_polynom(&((*(p))[i]), dgr);
+	}
+	for (i = 0; i < *(n); i++) {
+		// Заполнение
+		fill_polynom((*(p))[i], *(file));
+	}
+	fclose(*(file));
+}
 void fill_polynom(TPolynom* p, FILE* file) {
 	int i;
 	for (i = p->degree; i >= 0; i--) {
 		fscanf(file, "%f", &(p->coeff[i]));
 	}
 }
-
 void print_polynom(TPolynom* p) {
 	int i;
 	printf("%.2fx^%d ", (p->coeff[p->degree]), (p->degree));
 	for (i = p->degree - 1; i >= 0; i--) {
-		if (p->coeff[i] >= 0)
+		if (p->coeff[i] > 0)
 			printf("+ %.2fx^%d ", (p->coeff[i]), i);
-		else
+		else if (p->coeff[i] < 0)
 			printf("- %.2fx^%d ", -(p->coeff[i]), i);
 	}
 	printf("\n");
@@ -35,21 +76,24 @@ void print_polynom(TPolynom* p) {
 
 TPolynom* plus_polynom(TPolynom* p1, TPolynom* p2) {
 	TPolynom* res;
-	int i;
+	TPolynom* tmp;
+	int i, tmp_dgr = 0;
 	if ((p1->degree) > (p2->degree)) {
-		allocate_polynom(&res, p1->degree);
+		allocate_polynom(&tmp, p1->degree);
 		for (i = p1->degree; i >= 0; i--)
-			res->coeff[i] = p1->coeff[i];
+			tmp->coeff[i] = p1->coeff[i];
 		for (i = p2->degree; i >= 0; i--)
-			res->coeff[i] += p2->coeff[i];
+			tmp->coeff[i] += p2->coeff[i];
 	}
 	else {
-		allocate_polynom(&res, p2->degree);
+		allocate_polynom(&tmp, p2->degree);
 		for (i = p2->degree; i >= 0; i--)
-			res->coeff[i] = p2->coeff[i];
+			tmp->coeff[i] = p2->coeff[i];
 		for (i = p1->degree; i >= 0; i--)
-			res->coeff[i] += p1->coeff[i];
+			tmp->coeff[i] += p1->coeff[i];
 	}
+
+	res = allocate_polynom_copy(&res, &tmp);
 	return res;
 }
 
@@ -69,17 +113,19 @@ TPolynom* multi_polynom(TPolynom* p1, TPolynom* p2) {
 
 TPolynom* minus_polynom(TPolynom* p1, TPolynom* p2) {
 	TPolynom* res;
-	int i;
+	TPolynom* tmp;
+	int i, tmp_dgr = 0;
 	int M = ((p1->degree) > (p2->degree)) ? (p1->degree) : (p2->degree);
-	allocate_polynom(&res, M);
+	allocate_polynom(&tmp, M);
 	for (i = M; i >= 0; i--)
-		res->coeff[i] = 0;
+		tmp->coeff[i] = 0;
 
 	for (i = p1->degree; i >= 0; i--)
-		res->coeff[i] = p1->coeff[i];
+		tmp->coeff[i] = p1->coeff[i];
 	for (i = p2->degree; i >= 0; i--)
-		res->coeff[i] -= p2->coeff[i];
+		tmp->coeff[i] -= p2->coeff[i];
 
+	res = allocate_polynom_copy(&res, &tmp);
 	return res;
 }
 
@@ -100,18 +146,13 @@ TPolynom* diff_polynom(TPolynom* p) {
 }
 
 
-float power(float x, int n) {
+float value_polynome(TPolynom* p, float _x) {
 	int i;
-	float res = 1.0f;
-	for (i = 0; i < n; i++)
-		res *= x;
-	return res;
-}
+	float res = 0.0f, x = 1.0f;
+	for (i = 0; i < p->degree; i++) {
+		res += p->coeff[i] * x;
+		x *= _x;
+	}
 
-float value_polynome(TPolynom* p, float x) {
-	int i;
-	float res = 0.0f;
-	for (i = p->degree; i >= 0; i--)
-		res += p->coeff[i] * power(x, i);
 	return res;
 }
