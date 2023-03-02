@@ -37,4 +37,6 @@ void main() {
 	result = multiplication_const(m1, constant, dimension);
 	print_matrix(result, dimension);
 	free_m(&result);
+	free_m(&m1);
+	free_m(&m2);
 }

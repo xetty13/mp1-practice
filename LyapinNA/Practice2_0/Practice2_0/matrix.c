@@ -29,8 +29,10 @@ void print_matrix(TMatrix* matrix, int dimension)
 }
 
 TMatrix* addition(TMatrix* matrix1, TMatrix* matrix2, int dimension)
-{
+{	
 	TMatrix* result;
+	if (matrix1->d != matrix2->d)
+		return NULL;
 	allocate_matrix(&result, (matrix1->d) / dimension);
 	for (int i = 0; i < result->d; i++)
 		result->x[i] = matrix1->x[i] + matrix2->x[i];
@@ -40,18 +42,21 @@ TMatrix* addition(TMatrix* matrix1, TMatrix* matrix2, int dimension)
 
 TMatrix* multiplication(TMatrix* matrix1, TMatrix* matrix2, int dimension) 
 {
-	int row, column;
 	TMatrix* result;
+	int  k = 0, i = 0, j = 0;
+	if (matrix1->d != matrix2->d)
+		return NULL;
 	allocate_matrix(&result, (matrix1->d) / dimension);
-	for (int i = 0; i < matrix1->d; i++) {
-		result->x[i] = 0;
-		if (i >= dimension)
-			column = i % dimension;
-		else column = i;
-		row = i / dimension;
-
-		for (int j = 0; j < dimension; j++)
-			result->x[i] += matrix1->x[j + dimension*row] * matrix2->x[column + dimension*j];
+	for (i = 0; i < dimension; i++)
+	{
+		for (j = 0; j < dimension; j++)
+		{
+			result->x[i * dimension + j] = 0;
+			for (k = 0; k < dimension; k++)
+			{
+				result->x[i * dimension + j] += matrix1->x[i * dimension + k] * matrix2->x[k * dimension + j];
+			}
+		}
 	}
 	return result;
 }
