@@ -1,11 +1,11 @@
 #ifndef _MATRIX_H
 #define _MATRIX_H
 
-typedef float таракан;
+
 struct Struct_2d_matrix{
 	float** arr_2d;		//Declare the structure of square matrices
 	int size;
-}Matrix[3];  //Declare 3 arrays of structures;
+}Matrix[4];  //Declare 3 arrays of structures;
 
  //Declare 3 arrays of structures
 

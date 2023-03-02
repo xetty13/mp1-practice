@@ -51,51 +51,46 @@ void free_matrix(struct Struct_2d_matrix  *struct_p)
     free(struct_p->arr_2d); //Freeing up memory from underneath the strings
 }
 
-void add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res)
+void add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res1)
 {
     int i = 0;
- /*   if (matr1->size != matr2->size)
+    if (matr1->size != matr2->size)
     {
         printf("ERROR: Vectors should have the same lenght.\n");
         return NULL;
     }
- */
-    allocate_matrix(res, Matrix[0].size); //Definition of the res matrix
-    for (i=0; i < res->size; i++)
+ 
+    allocate_matrix(res1, matr1->size); //Definition of the res matrix
+    for (i=0; i < res1->size; i++)
     {
-        for (int j = 0; j < res->size; j++) {
-            res->arr_2d[i][j] = matr1->arr_2d[i][j] + matr2->arr_2d[i][j];//Add matr1 and matr2 element by element
+        for (int j = 0; j < res1->size; j++) {
+            res1->arr_2d[i][j] = matr1->arr_2d[i][j] + matr2->arr_2d[i][j];//Add matr1 and matr2 element by element
         }
     }
 }
 
-void multi_const(struct Struct_2d_matrix* res, float c)
+void multi_const(struct Struct_2d_matrix* matr1, float c)
 {
     int i = 0;
-    allocate_matrix(res, Matrix[0].size); //Definition of the res matrix
-    fill_matrix(res);
-    for (i = 0; i < res->size; i++)
+    for (i = 0; i < matr1->size; i++)
     {
-        for (int j = 0; j < res->size; j++) {
-            res->arr_2d[i][j] = res->arr_2d[i][j] * c;//Each element of the matrix res is multiplied by c
+        for (int j = 0; j < matr1->size; j++) {
+            matr1->arr_2d[i][j] = matr1->arr_2d[i][j] * c;//Each element of the matrix res is multiplied by c
         }
     }
 }
-void add_const(struct Struct_2d_matrix* res, float c)
+void add_const(struct Struct_2d_matrix* matr2, float c)
 {
     int i = 0;
-    allocate_matrix(res, Matrix[0].size);//Definition of the res matrix
-    fill_matrix(res);
-    for (i = 0; i < res->size; i++)
+    for (i = 0; i < matr2->size; i++)
     {
-        for (int j = 0; j < res->size; j++) {
-            res->arr_2d[i][j] = res->arr_2d[i][j] + c;//Each element of the matrix res is added by c
+        for (int j = 0; j < matr2->size; j++) {
+            matr2->arr_2d[i][j] = matr2->arr_2d[i][j] + c;//Each element of the matrix res is added by c
         }
     }
-    return res;
 }
 
-void multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res)
+void multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res2)
 {
     int k = 0;
     int i = 0;
@@ -106,17 +101,17 @@ void multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2
            return NULL;
        }
     */
-    allocate_matrix(res, Matrix[0].size);
-    for (i = 0; i < res->size; i++) {
-        for ( j = 0; j < res->size; j++) {
-            res->arr_2d[i][j] = 0;
+    allocate_matrix(res2, matr1->size);
+    for (i = 0; i < res2->size; i++) {
+        for ( j = 0; j < res2->size; j++) {
+            res2->arr_2d[i][j] = 0;
         }
     }
-    for (i = 0; i < res->size; i++)
+    for (i = 0; i < res2->size; i++)
     {
-        while (k < res->size) {//fix i-kth cell of matrix res
-            for (int j = 0; j < res->size; j++) {
-                res->arr_2d[i][k] += matr1->arr_2d[i][j] * matr2->arr_2d[j][k]; //matrix multiplication design
+        while (k < res2->size) {//fix i-kth cell of matrix res
+            for (int j = 0; j < res2->size; j++) {
+                res2->arr_2d[i][k] += matr1->arr_2d[i][j] * matr2->arr_2d[j][k]; //matrix multiplication design
             }
             k++;
         }
