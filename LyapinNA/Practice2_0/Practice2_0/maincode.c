@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "matrix.h"
 
 void main() {
@@ -23,7 +22,7 @@ void main() {
 	print_matrix(m2, dimension);
 	//складывание матриц
 	printf("\n\n\nMatrix addition\n");
-	result = addition(m1, m2);
+	result = addition(m1, m2, dimension);
 	print_matrix(result, dimension);
 	free_m(&result);
 	//умножение матриц
