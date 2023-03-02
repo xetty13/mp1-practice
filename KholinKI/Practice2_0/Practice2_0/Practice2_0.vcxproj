@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{55dab9dd-64ee-4a35-84b1-6f7e0875d44e}</ProjectGuid>
+    <ProjectGuid>{2f1640e9-54af-4ab5-bfbf-5bcfdd601b57}</ProjectGuid>
     <RootNamespace>Practice20</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -140,11 +140,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.c" />
-    <ClCompile Include="matrix_realization.c" />
+    <ClCompile Include="..\..\..\..\OneDrive\Рабочий стол\Practice2_0\main.c" />
+    <ClCompile Include="..\..\..\..\OneDrive\Рабочий стол\Practice2_0\matrix_realization.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="..\..\..\..\OneDrive\Рабочий стол\Practice2_0\Matrix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="..\..\..\..\OneDrive\Рабочий стол\Practice2_0\main.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="matrix_realization.c">
+    <ClCompile Include="..\..\..\..\OneDrive\Рабочий стол\Practice2_0\matrix_realization.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix.h">
+    <ClInclude Include="..\..\..\..\OneDrive\Рабочий стол\Practice2_0\Matrix.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
