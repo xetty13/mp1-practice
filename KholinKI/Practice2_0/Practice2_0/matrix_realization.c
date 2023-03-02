@@ -51,7 +51,7 @@ void free_matrix(struct Struct_2d_matrix  *struct_p)
     free(struct_p->arr_2d); //Freeing up memory from underneath the strings
 }
 
-struct Matrix* add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2,struct Struct_2d_matrix* res)
+void add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res)
 {
     int i = 0;
  /*   if (matr1->size != matr2->size)
@@ -67,10 +67,9 @@ struct Matrix* add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matri
             res->arr_2d[i][j] = matr1->arr_2d[i][j] + matr2->arr_2d[i][j];//Add matr1 and matr2 element by element
         }
     }
-    return res;
 }
 
-struct Matrix* multi_const(struct Struct_2d_matrix* res, float c)
+void multi_const(struct Struct_2d_matrix* res, float c)
 {
     int i = 0;
     allocate_matrix(res, Matrix[0].size); //Definition of the res matrix
@@ -81,9 +80,8 @@ struct Matrix* multi_const(struct Struct_2d_matrix* res, float c)
             res->arr_2d[i][j] = res->arr_2d[i][j] * c;//Each element of the matrix res is multiplied by c
         }
     }
-    return res;
 }
-struct Matrix* add_const(struct Struct_2d_matrix* res, float c)
+void add_const(struct Struct_2d_matrix* res, float c)
 {
     int i = 0;
     allocate_matrix(res, Matrix[0].size);//Definition of the res matrix
@@ -97,7 +95,7 @@ struct Matrix* add_const(struct Struct_2d_matrix* res, float c)
     return res;
 }
 
-struct Matrix* multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res)
+void multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2, struct Struct_2d_matrix* res)
 {
     int k = 0;
     int i = 0;
@@ -124,6 +122,5 @@ struct Matrix* multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_mat
         }
         k = 0;
     }
-    return res;
 }
 

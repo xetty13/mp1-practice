@@ -25,19 +25,19 @@ int main()
  //   print_matrix(dynamic_matrix2);
   */
 
-    res = add_matrix(dynamic_matrix1, dynamic_matrix2,res);
+    add_matrix(dynamic_matrix1, dynamic_matrix2,res);
     print_matrix(res);
     free_matrix(res);
 
-    res = multi_const(res, c);
+    multi_const(res, c);
     print_matrix(res);
     free_matrix(res);
 
-    res = add_const(res, c);
+    add_const(res, c);
     print_matrix(res); 
     free_matrix(res);
 
-    res = multi_matrix(dynamic_matrix1, dynamic_matrix2, res);
+    multi_matrix(dynamic_matrix1, dynamic_matrix2, res);
     print_matrix(res);
     free_matrix(res);
 
