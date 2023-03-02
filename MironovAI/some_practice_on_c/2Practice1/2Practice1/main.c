@@ -21,7 +21,6 @@ int main() {
     fscanf(file, "%d", &n);
 
     BanksData* data = (BanksData*)malloc(sizeof(BanksData) * n);
-
     read(file, data, n);
     print_data(data, n);
 
@@ -30,9 +29,10 @@ int main() {
     input_user_data(&user_year, &user_money);
     pair ans = comparing(data, n, user_year, user_money);
 
-    printf("\n!!!  The best suggestion for you in %s  %s.\n!!!  Your benefit in %d years will be %.2f rubles \n!!!  if you would invest %.2f at a %.2f %% per year\n ", data[ans.id1].ownership, data[ans.id1].name, user_year, ans.profit, user_money, data[ans.id1].conditions[ans.id2]);
-   
-    freedata(&data,n);
+    printf("\n The best suggestion for you in %s %s.\n \n if you would invest %.2f in %s deposit at a %.2f per year\n \nYour benefit in %d years will be %.2f rubles \n", data[ans.id1].ownership, data[ans.id1].name, user_money, data[ans.id1].deposits[ans.id2].name, data[ans.id1].deposits[ans.id2].conditions, user_year, ans.profit);
+
+    freedata(&data, n);
+
     free(path);
     free(data);
     return 0;
