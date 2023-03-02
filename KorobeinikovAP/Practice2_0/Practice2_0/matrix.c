@@ -1,5 +1,5 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <stdlib.h>
 #include "matrix.h"
 
 void allocate_m(TMatrix** matrix, int n)
@@ -14,7 +14,7 @@ void allocate_m(TMatrix** matrix, int n)
 void fill_matrix(TMatrix* matrix)
 {
 	int i,j;
-	for (i = 0; i < matrix->n; i++){
+	for (i = 0; i < matrix->n; i++){ 
 		for (j = 0; j < matrix->n; j++) {
 			scanf("%f", &(matrix->x[matrix->n*i+j]));
 		}

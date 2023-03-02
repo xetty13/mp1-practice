@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include "matrix.h"
 
@@ -36,7 +35,6 @@ int main() {
 	res = multi_matrix(m1, m2);
 	print_matrix(res);
 	free_matrix(&res);
-
 
 	return 0;
 }
