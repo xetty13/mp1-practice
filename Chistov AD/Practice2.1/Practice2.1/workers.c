@@ -33,7 +33,6 @@ void databse() {
 }
 
 int amount() {
-	setlocale(LC_ALL, "Rus");
 	int n = 0;
 	FILE* file;
 	char table[N];
@@ -45,25 +44,44 @@ int amount() {
 	fclose(file);
 }
 
-int higher_education() {
+int higher_education(worker** w) {
 	setlocale(LC_ALL, "Rus");
 	float counter = 0;
-	worker w;
 	FILE* file;
+	char* istr;
+	char sep = ' ';
+	char table[N];
+	int i, j;
 	int n =amount();
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
-
-
-
-
-	printf("All employees with higher education from the database:\n");
-	while (fread(&w, sizeof(worker), 1, file)) {
-		if (strcmp(w.education, "no") != 0) {
-			printf("%-5s%-20s\n", w.id, w.education);
+	fgets(table, N, file);
+	istr = strtok(table,sep);
+	while (istr != NULL) {
+		for (int i = 0; i < n; i++) {
+			(*w)->id[i] = istr;
+			istr = strtok(NULL, sep);
+			(*w)->profession[i] = istr;
+			istr = strtok(NULL, sep);
+			(*w)->education[i] = istr;
+			istr = strtok(NULL, sep);
+			(*w)->last_job[i] = istr;
+			istr = strtok(NULL, sep);
+			(*w)->rsn_dismis[i] = istr;
+			istr = strtok(NULL, sep);
+			(*w)->family_status[i] = istr;
+			istr = strtok(NULL, sep);
+			(*w)->contact_info[i] = istr;
+			istr = strtok(NULL, sep);
+		}
+	}
+	while (fread(*w, sizeof(worker), 1, file)) {
+		if (strcmp((*w)->education, "no") != 0) {
+			printf("%-5s%-20s\n", (*w)->id, (*w)->education);
 			counter++;
 		}
 	}
+	
 	printf("Percentage of employees with higher education:%f\n ", (counter / N) * 100);
 	fclose(file);
 }
