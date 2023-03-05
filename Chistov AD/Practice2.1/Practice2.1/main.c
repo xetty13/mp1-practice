@@ -4,7 +4,6 @@
 
 int main() {
 	int answer;
-	int n;
 	do {
 		printf("MENU:\n");
 		printf("1.The entire database of employees\n");
@@ -21,3 +20,4 @@ int main() {
 		}
 	} while (answer != 4);
 }
+
