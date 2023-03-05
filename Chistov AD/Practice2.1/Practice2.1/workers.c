@@ -1,47 +1,43 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include "workers.h";
+#define N 100
 
-int adding() {
-	worker* w;
+void databse() {
 	FILE* file;
-	int n;
-	printf("How many workers do you want to add:");
-	scanf("%d", &n);
-	file = fopen("label exchange.txt", "a+");
+	char table[N];
+	setlocale(LC_ALL, "Rus");
+	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
-	w = (worker*)calloc(n, sizeof(worker));
-	for (int i = 0; i < n; i++)
-	{
-		printf("Enter id:\n");
-		scanf("%s", w[i].id);
-		/*printf("Enter profession:\n");
-		scanf("%s", w[i].profession);	*/
-		printf("Enter education:\n");
-		scanf("%s", w[i].education);
-		/*
-		printf("Enter last job:\n");
-		scanf("%s", w[i].last_job);
-		printf("Enter reason of dismiss:\n");
-		scanf("%s", w[i].rsn_dismis);
-		printf("Enter family status : \n");
-		scanf("%s", w[i].family_status);
-		printf("Enter contact information:\n");
-		scanf("%s", w[i].contact_info);
-		*/
-		fwrite(&w[i], sizeof(worker), 1, file);
+	while (fgets(table, N, file) != NULL) {
+		printf("%s", table);
 	}
-	free(w);
+	int n = amount();
+	printf("Total employees-% d\n", n );
+	system("pause");
 	system("cls");
 	fclose(file);
 }
 
-int workers() {
+int amount() {
+	int n = 0;
+	FILE* file;
+	char table[N];
+	file = fopen("label exchange.txt", "r");
+	while (fgets(table, N, file) != NULL) {
+		n++;
+	}
+	return n/2;
+	fclose(file);
+}
+
+int higher_education() {
 	float counter = 0;
 	worker w;
 	FILE* file;
-	float  N = amount();
+	int n =amount();
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	printf("All employees with higher education from the database:\n");
@@ -55,12 +51,20 @@ int workers() {
 	fclose(file);
 }
 
-float amount() {
+void percent() {
 	FILE* file;
+	char table[N];
+	char arr[N];
+	int counter = 0;
+	setlocale(LC_ALL, "Rus");
 	file = fopen("label exchange.txt", "r");
-	fseek(file, 0, SEEK_END);
-	float n = ftell(file) / sizeof(worker);
-	return n;
-	fclose(file);
-}
+	if (file == NULL) { printf("Can't open file"); return 1; }
+	fgets(arr, N, file);
+	while (fgets(table, N, file) != NULL) {
+		if (strcmp(arr, "нет") == 0) {
+			counter++;
+		}
+	}
+	printf("Total employees-% d\n", counter);
 
+}
