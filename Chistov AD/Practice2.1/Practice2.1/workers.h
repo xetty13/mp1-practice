@@ -3,6 +3,7 @@
 #define LINE 50
 
 typedef struct {
+	char string[LINE];
 	char id[LINE];
 	char profession[LINE];
 	char education[LINE];
@@ -12,7 +13,8 @@ typedef struct {
 	char contact_info[LINE];
 }worker;
 
-int adding();
-float amount();
-int workers();
+void database();
+int amount();
+int higher_education();
+void percent();
 #endif 
