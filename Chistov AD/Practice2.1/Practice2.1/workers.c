@@ -2,18 +2,69 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 #include "workers.h";
-#define N 100
+#define N 1000
 
-void allocate(worker** w) {
-	(*w) = (worker*)malloc(sizeof(worker) * 1);
-	(*w)->id = (char*)malloc(sizeof(char) * N);
-	(*w)->profession = (char*)malloc(sizeof(char) * N);
-	(*w)->education = (char*)malloc(sizeof(char) * N);
-	(*w)->last_job = (char*)malloc(sizeof(char) * N);
-	(*w)->rsn_dismis = (char*)malloc(sizeof(char) * N);
-	(*w)->family_status = (char*)malloc(sizeof(char) * N);
-	(*w)->contact_info = (char*)malloc(sizeof(char) * N);
+void allocate(worker** w, int n  ) {
+		int i;
+		*w = (worker*)malloc(sizeof(worker) * 1);
+		(*w)->id = (char**)malloc(n * sizeof(char*));
+		for (i = 0; i < n; i++) {
+			(*w)->id[i] = (char*)malloc(100 * sizeof(char));
+		}
+		(*w)->profession = (char**)malloc(n * sizeof(char*));
+		for (i = 0; i < n; i++) {
+			(*w)->profession[i] = (char*)malloc(100 * sizeof(char));
+		}
+		(*w)->education = (char**)malloc(n * sizeof(char*));
+		for (i = 0; i < n; i++) {
+			(*w)->education[i] = (char*)malloc(1000 * sizeof(char));
+		}
+		(*w)->rsn_dismiss = (char**)malloc(n * sizeof(char*));
+		for (i = 0; i < n; i++) {
+			(*w)->rsn_dismiss[i] = (char*)malloc(100 * sizeof(char));
+		}
+		(*w)->family_status = (char**)malloc(n * sizeof(char*));
+		for (i = 0; i < n; i++) {
+			(*w)->family_status[i] = (char*)malloc(100 * sizeof(char));
+		}
+		(*w)->contact_info = (char**)malloc(n * sizeof(char*));
+		for (i = 0; i < n; i++) {
+			(*w)->contact_info[i] = (char*)malloc(100 * sizeof(char));
+		}
+	}
+
+int counter( ) {
+	char c;
+	int count = 0;
+	FILE* file = fopen("label exchange.txt", "r");
+if (file == NULL) { printf("Can't open file"); return 1; }
+	for (c = getc(file); c != EOF; c = getc(file)) {
+		count++;
+	}
+	fclose(file);
+	return count;
+}
+
+int amount( ) {
+	int amount = 0;
+	char* s = (char*)malloc(N * sizeof(char));
+	FILE* file = fopen("label exchange.txt", "r");
+if (file == NULL) { printf("Can't open file"); return 1; }
+	while (1) {
+		if (fgets(s, N, file) != NULL) {
+			if (strcmp(s, "\n") != 0) {
+				amount++;
+			}
+		}
+		else {
+			break;
+		}
+	}
+	fclose(file);
+	free(s);
+	return amount;
 }
 
 void databse() {
@@ -32,69 +83,117 @@ void databse() {
 	fclose(file);
 }
 
-int amount() {
-	int n = 0;
+char* readFile( int charCount) {
 	FILE* file;
-	char table[N];
+	int n = counter;
 	file = fopen("label exchange.txt", "r");
-	while (fgets(table, N, file) != NULL) {
-		n++;
-	}
-	return n/2;
-	fclose(file);
-}
-
-int higher_education(worker** w) {
-	setlocale(LC_ALL, "Rus");
-	float counter = 0;
-	FILE* file;
-	char* istr;
-	char sep = ' ';
-	char table[N];
-	int i, j;
-	int n =amount();
-	file = fopen("label exchange.txt", "r");
+	char* str = (char*)malloc(1024 * sizeof(char));
+	char* buff = (char*)malloc(10 * charCount * sizeof(char));
+	char* bcpy = (char*)malloc(10 * charCount * sizeof(char));
 	if (file == NULL) { printf("Can't open file"); return 1; }
-	fgets(table, N, file);
-	istr = strtok(table,sep);
-	while (istr != NULL) {
-		for (int i = 0; i < n; i++) {
-			(*w)->id[i] = istr;
-			istr = strtok(NULL, sep);
-			(*w)->profession[i] = istr;
-			istr = strtok(NULL, sep);
-			(*w)->education[i] = istr;
-			istr = strtok(NULL, sep);
-			(*w)->last_job[i] = istr;
-			istr = strtok(NULL, sep);
-			(*w)->rsn_dismis[i] = istr;
-			istr = strtok(NULL, sep);
-			(*w)->family_status[i] = istr;
-			istr = strtok(NULL, sep);
-			(*w)->contact_info[i] = istr;
-			istr = strtok(NULL, sep);
+	while (1) {
+		if (fgets(str, 1000, file) != NULL) {
+			strcpy(bcpy, buff);
+			snprintf(buff, charCount+1, "%s%s", str, bcpy);}
+		else {
+			break;
 		}
 	}
-	while (fread(*w, sizeof(worker), 1, file)) {
-		if (strcmp((*w)->education, "no") != 0) {
+	free(str);
+	free(bcpy);
+	fclose(file);
+	return buff;
+}
+
+void higher_education(worker** w) {
+	float counter = 0;
+	FILE* file;
+	float  n = amount();
+	file = fopen("label exchange.txt", "r");
+	if (file == NULL) { printf("Can't open file"); return 1; }
+	printf("All employees with higher education from the database:\n");
+	while (fread(&w, sizeof(worker), 1, file)) {
+		if (strcmp((*w)->education, "нет") != 0) {
 			printf("%-5s%-20s\n", (*w)->id, (*w)->education);
 			counter++;
 		}
 	}
-	
-	printf("Percentage of employees with higher education:%f\n ", (counter / N) * 100);
+	printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
 	fclose(file);
 }
 
-void percent() {}
+void fill(worker* w, char* buff) {
+	char* token;
+	char delim[] = "|\n";
+	int i = 0;
+	int j = 0;
+	for (token = strtok(buff, delim); token; token = strtok(NULL, delim)) {
+		//printf("token=%s\n", token);
+		switch (i) {
+		case 0:
+			w->id[j] = token;
+			break;
+		case 1:
+			w->profession[j] = token;
+			break;
+		case 2:
+			w->education[j] = token;
+			break;
+		case 3:
+			w->last_job[j] = token;
+			break;
+		case 4:
+			w->rsn_dismiss[j] = token;
+			break;
+		case 5:
+			w->family_status; break;
+		case 6:
+			w->contact_info[j] = token;
+			i = -1;
+			j++;
+			break;
+		}
+		i++;
+	}
+}
 
-void free(worker** w) {
+void memory_free(worker** w, int n) {
+	int i;
+	for (i = 0; i < n; i++) {
+		(*w)->id[i] = NULL;
+		free((*w)->id[i]);
+	}
 	free((*w)->id);
+	for (i = 0; i < n; i++) {
+		(*w)->profession[i] = NULL;
+		free((*w)->profession[i]);
+	}
 	free((*w)->profession);
+	for (i = 0; i < n; i++) {
+		(*w)->education[i] = NULL;
+		free((*w)->education[i]);
+	}
 	free((*w)->education);
+	for (i = 0; i < n; i++) {
+		(*w)->last_job[i] = NULL;
+		free((*w)->last_job[i]);
+	}
 	free((*w)->last_job);
-	free((*w)->rsn_dismis);
+	for (i = 0; i < n; i++) {
+		(*w)->rsn_dismiss[i] = NULL;
+		free((*w)->rsn_dismiss[i]);
+	}
+	free((*w)->rsn_dismiss);
+	for (i = 0; i < n; i++) {
+		(*w)->family_status[i] = NULL;
+		free((*w)->family_status[i]);
+	}
 	free((*w)->family_status);
+	for (i = 0; i < n; i++) {
+		(*w)->contact_info[i] = NULL;
+		free((*w)->contact_info[i]);
+	}
 	free((*w)->contact_info);
 	free(*w);
 }
+
