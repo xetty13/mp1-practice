@@ -98,9 +98,6 @@ char* readFile(int charCount) {
 			break;
 		}
 	}
-	free(str);
-	free(bcpy);
-	fclose(file);
 	return buff;
 }
 
@@ -138,18 +135,19 @@ void adding(worker* w, char* buff) {
 	}
 }
 
-void higher_education(worker** w, int stringCount) {
+void higher_education(worker** w, int count) {
 	float counter = 0;
 	FILE* file;
 	float  n = amount();
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	int i;
-	for (i = 0; i < stringCount; i++) {
-		if (strcmp((*w)->education, " no'") != 0) {
-			printf("%-5s%-20s\n", (*w)->id, (*w)->education);
+	for (i = 0; i < count; i++) {
+		if (strcmp((*w)->education[i], 'no') != 0) {
+			printf("%-5s%-20s\n", (*w)->id[i], (*w)->education[i]);
 			counter++;
 		}
+		else { continue; }
 	}
 printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
 system("pause");
