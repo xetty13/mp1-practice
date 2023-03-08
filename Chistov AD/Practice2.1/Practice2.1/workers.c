@@ -53,7 +53,6 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 }
 
 int amount( ) {
-	setlocale(LC_ALL, "Russian");
 	int amount = 0;
 	char* s = (char*)malloc(N * sizeof(char));
 	FILE* file = fopen("label exchange.txt", "r");
@@ -73,11 +72,10 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 	return amount;
 }
 
-void databse() {
+void database () {
 	setlocale(LC_ALL, "Russian");	
-	FILE* file;
+	FILE* file = fopen("label exchange.txt", "r");;
 	char table[N];
-	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	while (fgets(table, N, file) != NULL) {
 		printf("%s", table);
@@ -110,7 +108,6 @@ char* readFile(int charCount) {
 	fclose(file);
 	return buff;
 }
-
 
 void adding(worker* w, char* buff) {
 	setlocale(LC_ALL, "Rus");
@@ -155,7 +152,7 @@ void higher_education(worker** w) {
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	while (fread(&w, sizeof(worker), 1, file)) {
-		if (strcmp((*w)->education, "нет") != 0) {
+		if (strcmp((*w)->education, " нет'") != 0) {
 			printf("%-5s%-20s\n", (*w)->id, (*w)->education);
 			counter++;
 		}
@@ -163,9 +160,7 @@ void higher_education(worker** w) {
 	printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
 	fclose(file);
 }
-
-
-void memory_free(worker** w, int n) {
+ void memory_free(worker** w, int n) {
 	setlocale(LC_ALL, "Rus");
 	int i;
 	for (i = 0; i < n; i++) {
@@ -205,3 +200,4 @@ void memory_free(worker** w, int n) {
 	free((*w)->contact_info);
 	free(*w);
 }
+
