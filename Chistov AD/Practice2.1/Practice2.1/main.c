@@ -1,13 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
 #include "workers.h";
 #define N 100
 
 int main() {
-	setlocale(LC_ALL, "Russian");
 	worker* w;
 	char* buffer;
 	char* fileStr;
@@ -26,8 +24,8 @@ int main() {
 		scanf("%d", &answer);
 		switch (answer) {
 		case 1: database ()  ; break;
-		case 2: higher_education(w); system("pause"); break;
-		case 3: {memory_free (w, stringCount); return 0; }
+		case 2: higher_education(w, stringCount);  break;
+		case 3: {memory_free (&w, stringCount); return 0; }
 		}
 		} while (answer != 3);
 	}
