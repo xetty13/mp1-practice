@@ -2,19 +2,19 @@
 #define _WORKERS_H
 
 typedef struct {
-	char *id;
-	char *profession;
-	char *education;
-	char *last_job;
-	char *rsn_dismis;
-	char *family_status;
-	char *contact_info;
+	char **id;
+	char  **profession;
+	char  **education;
+	char  **last_job;
+	char  **rsn_dismiss;
+	char  **family_status;
+	char  **contact_info;
 }worker;
 
+void allocate(worker** w);
 void database();
 void allocate(worker** w);
-void free(worker** w);
-void percent();
+void memory_free(worker** w);
 int amount();
-int higher_education();
+void higher_education();
 #endif 
