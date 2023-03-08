@@ -11,10 +11,12 @@ typedef struct {
 	char  **contact_info;
 }worker;
 
-void allocate(worker** w);
-void database();
-void allocate(worker** w);
-void memory_free(worker** w);
+void allocate(worker** w, int n);
+int counter();
 int amount();
-void higher_education();
+char* readFile();
+void database();
+void add(worker* w, char* buff);
+void higher_education(worker** w);
+void memory_free(worker** w);
 #endif 
