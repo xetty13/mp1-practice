@@ -1,6 +1,7 @@
 #ifndef _MATRIX_H
 #define _MATRIX_H
 
+typedef struct Struct_2d_matrix TDmatrix;
 
 struct Struct_2d_matrix{
 	float** arr_2d;		//Declare the structure of square matrices

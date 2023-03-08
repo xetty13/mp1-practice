@@ -7,11 +7,11 @@ int main()
 {
     int i = 0;
     float c = 6;
-    struct Struct_2d_matrix *dynamic_matrix1;
+    TDmatrix*dynamic_matrix1;
     dynamic_matrix1 = &Matrix[0];
-    struct Struct_2d_matrix* dynamic_matrix2;          //Declare three pointers to square matrices
+    TDmatrix* dynamic_matrix2;          //Declare three pointers to square matrices
     dynamic_matrix2 = &Matrix[1];
-    struct Struct_2d_matrix* res;
+    TDmatrix* res;
     int size_2d;
     printf("Specify the dimension of the square matrix: \n");   //Determine the size of the square matrices
     scanf("%d", &size_2d);

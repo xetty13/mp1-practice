@@ -2,7 +2,7 @@
 #include <malloc.h>
 #include "Matrix.h"
 
-void allocate_matrix(struct Struct_2d_matrix *struct_p, int size)
+void allocate_matrix(TDmatrix *struct_p, int size)
 {
 
     int i = 0;
@@ -13,7 +13,7 @@ void allocate_matrix(struct Struct_2d_matrix *struct_p, int size)
     }
 }
 
-void fill_matrix(struct Struct_2d_matrix *struct_p)
+void fill_matrix(TDmatrix *struct_p)
 {
     printf("Fill the matrix: \n");
     int i = 0;
@@ -27,7 +27,7 @@ void fill_matrix(struct Struct_2d_matrix *struct_p)
     }
 }
 
-void print_matrix(struct Struct_2d_matrix *struct_p)
+void print_matrix(TDmatrix*struct_p)
 {
     printf("Two-demension matrix: \n");
     int i = 0;
@@ -42,7 +42,7 @@ void print_matrix(struct Struct_2d_matrix *struct_p)
     printf("\n");
 }
 
-void free_matrix(struct Struct_2d_matrix  *struct_p)
+void free_matrix(TDmatrix *struct_p)
 {
     int i = 0;
     for (i = 0; i < struct_p->size;i++) {
@@ -51,7 +51,7 @@ void free_matrix(struct Struct_2d_matrix  *struct_p)
     free(struct_p->arr_2d); //Freeing up memory from underneath the strings
 }
 
-struct Struct_2d_matrix* add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2)
+TDmatrix* add_matrix(TDmatrix* matr1, TDmatrix* matr2)
 {
     struct Struct_2d_matrix* res1 = &Matrix[2];//Getting the address of structure number 2
     int i = 0, j = 0;
@@ -70,7 +70,7 @@ struct Struct_2d_matrix* add_matrix(struct Struct_2d_matrix* matr1, struct Struc
     return res1;
 }
 
-struct Struct_2d_matrix* multi_const(struct Struct_2d_matrix* matr1, float c)
+TDmatrix* multi_const(TDmatrix* matr1, float c)
 {
     struct Struct_2d_matrix* res2 = &Matrix[2];//Getting the address of structure number 2
     int i = 0,j=0;
@@ -84,7 +84,7 @@ struct Struct_2d_matrix* multi_const(struct Struct_2d_matrix* matr1, float c)
     return res2;
 
 }
- struct Struct_2d_matrix* add_const(struct Struct_2d_matrix* matr2, float c)
+TDmatrix* add_const(TDmatrix* matr2, float c)
  {
     struct Struct_2d_matrix* res3 = &Matrix[2];//Getting the address of structure number 2
     int i = 0, j =0;
@@ -98,7 +98,7 @@ struct Struct_2d_matrix* multi_const(struct Struct_2d_matrix* matr1, float c)
     return res3;
 }
 
- struct Struct_2d_matrix* multi_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2)
+TDmatrix* multi_matrix(TDmatrix* matr1, TDmatrix* matr2)
 {
     int k = 0;
     int i = 0;
