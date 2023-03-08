@@ -16,7 +16,7 @@ int counter();
 int amount();
 char* readFile();
 void database();
-void add(worker* w, char* buff);
+void adding(worker* w, char* buff);
 void higher_education(worker** w);
 void memory_free(worker** w);
 #endif 
