@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
 #include "workers.h";
 #define N 1000
@@ -40,7 +39,6 @@ void allocate(worker** w, int n  ) {
 	}
 
 int counter( ) {
-	setlocale(LC_ALL, "Russian");
 	char c;
 	int count = 0;
 	FILE* file = fopen("label exchange.txt", "r");
@@ -73,7 +71,6 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 }
 
 void database () {
-	setlocale(LC_ALL, "Russian");	
 	FILE* file = fopen("label exchange.txt", "r");;
 	char table[N];
 	if (file == NULL) { printf("Can't open file"); return 1; }
@@ -88,9 +85,7 @@ void database () {
 }
 
 char* readFile(int charCount) {
-	setlocale(LC_ALL, "Russian");
-	FILE* file;
-	file = fopen("label exchange.txt", "r");
+	FILE* file = fopen("label exchange.txt", "r");
 	char* str = (char*)malloc(1024 * sizeof(char));
 	char* buff = (char*)malloc(10 * charCount * sizeof(char));
 	char* bcpy = (char*)malloc(10 * charCount * sizeof(char));
@@ -110,7 +105,6 @@ char* readFile(int charCount) {
 }
 
 void adding(worker* w, char* buff) {
-	setlocale(LC_ALL, "Rus");
 	char* token;
 	char delim[] = ";\n";
 	int i = 0;
@@ -144,24 +138,26 @@ void adding(worker* w, char* buff) {
 	}
 }
 
-void higher_education(worker** w) {
-	setlocale(LC_ALL, "Russian");
+void higher_education(worker** w, int stringCount) {
 	float counter = 0;
 	FILE* file;
 	float  n = amount();
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
-	while (fread(&w, sizeof(worker), 1, file)) {
-		if (strcmp((*w)->education, " нет'") != 0) {
+	int i;
+	for (i = 0; i < stringCount; i++) {
+		if (strcmp((*w)->education, " no'") != 0) {
 			printf("%-5s%-20s\n", (*w)->id, (*w)->education);
 			counter++;
 		}
 	}
-	printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
-	fclose(file);
+printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
+system("pause");
+system("cls");
+fclose(file);
 }
- void memory_free(worker** w, int n) {
-	setlocale(LC_ALL, "Rus");
+
+void memory_free(worker** w, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
 		(*w)->id[i] = NULL;
@@ -200,4 +196,3 @@ void higher_education(worker** w) {
 	free((*w)->contact_info);
 	free(*w);
 }
-
