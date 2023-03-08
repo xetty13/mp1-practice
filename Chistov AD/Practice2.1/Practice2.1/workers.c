@@ -17,6 +17,10 @@ void allocate(worker** w, int n  ) {
 		for (i = 0; i < n; i++) {
 			(*w)->profession[i] = (char*)malloc(100 * sizeof(char));
 		}
+		(*w)->last_job = (char**)malloc(n * sizeof(char*));
+		for (i = 0; i < n; i++) {
+			(*w)->last_job[i] = (char*)malloc(100 * sizeof(char));
+		}
 		(*w)->education = (char**)malloc(n * sizeof(char*));
 		for (i = 0; i < n; i++) {
 			(*w)->education[i] = (char*)malloc(1000 * sizeof(char));
@@ -36,6 +40,7 @@ void allocate(worker** w, int n  ) {
 	}
 
 int counter( ) {
+	setlocale(LC_ALL, "Russian");
 	char c;
 	int count = 0;
 	FILE* file = fopen("label exchange.txt", "r");
@@ -48,6 +53,7 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 }
 
 int amount( ) {
+	setlocale(LC_ALL, "Russian");
 	int amount = 0;
 	char* s = (char*)malloc(N * sizeof(char));
 	FILE* file = fopen("label exchange.txt", "r");
@@ -68,7 +74,7 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 }
 
 void databse() {
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "Russian");	
 	FILE* file;
 	char table[N];
 	file = fopen("label exchange.txt", "r");
@@ -83,9 +89,9 @@ void databse() {
 	fclose(file);
 }
 
-char* readFile( int charCount) {
+char* readFile(int charCount) {
+	setlocale(LC_ALL, "Russian");
 	FILE* file;
-	int n = counter;
 	file = fopen("label exchange.txt", "r");
 	char* str = (char*)malloc(1024 * sizeof(char));
 	char* buff = (char*)malloc(10 * charCount * sizeof(char));
@@ -94,7 +100,7 @@ char* readFile( int charCount) {
 	while (1) {
 		if (fgets(str, 1000, file) != NULL) {
 			strcpy(bcpy, buff);
-			snprintf(buff, charCount+1, "%s%s", str, bcpy);}
+			snprintf(buff, charCount, "%s%s", str, bcpy);}
 		else {
 			break;
 		}
@@ -105,30 +111,14 @@ char* readFile( int charCount) {
 	return buff;
 }
 
-void higher_education(worker** w) {
-	float counter = 0;
-	FILE* file;
-	float  n = amount();
-	file = fopen("label exchange.txt", "r");
-	if (file == NULL) { printf("Can't open file"); return 1; }
-	printf("All employees with higher education from the database:\n");
-	while (fread(&w, sizeof(worker), 1, file)) {
-		if (strcmp((*w)->education, "нет") != 0) {
-			printf("%-5s%-20s\n", (*w)->id, (*w)->education);
-			counter++;
-		}
-	}
-	printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
-	fclose(file);
-}
 
-void fill(worker* w, char* buff) {
+void adding(worker* w, char* buff) {
+	setlocale(LC_ALL, "Rus");
 	char* token;
-	char delim[] = "|\n";
+	char delim[] = ";\n";
 	int i = 0;
 	int j = 0;
 	for (token = strtok(buff, delim); token; token = strtok(NULL, delim)) {
-		//printf("token=%s\n", token);
 		switch (i) {
 		case 0:
 			w->id[j] = token;
@@ -157,7 +147,26 @@ void fill(worker* w, char* buff) {
 	}
 }
 
+void higher_education(worker** w) {
+	setlocale(LC_ALL, "Russian");
+	float counter = 0;
+	FILE* file;
+	float  n = amount();
+	file = fopen("label exchange.txt", "r");
+	if (file == NULL) { printf("Can't open file"); return 1; }
+	while (fread(&w, sizeof(worker), 1, file)) {
+		if (strcmp((*w)->education, "нет") != 0) {
+			printf("%-5s%-20s\n", (*w)->id, (*w)->education);
+			counter++;
+		}
+	}
+	printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
+	fclose(file);
+}
+
+
 void memory_free(worker** w, int n) {
+	setlocale(LC_ALL, "Rus");
 	int i;
 	for (i = 0; i < n; i++) {
 		(*w)->id[i] = NULL;
@@ -196,4 +205,3 @@ void memory_free(worker** w, int n) {
 	free((*w)->contact_info);
 	free(*w);
 }
-
