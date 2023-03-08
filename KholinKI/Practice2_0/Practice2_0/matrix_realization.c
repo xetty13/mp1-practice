@@ -53,7 +53,7 @@ void free_matrix(struct Struct_2d_matrix  *struct_p)
 
 struct Struct_2d_matrix* add_matrix(struct Struct_2d_matrix* matr1, struct Struct_2d_matrix* matr2)
 {
-    struct Struct_2d_matrix* res1 = &Matrix[2];
+    struct Struct_2d_matrix* res1 = &Matrix[2];//Getting the address of structure number 2
     int i = 0, j = 0;
     if (matr1->size != matr2->size)
     {
@@ -72,7 +72,7 @@ struct Struct_2d_matrix* add_matrix(struct Struct_2d_matrix* matr1, struct Struc
 
 struct Struct_2d_matrix* multi_const(struct Struct_2d_matrix* matr1, float c)
 {
-    struct Struct_2d_matrix* res2 = &Matrix[3];
+    struct Struct_2d_matrix* res2 = &Matrix[2];//Getting the address of structure number 2
     int i = 0,j=0;
     allocate_matrix(res2, matr1->size); //Definition of the res matrix
     for (i = 0; i < matr1->size; i++)
@@ -86,7 +86,7 @@ struct Struct_2d_matrix* multi_const(struct Struct_2d_matrix* matr1, float c)
 }
  struct Struct_2d_matrix* add_const(struct Struct_2d_matrix* matr2, float c)
  {
-    struct Struct_2d_matrix* res3 = &Matrix[4];
+    struct Struct_2d_matrix* res3 = &Matrix[2];//Getting the address of structure number 2
     int i = 0, j =0;
     allocate_matrix(res3, matr2->size); //Definition of the res matrix
     for (i = 0; i < matr2->size; i++)
@@ -103,7 +103,7 @@ struct Struct_2d_matrix* multi_const(struct Struct_2d_matrix* matr1, float c)
     int k = 0;
     int i = 0;
     int j = 0;
-    struct Struct_2d_matrix* res4 = &Matrix[5];
+    struct Struct_2d_matrix* res4 = &Matrix[2];//Getting the address of structure number 2
        if (matr1->size != matr2->size)
        {
            printf("ERROR: Vectors should have the same lenght.\n");

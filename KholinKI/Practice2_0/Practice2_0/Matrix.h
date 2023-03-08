@@ -5,7 +5,7 @@
 struct Struct_2d_matrix{
 	float** arr_2d;		//Declare the structure of square matrices
 	int size;
-}Matrix[6];  //Declare 3 arrays of structures;
+}Matrix[3];  //Declare 3 arrays of structures;
 
  //Declare 3 arrays of structures
 
