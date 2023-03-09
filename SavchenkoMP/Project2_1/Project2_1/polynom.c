@@ -30,7 +30,7 @@ void free_polynom(TPolynom** polynom) {
 }
 
 
-void read_file(TPolynom*** p, FILE** file, int* n) {
+void read_file(TPolynom*** p, int* n) {
 	/*
 	Чтение происходит из файла "data.txt"
 	-В первой строке - количество полиномов
@@ -40,20 +40,21 @@ void read_file(TPolynom*** p, FILE** file, int* n) {
 	!!!Предполагается, что введенные данные верны!!!
 	*/
 	int i, dgr;
-	*(file) = fopen("data.txt", "r");
-	fscanf(*(file), "%d", n);
+	FILE* file;
+	file = fopen("data.txt", "r");
+	fscanf(file, "%d", n);
 
 	*(p) = (TPolynom**)malloc(sizeof(TPolynom*) * *(n)); // массив полиномов
 	for (i = 0; i < *(n); i++) {
 		// Инициализация
-		fscanf(*(file), "%d", &dgr);
+		fscanf(file, "%d", &dgr);
 		allocate_polynom(&((*(p))[i]), dgr);
 	}
 	for (i = 0; i < *(n); i++) {
 		// Заполнение
-		fill_polynom((*(p))[i], *(file));
+		fill_polynom((*(p))[i], file);
 	}
-	fclose(*(file));
+	fclose(file);
 }
 void fill_polynom(TPolynom* p, FILE* file) {
 	int i;
@@ -149,7 +150,7 @@ TPolynom* diff_polynom(TPolynom* p) {
 float value_polynome(TPolynom* p, float _x) {
 	int i;
 	float res = 0.0f, x = 1.0f;
-	for (i = 0; i < p->degree; i++) {
+	for (i = 0; i <= p->degree; i++) {
 		res += p->coeff[i] * x;
 		x *= _x;
 	}

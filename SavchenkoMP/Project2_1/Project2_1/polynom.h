@@ -15,7 +15,7 @@ void allocate_polynom(TPolynom** polynom, int degree);
 TPolynom* allocate_polynom_copy(TPolynom** p, TPolynom** tmp);
 void free_polynom(TPolynom** polynom);
 
-void read_file(TPolynom*** p, FILE** file, int* n);
+void read_file(TPolynom*** p, int* n);
 void fill_polynom(TPolynom* p, FILE* file);
 void print_polynom(TPolynom* p);
 

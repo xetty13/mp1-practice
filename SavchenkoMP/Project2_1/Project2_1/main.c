@@ -21,11 +21,10 @@ int main() {
 	int ind_1;
 	int ind[2];
 
-	FILE* file;
 	TPolynom* res;
 	TPolynom** p; // массив полиномов
 
-	read_file(&p, &file, &n);
+	read_file(&p, &n);
 
 	while (ans) {
 		system("cls");
