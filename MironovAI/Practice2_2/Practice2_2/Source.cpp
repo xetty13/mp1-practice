@@ -12,7 +12,7 @@ using namespace std;
 
 
 
-int read(BanksData** data, int *p, char* path) {
+int read(BanksData** data, int* p, char* path) {
     ifstream infile(path);
     if (!infile) {
         cout << "This file isn`t exist" << endl;
@@ -23,11 +23,10 @@ int read(BanksData** data, int *p, char* path) {
         int n = *p;
         (*data) = new BanksData[n];
         for (int i = 0; i < n; i++) {
-            //fscanf(file, "%s %s %d", (*data)[i].name, (*data)[i].ownership, &(*data)[i].count);
+     
             infile >> (*data)[i].name >> (*data)[i].ownership >> (*data)[i].count;
             (*data)[i].deposits.resize((*data)[i].count);
             for (int j = 0; j < (*data)[i].count; j++) {
-                // fscanf(file, "%s %d %f", (*data)[i].deposits[j].name, (*data)[i].deposits[j].period, &((*data)[i].deposits[j].conditions));
                 infile >> (*data)[i].deposits[j].name >> (*data)[i].deposits[j].period >> (*data)[i].deposits[j].conditions;
             }
         }
@@ -38,13 +37,13 @@ int read(BanksData** data, int *p, char* path) {
 
 void input_path(char* path) {
     printf("Input a path with file type: \n");
-    scanf("%s", path);
+    cin >> path;
     printf("\n \nYour path:  \n%s \n\n", path);
 }
 void print_data(BanksData* data, int n) {
     cout << "Yours data: " << "\n \n";
     for (int i = 0; i < n; i++) {
-        
+
         cout << data[i].name << " " << data[i].ownership << " " << data[i].count << endl;
         for (int j = 0; j < data[i].count; j++) {
             cout << data[i].deposits[j].name << " " << data[i].deposits[j].period << " " << data[i].deposits[j].conditions << endl;
@@ -55,7 +54,7 @@ void print_data(BanksData* data, int n) {
 void input_user_data(int* user_year, float* user_money) {
     do {
         printf("For how long would you like to open a deposit? \n");
-        scanf("%d", &(*user_year));
+        cin >> (*user_year);
 
         if ((*user_year) <= 0 || (*user_year) >= 100) {
             printf("Wrong period, try again\n");
@@ -63,7 +62,7 @@ void input_user_data(int* user_year, float* user_money) {
     } while ((*user_year) <= 0 || (*user_year) >= 100);
     do {
         printf("How much would you like to open a deposit for (rubles)? \n");
-        scanf("%f", &(*user_money));
+        cin >> (*user_money);
 
         if ((*user_money) <= 0) {
             printf("Wrong period, try again\n");
@@ -71,24 +70,40 @@ void input_user_data(int* user_year, float* user_money) {
     } while ((*user_money) <= 0);
 }
 
-triple comparing(BanksData* data, int n, int user_year, int user_money) {
+
+pair<int, float> BanksData::best_deposit(int user_year, float user_money) {
     float profit = 0;
-    int  id1 = -1;
-    int id2 = -1;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < data[i].count; j++)
-            if (user_year % data[i].deposits[j].period == 0) {
-                float tmp_profit = user_money * (pow(1 + (data[i].deposits[j].conditions * 0.01), user_year));// formule
-                if (profit < tmp_profit) {
-                    profit = tmp_profit;
-                    id1 = i;
-                    id2 = j;
-                }
+    int  id = -1;
+    for (int j = 0; j < count; j++) {
+        if (user_year % deposits[j].period == 0) {
+            float tmp_profit = user_money * (pow(1 + (deposits[j].conditions * 0.01), user_year));// formule
+            if (profit < tmp_profit) {
+                profit = tmp_profit;
+                id = j;         
             }
+        }
     }
-    triple q;
-    q.id1 = id1;
-    q.id2 = id2;
-    q.profit = profit;
+    pair<int, float> q;
+    q.first = id;
+    q.second = profit;
     return q;
+}
+
+triple comparing(BanksData* data, int user_year, float user_money, int n) {
+    triple ans;
+    BanksData best_data = data[0];
+    best_data.best_suggestion = best_data.best_deposit(user_year, user_money);
+    ans.id1 = 0;
+    ans.id2 = best_data.best_suggestion.first;
+    ans.profit = best_data.best_suggestion.second;
+    for (int i = 1; i < n; i++) {
+        data[i].best_suggestion = data[i].best_deposit(user_year, user_money);
+        if (best_data < data[i]) {
+            best_data = data[i];
+            ans.id1 = i;
+            ans.id2 = data[i].best_suggestion.first;
+            ans.profit = data[i].best_suggestion.second;
+        }
+    }
+    return ans;
 }
