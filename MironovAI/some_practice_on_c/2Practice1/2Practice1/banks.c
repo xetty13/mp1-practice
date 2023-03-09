@@ -50,26 +50,42 @@ void input_user_data(int* user_year, float* user_money) {
         }
     } while ((*user_money) <= 0);
 }
-void read(FILE* file, BanksData* data, int n) {
+int read(BanksData** data) {
+
+    char* path = (char*)malloc(sizeof(char) * MAX_PATH);
+    input_path(path);
+
+    FILE* file;
+    file = fopen(path, "r");
+    if (file == NULL) {
+        printf("\n Uncorrect path\n");
+        return 0;
+    }
+    int n;
+    fscanf(file, "%d", &n);
+
+    (*data) = (BanksData*)malloc(sizeof(BanksData) * n);
 
     for (int i = 0; i < n; i++) {
 
-        data[i].name = (char*)malloc(sizeof(char) * MAX_NAME);
-        data[i].ownership = (char*)malloc(sizeof(char) * MAX_NAME);
+        (*data)[i].name = (char*)malloc(sizeof(char) * MAX_NAME);
+        (*data)[i].ownership = (char*)malloc(sizeof(char) * MAX_NAME);
 
-        fscanf(file, "%s %s %d", data[i].name, data[i].ownership, &data[i].count);
+        fscanf(file, "%s %s %d", (*data)[i].name, (*data)[i].ownership, &(*data)[i].count);
 
-        data[i].deposits = (Deposit*)malloc(sizeof(Deposit) * (data[i].count + 5));
+        (*data)[i].deposits = (Deposit*)malloc(sizeof(Deposit) * ((*data)[i].count + 5));
 
-        for (int j = 0; j < data[i].count; j++) {
-            data[i].deposits[j].name = (char*)malloc(sizeof(char) * MAX_NAME);
-            if (data[i].deposits[j].name == NULL) {
+        for (int j = 0; j < (*data)[i].count; j++) {
+            (*data)[i].deposits[j].name = (char*)malloc(sizeof(char) * MAX_NAME);
+            if ((*data)[i].deposits[j].name == NULL) {
                 printf("bee");
             }
-            fscanf(file, "%s %d %f", data[i].deposits[j].name, &(data[i].deposits[j].period), &(data[i].deposits[j].conditions));
+            fscanf(file, "%s %d %f", (*data)[i].deposits[j].name, &((*data)[i].deposits[j].period), &((*data)[i].deposits[j].conditions));
         }
     }
+    free(path);
     fclose(file);
+    return n;
 }
 
 pair comparing(BanksData* data, int n, int user_year, int user_money) {

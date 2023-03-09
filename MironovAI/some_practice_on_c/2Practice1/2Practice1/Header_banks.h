@@ -20,7 +20,7 @@ typedef struct {
 } pair;
 
 void input_path(char* path);
-void read(FILE* file, BanksData* data, int n);
+int read(BanksData** data);
 void print_data(BanksData* data, int n);
 void freedata(BanksData** data, int n);
 void input_user_data(int* user_year, float* user_money);
