@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Header_banks.h"
+#include "Header.h"
 #define MAX_PATH 100 // Max path length 
 
 
 
 int main() {
-
+    int n;
     BanksData* data;
-    int n = read(&data);
+    do {
+        n = read(&data);
+    } while (n == 0);
+    
+
     print_data(data, n);
 
     int user_year;

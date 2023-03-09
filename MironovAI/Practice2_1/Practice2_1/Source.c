@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "Header_banks.h"
+#include "Header.h"
 #define MAX_PATH 100 // Max path length 
 #define MAX_NAME 20  // Max name of banks length
 
