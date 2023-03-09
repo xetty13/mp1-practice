@@ -4,11 +4,10 @@
 
 int main(void)
 {
-    FILE* file;
     Person** per;
     int n, i, a;
 
-    read(&per, &file, &n);
+    read(&per, &n);
     for (i = 0; i < n; i++)
         print_persons(per[i]);
     Sort(per, n);
