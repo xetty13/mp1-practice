@@ -12,24 +12,24 @@ int main()
 
 	fill_matrix(m1);
 	fill_matrix(m2);
-	/*
+	
 	res = addition_matrix(m1, m2);
 	print_matrix(res);
 	free_matrix(&res);
-	free_matrix(&m1);
-	*/
+	
+	
 
-	/*
+	
 	res = addition_const(m1, 5.2f);
 	print_matrix(res);
 	free_matrix(&res);
-	free_matrix(&m1);
+	
 
 	res = multi_const(m1, 3.4f);
 	print_matrix(res);
 	free_matrix(&res);
-	free_matrix(&m1);
-	*/
+	
+	
 
 	res = multi_matrix(m1, m2);
 	print_matrix(res);
