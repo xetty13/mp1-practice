@@ -5,38 +5,38 @@
 #include "workers.h";
 #define N 1000
 
-void allocate(worker** w, int n  ) {
-		int i;
-		*w = (worker*)malloc(sizeof(worker) * 1);
-		(*w)->id = (char**)malloc(n * sizeof(char*));
-		for (i = 0; i < n; i++) {
-			(*w)->id[i] = (char*)malloc(100 * sizeof(char));
-		}
-		(*w)->profession = (char**)malloc(n * sizeof(char*));
-		for (i = 0; i < n; i++) {
-			(*w)->profession[i] = (char*)malloc(100 * sizeof(char));
-		}
-		(*w)->last_job = (char**)malloc(n * sizeof(char*));
-		for (i = 0; i < n; i++) {
-			(*w)->last_job[i] = (char*)malloc(100 * sizeof(char));
-		}
-		(*w)->education = (char**)malloc(n * sizeof(char*));
-		for (i = 0; i < n; i++) {
-			(*w)->education[i] = (char*)malloc(1000 * sizeof(char));
-		}
-		(*w)->rsn_dismiss = (char**)malloc(n * sizeof(char*));
-		for (i = 0; i < n; i++) {
-			(*w)->rsn_dismiss[i] = (char*)malloc(100 * sizeof(char));
-		}
-		(*w)->family_status = (char**)malloc(n * sizeof(char*));
-		for (i = 0; i < n; i++) {
-			(*w)->family_status[i] = (char*)malloc(100 * sizeof(char));
-		}
-		(*w)->contact_info = (char**)malloc(n * sizeof(char*));
-		for (i = 0; i < n; i++) {
-			(*w)->contact_info[i] = (char*)malloc(100 * sizeof(char));
-		}
+void allocate(worker** w, int n) {
+	int i;
+	*w = (worker*)malloc(sizeof(worker) * 1);
+	(*w)->id = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->id[i] = (char*)malloc(N * sizeof(char));
 	}
+	(*w)->profession = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->profession[i] = (char*)malloc(N * sizeof(char));
+	}
+	(*w)->last_job = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->last_job[i] = (char*)malloc(N * sizeof(char));
+	}
+	(*w)->education = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->education[i] = (char*)malloc(N * sizeof(char));
+	}
+	(*w)->rsn_dismiss = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->rsn_dismiss[i] = (char*)malloc(N * sizeof(char));
+	}
+	(*w)->family_status = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->family_status[i] = (char*)malloc(N * sizeof(char));
+	}
+	(*w)->contact_info = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->contact_info[i] = (char*)malloc(N * sizeof(char));
+	}
+}
 
 int counter( ) {
 	char c;
@@ -135,7 +135,7 @@ void adding(worker* w, char* buff) {
 	}
 }
 
-void higher_education(worker** w, int count) {
+void higher_education(worker* w, int count) {
 	float counter = 0;
 	FILE* file;
 	float  n = amount();
@@ -143,8 +143,8 @@ void higher_education(worker** w, int count) {
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	int i;
 	for (i = 0; i < count; i++) {
-		if (strcmp((*w)->education[i], 'no') != 0) {
-			printf("%-5s%-20s\n", (*w)->id[i], (*w)->education[i]);
+		if (strcmp(w->education[i], "no\n") != 0) {
+			printf("%-5s%-20s\n", w->id[i], w->education[i]);
 			counter++;
 		}
 		else { continue; }
@@ -158,39 +158,34 @@ fclose(file);
 void memory_free(worker** w, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
-		(*w)->id[i] = NULL;
 		free((*w)->id[i]);
 	}
 	free((*w)->id);
 	for (i = 0; i < n; i++) {
-		(*w)->profession[i] = NULL;
 		free((*w)->profession[i]);
 	}
 	free((*w)->profession);
 	for (i = 0; i < n; i++) {
-		(*w)->education[i] = NULL;
 		free((*w)->education[i]);
 	}
 	free((*w)->education);
 	for (i = 0; i < n; i++) {
-		(*w)->last_job[i] = NULL;
 		free((*w)->last_job[i]);
 	}
 	free((*w)->last_job);
 	for (i = 0; i < n; i++) {
-		(*w)->rsn_dismiss[i] = NULL;
 		free((*w)->rsn_dismiss[i]);
 	}
 	free((*w)->rsn_dismiss);
 	for (i = 0; i < n; i++) {
-		(*w)->family_status[i] = NULL;
 		free((*w)->family_status[i]);
 	}
 	free((*w)->family_status);
 	for (i = 0; i < n; i++) {
-		(*w)->contact_info[i] = NULL;
 		free((*w)->contact_info[i]);
 	}
 	free((*w)->contact_info);
 	free(*w);
 }
+
+
