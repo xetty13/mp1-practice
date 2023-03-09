@@ -1,17 +1,16 @@
 #ifndef _MATRIX_H
 #define _MATRIX_H
 
-typedef struct Struct_2d_matrix TDmatrix;
 
-struct Struct_2d_matrix{
+typedef struct{
 	float** arr_2d;		//Declare the structure of square matrices
 	int size;
-}Matrix[3];  //Declare 3 arrays of structures;
+}TDmatrix;  
 
  //Declare 3 arrays of structures
 
-void allocate_matrix(TDmatrix*struct_p, int size); //Creating a square matrix
-void free_matrix(TDmatrix*struct_p); //Releasing the memory
+void allocate_matrix(TDmatrix** struct_p, int size); //Creating a square matrix
+void free_matrix(TDmatrix** struct_p); //Releasing the memory
 
 void fill_matrix(TDmatrix*struct_p); //filling square matrix
 void print_matrix(TDmatrix*struct_p); //Output the contents of a square matrix
