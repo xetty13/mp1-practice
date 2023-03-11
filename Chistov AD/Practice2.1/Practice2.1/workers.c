@@ -142,14 +142,15 @@ void higher_education(worker* w, int count) {
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	int i;
+	printf("All employees with higher education from the database:\n");
 	for (i = 0; i < count; i++) {
-		if (strcmp(w->education[i], "no\n") != 0) {
+		if (strcmp(w->education[i], "no") != 0) {
 			printf("%-5s%-20s\n", w->id[i], w->education[i]);
 			counter++;
 		}
 		else { continue; }
 	}
-printf("Percentage of employees with higher education:%f\n ", (counter / n) * 100);
+printf("Percentage of employees with higher education:%.3f%%\n ", (counter / n) * 100);
 system("pause");
 system("cls");
 fclose(file);
@@ -187,5 +188,3 @@ void memory_free(worker** w, int n) {
 	free((*w)->contact_info);
 	free(*w);
 }
-
-
