@@ -70,20 +70,6 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 	return amount;
 }
 
-void database () {
-	FILE* file = fopen("label exchange.txt", "r");;
-	char table[N];
-	if (file == NULL) { printf("Can't open file"); return 1; }
-	while (fgets(table, N, file) != NULL) {
-		printf("%s", table);
-	}
-	int n = amount();
-	printf("Total employees-% d\n", n );
-	system("pause");
-	system("cls");
-	fclose(file);
-}
-
 char* readFile(int charCount) {
 	FILE* file = fopen("label exchange.txt", "r");
 	char* str = (char*)malloc(1024 * sizeof(char));
@@ -188,3 +174,5 @@ void memory_free(worker** w, int n) {
 	free((*w)->contact_info);
 	free(*w);
 }
+
+
