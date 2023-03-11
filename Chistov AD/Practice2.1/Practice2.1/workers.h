@@ -15,7 +15,6 @@ void allocate(worker** w, int n);
 int counter();
 int amount();
 char* readFile();
-void database();
 void adding(worker* w, char* buff);
 void higher_education(worker** w);
 void memory_free(worker** w);
