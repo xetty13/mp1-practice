@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\OneDrive\Рабочий стол\main.c">
+    <ClInclude Include="Functions_structures.h">
       <Filter>Исходные файлы</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="prototypes.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\OneDrive\Рабочий стол\prototypes.h">
+    <ClCompile Include="main.c">
       <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\OneDrive\Рабочий стол\Functions_structures.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
 </Project>
