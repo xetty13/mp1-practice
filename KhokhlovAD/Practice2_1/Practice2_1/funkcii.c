@@ -5,16 +5,32 @@
 
 
 
-void read_inf(Owners* owner, FILE* f, int n)
+Owners* read_inf(int n)
 {
+	FILE* f;
+	f = fopen("1.txt", "r");
+	if (f == NULL)
+	{
+		printf("File not found\n");
+	}
+	else
+		printf("file opened successfully\n");
+	fscanf(f, "%d", &n);
+	Owners* owner = (Owners*)malloc(sizeof(Owners) * n);
+	printf("number of owners = %d\n", n);
 	for (int i = 0; i < n; i++) 
 	{
-		owner[i].name = (char*)malloc(sizeof(char) * 40);
-		owner[i].date = (char*)malloc(sizeof(char) * 11);
-		owner[i].carnum = (char*)malloc(sizeof(char) * 6);
-		owner[i].phnum = (char*)malloc(sizeof(char) * 12);
-		fscanf(f, "%s %s %s %d %s %d", owner[i].name, owner[i].date, owner[i].carnum, &owner[i].gibdd, owner[i].phnum, &owner[i].tehpas);
+		owner[i].n = n;
+		owner[i].name = (char*)malloc(sizeof(char) * 12);
+		owner[i].surname = (char*)malloc(sizeof(char) * 12);
+		owner[i].patronymic = (char*)malloc(sizeof(char) * 20);
+		owner[i].date = (char*)malloc(sizeof(char) * 12);
+		owner[i].carnum = (char*)malloc(sizeof(char) * 12);
+		owner[i].phnum = (char*)malloc(sizeof(char) * 13);
+		fscanf(f, "%s %s %s %s %s %d %s %d", owner[i].name, owner[i].surname, owner[i].patronymic, owner[i].date, owner[i].carnum, &owner[i].gibdd, owner[i].phnum, &owner[i].tehpas);
 	}
+	fclose(f);
+	return owner;
 }
 
 
@@ -23,25 +39,31 @@ void print_inf(Owners* owner, int n)
 	for (int i = 0; i < n; i++)
 	{
 
-		printf("%s\n %s\n %s\n %d\n %s\n %d\n\n", owner[i].name, owner[i].date, owner[i].carnum, owner[i].gibdd, owner[i].phnum, owner[i].tehpas);
+		printf("%s %s %s\n %s\n %s\n %d\n %s\n %d\n\n", owner[i].name, owner[i].surname, owner[i].patronymic, owner[i].date, owner[i].carnum, owner[i].gibdd, owner[i].phnum, owner[i].tehpas);
 	}
 }
 
-int search_owner(Owners* owner, int gibdd, int n)
+int search_owner(Owners* owner, int n)
 {
-	int flag=0;
-	for (int i = 0; i < n; i++)
+
+	int flag = 0, g;
+	while (flag == 0)
 	{
-		if (owner[i].gibdd == gibdd)
+		printf("input number of gibdd = ");
+		scanf("%d", &g);
+		printf("\n");
+		for (int i = 0; i < n; i++)
 		{
-			flag++;
-			printf("%s\n %s\n %s\n %d\n %s\n %d\n\n", owner[i].name, owner[i].date, owner[i].carnum, owner[i].gibdd, owner[i].phnum, owner[i].tehpas);
+			if (owner[i].gibdd == g)
+			{
+				flag++;
+				printf("%s %s %s\n %s\n %s\n %d\n %s\n %d\n\n", owner[i].name, owner[i].surname, owner[i].patronymic, owner[i].date, owner[i].carnum, owner[i].gibdd, owner[i].phnum, owner[i].tehpas);
+			}
 		}
-	}
-	if (flag == 0)
-	{
-		printf("incorrect number of gibdd\n");
-		return 1;
+		if (flag == 0)
+		{
+			printf("incorrect number of gibdd\n");
+		}
 	}
 	return 0;
 }
@@ -53,9 +75,11 @@ void free_inf(Owners** owner, int n)
 	{
 		
 		free((*owner)[i].name);
-		//free((*owner)[i].date);
-		//free((*owner)[i].carnum);
-		//free((*owner)[i].phnum);
+		free((*owner)[i].surname);
+		free((*owner)[i].patronymic);
+		free((*owner)[i].date);
+		free((*owner)[i].carnum);
+		free((*owner)[i].phnum);
 		
 	}
 	free(*owner);

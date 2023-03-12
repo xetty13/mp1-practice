@@ -3,7 +3,10 @@
 
 typedef struct
 {
+	int n;
 	char* name;
+	char* surname;
+	char* patronymic;
 	char* date;
 	char* carnum;
 	unsigned long gibdd;
@@ -11,10 +14,10 @@ typedef struct
 	unsigned long tehpas;
 } Owners;
 
-void read_inf(Owners* owner, FILE* f, int n);
+Owners* read_inf(int n);
 void print_inf(Owners* owner, int n);
 
 void free_inf(Owners** owner, int n);
 
-int search_owner(Owners* owner, int gibdd, int n);
+int search_owner(Owners* owner, int n);
 #endif
