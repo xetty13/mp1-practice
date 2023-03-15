@@ -4,11 +4,20 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_NAME 100
+#define MAX_LINE_LEN 5000
+
+typedef enum {
+    DNEV,
+    VECHER,
+    ZAOCH
+} EducationalForm;
 
 typedef struct {
     char name[MAX_NAME];
     int n_form;
-    int form_info[3][2];
+    EducationalForm* forms;
+    int* examScores;
+    int* costs;
 } Spec_t;
 
 typedef struct {
@@ -18,8 +27,8 @@ typedef struct {
 } University_t;
 
 int find_num_univ(FILE* fp);
-void alloc_univ(FILE* fp, University_t** uns);
-void print_all_info(University_t** uns, int c);
-void free_memory(University_t** uns, int c);
+void fill_univ(FILE* fp, University_t* uns);
+void print_all_info(University_t* uns, int c);
+void free_memory(University_t* uns, int c);
 
 #endif

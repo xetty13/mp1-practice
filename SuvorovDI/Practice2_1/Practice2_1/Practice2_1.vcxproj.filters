@@ -21,9 +21,15 @@
     <ClCompile Include="fileProcessing.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="userSide.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fileProcessing.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="userSide.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

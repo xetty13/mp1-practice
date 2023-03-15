@@ -128,10 +128,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="userSide.c" />
     <ClCompile Include="fileProcessing.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="userSide.h" />
     <ClInclude Include="fileProcessing.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
