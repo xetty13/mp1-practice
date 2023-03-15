@@ -7,11 +7,10 @@
 int main() {
 	worker* w;
 	char* buffer;
-	char* fileStr;
-	int charCount = counter();
-	int stringCount = amount();
-	buffer = readFile(charCount);
-	allocate(&w, stringCount);
+	int n = counter();
+	int N = amount();
+	buffer = readFile(n);
+	allocate(&w, N);
 	adding(w, buffer);
-	higher_education(w, stringCount);
+	higher_education(w, N);
 }
