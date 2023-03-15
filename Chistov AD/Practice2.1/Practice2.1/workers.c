@@ -10,54 +10,42 @@ void allocate(worker** w, int n) {
 	*w = (worker*)malloc(sizeof(worker) * 1);
 	(*w)->id = (char**)malloc(n * sizeof(char*));
 	for (i = 0; i < n; i++) {
-		(*w)->id[i] = (char*)malloc(N * sizeof(char));
+		(*w)->id[i] = (char*)malloc(100 * sizeof(char));
 	}
 	(*w)->profession = (char**)malloc(n * sizeof(char*));
 	for (i = 0; i < n; i++) {
-		(*w)->profession[i] = (char*)malloc(N * sizeof(char));
-	}
-	(*w)->last_job = (char**)malloc(n * sizeof(char*));
-	for (i = 0; i < n; i++) {
-		(*w)->last_job[i] = (char*)malloc(N * sizeof(char));
+		(*w)->profession[i] = (char*)malloc(100 * sizeof(char));
 	}
 	(*w)->education = (char**)malloc(n * sizeof(char*));
 	for (i = 0; i < n; i++) {
-		(*w)->education[i] = (char*)malloc(N * sizeof(char));
+		(*w)->education[i] = (char*)malloc(1000 * sizeof(char));
+	}
+	(*w)->last_job = (char**)malloc(n * sizeof(char*));
+	for (i = 0; i < n; i++) {
+		(*w)->last_job[i] = (char*)malloc(100 * sizeof(char));
 	}
 	(*w)->rsn_dismiss = (char**)malloc(n * sizeof(char*));
 	for (i = 0; i < n; i++) {
-		(*w)->rsn_dismiss[i] = (char*)malloc(N * sizeof(char));
+		(*w)->rsn_dismiss[i] = (char*)malloc(100 * sizeof(char));
 	}
 	(*w)->family_status = (char**)malloc(n * sizeof(char*));
 	for (i = 0; i < n; i++) {
-		(*w)->family_status[i] = (char*)malloc(N * sizeof(char));
+		(*w)->family_status[i] = (char*)malloc(100 * sizeof(char));
 	}
 	(*w)->contact_info = (char**)malloc(n * sizeof(char*));
 	for (i = 0; i < n; i++) {
-		(*w)->contact_info[i] = (char*)malloc(N * sizeof(char));
+		(*w)->contact_info[i] = (char*)malloc(100 * sizeof(char));
 	}
-}
-
-int counter( ) {
-	char c;
-	int count = 0;
-	FILE* file = fopen("label exchange.txt", "r");
-if (file == NULL) { printf("Can't open file"); return 1; }
-	for (c = getc(file); c != EOF; c = getc(file)) {
-		count++;
-	}
-	fclose(file);
-	return count;
 }
 
 int amount( ) {
 	int amount = 0;
-	char* s = (char*)malloc(N * sizeof(char));
+	char* str = (char*)malloc(N * sizeof(char));
 	FILE* file = fopen("label exchange.txt", "r");
 if (file == NULL) { printf("Can't open file"); return 1; }
 	while (1) {
-		if (fgets(s, N, file) != NULL) {
-			if (strcmp(s, "\n") != 0) {
+		if (fgets(str, N, file) != NULL) {
+			if (strcmp(str, "\n") != 0) {
 				amount++;
 			}
 		}
@@ -66,65 +54,60 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 		}
 	}
 	fclose(file);
-	free(s);
+	free(str);
 	return amount;
 }
 
-char* readFile(int n) {
+void adding(worker* w ) {
+	char* token;
+	char srch[] = ";\n";
+	int i = 0;
+	int j = 0;
 	FILE* file = fopen("label exchange.txt", "r");
 	char* str = (char*)malloc(1024 * sizeof(char));
-	char* buff = (char*)malloc(10 * n * sizeof(char));
-	char* bcpy = (char*)malloc(10 * n * sizeof(char));
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	while (1) {
 		if (fgets(str, 1000, file) != NULL) {
-			strcpy(bcpy, buff);
-			snprintf(buff, n, "%s%s", str, bcpy);}
+			for (token = strtok(str, srch); token; token = strtok(NULL, srch)) {
+				switch (i) {
+				case 0:
+					strcpy(w->id[j], token);
+					break;
+				case 1:
+					strcpy(w->profession[j], token);
+					break;
+				case 2:
+					strcpy(w->education[j], token);
+					break;
+				case 3:
+					strcpy(w->last_job[j], token);
+					break;
+				case 4:
+					strcpy(w->rsn_dismiss[j], token);
+					break;
+				case 5:
+					strcpy(w->family_status[j], token);
+					break;
+				case 6:
+					strcpy(w->contact_info[j], token);
+					i = -1;
+					j++;
+					break;
+				}
+				i++;
+			}
+		}
 		else {
 			break;
 		}
 	}
-	return buff;
-}
-
-void adding(worker* w, char* buff) {
-	char* token;
-	char delim[] = ";\n";
-	int i = 0;
-	int j = 0;
-	for (token = strtok(buff, delim); token; token = strtok(NULL, delim)) {
-		switch (i) {
-		case 0:
-			w->id[j] = token;
-			break;
-		case 1:
-			w->profession[j] = token;
-			break;
-		case 2:
-			w->education[j] = token;
-			break;
-		case 3:
-			w->last_job[j] = token;
-			break;
-		case 4:
-			w->rsn_dismiss[j] = token;
-			break;
-		case 5:
-			w->family_status; break;
-		case 6:
-			w->contact_info[j] = token;
-			i = -1;
-			j++;
-			break;
-		}
-		i++;
-	}
+	free(str);
+	fclose(file);
 }
 
 void higher_education(worker* w, int count) {
 	float counter = 0;
 	FILE* file;
-	float  n = amount();
 	file = fopen("label exchange.txt", "r");
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	int i;
@@ -136,7 +119,7 @@ void higher_education(worker* w, int count) {
 		}
 		else { continue; }
 	}
-printf("Percentage of employees with higher education:%.3f%%\n ", (counter / n) * 100);
+printf("Percentage of employees with higher education:%.3f%%\n ", (counter / count) * 100);
 system("pause");
 system("cls");
 fclose(file);
