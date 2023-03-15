@@ -12,10 +12,8 @@ typedef struct {
 }worker;
 
 void allocate(worker** w, int n);
-int counter();
 int amount();
-char* readFile();
-void adding(worker* w, char* buff);
-void higher_education(worker** w);
-void memory_free(worker** w);
+void adding(worker* w);
+void higher_education(worker** w, int count);
+void memory_free(worker**w);
 #endif 
