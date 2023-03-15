@@ -70,16 +70,16 @@ if (file == NULL) { printf("Can't open file"); return 1; }
 	return amount;
 }
 
-char* readFile(int charCount) {
+char* readFile(int n) {
 	FILE* file = fopen("label exchange.txt", "r");
 	char* str = (char*)malloc(1024 * sizeof(char));
-	char* buff = (char*)malloc(10 * charCount * sizeof(char));
-	char* bcpy = (char*)malloc(10 * charCount * sizeof(char));
+	char* buff = (char*)malloc(10 * n * sizeof(char));
+	char* bcpy = (char*)malloc(10 * n * sizeof(char));
 	if (file == NULL) { printf("Can't open file"); return 1; }
 	while (1) {
 		if (fgets(str, 1000, file) != NULL) {
 			strcpy(bcpy, buff);
-			snprintf(buff, charCount, "%s%s", str, bcpy);}
+			snprintf(buff, n, "%s%s", str, bcpy);}
 		else {
 			break;
 		}
@@ -174,5 +174,3 @@ void memory_free(worker** w, int n) {
 	free((*w)->contact_info);
 	free(*w);
 }
-
-
