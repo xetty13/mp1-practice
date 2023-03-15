@@ -29,12 +29,13 @@ char euro_zone[20][15] = {//list of eurozone countries
 	"Croatia\n"
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 	system("chcp 1251");
 	setlocale(LC_ALL, "rus");
 
-	string str;
+	char buf[399];
 	int ch;
+
 	char path[100] = "C://TouristAgences.txt";
 	try {
 		list_ag* my_objects = new list_ag[7];
@@ -42,41 +43,29 @@ int main(int argc, char *argv[]) {
 		if (!file.is_open()) {
 			throw path;//problem var
 		}
-											//придумать,как реализовать для string
-		getline(file, str);
-		for (int i = 0; i < 7; i++) {
-			ch = c[i];
-
-			if (ch == 10) {
-				do {
-					file.seekg(1, ios_base::beg);
-					file.getline(c, 255, '\n');
-					ch = c[0];
-				} while (ch == 10);
-				goto reading;//jump to output
-			}
-			else {
-			reading:
-				for (int j = 0; j < 1; j++) {
-					file.seekg(-2, ios_base::cur);
-					file.getline(my_objects[j].INFO.name_travel_agencies, 25, '\n');
-					file.getline(my_objects[j].INFO.country, 15, '\n');
-					file.getline(my_objects[j].INFO.travel_conditions, 500, '\n');
-					file.getline(my_objects[j].INFO.excursion_services, 500, '\n');
-					file.getline(my_objects[j].INFO.host_service, 300, '\n');
-					file.getline(my_objects[j].INFO.ticket_price, 20, '\n');
-				}
-				break;
-			}
-		}
 		int i = 0;
-		while (i < 1) {
-			cout << my_objects[i].INFO.name_travel_agencies << endl;
-			cout << my_objects[i].INFO.country << endl;
-			cout << my_objects[i].INFO.travel_conditions << endl;
-			cout << my_objects[i].INFO.excursion_services << endl;
-			cout << my_objects[i].INFO.host_service << endl;
-			cout << my_objects[i].INFO.ticket_price << endl;
+		for (i = 0; i < 7; i++) {
+			do {
+				file.getline(buf, 399);
+				file.seekg(1, ios_base::cur);
+				ch = buf[i];
+			} while (!(ch >= 65 && ch <=90) || !(ch > 48 && ch <= 57) || !(ch >= 97 && ch <= 122));
+			file.getline(my_objects[i].INFO.name_travel_agencies, 250, '\n');
+			file.getline(my_objects[i].INFO.country, 150, '\n');
+			file.getline(my_objects[i].INFO.travel_conditions, 500, '\n');
+			file.getline(my_objects[i].INFO.excursion_services, 500, '\n');
+			file.getline(my_objects[i].INFO.host_service, 300, '\n');
+			file.getline(my_objects[i].INFO.ticket_price, 200, '\n');
+		}
+		int j = 0;
+		while (j < 7) {
+			cout << my_objects[j].INFO.name_travel_agencies << endl;
+			cout << my_objects[j].INFO.country << endl;
+			cout << my_objects[j].INFO.travel_conditions << endl;
+			cout << my_objects[j].INFO.excursion_services << endl;
+			cout << my_objects[j].INFO.host_service << endl;
+			cout << my_objects[j].INFO.ticket_price << endl;
+			j++;
 		}
 	}
 	catch(char path[100]) {
