@@ -1,20 +1,42 @@
 #ifndef _prototypes_h
 #define _prototypes_h
 
-typedef struct {
-	struct travel_agency_information {
-		char name_travel_agencies[25];
-		char country[15];
-		char travel_conditions[500];
-		char excursion_services[500];
-		char host_service[300];
-		char ticket_price[20];
-	}INFO;//info about agences
-}list_ag;//Addressing the agency by index
+#define LEN 256
 
-list_ag* file_reader(FILE* fptr, list_ag** my_objects);
-void output_data_file(FILE* fptr, list_ag** pointer);
-void output_data_EZONES(FILE* fptr, list_ag** pointer, char *e_zone[]);
-void free_memory(list_ag** pointer);
+typedef struct
+{
+	char* country;
+	char* host_service;
+	char* travel_conditions;
+	// все, что есть в информации об услуге в задаче
+} TService;
+
+typedef struct
+{
+	char* name;
+	int num_services;
+	TService *services;
+} TAgency;
+
+void allocate_struct() {
+	int i = 0;
+	TAgency** agencies = (*TAgency)malloc(sizeof(TAgency));
+	printf("Enter num_sevices: \n");
+	scanf("%d", &(*agencies)->num_services);
+	for (i = 0; i < (*agencies)->num_services; i++) {
+		(*list)->services[i] = (TService*)malloc(sizeof(TService));
+	}
+}
+void free_memory(TAgency** list) {
+	for (int i = 0; i < (*list)->num_services; i++){
+		free((*list)->services[i]);
+	}
+}
+
+/*TAgency* file_reader(FILE* fptr, TAgency**);
+void output_data_file(FILE* fptr, TAgency** pointer);
+void output_data_EZONES(FILE* fptr, TAgency** pointer, char *e_zone[]);
+void free_memory(TAgency** pointer);
+*/
 
 #endif

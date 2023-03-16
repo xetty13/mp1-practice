@@ -4,10 +4,9 @@
 #include <string.h>
 #include "prototypes.h"
 #define MAX 1000
-#define q_TAgences 7
 
 
-
+/*
 list_ag* file_reader(FILE* fptr, list_ag** my_objects) {
 	int i = 0;
 	int j = 0;
@@ -73,4 +72,5 @@ void output_data_EZONES(FILE* fptr, list_ag** pointer,char *e_zone[]) {
 void free_memory(list_ag **pointer) {
 	free((*pointer));
 }
+*/
 
