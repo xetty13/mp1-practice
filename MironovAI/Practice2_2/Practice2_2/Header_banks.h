@@ -1,7 +1,7 @@
-#pragma once
 #ifndef _Header_bankh_
 #define _Header_bankh_
-#define MAX_NAME 20
+#define MAX_PATH 100 // Max path length 
+#define MAX_NAME 20  // Max name of banks length
 using namespace std;
 
 

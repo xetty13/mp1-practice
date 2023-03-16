@@ -1,12 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include "Header_banks.h"
 #include <fstream>
-#define MAX_PATH 100 // Max path length 
-#define MAX_NAME 20  // Max name of banks length
 using namespace std;
 
 
@@ -23,7 +19,7 @@ int read(BanksData** data, int* p, char* path) {
         int n = *p;
         (*data) = new BanksData[n];
         for (int i = 0; i < n; i++) {
-     
+
             infile >> (*data)[i].name >> (*data)[i].ownership >> (*data)[i].count;
             (*data)[i].deposits.resize((*data)[i].count);
             for (int j = 0; j < (*data)[i].count; j++) {
@@ -36,9 +32,9 @@ int read(BanksData** data, int* p, char* path) {
 }
 
 void input_path(char* path) {
-    printf("Input a path with file type: \n");
+    cout << "Input a path with file type: " << endl;
     cin >> path;
-    printf("\n \nYour path:  \n%s \n\n", path);
+    cout << "Your path : \n % s \n" << endl;
 }
 void print_data(BanksData* data, int n) {
     cout << "Yours data: " << "\n \n";
@@ -53,19 +49,19 @@ void print_data(BanksData* data, int n) {
 }
 void input_user_data(int* user_year, float* user_money) {
     do {
-        printf("For how long would you like to open a deposit? \n");
+        cout << "For how long would you like to open a deposit?" << endl;
         cin >> (*user_year);
 
         if ((*user_year) <= 0 || (*user_year) >= 100) {
-            printf("Wrong period, try again\n");
+            cout << "Wrong period, try again" << endl;
         }
     } while ((*user_year) <= 0 || (*user_year) >= 100);
     do {
-        printf("How much would you like to open a deposit for (rubles)? \n");
+        cout << "How much would you like to open a deposit for (rubles)? " << endl;
         cin >> (*user_money);
 
         if ((*user_money) <= 0) {
-            printf("Wrong period, try again\n");
+            cout << "Wrong period, try again" << endl;
         }
     } while ((*user_money) <= 0);
 }
@@ -79,7 +75,7 @@ pair<int, float> BanksData::best_deposit(int user_year, float user_money) {
             float tmp_profit = user_money * (pow(1 + (deposits[j].conditions * 0.01), user_year));// formule
             if (profit < tmp_profit) {
                 profit = tmp_profit;
-                id = j;         
+                id = j;
             }
         }
     }

@@ -1,10 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <iostream>
 #include <vector>
 #include "Header_banks.h"
-
-#define MAX_PATH 100 // Max path length 
 using namespace std;
 
 
@@ -15,7 +11,7 @@ int main() {
     int* p = &n;
     BanksData* data;
     int q;
-  
+
 
     do {
         q = read(&data, p, path);
@@ -30,9 +26,9 @@ int main() {
     float user_money;
     input_user_data(&user_year, &user_money);
 
-   
-    triple ans = comparing(data,user_year, user_money, n);
-    
+
+    triple ans = comparing(data, user_year, user_money, n);
+
     cout << "!!!" << endl;
     cout << "\n" << "The best suggestion for you in " << data[ans.id1].ownership << " " << data[ans.id1].name << endl;
     cout << "\n" << "if you would invest " << user_money << " in " << data[ans.id1].deposits[ans.id2].name << " at a " << data[ans.id1].deposits[ans.id2].conditions << " per year";
