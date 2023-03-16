@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include "cars.h"
 #include <stdlib.h>
-#include <string.h>
-
+/*#include <string.h>
+#include <iostream>
+using namespace std;
+*/
 int main()
 {
     // get path to file with cars
-    char* path = getPath();
+    string* path = getPath();
     puts(path);
 
     // read file and save info about cars to array

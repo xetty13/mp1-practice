@@ -3,60 +3,25 @@
 #include "cars.h"
 #include <stdlib.h>
 
-// dynamic reading for str
-char* read_string(FILE* stream)
+#include <ifstream>
+#include <fstream>
+#include <string>
+#include <iostream>
+using namespace std;
+
+string* getPath()
 {
-    int buffer_size = 16;
-    int buffer_size_divizer = 1;
-    int offset = 0;
-    int additional_length;
-
-    char* buffer = (char*)malloc(buffer_size);
-    if (buffer == NULL) {
-        return NULL;
-    }
-    buffer[0] = '\0';
-
-    // read string while not face with '\n'
+   string* file_path;
     while (1) {
-        // read string to buffer with current offset
-        if (fgets(buffer + offset, buffer_size / buffer_size_divizer, stream) == NULL) {
-            free(buffer); // free allocated memory
-            return NULL;
-        }
-        else {
-            additional_length = strlen(buffer + offset);
-            if (buffer[offset + additional_length - 1] != '\n') {
-                // increase buffer_size by 2 times
-                buffer_size *= 2;
-                // realloc new memory
-                buffer = (char*)realloc(buffer, buffer_size);
-                // update offset to number of read elements
-                offset += additional_length;
-                buffer_size_divizer = 2;
-            }
-            else {
-                buffer[offset + additional_length - 1] = '\0';
-                break;
-            }
-        }
-    }
-    return buffer;
-}
-
-char* getPath()
-{
-    char* file_path;
-    while (1) {
-        printf("Enter the path to file : ");
-        file_path = read_string(stdin);
+        cout <<"Enter the path to file : " << endl;
+        getline(cin, *file_path);
         if (file_path != NULL)
             break;
     }
     return file_path;
 }
 
-Car ReadCarEntity(FILE* file)
+Car ReadCarEntity(ifstream* file)
 {
     char* car_brand = read_string(file);
     char* car_color = read_string(file);
@@ -70,11 +35,16 @@ Car ReadCarEntity(FILE* file)
     return new_car;
 }
 
-Car* ReadCarFile(char* file_path, int* number_of_cars)
+
+Car* ReadCarFile(string* file_path, int* number_of_cars)
 {
-    FILE* file = fopen(file_path, "r");
+    ifstream* file;
+    file.open(file_path);
+
+
+   // FILE* file = fopen(file_path, "r");
     if (file == NULL) {
-        printf("\nRead file error.\n");
+        throw "Read file error ";
     }
     Car* cars = (Car*)malloc(sizeof(Car));
     *number_of_cars = 1;
@@ -108,11 +78,11 @@ Car FindOldestCar(Car* cars, int count_of_cars)
 
 void PrintCar(Car car)
 {
-    printf("Brand: %s\n", car.brand);
-    printf("Color: %s\n", car.color);
-    printf("Serial number: %s\n", car.serial_number);
-    printf("Registration number: %s\n", car.registration_number);
-    printf("Numbers of doors: %d\n", car.count_door);
-    printf("Year of car manufacture: %d\n", car.year);
-    printf("Price: %d\n\n", car.price);
+    cout << "Brand: " << car.brand << endl;
+    cout << "Color: " << car.color << endl;
+    cout << "Serial number: " << car.serial_number << endl;
+    cout << "Regestrarion number: " << car.registration_number << endl;
+    cout << "Numbers of doors: " << car.count_door << endl;
+    cout << "Year of car manufacture: " << car.year << endl;
+    cout << "Price: " << car.price << endl;
 }

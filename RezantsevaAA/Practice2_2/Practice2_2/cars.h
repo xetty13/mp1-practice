@@ -1,6 +1,7 @@
 #ifndef _CARS_H
 #define _CARS_H
-
+#include <string>
+using namespace std;
 typedef struct
 {
     char* brand;
@@ -12,10 +13,10 @@ typedef struct
     int price;
 } Car;
 
-char* read_string(FILE* stream);
-char* getPath();
-Car ReadCarEntity(FILE* file);
-Car* ReadCarFile(char* file_path, int* number_of_cars);
+string* read_string(ifstream* stream);
+string* getPath();
+Car ReadCarEntity(ifstream* file);
+Car* ReadCarFile(string* file_path, int* number_of_cars);
 Car FindOldestCar(Car* cars, int count_of_cars);
 void PrintCar(Car car);
 
