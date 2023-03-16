@@ -2,23 +2,44 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <windows.h>
 #include "fileProcessing.h"
 
-int find_num_univ(FILE* fp)
+int find_num_univ(char fname[])
 {
     char line[MAX_LINE_LEN];
     int c = 0;
+
+    FILE* fp;
+    fp = fopen(fname, "r");
+    if (fp == NULL)
+    {
+        printf("No such file");
+        return 1;
+    }
+
     while (fgets(line, MAX_LINE_LEN, fp) != NULL)
     {
         c++;
     }
+    fclose(fp);
+
     return c;
 }
 
-void fill_univ(FILE* fp, University_t* uns)
+University_t* fill_univ(char fname[], int c)
 {
     char line[1000];
     int i = 0;
+    University_t* uns = (University_t*)malloc(sizeof(University_t) * c);
+
+    FILE* fp;
+    fp = fopen(fname, "r");
+    if (fp == NULL)
+    {
+        printf("No such file");
+        return 1;
+    }
 
     while (fgets(line, MAX_LINE_LEN, fp) != NULL)
     {
@@ -65,27 +86,10 @@ void fill_univ(FILE* fp, University_t* uns)
 
         i++;
     }
-}
 
-void print_all_info(University_t* uns, int c)
-{
-    int i;
-    for (i = 0; i < c; i++)
-    {
-        int j;
-        printf("%s  %d::: \n", uns[i].name, uns[i].n_spec);
+    return uns;
 
-        for (j = 0; j < uns[i].n_spec; j++)
-        {
-            int z;
-            printf("   %s  %d:: \n", uns[i].specs[j].name, uns[i].specs[j].n_form);
-
-            for (z = 0; z < uns[i].specs[j].n_form; z++)
-            {
-                printf("      %d %d\n", uns[i].specs[j].examScores[z], uns[i].specs[j].costs[z]);
-            }
-        }
-    }
+    fclose(fp);
 }
 
 void free_memory(University_t* uns, int c)

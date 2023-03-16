@@ -26,9 +26,8 @@ typedef struct {
     Spec_t* specs;
 } University_t;
 
-int find_num_univ(FILE* fp);
-void fill_univ(FILE* fp, University_t* uns);
-void print_all_info(University_t* uns, int c);
+int find_num_univ(char fname[]);
+University_t* fill_univ(char fname[], int c);
 void free_memory(University_t* uns, int c);
 
 #endif
