@@ -125,8 +125,9 @@ float CountPerimeter(Triangle triangle)
     printf("P = %f \n", p);
 }
 
-float* Height(Triangle triangle, float s)
+float* Height(Triangle triangle)
 {
+    float s = (abs(((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[2].y - triangle.vertices[0].y)) - ((triangle.vertices[2].x - triangle.vertices[0].x) * (triangle.vertices[1].y - triangle.vertices[0].y)))) / 2;
     float heights[3];
     float* sides = Sides(triangle);
     heights[0] = 2 * s / sides[0];

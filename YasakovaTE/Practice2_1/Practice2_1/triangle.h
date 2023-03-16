@@ -17,7 +17,7 @@ Triangle ReadTriangleEntity(FILE* file);
 float CountSquare(Triangle triangle);
 float CountPerimeter(Triangle triangle);
 float* Sides(Triangle triangle);
-float* Height(Triangle triangle, float s);
+float* Height(Triangle triangle);
 void PrintTriangleType(Triangle triangle);
 
 

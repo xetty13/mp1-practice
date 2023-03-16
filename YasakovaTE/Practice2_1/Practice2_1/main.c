@@ -19,7 +19,7 @@ int main() {
 			else if (t == 2)
 				CountPerimeter(triangles[i]);
 			else if (t==3)
-				CountPerimeter(triangles[i]);
+				Height(triangles[i]);
 			else if (t==4)
 				PrintTriangleType(triangles[i]);
 		printf("If you want to exit, enter 0: ");
