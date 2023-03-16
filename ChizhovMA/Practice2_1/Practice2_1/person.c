@@ -6,6 +6,24 @@
 
 
 
+int cntStruct(FILE* file)
+{
+	int cnt = 0;
+	int any;
+	FILE* f = fopen(file, "r");
+	if (f == NULL) {
+		return -1;
+	}
+	do {
+		any = fgetc(f);
+		if (any == '\n') {
+			cnt++;
+		}
+	} while (any != EOF);
+	fclose(f);
+	return cnt;
+}
+
 void allocate_person(Person** p)
 {
 	(*p) = (Person*)malloc(sizeof(Person) * 1);
@@ -28,46 +46,74 @@ void allocate_person(Person** p)
 	(*p)->ad.apartament = (char*)malloc(sizeof(char) * const_c);
 }
 
-void fill_data(Person* p,FILE* file)
+void fill_data(Person* p, FILE* file)
 {
-	fscanf(file, "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s",
-		(p->surname),
-		(p->name),
-		(p->patronymic),
-		(p->gender),
-		(p->nation),
-		(p->date),
-		(p->height),
-		(p->weight),
-		(p->num_phone),
-		(p->postal_code),
-		(p->ad.country),
-		(p->ad.region),
-		(p->ad.city),
-		(p->ad.district),
-		(p->ad.street),
-		(p->ad.house),
-		(p->ad.apartament));
-
+	char str[200], sep[10] = ";";
+	char* istr;
+	int flag = 0;
+	fgets(str, 200, file);
+	istr = strtok(str, sep);
+	while (str != NULL)
+	{
+		if (flag == 0)
+			strcpy(p->surname, istr);
+		if (flag == 1)
+			strcpy(p->name, istr);
+		if (flag == 2)
+			strcpy(p->patronymic, istr);
+		if (flag == 3)
+			strcpy(p->gender, istr);
+		if (flag == 4)
+			strcpy(p->nation, istr);
+		if (flag == 5)
+			strcpy(p->date, istr);
+		if (flag == 6)
+			strcpy(p->height, istr);
+		if (flag == 7)
+			strcpy(p->weight, istr);
+		if (flag == 8)
+			strcpy(p->num_phone, istr);
+		if (flag == 9)
+			strcpy(p->postal_code, istr);
+		if (flag == 10)
+			strcpy(p->ad.country, istr);
+		if (flag == 11)
+			strcpy(p->ad.region, istr);
+		if (flag == 12)
+			strcpy(p->ad.city, istr);
+		if (flag == 13)
+			strcpy(p->ad.district, istr);
+		if (flag == 14)
+			strcpy(p->ad.street, istr);
+		if (flag == 15)
+			strcpy(p->ad.house, istr);
+		if (flag == 16)
+			strcpy(p->ad.apartament, istr);
+		if (flag == 17)
+			break;
+		istr = strtok(NULL, sep);
+		flag++;
+	}
 }
 
-void read(Person*** p, int* n)
-{ // передается адресс массива объектов "p"
-	int i,j;
-	FILE* file = fopen("people.txt", "r");
+
+void read(Person*** p, int* n, const FILE* file)
+{
+	int i, j;
+	file = fopen(file, "r");
 	if (file == NULL)
 	{
-		printf("Fike error");
-		return;
+		printf("FiLe error");
+		return 1;
 	}
-	fscanf(file, "%d", n); // здесь n уже адресс
+	(*n) = cntStruct("people.txt"); // считаем количество структур
 
-	*p = (Person**)malloc(sizeof(Person*) * (*n));// выделение памяти под массив указателей на объекты
+	*p = (Person**)malloc(sizeof(Person*) * (*n));// выделяем под структуры
 	for (i = 0; i < (*n); i++)
 	{
-		allocate_person(&((*p)[i])); // выделение памятти под каждый объект
-		fill_data((*p)[i], file);// чтениее строки из файла и запись в объект
-		
+		allocate_person(&((*p)[i])); // выделяем память для каждой структуры
+		fill_data((*p)[i], file);// заполняем структуру
+
 	}
 	fclose(file);
 }

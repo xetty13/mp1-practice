@@ -6,8 +6,10 @@ int main(void)
 {
     Person** per;
     int n, i, a;
-
-    read(&per, &n);
+    char f[100];
+    printf("Enter filename: ");
+    scanf("%s", f);
+    read(&per, &n, f);
     for (i = 0; i < n; i++)
         print_persons(per[i]);
     Sort(per, n);

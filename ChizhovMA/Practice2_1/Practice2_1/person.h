@@ -28,6 +28,7 @@ typedef struct
 
 }Person;
 
+int cntStruct(FILE* file);
 void allocate_person(Person** p);
 void fill_data(Person* p, FILE* file);
 void read(Person*** p, int* n);

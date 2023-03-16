@@ -1,7 +1,5 @@
-4
-Ivanov; Ivan; Alexeyevich; Male; Bolgar; 12.34.1980; 178.25; 67.0; 89304567890; 345678; Russia; Moscow; Moscow; Tagansky; Dolgorukova; 25; 143;
+Ivanov; Ivan; Alexeyevich; Male; Bolgar; 12.34.1980; 178.25; 67.0; 89304567890; 345678; Russia; Moscow; Moscow; Tagansky; Yuri Dolgorukova; 25; 143;
 Petrova; Ekaterina; Borisovna; Female; Russian; 23.05.1982; 167.0; 52.1; 89503456712; 345900; Russia; N.Novgorod; N.Novgorod; Sormovsky; Ivanova; 34/2; 12;
-Andreev; Petr; Ivanovich; Male; Russian; 03.02.1992; 185.3; 78.2; 89405672312; 784566; Russia; Orenburg; Orenburg; Lenensky; Central; 145; 66;
-Andreev; Ivan; Ivanovich; Male; Russian; 03.02.1992; 185.0; 68.2; 89405672312; 784566; Russia; Orenburg; Orenburg; Lenensky; Central; 145; 66;
-
-                                                                                  
+Andreev; Petr; Ivanovich; Male; Russian; 05.02.1996; 180.3; 66.5; 894503457899; 784566; Russia; Orenburg; Orenburg; Lenensky; Central; 145; 66;
+Andreev; Ivan; Ivanovich; Male; Russian; 03.02.1992; 185.3; 78.2; 89405672312; 784566; Russia; Orenburg; Orenburg; Lenensky; Central; 145; 66;
+                                                                                 
