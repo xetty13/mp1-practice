@@ -44,7 +44,7 @@ bool TPolynom::operator==(const TPolynom& p) const {
 bool TPolynom::operator!=(const TPolynom& p) const {
 	return !(*this == p);
 }
-TPolynom& TPolynom::operator=(const TPolynom& p) {
+const TPolynom& TPolynom::operator=(const TPolynom& p) {
 	if (this != &p) {
 		if (degree != p.degree) {
 			delete[] coeff;
@@ -59,32 +59,93 @@ TPolynom& TPolynom::operator=(const TPolynom& p) {
 }
 
 TPolynom TPolynom::operator+(const TPolynom& p) {
-	TPolynom res;
-	res.Add(*this, p);
+	TPolynom res(max_d(degree, p.degree));
+
+	if (degree >= p.degree) {
+		for (int i = degree; i >= 0; i--)
+			res.coeff[i] = coeff[i];
+		for (int i = p.degree; i >= 0; i--)
+			res.coeff[i] += p.coeff[i];
+	}
+	else {
+		for (int i = p.degree; i >= 0; i--)
+			res.coeff[i] = p.coeff[i];
+		for (int i = degree; i >= 0; i--)
+			res.coeff[i] += coeff[i];
+	}
+	if (res.coeff[res.degree] == 0)
+		res.Rebuffer();
+
 	return res;
 }
 TPolynom TPolynom::operator-(const TPolynom& p) {
-	TPolynom res;
-	res.Minus(*this, p);
+	TPolynom res(max_d(degree, p.degree));
+	
+	for (int i = res.degree; i >= 0; i--)
+		res.coeff[i] = 0.f;
+
+	for (int i = degree; i >= 0; i--)
+		res.coeff[i] = coeff[i];
+	for (int i = p.degree; i >= 0; i--)
+		res.coeff[i] -= p.coeff[i];
+
+	if (res.coeff[res.degree] == 0)
+		res.Rebuffer();
 	return res;
 }
 TPolynom TPolynom::operator*(const TPolynom& p) {
-	TPolynom res;
-	res.Multi(*this, p);
+	TPolynom res(degree + p.degree);
+
+	for (int i = degree; i >= 0; i--)
+		for (int j = p.degree; j >= 0; j--)
+			res.coeff[i + j] += coeff[i] * p.coeff[j];
+
 	return res;
 }
 float TPolynom::operator()(float _x) {
-	return Value(_x);
+	float res = 0.0f, x = 1.0f;
+	for (int i = degree; i >= 0; i--) {
+		res += coeff[i] * x;
+		x *= _x;
+	}
+	return res;
 }
 
 TPolynom& TPolynom::operator+=(const TPolynom& p) {
-	return AddEq(p);
+	if (p.degree > degree)
+		this->Resize(p.degree);
+
+	for (int i = p.degree; i >= 0; i--)
+		coeff[i] += p.coeff[i];
+
+	if (coeff[degree] == 0)
+		this->Rebuffer();
+	return *this;
 }
 TPolynom& TPolynom::operator-=(const TPolynom& p) {
-	return MinusEq(p);
+	if (p.degree > degree)
+		this->Resize(p.degree);
+
+	for (int i = p.degree; i >= 0; i--)
+		coeff[i] -= p.coeff[i];
+
+	if (coeff[degree] == 0)
+		this->Rebuffer();
+	return *this;
 }
 TPolynom& TPolynom::operator*=(const TPolynom& p) {
-	return MultiEq(p);
+	int tmp_d = degree + p.degree;
+	TPolynom tmp(tmp_d);
+
+	for (int i = degree; i >= 0; i--)
+		for (int j = p.degree; j >= 0; j--)
+			tmp.coeff[i + j] += coeff[i] * p.coeff[j];
+
+	this->Rebuffer(tmp_d);
+	for (int i = tmp_d; i >= 0; i--)
+		coeff[i] = tmp.coeff[i];
+
+	return *this;
 }
 
 void read_file(TPolynom** p, int& n) {
@@ -128,22 +189,22 @@ void TPolynom::Fill_hand() {
 	}
 	cout << endl;
 }
-void TPolynom::Show() {
-	cout << coeff[degree];
-	if (!coeff[degree]) {
-		cout << "x^0" << endl;
-		return;
-	}
-
-	cout << "x^" << degree << " ";
-	for (int i = degree - 1; i >= 0; i--) {
-		if (coeff[i] > 0)
-			cout << "+ " << coeff[i] << "x^" << i << " ";
-		else if (coeff[i] < 0)
-			cout << "- " << -coeff[i] << "x^" << i << " ";
-	}
-	cout << endl;
-}
+//void TPolynom::Show() {
+//	cout << coeff[degree];
+//	if (!coeff[degree]) {
+//		cout << "x^0" << endl;
+//		return;
+//	}
+//
+//	cout << "x^" << degree << " ";
+//	for (int i = degree - 1; i >= 0; i--) {
+//		if (coeff[i] > 0)
+//			cout << "+ " << coeff[i] << "x^" << i << " ";
+//		else if (coeff[i] < 0)
+//			cout << "- " << -coeff[i] << "x^" << i << " ";
+//	}
+//	cout << endl;
+//}
 void TPolynom::Copy(const TPolynom& p) {
 	this->Rebuffer(p.degree);
 	for (int i = degree; i >= 0; i--)
@@ -151,48 +212,6 @@ void TPolynom::Copy(const TPolynom& p) {
 }
 
 
-TPolynom TPolynom::Add(const TPolynom& p1, const TPolynom& p2) {
-	this->Rebuffer(max_d(p1.degree, p2.degree));
-
-	if (p1.degree >= p2.degree) {
-		for (int i = p1.degree; i >= 0; i--)
-			coeff[i] = p1.coeff[i];
-		for (int i = p2.degree; i >= 0; i--)
-			coeff[i] += p2.coeff[i];
-	}
-	else {
-		for (int i = p2.degree; i >= 0; i--)
-			coeff[i] = p2.coeff[i];
-		for (int i = p1.degree; i >= 0; i--)
-			coeff[i] += p1.coeff[i];
-	}
-	if (coeff[degree] == 0)
-		this->Rebuffer();
-	return *this;
-}
-TPolynom TPolynom::Minus(const TPolynom& from, const TPolynom& substract) {
-	this->Rebuffer(max_d(from.degree, substract.degree));
-	for (int i = degree; i >= 0; i--)
-		coeff[i] = 0.f;
-
-	for (int i = from.degree; i >= 0; i--)
-		coeff[i] = from.coeff[i];
-	for (int i = substract.degree; i >= 0; i--)
-		coeff[i] -= substract.coeff[i];
-
-	if (coeff[degree] == 0)
-		this->Rebuffer();
-	return *this;
-}
-TPolynom TPolynom::Multi(const TPolynom& p1, const TPolynom& p2) {
-	this->Rebuffer(p1.degree + p2.degree);
-
-	for (int i = p1.degree; i >= 0; i--)
-		for (int j = p2.degree; j >= 0; j--)
-			coeff[i + j] += p1.coeff[i] * p2.coeff[j];
-
-	return *this;
-}
 TPolynom TPolynom::Diff(const TPolynom& p) {
 	this->Rebuffer(0);
 
@@ -205,43 +224,6 @@ TPolynom TPolynom::Diff(const TPolynom& p) {
 	return *this;
 }
 
-
-TPolynom& TPolynom::AddEq(const TPolynom& p) {
-	if (p.degree > degree)
-		this->Resize(p.degree);
-
-	for (int i = p.degree; i >= 0; i--)
-		coeff[i] += p.coeff[i];
-
-	if (coeff[degree] == 0)
-		this->Rebuffer();
-	return *this;
-}
-TPolynom& TPolynom::MinusEq(const TPolynom& p) {
-	if (p.degree > degree)
-		this->Resize(p.degree);
-
-	for (int i = p.degree; i >= 0; i--)
-		coeff[i] -= p.coeff[i];
-
-	if (coeff[degree] == 0)
-		this->Rebuffer();
-	return *this;
-}
-TPolynom& TPolynom::MultiEq(const TPolynom& p) {
-	int tmp_d = degree + p.degree;
-	TPolynom tmp(tmp_d);
-
-	for (int i = degree; i >= 0; i--)
-		for (int j = p.degree; j >= 0; j--)
-			tmp.coeff[i + j] += coeff[i] * p.coeff[j];
-
-	this->Rebuffer(tmp_d);
-	for (int i = tmp_d; i >= 0; i--)
-		coeff[i] = tmp.coeff[i];
-
-	return *this;
-}
 TPolynom& TPolynom::DiffEq() {
 	int tmp_d = degree - 1;
 	TPolynom tmp(tmp_d);
@@ -259,18 +241,6 @@ TPolynom& TPolynom::DiffEq() {
 
 	return *this;
 }
-
-
-
-float TPolynom::Value(float _x) {
-	float res = 0.0f, x = 1.0f;
-	for (int i = degree; i >= 0; i--) {
-		res += coeff[i] * x;
-		x *= _x;
-	}
-	return res;
-}
-
 
 
 void TPolynom::Rebuffer(int newDegree) { // Изменяет кол-во коэф-ов и зануляет их

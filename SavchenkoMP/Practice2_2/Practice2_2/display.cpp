@@ -26,11 +26,10 @@ void retry(int& ans) {
 }
 
 
-
 void print_p(TPolynom*& p, const int n) {
 	for (int i = 0; i < n; i++) {
 		cout << "f" << i << " = ";
-		p[i].Show();
+		cout << p[i];
 	}
 	cout << endl;
 }
@@ -50,8 +49,8 @@ void index(int* ind, int n) {
 
 void print_2p(TPolynom& p1, TPolynom& p2, int* ind) {
 	cout << "f" << ind[0] << " = ";
-	p1.Show();
+	cout << p1;
 	cout << "f" << ind[1] << " = ";
-	p2.Show();
+	cout << p2;
 	cout << endl;
 }

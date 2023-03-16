@@ -49,7 +49,7 @@ int main() {
 				res = p[ind[0]] + p[ind[1]];
 
 				cout << "f" << ind[0] << " + f" << ind[1] << " = ";
-				res.Show();
+				cout << res;
 
 				retry(ans);
 				break;
@@ -64,7 +64,7 @@ int main() {
 				res = p[ind[0]] - p[ind[1]];
 
 				cout << "f" << ind[0] << " - f" << ind[1] << " = ";
-				res.Show();
+				cout << res;
 
 				retry(ans);
 				break;
@@ -79,7 +79,7 @@ int main() {
 				res = p[ind[0]] * p[ind[1]];
 
 				cout << "f" << ind[0] << " * f" << ind[1] << " = ";
-				res.Show();
+				cout << res;
 
 				retry(ans);
 				break;
@@ -95,7 +95,7 @@ int main() {
 
 				system("cls");
 				cout << "f" << ind_1 << " = ";
-				p[ind_1].Show();
+				cout << p[ind_1];
 
 				cout << "\nf" << ind_1 << "(" << x << ") = " << p[ind_1](x) << endl;
 
@@ -111,11 +111,11 @@ int main() {
 
 				system("cls");
 				cout << "f" << ind_1 << " = ";
-				p[ind_1].Show();
+				cout << p[ind_1];
 
 				res.Diff(p[ind_1]);
 				cout << "f'" << ind_1 << " = ";
-				res.Show();
+				cout << res;
 
 				retry(ans);
 				break;

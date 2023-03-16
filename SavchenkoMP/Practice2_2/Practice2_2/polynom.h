@@ -15,7 +15,7 @@ struct TPolynom {
 
 	bool operator==(const TPolynom& p) const;
 	bool operator!=(const TPolynom& p) const;
-	TPolynom& operator=(const TPolynom& p);
+	const TPolynom& operator=(const TPolynom& p);
 
 	TPolynom operator+(const TPolynom& p);
 	TPolynom operator-(const TPolynom& p);
@@ -28,21 +28,29 @@ struct TPolynom {
 	TPolynom& operator*=(const TPolynom& p);
 
 	void Fill_hand();		// Заполнение от руки
-	void Show();
 	void Copy(const TPolynom& p);
+	friend std::ostream& operator<<(std::ostream& out, const TPolynom& p) {
+		out << p.coeff[p.degree];
+		if (!p.coeff[p.degree]) {
+			out << "x^0" << std::endl;
+			return out;
+		}
+
+		out << "x^" << p.degree << " ";
+		for (int i = p.degree - 1; i >= 0; i--) {
+			if (p.coeff[i] > 0)
+				out << "+ " << p.coeff[i] << "x^" << i << " ";
+			else if (p.coeff[i] < 0)
+				out << "- " << -p.coeff[i] << "x^" << i << " ";
+		}
+		out << std::endl;
+		return out;
+	}
 
 
-	TPolynom Add(const TPolynom& p1, const TPolynom& p2);
-	TPolynom Minus(const TPolynom& p1, const TPolynom& p2);
-	TPolynom Multi(const TPolynom& p1, const TPolynom& p2);
 	TPolynom Diff(const TPolynom& p);
-
-	TPolynom& AddEq(const TPolynom& p);
-	TPolynom& MinusEq(const TPolynom& p);
-	TPolynom& MultiEq(const TPolynom& p);
 	TPolynom& DiffEq();
 
-	float Value(float x);
 
 	void Rebuffer(int newDegree);
 	void Rebuffer();
