@@ -18,6 +18,10 @@ void cfree(Ñonstellation** cns) {
 void read_data(Ñonstellation* cns) {
 	FILE* fp;
 	fp = fopen("data.txt", "r");
+	if (fp == NULL) {
+		printf("Empty file");
+		return -1;
+	}
 	for (int i = 0; i < 10; i++) {
 		fscanf(fp, "%s", cns[i].name);
 		for (int j = 0; j < 5; j++) {
