@@ -84,12 +84,12 @@ Triangle* ReadTriangleFile(char* file_path, int* number_of_triangles)
 
 Triangle ReadTriangleEntity(FILE* file)
 {
-    int x1= atoi(read_string(file));
-    int y1 = atoi(read_string(file));
-    int x2 = atoi(read_string(file));
-    int y2 = atoi(read_string(file));
-    int x3 = atoi(read_string(file));
-    int y3 = atoi(read_string(file));
+    float x1= atoi(read_string(file));
+    float y1 = atoi(read_string(file));
+    float x2 = atoi(read_string(file));
+    float y2 = atoi(read_string(file));
+    float x3 = atoi(read_string(file));
+    float y3 = atoi(read_string(file));
 
     Coord c1 = { x1, y1 };
     Coord c2 = { x2, y2 };
@@ -103,7 +103,7 @@ Triangle ReadTriangleEntity(FILE* file)
 float CountSquare(Triangle triangle)
 {
     float s = (abs(((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[2].y - triangle.vertices[0].y)) - ((triangle.vertices[2].x - triangle.vertices[0].x) * (triangle.vertices[1].y - triangle.vertices[0].y)))) / 2;
-    return s;
+    printf("S = %f \n", s);
 }
 
 
@@ -122,7 +122,7 @@ float CountPerimeter(Triangle triangle)
 {
     float* sides = Sides(triangle);
     float p = sides[0] + sides[1] + sides[2];
-    return p;
+    printf("P = %f \n", p);
 }
 
 float* Height(Triangle triangle, float s)
@@ -132,7 +132,7 @@ float* Height(Triangle triangle, float s)
     heights[0] = 2 * s / sides[0];
     heights[1] = 2 * s / sides[1];
     heights[2] = 2 * s / sides[2];
-    return heights;
+    printf("H1 = %f, H2 = %f, H3 = %f \n", heights[0], heights[1], heights[2]);
 }
 
 void PrintTriangleType(Triangle triangle)
@@ -151,20 +151,4 @@ void PrintTriangleType(Triangle triangle)
 }
 
 
-
-void PrintTriangles(Triangle* triangles, int count_of_triangles)
-{
-    for (int i = 0; i < count_of_triangles; ++i) {
-        printf("(%d, %d), ", triangles[i].vertices[0].x, triangles[i].vertices[0].y);
-        printf("(%d, %d), ", triangles[i].vertices[1].x, triangles[i].vertices[1].y);
-        printf("(%d, %d): \n", triangles[i].vertices[2].x, triangles[i].vertices[2].y);
-        float s = CountSquare(triangles[i]);
-        printf("S = %f \n", s);
-        printf("P = %f \n", CountPerimeter(triangles[i]));
-        float* heights = Height(triangles[i], s);
-        printf("H1 = %f, H2 = %f, H3 = %f \n", heights[0], heights[1], heights[2]);
-        PrintTriangleType(triangles[i]);
-        
-    }
-}
 

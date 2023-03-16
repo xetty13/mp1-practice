@@ -2,7 +2,7 @@
 #define _TRIANGLE_H
 
 typedef struct {
-	int x, y;
+	float x, y;
 }Coord;
 
 typedef struct {
@@ -14,7 +14,6 @@ char* read_string(FILE* stream);
 char* getPath();
 Triangle* ReadTriangleFile(char* file_path, int* number_of_triangles);
 Triangle ReadTriangleEntity(FILE* file);
-void PrintTriangles(Triangle* triangles, int count_of_triangles);
 float CountSquare(Triangle triangle);
 float CountPerimeter(Triangle triangle);
 float* Sides(Triangle triangle);
