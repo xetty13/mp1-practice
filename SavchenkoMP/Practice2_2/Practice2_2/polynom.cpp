@@ -87,13 +87,6 @@ TPolynom& TPolynom::operator*=(const TPolynom& p) {
 	return MultiEq(p);
 }
 
-int& TPolynom::Degree() {
-	return degree;
-}
-float& TPolynom::Coeff(const int i) {
-	return coeff[i];
-}
-
 void read_file(TPolynom** p, int& n) {
 	/*
 	Чтение происходит из файла "data.txt"
@@ -118,9 +111,9 @@ void read_file(TPolynom** p, int& n) {
 		(*p)[i].Rebuffer(dgr);
 	}
 	for (int i = 0; i < n; i++) {
-		for (int j = (*p)[i].Degree(); j >= 0; j--)
-			file >> (*p)[i].Coeff(j);
-		if (!(*p)[i].Coeff((*p)[i].Degree()))
+		for (int j = (*p)[i].degree; j >= 0; j--)
+			file >> (*p)[i].coeff[j];
+		if (!(*p)[i].coeff[(*p)[i].degree])
 			(*p)[i].Rebuffer();
 	}
 

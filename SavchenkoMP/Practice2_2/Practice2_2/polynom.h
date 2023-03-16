@@ -27,9 +27,6 @@ struct TPolynom {
 	TPolynom& operator-=(const TPolynom& p);
 	TPolynom& operator*=(const TPolynom& p);
 
-	int& Degree();
-	float& Coeff(const int i);
-
 	void Fill_hand();		// Заполнение от руки
 	void Show();
 	void Copy(const TPolynom& p);
