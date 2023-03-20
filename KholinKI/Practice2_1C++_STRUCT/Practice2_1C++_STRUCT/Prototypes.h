@@ -1,16 +1,31 @@
-#pragma once
+#ifndef _prototypes_h
+#define _prototypes_h
 
-#define list_agences list_ag 
+#define LEN 256
+#define NAgencies 7
 
-struct list_agences{
-	struct travel_agency_information {
-		char name_travel_agencies[250];
-		char country[150];
-		char travel_conditions[500];
-		char excursion_services[500];
-		char host_service[300];
-		char ticket_price[200];
-	}INFO;//info about agences
-};//Addressing the agency by index
+typedef struct
+{
+	char* country;
+	char* travel_conditions;
+	char* excursion_services;
+	char* host_service;
+	char* ticket_price;
+} TService;
 
-list_ag* file_reader(list_ag** my_objects);
+typedef struct
+{
+	char* name;
+	TService* services;
+} TAgency;
+
+TAgency* allocate_TAgency(TAgency** pointer);
+void free_memory(TAgency** pointer);
+
+/*TAgency* file_reader(FILE* fptr, TAgency**);
+void output_data_file(FILE* fptr, TAgency** pointer);
+void output_data_EZONES(FILE* fptr, TAgency** pointer, char *e_zone[]);
+void free_memory(TAgency** pointer);
+*/
+
+#endif
