@@ -6,31 +6,23 @@
 
 
 
-TAgency* allocate_TAgency(TAgency** pointer) {
+void allocate_TAgency(TAgency** pointer) {
 	int i = 0;
-	(*pointer) = (TAgency*)malloc(sizeof(TAgency) * NAgencies);//creating a list of travel agencies
-	for (i = 0; i < NAgencies; i++) {//allocating
-		(*pointer)[i].name = (char*)malloc(sizeof(char) * LEN);//creating names
-	}
-	for (i = 0; i < NAgencies; i++) {
-		(*pointer)[i].services = (TService*)malloc(sizeof(TService));//creating a service structure for each facility
-	}
-	return (*pointer);
+	(*pointer) = (TAgency*)malloc(sizeof(TAgency));//creating a list of travel agencies
+	(*pointer)->services = (TService*)malloc(sizeof(TService));//creating a service structure for each facility
+	(*pointer)->name = (char*)malloc(sizeof(char) * LEN);
 }
 
 void allocate_TServices(TAgency** ptr) {
-	int i = 0;
-	for (i = 0; i < NAgencies; i++) {
-		(*ptr)[i].services->country = (char*)malloc(sizeof(char) * LEN);
-		(*ptr)[i].services->travel_conditions = (char*)malloc(sizeof(char) * LEN);
-		(*ptr)[i].services->excursion_services = (char*)malloc(sizeof(char) * LEN);
-		(*ptr)[i].services->host_service = (char*)malloc(sizeof(char) * LEN);
-		(*ptr)[i].services->ticket_price = (char*)malloc(sizeof(char) * LEN);
-	}
+		(*ptr)->services->country = (char*)malloc(sizeof(char) * LEN);
+		(*ptr)->services->travel_conditions = (char*)malloc(sizeof(char) * LEN);
+		(*ptr)->services->excursion_services = (char*)malloc(sizeof(char) * LEN);
+		(*ptr)->services->host_service = (char*)malloc(sizeof(char) * LEN);
+		(*ptr)->services->ticket_price = (char*)malloc(sizeof(char) * LEN);
 }
 
 
-void search_string(FILE* fptr) {
+void search_string(FILE* fptr) {//look for the first occurrence of the string
 	int i = 0;
 	char c = 32;
 			fscanf(fptr, "%c", &c);
@@ -42,52 +34,54 @@ void search_string(FILE* fptr) {
 	}
 }
 
-void file_reader(FILE * fptr, TAgency ** list) {
+void file_reader(FILE * fptr, TAgency *** list) {
+	*(list) = (TAgency**)malloc(sizeof(TAgency*) * NAgencies); //create a dynamic array of objects
 	int i = 0;
+	for (i = 0; i < NAgencies; i++) {
+		allocate_TAgency(&(*list)[i]);//Give the same pointer to create the structure
+	}
+	for (i = 0; i < NAgencies; i++) {
+		allocate_TServices(&(*list)[i]);//Give the same pointer to create the structure
+	}
 	for (i = 0; i < NAgencies; i++) {
 		search_string(fptr);
 		fseek(fptr, -1, SEEK_CUR);
-		fgets((*list)[i].name, LEN, fptr);
-		fgets((*list)[i].services->country, LEN, fptr);
-		fgets((*list)[i].services->travel_conditions, LEN, fptr);
-		fgets((*list)[i].services->excursion_services, LEN, fptr);
-		fgets((*list)[i].services->host_service, LEN, fptr);
-		fgets(((*list)[i].services->ticket_price), LEN, fptr);
+		fgets((*list)[i]->name, LEN, fptr);
+		fgets((*list)[i]->services->country, LEN, fptr);
+		fgets((*list)[i]->services->travel_conditions, LEN, fptr);
+		fgets((*list)[i]->services->excursion_services, LEN, fptr);
+		fgets((*list)[i]->services->host_service, LEN, fptr);
+		fgets((*list)[i]->services->ticket_price, LEN, fptr);
 	}
 }
+
 void output_all_data(FILE* fptr, TAgency** list) {
 	int i = 0;
 	while (i < NAgencies) {
-		printf("%s",(* list)[i].name);
-		printf("%s",( *list)[i].services->country);
-		printf("%s",( *list)[i].services->travel_conditions);
-		printf("%s", (*list)[i].services->excursion_services);
-		printf("%s", (*list)[i].services->host_service);
-		printf("%s", (*list)[i].services->ticket_price);
+		printf("%s", list[i]->name);
+		printf("%s", list[i]->services->country);
+		printf("%s", list[i]->services->travel_conditions);
+		printf("%s", list[i]->services->excursion_services);
+		printf("%s", list[i]->services->host_service);
+		printf("%s", list[i]->services->ticket_price);
 		printf("\n");
 		i++;
 	}
 }
 
-void free_memory(TAgency** pointer) {//сначала из подмассивов,потом из подобъектов и уже после массив объектов
-	for (int i = 0; i < NAgencies; i++) {
-		free((*pointer)[i].services);
-	}
-	free((*pointer));
-}
-/*
-void output_data_EZONES(FILE* fptr, list_ag** pointer,char *e_zone[]) {
+
+void output_data_EZONES(FILE* fptr, TAgency** pointer,char *e_zone[]) {
 	int i = 0;
 	int j = 0;
-	for (i = 0; i < q_TAgences; i++) {
+	for (i = 0; i < NAgencies; i++) {
 		while (j < 20) {
-			if (strcmp((*pointer)[i].INFO.country, e_zone[j]) == 0) {
-				printf("%s", (*pointer)[i].INFO.name_travel_agencies);
-				printf("%s", (*pointer)[i].INFO.country);
-				printf("%s", (*pointer)[i].INFO.travel_conditions);
-				printf("%s", (*pointer)[i].INFO.excursion_services);
-				printf("%s", (*pointer)[i].INFO.host_service);
-				printf("%s", (*pointer)[i].INFO.ticket_price);
+			if (strcmp(pointer[i]->services->country, e_zone[j]) == 0) {
+				printf("%s", pointer[i]->name);
+				printf("%s", pointer[i]->services->country);
+				printf("%s", pointer[i]->services->travel_conditions);
+				printf("%s", pointer[i]->services->excursion_services);
+				printf("%s", pointer[i]->services->host_service);
+				printf("%s", pointer[i]->services->ticket_price);
 				printf("\n");
 				j = 0;
 				break;
@@ -97,5 +91,21 @@ void output_data_EZONES(FILE* fptr, list_ag** pointer,char *e_zone[]) {
 		j = 0;
 	}
 }
-*/
 
+void free_memory(TAgency** pointer) {
+	for (int i = 0; i < NAgencies; i++) {//Freeing up memory from dynamic fields
+		free(pointer[i]->services->country);
+		free(pointer[i]->services->travel_conditions);
+		free(pointer[i]->services->excursion_services);
+		free(pointer[i]->services->host_service);
+		free(pointer[i]->services->ticket_price);
+	}
+
+	for (int i = 0; i < NAgencies; i++) {//Freeing up memory from dynamic structure
+		free(pointer[i]->services);
+	}
+	for (int i = 0; i < NAgencies; i++) {//Freeing up memory from dynamic structure
+		free(pointer[i]);
+	}
+	free(pointer);//freeing up memory massive objects
+}

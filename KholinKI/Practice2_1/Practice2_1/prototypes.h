@@ -4,7 +4,7 @@
 #define LEN 256
 #define NAgencies 7
 
-typedef struct
+typedef struct // list of service
 {
 	char* country;
 	char* travel_conditions;
@@ -13,19 +13,19 @@ typedef struct
 	char* ticket_price;
 } TService;
 
-typedef struct
+typedef struct // Tourist agency
 {
 	char* name;
 	TService *services;
 } TAgency;
 
-TAgency* allocate_TAgency(TAgency** pointer);
+void allocate_TAgency(TAgency** pointer);//allocating guide list...
+void file_reader(FILE* fptr, TAgency*** list);//reading data
+void allocate_TServices(TAgency** ptr);//allocating list of service
+void search_string(FILE* fptr);
+void output_all_data(FILE* fptr, TAgency** pointer);//all data
+void output_data_EZONES(FILE* fptr, TAgency** pointer, char* e_zone[]);//data about euro zones
 void free_memory(TAgency** pointer);
 
-/*TAgency* file_reader(FILE* fptr, TAgency**);
-void output_data_file(FILE* fptr, TAgency** pointer);
-void output_data_EZONES(FILE* fptr, TAgency** pointer, char *e_zone[]);
-void free_memory(TAgency** pointer);
-*/
 
 #endif
