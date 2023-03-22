@@ -1,31 +1,33 @@
 #ifndef _prototypes_h
 #define _prototypes_h
 
-#define LEN 256
+#include <fstream>
+#include <string>
+using namespace std;
 #define NAgencies 7
+#define buffer 256
 
-typedef struct
+typedef struct// list of service
 {
-	char* country;
-	char* travel_conditions;
-	char* excursion_services;
-	char* host_service;
-	char* ticket_price;
-} TService;
+	string country;
+	string travel_conditions;
+	string excursion_services;
+	string host_service;
+	string ticket_price;
+}TService;
 
-typedef struct
+typedef struct // Tourist agency
 {
-	char* name;
+	string name;
 	TService* services;
-} TAgency;
+}TAgency;
 
-TAgency* allocate_TAgency(TAgency** pointer);
-void free_memory(TAgency** pointer);
 
-/*TAgency* file_reader(FILE* fptr, TAgency**);
-void output_data_file(FILE* fptr, TAgency** pointer);
-void output_data_EZONES(FILE* fptr, TAgency** pointer, char *e_zone[]);
+void allocate_TAgency(TAgency** pointer);//allocating guide list...
+void file_reader(ifstream& file, TAgency*** list);//reading data
+void search_string(ifstream& file);
+void output_all_data(TAgency** pointer);//all data
+void output_data_EZONES(TAgency** pointer, string  e_zone[]);//data about euro zones
 void free_memory(TAgency** pointer);
-*/
 
 #endif

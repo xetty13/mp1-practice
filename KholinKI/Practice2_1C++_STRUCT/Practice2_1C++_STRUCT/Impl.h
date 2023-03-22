@@ -1,100 +1,87 @@
 #pragma once
 #include <stdio.h>
-#include <malloc.h>
-#include <string.h>
 #include "prototypes.h"
 
 
 
-TAgency* allocate_TAgency(TAgency** pointer) {
+void allocate_TAgency(TAgency** pointer) {
 	int i = 0;
-	(*pointer) = new TAgency[NAgencies];//creating a list of travel agencies
-	for (i = 0; i < NAgencies; i++) {//allocating
-		(*pointer)[i].name = new char[LEN];//creating names
+	(*pointer) = new TAgency;//creating a list of travel agencies
+	(*pointer)->services = new TService;//creating a service structure for each facility
+}
+
+void search_string(ifstream& file) {//look for the first occurrence of the string
+next:	
+	int i = 0;
+	int len;
+	int code;
+	int status = 0;
+	string str;
+	getline(file, str, '\n');//count to 0 inclusive
+	len = str.length();
+	do {
+		while (i < len) {
+			code = str[i];
+			if (((code >= 48) && (code <= 57)) || ((code >= 65) && (code <= 90)) || ((code >= 97) && (code <= 122))) {
+				status = 1;//The line is not empty
+				break;
+			}
+			i++;
+		}
+		if (len == 0) {//This is a bad line
+			file.seekg(1, ios_base::cur);
+			goto next;
+		}
+		if (status == 1) {//This is a good line
+			file.seekg(-len, ios_base::cur);
+		}
+		if (status == 0) {//This is a bad line
+			file.seekg(1, ios_base::cur);
+		}
+	} while (status == 0);
+}
+
+void file_reader(ifstream& file, TAgency*** list) {
+	*(list) = new TAgency* [NAgencies]; //create a dynamic array of objects
+	int i = 0;
+	for (i = 0; i < NAgencies; i++) {
+		allocate_TAgency(&(*list)[i]);//Give the same pointer to create the structure
 	}
 	for (i = 0; i < NAgencies; i++) {
-		(*pointer)[i].services = new TService;//creating a service structure for each facility
-	}
-	return (*pointer);
-}
-
-void allocate_TServices(TAgency** ptr) {
-	int i = 0;
-	for (i = 0; i < NAgencies; i++) {
-		(*ptr)[i].services->country = new char[LEN];
-		(*ptr)[i].services->travel_conditions = new char[LEN];
-		(*ptr)[i].services->excursion_services = new char[LEN];
-		(*ptr)[i].services->host_service = new char[LEN];
-		(*ptr)[i].services->ticket_price = new char[LEN];
+		search_string(file);
+		getline(file,(*list)[i]->name);
+		getline(file, (*list)[i]->services->country);
+		getline(file, (*list)[i]->services->travel_conditions);
+		getline(file, (*list)[i]->services->excursion_services);
+		getline(file, (*list)[i]->services->host_service);
+		getline(file, (*list)[i]->services->ticket_price);
 	}
 }
-
-
-void search_string(FILE* fptr) {
-	int i = 0;
-	char c = 32;
-	fscanf(fptr, "%c", &c);
-	if (c == 10) {
-		do {
-			fseek(fptr, 1, SEEK_CUR);
-			fscanf(fptr, "%c", &c);
-		} while (c == 10);
-	}
-}
-
-void file_reader(FILE* fptr, TAgency** list) {
-	int i = 0;
-	for (i = 0; i < NAgencies; i++) {
-		search_string(fptr);
-		fseek(fptr, -1, SEEK_CUR);
-		fgets((*list)[i].name, LEN, fptr);
-		fgets((*list)[i].services->country, LEN, fptr);
-		fgets((*list)[i].services->travel_conditions, LEN, fptr);
-		fgets((*list)[i].services->excursion_services, LEN, fptr);
-		fgets((*list)[i].services->host_service, LEN, fptr);
-		fgets(((*list)[i].services->ticket_price), LEN, fptr);
-	}
-}
-void output_all_data(FILE* fptr, TAgency** list) {
+void output_all_data(TAgency** list) {
 	int i = 0;
 	while (i < NAgencies) {
-		printf("%s", (*list)[i].name);
-		printf("%s", (*list)[i].services->country);
-		printf("%s", (*list)[i].services->travel_conditions);
-		printf("%s", (*list)[i].services->excursion_services);
-		printf("%s", (*list)[i].services->host_service);
-		printf("%s", (*list)[i].services->ticket_price);
-		printf("\n");
+		cout << list[i]->name << endl;
+		cout << list[i]->services->country << endl;
+		cout << list[i]->services->travel_conditions << endl;
+		cout << list[i]->services->excursion_services << endl;
+		cout << list[i]->services->host_service << endl;
+		cout << list[i]->services->ticket_price << endl;
 		i++;
 	}
 }
 
-void free_memory(TAgency** pointer) {
-	for (int i = 0; i < NAgencies; i++) {
-		delete[](*pointer)[i].services->country;
-		delete[](*pointer)[i].services->travel_conditions;
-		delete[](*pointer)[i].services->excursion_services;
-		delete[](*pointer)[i].services->host_service;
-		delete[](*pointer)[i].services->ticket_price;//need int massive
-	}
-	for (int i = 0; i < NAgencies; i++) {
-		delete[](*pointer)[i].services;
-	}
-	delete[] (*pointer);
-}
-/*
-void output_data_EZONES(FILE* fptr, list_ag** pointer,char *e_zone[]) {
+void output_data_EZONES(TAgency** list,string  e_zone[]) {
 	int i = 0;
 	int j = 0;
-	for (i = 0; i < q_TAgences; i++) {
+	for (i = 0; i < NAgencies; i++) {
 		while (j < 20) {
-			if (strcmp((*pointer)[i].INFO.country, e_zone[j]) == 0) {
-				printf("%s", (*pointer)[i].INFO.name_travel_agencies);
-				printf("%s", (*pointer)[i].INFO.country);
-				printf("%s", (*pointer)[i].INFO.travel_conditions);
-				printf("%s", (*pointer)[i].INFO.excursion_services);
-				printf("%s", (*pointer)[i].INFO.host_service);
-				printf("%s", (*pointer)[i].INFO.ticket_price);
+			if (list[i]->services->country == e_zone[j]){
+				cout << list[i]->name << endl;
+				cout << list[i]->services->country << endl;
+				cout << list[i]->services->travel_conditions << endl;
+				cout << list[i]->services->excursion_services << endl;
+				cout << list[i]->services->host_service << endl;
+				cout << list[i]->services->ticket_price << endl;
 				printf("\n");
 				j = 0;
 				break;
@@ -104,4 +91,10 @@ void output_data_EZONES(FILE* fptr, list_ag** pointer,char *e_zone[]) {
 		j = 0;
 	}
 }
-*/
+
+void free_memory(TAgency** pointer) {
+	for (int i = 0; i < NAgencies; i++) {
+		delete pointer[i]->services;
+	}
+	delete[] pointer;
+}
