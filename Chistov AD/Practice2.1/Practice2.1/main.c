@@ -2,9 +2,12 @@
 #include "workers.h";
 
 int main() {
-	worker* w;
+	worker**w;
 	int N = amount();
-	allocate(&w, N);
+	allocate_memory(&w, N);
 	adding(w);
 	higher_education(w, N);
+	for (int i = 0; i < N; i++) {
+		memory_free(&(w[i]));
+	}
 }
