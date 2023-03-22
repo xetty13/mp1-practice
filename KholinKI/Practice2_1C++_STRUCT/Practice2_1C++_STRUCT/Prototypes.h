@@ -7,20 +7,20 @@ using namespace std;
 #define NAgencies 7
 #define buffer 256
 
-typedef struct// list of service
+struct TService// list of service
 {
 	string country;
 	string travel_conditions;
 	string excursion_services;
 	string host_service;
 	string ticket_price;
-}TService;
+};
 
-typedef struct // Tourist agency
+struct TAgency // Tourist agency
 {
 	string name;
 	TService* services;
-}TAgency;
+};
 
 
 void allocate_TAgency(TAgency** pointer);//allocating guide list...
