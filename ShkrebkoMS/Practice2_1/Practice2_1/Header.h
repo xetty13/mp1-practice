@@ -1,20 +1,27 @@
 #ifndef _BOOK_H
 #define _BOOK_H
 
+#include <stdbool.h>
+
+
+
+
 typedef struct
 {
-	char Author[100];
+	int Couaut;
+	char** Author;
 	char Name[100];
 	char Publishing[100];
 	char Section[100];
-	char Availability[100];
-	char Score[100];
-
-
+	bool Availability;
+	int Score;
 }TBook;
-int read(FILE** file);
+
+void setAuthors(char* strTmp, TBook* book);
+
+void read(FILE** file, TBook* book);
 void print_book(TBook* book, int count);
 
-void print_section(TBook* book, int count);
 void print_section(TBook* book, int count, char* word);
+void free_mas(TBook* book, int count);
 #endif _BOOK_H

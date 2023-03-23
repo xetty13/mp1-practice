@@ -1,23 +1,31 @@
-#include <stdio.h>;
-#include "Header.h";
-#include <stdlib.h>;
+#include <stdio.h>
+#include "Header.h"
+#include <stdlib.h>
 #include <string.h>
 #include <locale.h>
-
-#define LIB_SIZE 100
-
+#include <stdbool.h>
+#define LONGLINE 255
 
 int main()
 {
 	
-	int count,a;
+	int z=0,count=0,a;
 	char line[100],word[20];
 	setlocale(LC_ALL, "Rus");
-	
-	FILE* file = fopen("progr.txt", "r");
-	TBook lib[LIB_SIZE];
 
-	count=read(file,lib);
+	FILE* file = fopen("progr.txt", "r");
+	TBook *lib;
+
+	while (fgets(line, LONGLINE, file) != NULL)
+	{
+		count++;
+	}
+
+	rewind(file);
+
+	lib = (TBook*)malloc(sizeof(TBook) * count);
+
+	read(file,lib);
 	
 	print_book(lib, count);
 	do {
@@ -63,7 +71,8 @@ int main()
 		}
 	} while (a!=0);
 
-
+	free_mas(lib, count);
 	fclose(file);
+	free(lib);
 	return 0;
 }
