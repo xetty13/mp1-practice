@@ -2,7 +2,6 @@
 #define _prototypes_h
 
 #define LEN 256
-#define NAgencies 7
 
 typedef struct // list of service
 {
@@ -20,14 +19,16 @@ typedef struct // Tourist agency
 	TService *services;
 } TAgency;
 
-int counter_agencies(int counter, FILE* fptr);//count agencies
-void allocate_TAgency(TAgency** pointer);//allocating guide list...
-void allocate_TServices(TAgency** ptr);//allocating list of service
-void file_reader(FILE* fptr, TAgency*** list);//reading data
+int CountAgencies(int num_agencies, FILE* fptr); //count agencies
+int* CountTServices(int* num_services, int num_agencies, FILE* fptr);//count directions
+
+void allocate_TAgency(TAgency** pointer, int num_services);//allocating guide list...
+void allocate_TServices(TAgency** ptr,int num_services);//allocating list of service
+void file_reader(FILE* fptr, TAgency*** list,int num_agencies,int* num_services);//reading data
 void search_string(FILE* fptr);
-void output_all_data(FILE* fptr, TAgency** pointer);//all data
-void output_data_EZONES(FILE* fptr, TAgency** pointer, char* e_zone[]);//data about euro zones
-void free_memory(TAgency** pointer);
+void output_all_data(FILE* fptr, TAgency** list, int num_agencies, int* num_services);//all data
+//void output_data_EZONES(FILE* fptr, TAgency** pointer, char* e_zone[]);//data about euro zones
+//void free_memory(TAgency** pointer);
 
 
 #endif
