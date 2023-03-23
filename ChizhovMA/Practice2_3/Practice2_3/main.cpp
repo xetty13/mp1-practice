@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <list>
 #include "person.h"
 using namespace std;
 
