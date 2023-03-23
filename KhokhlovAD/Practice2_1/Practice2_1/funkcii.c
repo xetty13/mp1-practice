@@ -5,17 +5,20 @@
 
 
 
-Owners* read_inf(int n)
+Owners* read_inf()
 {
 	FILE* f;
-	f = fopen("1.txt", "r");
+	int n;
+	char* path = (char*)malloc(sizeof(char)*100);
+	scanf("%s", &path);
+	f = fopen(path, "r");
 	if (f == NULL)
 	{
 		printf("File not found\n");
 	}
 	else
 		printf("file opened successfully\n");
-	fscanf(f, "%d", &n);
+	fscanf(f, "%d", &n);	
 	Owners* owner = (Owners*)malloc(sizeof(Owners) * n);
 	printf("number of owners = %d\n", n);
 	for (int i = 0; i < n; i++) 
@@ -30,6 +33,7 @@ Owners* read_inf(int n)
 		fscanf(f, "%s %s %s %s %s %d %s %d", owner[i].name, owner[i].surname, owner[i].patronymic, owner[i].date, owner[i].carnum, &owner[i].gibdd, owner[i].phnum, &owner[i].tehpas);
 	}
 	fclose(f);
+	free(path);
 	return owner;
 }
 

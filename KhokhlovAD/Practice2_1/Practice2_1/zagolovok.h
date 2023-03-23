@@ -14,7 +14,7 @@ typedef struct
 	unsigned long tehpas;
 } Owners;
 
-Owners* read_inf(int n);
+Owners* read_inf();
 void print_inf(Owners* owner, int n);
 
 void free_inf(Owners** owner, int n);
