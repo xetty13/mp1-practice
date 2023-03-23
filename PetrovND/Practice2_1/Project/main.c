@@ -5,7 +5,7 @@
 
 int main() {
 	char** section;
-	char* path = "C:\\Users\\nikit\\Desktop\\12.txt";
+	char* path = "C:\\Users\\nikit\\Desktop\\lib.txt";
 	int stringCount = strCount(path);
 	int act = authorsCount(path, stringCount);
 	cardIndex* cards = alloc(stringCount, act);
