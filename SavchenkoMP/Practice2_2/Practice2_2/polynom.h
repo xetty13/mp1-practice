@@ -58,10 +58,10 @@ struct TPolynom {
 	void _coeffcopy(float* c1, float* c2);
 };
 
-void read_file(TPolynom** p, int& n);
+void read_file(TPolynom*& p, int& n);
 
-float power(float x, int n);
-int max_d(int a, int b);
-int min_d(int a, int b);
+inline int max_d(int a, int b) {
+	return (a > b) ? a : b;
+};
 
 #endif

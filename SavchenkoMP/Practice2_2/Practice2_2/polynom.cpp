@@ -148,7 +148,7 @@ TPolynom& TPolynom::operator*=(const TPolynom& p) {
 	return *this;
 }
 
-void read_file(TPolynom** p, int& n) {
+void read_file(TPolynom*& p, int& n) {
 	/*
 	Чтение происходит из файла "data.txt"
 	-В первой строке - количество полиномов
@@ -166,16 +166,16 @@ void read_file(TPolynom** p, int& n) {
 		throw "Файл данных не открыт";
 
 	file >> n;
-	*p = new TPolynom[n];
+	p = new TPolynom[n];
 	for (int i = 0; i < n; i++) {
 		file >> dgr;
-		(*p)[i].Rebuffer(dgr);
+		p[i].Rebuffer(dgr);
 	}
 	for (int i = 0; i < n; i++) {
-		for (int j = (*p)[i].degree; j >= 0; j--)
-			file >> (*p)[i].coeff[j];
-		if (!(*p)[i].coeff[(*p)[i].degree])
-			(*p)[i].Rebuffer();
+		for (int j = p[i].degree; j >= 0; j--)
+			file >> p[i].coeff[j];
+		if (!p[i].coeff[p[i].degree])
+			p[i].Rebuffer();
 	}
 
 	file.close();
@@ -189,22 +189,6 @@ void TPolynom::Fill_hand() {
 	}
 	cout << endl;
 }
-//void TPolynom::Show() {
-//	cout << coeff[degree];
-//	if (!coeff[degree]) {
-//		cout << "x^0" << endl;
-//		return;
-//	}
-//
-//	cout << "x^" << degree << " ";
-//	for (int i = degree - 1; i >= 0; i--) {
-//		if (coeff[i] > 0)
-//			cout << "+ " << coeff[i] << "x^" << i << " ";
-//		else if (coeff[i] < 0)
-//			cout << "- " << -coeff[i] << "x^" << i << " ";
-//	}
-//	cout << endl;
-//}
 void TPolynom::Copy(const TPolynom& p) {
 	this->Rebuffer(p.degree);
 	for (int i = degree; i >= 0; i--)
@@ -301,10 +285,3 @@ float power(float x, int n) {
 		res *= x;
 	return res;
 }
-int max_d(int a, int b) {
-	return (a > b) ? a : b;
-}
-int min_d(int a, int b) {
-	return (a < b) ? a : b;
-}
-
