@@ -149,6 +149,7 @@ int cntStruct(string& f)
 		i++;
 	}
 	delete[]str;
+	file.close();
 	return i;
 }
 
