@@ -17,7 +17,7 @@ struct Deposit {
 	string name;
 	int period;
 	float conditions;
-	//default contructor and destructor
+	//default contructor axnd destructor
 };
 struct BanksData {
 	string name;
@@ -56,9 +56,9 @@ struct BanksData {
 };
 
 
-int read(BanksData** data, int* n, char* path);
+int read(BanksData*& data, int* n, const string& path);
 
-void input_path(char* path);
+void input_path(string& path);
 void print_data(BanksData* data, int n);
 void input_user_data(int* user_year, float* user_money);
 

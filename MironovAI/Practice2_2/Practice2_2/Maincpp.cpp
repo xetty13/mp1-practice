@@ -5,21 +5,22 @@ using namespace std;
 
 
 int main() {
-    char* path = (char*)malloc(sizeof(char) * MAX_PATH);
+    
+    string path;
     input_path(path);
     int n;
     int* p = &n;
     BanksData* data;
     int q;
 
-
     do {
-        q = read(&data, p, path);
+        q = read(data, p, path);
         if (q != 0) {
             input_path(path);
         }
 
     } while (q != 0);
+    
     print_data(data, n);
 
     int user_year;
@@ -34,4 +35,5 @@ int main() {
     cout << "\n" << "if you would invest " << user_money << " in " << data[ans.id1].deposits[ans.id2].name << " at a " << data[ans.id1].deposits[ans.id2].conditions << " per year";
     cout << "\n \n" << "Your benefit in " << user_year << " years will be " << ans.profit << " rubles" << endl;
     return 0;
+    
 }

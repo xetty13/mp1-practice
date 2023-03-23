@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-int read(BanksData** data, int* p, char* path) {
+int read(BanksData*& data, int* p, const string& path) {
     ifstream infile(path);
     if (!infile) {
         cout << "This file isn`t exist" << endl;
@@ -17,13 +17,13 @@ int read(BanksData** data, int* p, char* path) {
     else {
         infile >> (*p);
         int n = *p;
-        (*data) = new BanksData[n];
+        data = new BanksData[n];
         for (int i = 0; i < n; i++) {
 
-            infile >> (*data)[i].name >> (*data)[i].ownership >> (*data)[i].count;
-            (*data)[i].deposits.resize((*data)[i].count);
-            for (int j = 0; j < (*data)[i].count; j++) {
-                infile >> (*data)[i].deposits[j].name >> (*data)[i].deposits[j].period >> (*data)[i].deposits[j].conditions;
+            infile >> data[i].name >> data[i].ownership >> data[i].count;
+            data[i].deposits.resize(data[i].count);
+            for (int j = 0; j < data[i].count; j++) {
+                infile >> data[i].deposits[j].name >> data[i].deposits[j].period >> data[i].deposits[j].conditions;
             }
         }
         infile.close();
@@ -31,10 +31,10 @@ int read(BanksData** data, int* p, char* path) {
     }
 }
 
-void input_path(char* path) {
+void input_path(string& path) {
     cout << "Input a path with file type: " << endl;
     cin >> path;
-    cout << "Your path : \n % s \n" << endl;
+    cout << "Your path : \n" << path << " \n" << endl;
 }
 void print_data(BanksData* data, int n) {
     cout << "Yours data: " << "\n \n";
@@ -65,7 +65,6 @@ void input_user_data(int* user_year, float* user_money) {
         }
     } while ((*user_money) <= 0);
 }
-
 
 pair<int, float> BanksData::best_deposit(int user_year, float user_money) {
     float profit = 0;
