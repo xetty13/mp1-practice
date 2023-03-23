@@ -13,7 +13,7 @@ int main()
     read(p, n);
 
     for (int i = 0; i < n; i++)
-        p[i].Print();
+        cout<<p[i];
     Sort(p, n);
 
     do {
@@ -23,13 +23,13 @@ int main()
         {
             cout << "\n";
             for (int i = 0; i < n; i++)
-                p[i].Print();
+                cout << p[i];
         }
         if (a == 2)
         {
             cout << "\n";
             for (int i = n - 1; i >= 0; i--)
-                p[i].Print();
+                cout << p[i];
         }
     } while ((a <= 0) || (a > 2));
     delete[]p;

@@ -1,6 +1,6 @@
-#include <string>
 #ifndef _PERSON_H
 #define _PERSON_H
+#include <string>
 using namespace std;
 
 struct Address
@@ -26,11 +26,11 @@ struct Person
 	string num_phone;
 	string postal_code;
 	Address ad;
-	void Print();
+	friend ostream& operator<<(ostream& out, const Person& p);
 };
 void read(Person*& p, int& n);
-int cntStruct(fstream& f);
-void fill_data(Person*& p, int n, char*& f);
+int cntStruct(string& f);
+void fill_data(Person*& p, int n, string& f);
 void Sort(Person*& p, int n);
 void removeFirstN(string& str, int n);
 #endif // !_PERSON_H

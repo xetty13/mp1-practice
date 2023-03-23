@@ -8,23 +8,21 @@ using namespace std;
 
 void read(Person*& p, int& n)
 {
-	fstream file;
-	char* f = new char[100];
+	
+	string f;
 	cout << "Enter filename or path: ";
 	cin >> f;
-	file.open(f);
-	if (!file.is_open())
-		throw "File open error";
-
-	n = cntStruct(file);
+	n = cntStruct(f);
 	p = new Person[n];
 	fill_data(p, n, f);
 }
 
-void fill_data(Person*& p, int n, char*& f)
+void fill_data(Person*& p, int n, string& f)
 {
 	fstream file;
 	file.open(f);
+	if (!file.is_open())
+		throw "File open error";
 	for (int i = 0; i < n; i++)
 	{
 		string str = "";
@@ -74,38 +72,43 @@ void fill_data(Person*& p, int n, char*& f)
 	file.close();
 }
 
-void Person::Print()
+ostream& operator<<(ostream& out, const Person& p)
 {
-	cout << "FIO: " << surname << " " << name << " " << patronymic << endl;
-	cout << "Gender: " << gender << endl;
-	cout << "Nation: " << nation << endl;
-	cout << "Date: " << date << endl;
-	cout << "Height: " << height << endl;
-	cout << "Weight: " << weight << endl;
-	cout << "Phone number: " << num_phone << endl;
-	cout << "Postal code: " << postal_code << endl;
-	cout << "Country: " << ad.country << endl;
-	cout << "Region: " << ad.region << endl;
-	cout << "Address: city: " << ad.city << ", ";
-	cout << ad.district << " district, ";
-	cout << ad.street << " street, ";
-	cout << "house number: " << ad.house;
-	cout << ", apartament: " << ad.apartament << endl;
-	cout << "<===========================================>" << endl;
+	out << "FIO: " << p.surname << " " << p.name << " " << p.patronymic << endl;
+	out << "Gender: " << p.gender << endl;
+	out << "Nation: " << p.nation << endl;
+	out << "Date: " << p.date << endl;
+	out << "Height: " << p.height << endl;
+	out << "Weight: " << p.weight << endl;
+	out << "Phone number: " << p.num_phone << endl;
+	out << "Postal code: " << p.postal_code << endl;
+	out << "Country: " << p.ad.country << endl;
+	out << "Region: " << p.ad.region << endl;
+	out << "Address: city: " << p.ad.city << ", ";
+	out << p.ad.district << " district, ";
+	out << p.ad.street << " street, ";
+	out << "house number: " << p.ad.house;
+	out << ", apartament: " << p.ad.apartament << endl;
+	out << "<===========================================>" << endl;
+	return out;
 }
 
 
-int cntStruct(fstream& f)
+int cntStruct(string& f)
 {
+	fstream file;
+	file.open(f);
 	char* str = new char[1024];
 	int i = 0;
-	//ifstream f(file);
-	while (!f.eof())
+	if (!file.is_open())
+		throw "File open error";
+	while (!file.eof())
 	{
-		f.getline(str, 1024, '\n');
+		file.getline(str, 1024, '\n');
 		i++;
 	}
 	delete[]str;
+	file.close();
 	return i;
 }
 
