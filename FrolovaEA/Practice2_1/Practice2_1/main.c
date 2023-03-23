@@ -8,19 +8,20 @@ int main() {
 
 	int number;
 	product* shipment;
+	date* data;
 
 	number = cntLines("sklad.txt");
 
 	//	printf("%d\n",number);
 	//	_getch();
 
-	allocate_stock(&shipment, number);
+	allocate_stock(&shipment, &data, number);
 
-	fill_shipment(shipment, number);
+	fill_shipment(shipment, data, number);
 
-	find_null(shipment, number);
+	find_null(shipment, data, number);
 
-	free_stock(&shipment, number);
+	free_stock(&shipment, &data, number);
 
 
 	return 0;
