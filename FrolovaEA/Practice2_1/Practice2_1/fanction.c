@@ -55,7 +55,7 @@ void fill_shipment(product* shipment, date* data, int number)
         flag++;
         if (flag == 1) {
             strcpy(shipment[j].name, istr);
-            //                        printf("%s\n", shipment[j].name);
+            
         }
         while (istr != NULL)
         {
@@ -63,45 +63,45 @@ void fill_shipment(product* shipment, date* data, int number)
             flag++;
 
             if (flag == 2) {
-                //                                printf("%s, %d\n", istr, flag);
+               
 
                 strcpy(shipment[j].unit, istr);
-                //                                printf("%s\n", shipment[j].unit);
+               
             }
 
             if (flag == 3) {
-                //                                printf("%s, %d\n", istr, flag);
+               
 
                 shipment[j].price = atoi(istr);
-                //                                printf("%.2f\n", shipment[j].price);
+               
             }
 
             if (flag == 4) {
-                //                printf("%s, %d\n", istr, flag);
+               
 
                 shipment[j].number = atoi(istr);
-                //                printf("%d\n", shipment[j].number);
+               
             }
 
             if (flag == 5) {
-                //                                                printf("%s, %d\n", istr, flag);
+                
 
                 data[j].day = atoi(istr);
-                //                printf("%d\n", data[j].day);
+               
             }
 
             if (flag == 6) {
-                //                                                printf("%s, %d\n", istr, flag);
+               
 
                 data[j].month = atoi(istr);
-                //                printf("%d\n", data[j].month);
+                
             }
 
             if (flag == 7) {
-                //                                                printf("%s, %d\n", istr, flag);
+               
 
                 data[j].year = atoi(istr);
-                //                printf("%d\n", data[j].year);
+                
             }
 
 
