@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Functions_structures.h">
+    <ClInclude Include="Functions_structures.c">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="prototypes.h">

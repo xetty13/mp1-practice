@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Functions_structures.h" />
+    <ClInclude Include="Functions_structures.c" />
     <ClInclude Include="prototypes.h" />
   </ItemGroup>
   <ItemGroup>

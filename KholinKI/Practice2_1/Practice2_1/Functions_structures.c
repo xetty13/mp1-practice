@@ -1,15 +1,16 @@
-#pragma once
+
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
 #include "prototypes.h"
 
 
-
 void allocate_TAgency(TAgency** pointer) {
 	int i = 0;
 	(*pointer) = (TAgency*)malloc(sizeof(TAgency));//creating a list of travel agencies
-	(*pointer)->services = (TService*)malloc(sizeof(TService));//creating a service structure for each facility
+	printf("Enter quantity services: \n");
+	scanf("%d", &(*pointer)->num_services);
+	(*pointer)->services = (TService*)malloc(sizeof(TService)*1);//creating a service structure for each facility
 	(*pointer)->name = (char*)malloc(sizeof(char) * LEN);
 }
 

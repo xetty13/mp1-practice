@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Functions_structures.h"
+#include "Functions_structures.c"
 #include <locale.h>
 #include <string.h>
 #include <malloc.h>
@@ -35,6 +35,9 @@ int main(int argc,char *argv[]) {
 	system("chcp 1251");
 	setlocale(LC_ALL, "rus");
 
+	printf("Enter quantity agencies: \n");
+	int q_agencies;
+	scanf("%d", &q_agencies);
 
 	FILE* fptr;//creating file var
 
@@ -43,7 +46,8 @@ int main(int argc,char *argv[]) {
 	if (fopen == NULL) {
 		printf("Error!File not found\n");//check
 		exit(-99999999999999);//normal program termination
-	}
+
+/* }
 	int i = 0;
 	TAgency** my_list_agencies;//create massive pointers
 	file_reader(fptr, &my_list_agencies);//reading data on file
@@ -54,5 +58,6 @@ int main(int argc,char *argv[]) {
 	}
 	output_data_EZONES(fptr, my_list_agencies, p_ezone);
 	free_memory(my_list_agencies);//wash hands
+*/
 	return 0;
 }
