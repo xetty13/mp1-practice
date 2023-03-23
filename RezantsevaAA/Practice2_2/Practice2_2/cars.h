@@ -14,7 +14,7 @@ struct Car {
 	string price;
 };
 
-void PrintCar(Car car);
+void PrintCar(Car &car);
 string GetFilePath();
 Car ReadCarEntity(ifstream& file);
 vector <Car>  ReadCarFile(string filepath);

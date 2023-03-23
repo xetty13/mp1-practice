@@ -45,7 +45,7 @@ vector <Car>  ReadCarFile(string filepath) {
 	ifstream file;
 	file.open(filepath);
 	if (!file.is_open()) { // check if the file can be opened
-		cout << "Failed to open file\n";
+		throw "Failed to open file\n";
 	}
 
 	vector <Car> cars;
@@ -77,7 +77,7 @@ Car FindOldestCar(vector <Car> cars) {
 	return oldest_car;
 }
 
-void PrintCar(Car car)
+void PrintCar(Car &car)
 {
 	cout << "Brand: " << car.brand << endl;
 	cout << "Color: " << car.color << endl;
