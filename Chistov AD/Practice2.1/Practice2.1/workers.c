@@ -15,7 +15,6 @@ void allocate_workers(worker** w, int n)
 		(*w + i)->last_job = (char*)malloc(sizeof(char) * N);
 		(*w + i)->rsn_dismiss = (char*)malloc(sizeof(char) * N);
 		(*w + i)->family_status = (char*)malloc(sizeof(char) * N);
-		(*w + i)->contact_info = (char*)malloc(sizeof(char) * N);
 
 	}
 }
@@ -71,7 +70,7 @@ void adding(worker* w) {
 					strcpy(w[j].family_status, token);
 					break;
 				case 6:
-					strcpy(w[j].contact_info, token);
+					w[j].contact_info = atoi(token);
 					i = -1;
 					j++;
 					break;
@@ -115,7 +114,6 @@ void free_workers(worker** w, int n)
 		free((*w + i)->last_job);
 		free((*w + i)->rsn_dismiss);
 		free((*w + i)->family_status);
-		free((*w + i)->contact_info);
 	}
 	free(*w);
 }
