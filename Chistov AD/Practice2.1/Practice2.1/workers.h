@@ -8,7 +8,7 @@ typedef struct {
 	char  *last_job;
 	char  *rsn_dismiss;
 	char  *family_status;
-	char  *contact_info;
+	int  contact_info;
 }worker;
 
 void allocate_workers(worker** w, int n);
