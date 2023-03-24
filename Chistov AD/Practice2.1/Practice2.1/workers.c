@@ -96,7 +96,7 @@ void higher_education(worker* w, int count) {
 	printf("All employees with higher education from the database:\n");
 	for (i = 0; i < count ; i++) {
 		if (strcmp(w[i].education, "no") != 0) {
-			printf("%-5s%-20s\n", w[i].id, w[i].education);
+			printf("%-5s %20s\n", w[i].id, w[i].education);
 			counter++;
 		}
 	}
