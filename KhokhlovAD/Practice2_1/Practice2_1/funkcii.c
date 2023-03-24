@@ -10,7 +10,7 @@ Owners* read_inf()
 	FILE* f;
 	int n;
 	char* path = (char*)malloc(sizeof(char)*100);
-	gets(path);  //123
+	gets(path);  //1
 	f = fopen(path, "r");
 	if (f == NULL)
 	{
