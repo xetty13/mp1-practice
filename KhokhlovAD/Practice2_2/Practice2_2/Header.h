@@ -7,7 +7,7 @@ struct Owner
 	string name;
 	string surname;
 	string patronymic;
-	string date;
+	string date;		//123
 	string carnum;
 	unsigned long gibdd;
 	string phnum;
