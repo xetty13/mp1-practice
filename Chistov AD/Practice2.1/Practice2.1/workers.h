@@ -10,11 +10,10 @@ typedef struct {
 	char  *family_status;
 	char  *contact_info;
 }worker;
-void alloc(worker** w);
+
+void allocate_workers(worker** w, int n);
 int amount();
-void allocate_memory(worker** w, int n);
-void adding(worker** w);
-void read(worker*** w);
-void higher_education(worker** w, int count);
-void memory_free(worker** w);
+void adding(worker* w);
+void higher_education(worker* w, int count);
+void free_workers(worker** w, int number);
 #endif 
