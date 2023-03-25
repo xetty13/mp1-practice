@@ -53,14 +53,14 @@ int main(int argc,char *argv[]) {
 	int i = 0;
 	TAgency** my_list_agencies;//create massive pointers
 	file_reader(fptr, &my_list_agencies,num_agencies,num_services);//reading data on file
-	output_all_data(fptr, my_list_agencies,num_agencies,num_services);//all data
-/*	char* p_ezone[20];//massive pointers
+//	output_all_data(fptr, my_list_agencies,num_agencies,num_services);//all data
+	char* p_ezone[20];//massive pointers
 	for (i = 0; i < 20; i++) {
 		p_ezone[i] = &euro_zone[i][0];//get adresses strings of list
 	}
-	output_data_EZONES(fptr, my_list_agencies, p_ezone);
-*/
-//	free_memory(my_list_agencies);//wash hands
+//	output_data_EZONES(fptr, my_list_agencies, p_ezone, num_agencies, num_services);
+
+	free_memory(my_list_agencies,num_agencies,num_services);//wash hands
 
 	return 0;
 }
