@@ -2,36 +2,40 @@
 
 #define FILM_H
 #include <string>
-typedef struct Producer {
-	char* Name;
-	char* Surname;
-} Producer;
+#include <fstream>
+#include <vector>
 
-typedef struct Film {
-	char* film_name;
+struct Producer {
+	std::string Name;
+	std::string Surname;
+
+	friend std::istream& operator>>(std::istream& input_stream, Producer& p);
+	friend std::ostream& operator<<(std::ostream& output_stream, const Producer& p);
+	bool operator==(const Producer& p) const;
+};
+
+struct Film {
+	std::string film_name;
 	Producer creator;
-	char* country;
+	std::string country;
 	int year;
 	int budget;
 	int fees;
-} Film;
+
+	friend std::istream& operator>>(std::istream& input_stream, Film& p);
+	friend std::ostream& operator<<(std::ostream& output_stream, const Film& p);
+};
 
 
-char* read_string(FILE* stream);
+std::string getInput(const std::string& message);
 
-char* getInput(char* message);
+Producer getProducerFromFile(std::ifstream& file);
+Producer getProducerFromString(std::string& producer_str);
 
-Producer getProducerFromString(char* str);
+Film ReadFilmEntity(std::ifstream& file);
 
-Film ReadFilmEntity(FILE* file);
+std::vector<Film> ReadFileWithFilms(const std::string& file_path);
 
-Film* ReadFileWithFilms(char* file_path, int* number_of_films);
-
-int compareProducers(const Producer* x, const Producer* y);
-
-Film* getFilmsByProducer(Film* all_films, int count_all_films, Producer creator, int* needed_count);
-
-void PrintFilm(Film film);
-
+std::vector<Film> getFilmsByProducer(const std::vector<Film>& all_films, const Producer& creator);
 
 #endif
