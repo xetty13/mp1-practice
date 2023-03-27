@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "card.h"
 #define LENGTH 512
+#define WORD_LEN 128
 
 cardIndex* alloc(int stringCount, int authorsCount) {
     int i, g;
@@ -10,14 +11,15 @@ cardIndex* alloc(int stringCount, int authorsCount) {
     for (i = 0; i < stringCount; i++) {
         cards[i].authors = (char**)malloc(authorsCount * sizeof(char*));
         for (g = 0; g < authorsCount; g++) {
-            cards[i].authors[g] = (char*)malloc(128 * sizeof(char));
+            cards[i].authors[g] = (char*)malloc(WORD_LEN * sizeof(char));
         }
     }
     return cards;
 }
 
-void memoryFree(cardIndex* cards, int stringCount, char** section, int authorsCount) {
+void memoryFree(cardIndex* cards, int stringCount, char** section, int authorsCount, int sectionCount, char* path) {
     int i,g;
+    free(path);
     for (i = 0; i < stringCount; i++) {
         for (g = 0; g < authorsCount; g++) {
             free(cards[i].authors[g]);
@@ -25,22 +27,34 @@ void memoryFree(cardIndex* cards, int stringCount, char** section, int authorsCo
         free(cards[i].authors);
     }
     free(cards);
-    for (i = 0; i < stringCount; i++) {
+    for (i = 0; i < sectionCount; i++) {
         free(section[i]);
     }
     free(section);
 }
 
+char* menu() {
+    char* path = (char*)malloc(_MAX_PATH * sizeof(char));
+    do{
+        printf("Enter the file path...\n");
+        scanf("%s", path);
+        FILE* file = fopen(path, "r");
+        if (file == NULL) {
+            printf("ERROR: Could not open file!\n");
+        }
+        else {
+            fclose(file);
+            return path;
+        }
+    } while (1);
+}
+
 int strCount(char* path) {
     int count = 0;
-    char* s = (char*)malloc(1000 * sizeof(char));
+    char* s = (char*)malloc(LENGTH * sizeof(char));
     FILE* file = fopen(path, "r");
-    if (file == NULL) {
-        printf("ERROR: Could not open file!\n");
-        return 1;
-    }
     while (1) {
-        if (fgets(s, 1000, file) != NULL) {
+        if (fgets(s, LENGTH, file) != NULL) {
             if (strcmp(s, "\n") != 0) {
                 count++;
             }
@@ -62,14 +76,10 @@ void readFile(cardIndex* cards, char* path, int stringCount, int authorsCount) {
     int g;
     char** b = (char**)malloc(stringCount * sizeof(char*));
     for (g = 0; g < stringCount; g++) {
-        b[g] = (char*)malloc(128 * sizeof(char));
+        b[g] = (char*)malloc(LENGTH * sizeof(char));
     }
     FILE* file = fopen(path, "r");
     char str [LENGTH];
-    if (file == NULL) {
-        printf("ERROR: Could not open file!\n");
-        return 1;
-    }
     while (1) {
         if (fgets(str, 512, file) != NULL) {
             for (token = strtok(str, delim); token; token = strtok(NULL, delim)) {
@@ -152,12 +162,8 @@ int authorsCount(char* path, int stringCount) {
     int g;
     FILE* file = fopen(path, "r");
     char str[LENGTH];
-    if (file == NULL) {
-        printf("ERROR: Could not open file!\n");
-        return 1;
-    }
     while (1) {
-        if (fgets(str, 512, file) != NULL) {
+        if (fgets(str, LENGTH, file) != NULL) {
             for (token = strtok(str, delim); token; token = strtok(NULL, delim)) {
                 switch (i) {
                 case 0:
@@ -204,26 +210,41 @@ void bookPrint(cardIndex* cards, int authorsCount, int g) {
     printf("Evaluation: %.1f\n", cards[g].evaluation);
 }
 
-char** booksBySection(cardIndex* cards, int stringCount, int authorsCount) {
-    int ind = 0;
-    int i;
-    char** section = (char**)malloc(stringCount * sizeof(char*));
+int secCt(cardIndex* cards, int stringCount) {
+    int ind = 0,i = 0;
+    char** buff = (char**)malloc(stringCount * sizeof(char*));
     for (i = 0; i < stringCount; i++) {
-        section[i] = (char*)malloc(100 * sizeof(char));
+        buff[i] = (char*)malloc(WORD_LEN * sizeof(char));
     }
     for (i = 0; i < stringCount; i++) {
-        if (isEqual(section, cards[i].section, stringCount) == 0) {
+        if (isEqual(buff, cards[i].section, stringCount) == 0) {
+            strcpy(buff[ind], cards[i].section);
+            ind++;
+        }
+    }
+    for (i = 0; i < stringCount; i++) {
+        free(buff[i]);
+    }
+    free(buff);
+    return ind;
+}
+
+char** booksBySection(cardIndex* cards, int stringCount, int authorsCount, int* ct) {
+    int ind = 0;
+    int i;
+    *ct = secCt(cards, stringCount);
+    char** section = (char**)malloc((*ct) * sizeof(char*));
+    for (i = 0; i < (*ct); i++) {
+        section[i] = (char*)malloc(WORD_LEN * sizeof(char));
+    }
+
+    for (i = 0; i < stringCount; i++) {
+        if (isEqual(section, cards[i].section, *ct) == 0) {
             strcpy(section[ind], cards[i].section);
             ind++;
         }
     }
-    int tmp = ind;
-    for (; tmp < stringCount; tmp++) {
-        section[tmp] = NULL;
-    }
-    for (i = 0; i < stringCount; i++) {
-        if (section[i] == NULL)
-            continue;
+    for (i = 0; i < *ct; i++) {
         printf("\nBooks from %s:\n", section[i]);
         for (int g = 0; g < stringCount; g++) {
             if (strcmp(cards[g].section, section[i]) == 0) {
@@ -234,17 +255,11 @@ char** booksBySection(cardIndex* cards, int stringCount, int authorsCount) {
     return section;
 }
 
-void selectBook(cardIndex* cards, char** section, int stringCount, int authorsCount) {
-    int sectionCount = 0;
+void selectBook(cardIndex* cards, char** section, int stringCount, int authorsCount, int sectionCount) {
     int i;
     int j = 0;
     int userInput;
     int* indexes = (int*)malloc((stringCount+1) * sizeof(int));
-    for (i = 0; i < stringCount; i++) {
-        if (section[i] != NULL) {
-            sectionCount++;
-        }
-    }
     do{
         printf("\nSelect the library section you are interested in:\n");
         for (i = 0; i < sectionCount; i++) {
