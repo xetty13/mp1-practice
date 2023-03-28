@@ -144,7 +144,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Impl.h">
+    <ClInclude Include="Impl.cpp">
       <DeploymentContent>true</DeploymentContent>
     </ClInclude>
     <ClInclude Include="Prototypes.h" />

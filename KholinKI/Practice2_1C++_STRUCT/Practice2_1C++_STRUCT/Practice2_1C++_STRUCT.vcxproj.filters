@@ -23,7 +23,7 @@
     <ClInclude Include="Prototypes.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Impl.h">
+    <ClInclude Include="Impl.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
