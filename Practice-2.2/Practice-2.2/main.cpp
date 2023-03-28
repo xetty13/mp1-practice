@@ -1,8 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "workers.h";
+using namespace std;
 
 int main() {
-	worker** w;
+	worker* w;
 	int N = amount();
 	allocate_workers(&w, N);
 	adding(w);
