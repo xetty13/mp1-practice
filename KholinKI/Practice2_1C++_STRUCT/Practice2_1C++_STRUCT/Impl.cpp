@@ -48,7 +48,7 @@ int CountAgencies(int num_agencies, ifstream& file) {
 	return num_agencies;
 }
 
-int*& CountTServices(int*& num_services,int num_agencies, ifstream& file) {
+int* CountTServices(int*& num_services,int num_agencies, ifstream& file) {
 	string str;
 	string buffer = "Directions:";
 	int c = 0;
@@ -169,7 +169,7 @@ void output_all_data(TAgency**& list,int num_agencies,int*& num_services) {
 	}
 }
 
-void output_data_EZONES(TAgency** list,string  e_zone[],int num_agencies,int*& num_services) {
+void output_data_EZONES(TAgency**& list,string  e_zone[],int num_agencies,int*& num_services) {
 	int i = 0;
 	int j = 0;
 	int k = 0;
