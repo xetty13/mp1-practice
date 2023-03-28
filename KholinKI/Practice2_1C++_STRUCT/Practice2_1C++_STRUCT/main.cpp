@@ -1,9 +1,12 @@
 #include <iostream>
 #include <clocale>
 #include <fstream>
-#include "Impl.h"
+#include "Impl.cpp"
 
 
+//Tourist Guide.The guide contains a list of travel agenciesand the services they offer
+//(country, city or itinerary of the cruise, accommodation and travel conditions, excursions, host service, price of the trip).
+//Provide a list of travel agencies offering tours to Eurozone countries.
 
 
 
@@ -42,13 +45,22 @@ int main(int argc, char* argv[]) {
 		if (file.is_open() == 0) {
 			throw ifstream();
 		}
+		int num_agencies = 0;
+		int* num_services;
+		num_agencies = CountAgencies(num_agencies,file);
+		num_services = new int[num_agencies];
+		for (int i = 0; i < num_agencies; i++) {
+			num_services[i] = 0;
+		}
+		num_services = CountTServices(num_services,num_agencies, file);
 		int i = 0;
 		TAgency** my_list_agencies;
-		file_reader(file, &my_list_agencies);
-		//output_all_data(my_list_agencies);
-		output_data_EZONES(my_list_agencies, euro_zone);
+		file_reader(file, my_list_agencies,num_agencies,num_services);
+	//	output_all_data(my_list_agencies,num_agencies,num_services);
+		output_data_EZONES(my_list_agencies, euro_zone,num_agencies,num_services);
 		file.close();
-		free_memory(my_list_agencies);
+		free_memory(my_list_agencies,num_agencies,num_services);
+
 	}
 	catch (const ifstream& exeption) {
 		cout << "Unable open file!" << endl;
