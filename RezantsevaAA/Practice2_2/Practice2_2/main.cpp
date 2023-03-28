@@ -19,7 +19,7 @@ int main()
 	Car oldest_car = FindOldestCar(cars);
 
 	// print answer
-	PrintCar(oldest_car);
+	cout << oldest_car;
 
 	return 0;
 }
