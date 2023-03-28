@@ -48,7 +48,7 @@ int CountAgencies(int num_agencies, ifstream& file) {
 	return num_agencies;
 }
 
-int* CountTServices(int* num_services,int num_agencies, ifstream& file) {
+int*& CountTServices(int*& num_services,int num_agencies, ifstream& file) {
 	string str;
 	string buffer = "Directions:";
 	int c = 0;

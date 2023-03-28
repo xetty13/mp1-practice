@@ -21,7 +21,7 @@ struct TAgency // Tourist agency
 };
 
 int CountAgencies(int num_agencies, ifstream& fptr); //count agencies
-int* CountTServices(int* num_services, int num_agencies, ifstream& file);//count directions
+int*& CountTServices(int*& num_services, int num_agencies, ifstream& file);//count directions
 
 void allocate_TAgency(TAgency*& pointer, int num_services);//allocating guide list...
 void file_reader(ifstream& file, TAgency**& list, int num_agencies, int*& num_services);//reading data
