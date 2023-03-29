@@ -2,12 +2,18 @@
 #define _HEAD
 using namespace std;
 
+struct Data
+{
+	int day;
+	int month;
+	int year;
+};
 struct Owner
 {
 	string name;
 	string surname;
 	string patronymic;
-	string date;		//123
+	Data date;		
 	string carnum;
 	unsigned long gibdd;
 	string phnum;
