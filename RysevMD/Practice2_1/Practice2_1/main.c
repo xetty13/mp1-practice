@@ -8,7 +8,7 @@
 int main() {
 	system("chcp 1251");
 
-	Ñonstellation* constellations;
+	Constellation* constellations;
 
 	read_data(&constellations);
 	cnst_table(constellations);

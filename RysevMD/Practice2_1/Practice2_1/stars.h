@@ -13,14 +13,14 @@ typedef struct {
 typedef struct {
 	char name[50];
 	Star* stars;
-}Ñonstellation;
+}Constellation;
 
-void Callocate(Ñonstellation** cns, int c);
+void Callocate(Constellation** cns, int c);
 void Sallocate(Star** st, int c);
-void cfree(Ñonstellation** cns);
+void cfree(Constellation** cns);
 
-void cnst_table(Ñonstellation* cns);
-void read_data(Ñonstellation** cns);
-void print_data(Ñonstellation* cns, int n);
-void choice(Ñonstellation* cns);
+void cnst_table(Constellation* cns);
+void read_data(Constellation** cns);
+void print_data(Constellation* cns, int n);
+void choice(Constellation* cns);
 #endif
