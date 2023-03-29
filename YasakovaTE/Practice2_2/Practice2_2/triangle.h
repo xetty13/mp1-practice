@@ -1,6 +1,7 @@
 #ifndef _TRIANGLE_H
 #define _TRIANGLE_H
-
+#include <string>
+using namespace std;
 struct Coord {
 	float x, y;
 };
@@ -10,12 +11,12 @@ struct Triangle {
 };
 
 
-int read(Triangle*& triangles, char* f);
-void CountSquare(Triangle triangle);
-void CountPerimeter(Triangle triangle);
-float* Sides(Triangle triangle);
-void Height(Triangle triangle);
-void PrintTriangleType(Triangle triangle);
+int read(Triangle*& triangles, const string& f);
+void CountSquare(const Triangle& triangle);
+void CountPerimeter(const Triangle& triangle);
+float* Sides(const Triangle& triangle);
+void Height(const Triangle& triangle);
+void TriangleType(const Triangle& triangle);
 
 
 #endif _TRIANGLE_H

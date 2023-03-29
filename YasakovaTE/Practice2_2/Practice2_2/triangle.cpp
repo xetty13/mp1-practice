@@ -7,7 +7,7 @@
 using namespace std;
 
 
-int read(Triangle*& triangles, char* f)
+int read(Triangle*& triangles, const string& f)
 {
     fstream file;
     file.open(f);
@@ -32,14 +32,14 @@ int read(Triangle*& triangles, char* f)
 }
 
 
-void CountSquare(Triangle triangle)
+void CountSquare(const Triangle& triangle)
 {
     float s = (abs(((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[2].y - triangle.vertices[0].y)) - ((triangle.vertices[2].x - triangle.vertices[0].x) * (triangle.vertices[1].y - triangle.vertices[0].y)))) / 2;
     cout <<"S =  " << s << endl;
 }
 
 
-float* Sides(Triangle triangle)
+float* Sides(const Triangle& triangle)
 {
     float sides[3];
     sides[0] = sqrt((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[1].x - triangle.vertices[0].x) + (triangle.vertices[1].y - triangle.vertices[0].y) * (triangle.vertices[1].y - triangle.vertices[0].y));
@@ -50,14 +50,14 @@ float* Sides(Triangle triangle)
 }
 
 
-void CountPerimeter(Triangle triangle)
+void CountPerimeter(const Triangle& triangle)
 {
     float* sides = Sides(triangle);
     float p = sides[0] + sides[1] + sides[2];
     cout << "P =  " << p << endl;
 }
 
-void Height(Triangle triangle)
+void Height(const Triangle& triangle)
 {
     float s = (abs(((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[2].y - triangle.vertices[0].y)) - ((triangle.vertices[2].x - triangle.vertices[0].x) * (triangle.vertices[1].y - triangle.vertices[0].y)))) / 2;
     float heights[3];
@@ -68,7 +68,7 @@ void Height(Triangle triangle)
     cout << "H1 = " << heights[0] << "; " << "H2 = " << heights[1] << "; " << "H3 = " << heights[2] << "; " <<  endl;
 }
 
-void PrintTriangleType(Triangle triangle)
+void TriangleType(const Triangle& triangle)
 {
     float* sides = Sides(triangle);
     int max;
@@ -81,7 +81,6 @@ void PrintTriangleType(Triangle triangle)
         }
     }
 
-
     int min;
     min = sides[0];
     for (int i = 0; i < 3; i++)
@@ -91,7 +90,6 @@ void PrintTriangleType(Triangle triangle)
             min = sides[i];
         }
     }
-
     float sr = sides[0] + sides[1] + sides[2] - max - min;
     if (max * max < (min * min + sr * sr))
 

@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,16 +6,15 @@
 using namespace std;
 int main() {
 	Triangle* triangles;
-	char* f = new char[100];
+	string f;
 	cout << "Enter filename or path: ";
 	cin >> f;
-	int n=read(triangles, f);
 
+	int n=read(triangles, f);
 
 	int t = 0;
 	while (1)
 	{
-
 		printf("Select an operation : 1 - area, 2 - perimeter, 3 - height, 4 - type of triangle:  ");
 		cin >> t;
 		for (int i = 0; i < n; i++) {
@@ -27,7 +25,7 @@ int main() {
 			else if (t == 3)
 				Height(triangles[i]);
 			else if (t == 4)
-				PrintTriangleType(triangles[i]);
+				TriangleType(triangles[i]);
 		}
 
 	    cout << "If you want to exit, enter 0: ";
