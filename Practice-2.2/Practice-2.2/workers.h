@@ -14,7 +14,8 @@ typedef struct {
 }worker;
 
 void allocate_workers(worker** w, int n);
-int amount();
+string GetPath();
+int amount(string path);
 void adding(worker* w);
 void higher_education(worker* w, int count);
 void free_workers(worker** w, int number);
