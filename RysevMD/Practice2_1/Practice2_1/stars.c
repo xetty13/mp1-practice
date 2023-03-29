@@ -4,28 +4,32 @@
 #include <string.h>
 #include "stars.h"
 
-void allocate(Ñonstellation** cns) {
-	(*cns) = (Ñonstellation*)malloc(sizeof(Ñonstellation) * 11);
-	for (int i = 0; i < 10; i++) {
-		(*cns)[i].stars = (Star*)malloc(sizeof(Star) * 6);
-	}
+void Callocate(Ñonstellation** cns, int c) {
+	(*cns) = (Ñonstellation*)malloc(sizeof(Ñonstellation) * c);
+}
+void Sallocate(Star** st, int c) {
+	(*st) = (Star*)malloc(sizeof(Star) * c);
 }
 void cfree(Ñonstellation** cns) {
 	free((*cns)->stars);
 	free(*cns);
 }
 
-void read_data(Ñonstellation* cns) {
+
+void read_data(Ñonstellation** cns) {
 	FILE* fp;
-	fp = fopen("data.txt", "r");
-	if (fp == NULL) {
-		printf("Empty file");
-		return -1;
-	}
-	for (int i = 0; i < 10; i++) {
-		fscanf(fp, "%s", cns[i].name);
-		for (int j = 0; j < 5; j++) {
-			fscanf(fp, "%s %f %f %f %f %f", cns[i].stars[j].name, &cns[i].stars[j].dist, &cns[i].stars[j].magnitude, &cns[i].stars[j].deg, &cns[i].stars[j].min, &cns[i].stars[j].sec);
+	char* path = (char*)malloc(sizeof(char) * 260);
+	int cns_count, stars_count;
+	printf("\nEnter the path: ");
+	scanf("%s", path);
+	fp = fopen(path, "r");
+	fscanf(fp, "%d", &cns_count);
+	Callocate(cns, cns_count);
+	for (int i = 0; i < cns_count; i++) {
+		fscanf(fp, "%s %d", (*cns)[i].name, &stars_count);
+		Sallocate(&(*cns)[i].stars, stars_count);
+		for (int j = 0; j < stars_count; j++) {
+			fscanf(fp, "%s %f %f %f %f %f", (*cns)[i].stars[j].name, &(*cns)[i].stars[j].dist, &(*cns)[i].stars[j].magnitude, &(*cns)[i].stars[j].deg, &(*cns)[i].stars[j].min, &(*cns)[i].stars[j].sec);
 		}
 	}
 	fclose(fp);
@@ -39,6 +43,7 @@ void print_data(Ñonstellation* cns, int n) {
 }
 
 void cnst_table(Ñonstellation* cns) {
+	printf("\n");
 	for (int i = 0; i < 5; i++) {
 		printf("%d\. %s \t\t %d\. %s\n", i + 1, cns[i].name, i + 6, cns[i + 5].name);
 	}
@@ -55,4 +60,5 @@ void choice(Ñonstellation* cns) {
 		else if (num != 0)
 			printf("Not found\n");
 	}
+	cfree(&cns);
 }

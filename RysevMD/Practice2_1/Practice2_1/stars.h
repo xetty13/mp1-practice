@@ -15,11 +15,12 @@ typedef struct {
 	Star* stars;
 }Ñonstellation;
 
-void allocate(Ñonstellation** cns);
+void Callocate(Ñonstellation** cns, int c);
+void Sallocate(Star** st, int c);
 void cfree(Ñonstellation** cns);
 
 void cnst_table(Ñonstellation* cns);
-void read_data(Ñonstellation* cns);
+void read_data(Ñonstellation** cns);
 void print_data(Ñonstellation* cns, int n);
 void choice(Ñonstellation* cns);
 #endif
