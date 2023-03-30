@@ -11,7 +11,7 @@ private:
 	std::string Surname;
 public:
 	Producer();
-	Producer(std::string name, std::string surname);
+	Producer(const std::string& name, const std::string& surname);
 	friend std::istream& operator>>(std::istream& input_stream, Producer& p);
 	friend std::ostream& operator<<(std::ostream& output_stream, const Producer& p);
 	bool operator==(const Producer& p) const;
@@ -27,7 +27,7 @@ private:
 	int budget;
 	int fees;
 public:
-	Film(std::string film_name, Producer creator, std::string country, int year, int budget, int fees);
+	Film(const std::string& film_name, const Producer& creator, const std::string& country, int year, int budget, int fees);
 	friend std::istream& operator>>(std::istream& input_stream, Film& p);
 	friend std::ostream& operator<<(std::ostream& output_stream, const Film& p);
 	Producer getCreator() const;

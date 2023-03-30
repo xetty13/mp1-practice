@@ -91,7 +91,7 @@ std::vector<Film> ReadFileWithFilms(const std::string& file_path) {
 }
 
 std::vector<Film> getFilmsByProducer(const std::vector<Film>& all_films, const Producer& creator) {
-	std::cout << "Search films with producer : " << creator <<"\n";
+	std::cout << "Search films with producer : " << creator << "\n";
 	std::vector<Film> needed_films;
 
 	for (int i = 0; i < all_films.size(); ++i) {
@@ -142,12 +142,12 @@ std::ostream& operator<<(std::ostream& output_stream, const Film& film) {
 	return output_stream;
 }
 
-Producer:: Producer(std::string name, std::string surname) {
+Producer::Producer(const std::string& name, const std::string& surname) {
 	this->Name = name;
 	this->Surname = surname;
 }
 
-Film:: Film (std::string film_name, Producer creator, std::string country, int year, int budget, int fees) {
+Film::Film(const std::string& film_name, const Producer& creator, const std::string& country, int year, int budget, int fees) {
 	this->film_name = film_name;
 	this->creator = creator;
 	this->country = country;
