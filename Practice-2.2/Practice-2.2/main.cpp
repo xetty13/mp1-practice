@@ -3,10 +3,9 @@
 using namespace std;
 
 int main() {
-	worker* w;
-	int N = amount();
-	allocate_workers(&w, N);
-	adding(w);
-	higher_education(w, N);
-	free_workers(&w, N);
+	string path = get_Path();
+	int N = amount(path);
+	worker* w = new worker[N];
+	adding(w, path, N);
+	delete[] w;
 }
