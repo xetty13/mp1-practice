@@ -40,34 +40,29 @@ Car ReadCarEntity(ifstream& file) {
 	return new_car;
 }
 
-vector <Car>  ReadCarFile(string filepath) {
-
+vector <Car> ReadCarFile(const string& filepath) {
 	ifstream file;
 	file.open(filepath);
 	if (!file.is_open()) { // check if the file can be opened
-		throw "Failed to open file\n";
+		cout << "Failed to open file\n";
 	}
 
-	vector <Car> cars;
+	vector<Car> cars;
 
 
 	// we assume that the file contains information about at least one car
 	string tmp;
-	while (1)
+	while (!file.eof())
 	{
 		Car current_car = ReadCarEntity(file);
 		cars.push_back(current_car);
 		getline(file, tmp);
-		if (file.eof())
-		{
-			break;
-		}
 	}
 	file.close();
 	return cars;
 }
 
-Car FindOldestCar(vector <Car> cars) {
+Car FindOldestCar(const vector<Car>& cars) {
 	Car oldest_car = cars[0];
 	for (int i = 1; i < cars.size(); ++i) {
 		if (cars[i].year < oldest_car.year) {
@@ -77,13 +72,14 @@ Car FindOldestCar(vector <Car> cars) {
 	return oldest_car;
 }
 
-void PrintCar(Car &car)
+ostream& operator<<(ostream& output_stream, const Car& car)
 {
-	cout << "Brand: " << car.brand << endl;
-	cout << "Color: " << car.color << endl;
-	cout << "Serial number: " << car.serial_number << endl;
-	cout << "Regestrarion number: " << car.registration_number << endl;
-	cout << "Numbers of doors: " << car.count_door << endl;
-	cout << "Year of car manufacture: " << car.year << endl;
-	cout << "Price: " << car.price << endl;
+	output_stream << "Brand: " << car.brand << endl;
+	output_stream << "Color: " << car.color << endl;
+	output_stream << "Serial number: " << car.serial_number << endl;
+	output_stream << "Regestrarion number: " << car.registration_number << endl;
+	output_stream << "Numbers of doors: " << car.count_door << endl;
+	output_stream << "Year of car manufacture: " << car.year << endl;
+	output_stream << "Price: " << car.price << endl;
+	return output_stream;
 }

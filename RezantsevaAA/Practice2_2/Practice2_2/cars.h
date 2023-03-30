@@ -12,13 +12,15 @@ struct Car {
 	string count_door;
 	string year;
 	string price;
+
+	friend ostream& operator<<(ostream& output_stream, const Car& car);
+
 };
 
-void PrintCar(Car &car);
 string GetFilePath();
+
 Car ReadCarEntity(ifstream& file);
-vector <Car>  ReadCarFile(string filepath);
+Car FindOldestCar(const vector <Car>& cars);
 
-Car FindOldestCar(vector <Car> cars);
-
+vector <Car>  ReadCarFile(const string& filepath);
 #endif _CARS_H
