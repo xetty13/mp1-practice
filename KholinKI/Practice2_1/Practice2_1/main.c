@@ -58,7 +58,7 @@ int main(int argc,char *argv[]) {
 	for (i = 0; i < 20; i++) {
 		p_ezone[i] = &euro_zone[i][0];//get adresses strings of list
 	}
-//	output_data_EZONES(fptr, my_list_agencies, p_ezone, num_agencies, num_services);
+	output_data_EZONES(fptr, my_list_agencies, p_ezone, num_agencies, num_services);
 
 	free_memory(my_list_agencies,num_agencies,num_services);//wash hands
 

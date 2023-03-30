@@ -9,6 +9,7 @@ int CountAgencies(int num_agencies, FILE* fptr) {
 	char* str_p;
 	char buffer[LEN] = "List agencies:";
 	int i = 0;
+	int q = 1;
 	int c = 0;
 	while (!feof(fptr)) {
 		fgets(str, LEN, fptr);
@@ -105,7 +106,7 @@ void search_string(FILE* fptr) {//look for the first occurrence of the string
 			else { len = strlen(c); fseek(fptr, -len - 1, SEEK_CUR); }
 }
 
-void file_reader(FILE * fptr, TAgency *** list,int num_agencies,int* num_services) {
+void file_reader(FILE * fptr, TAgency *** list) {
 	*(list) = (TAgency**)malloc(sizeof(TAgency*)*num_agencies); //create a dynamic array of objects
 	int i = 0;
 	int c = 0;

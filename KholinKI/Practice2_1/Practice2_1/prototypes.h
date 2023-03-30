@@ -14,6 +14,7 @@ typedef struct // list of service
 
 typedef struct // Tourist agency
 {
+	int num_services;
 	char* name;
 	TService *services;
 } TAgency;
