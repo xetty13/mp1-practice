@@ -11,9 +11,10 @@ typedef struct {
 	int  contact_info;
 }worker;
 
+char * get_Path();
 void allocate_workers(worker** w, int n);
-int amount();
-void adding(worker* w);
+int amount(char* path);
+void adding(worker* w, char* path);
 void higher_education(worker* w, int count);
 void free_workers(worker** w, int number);
 #endif 
