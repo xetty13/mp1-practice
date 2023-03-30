@@ -3,9 +3,10 @@
 
 int main() {
 	worker**w;
-	int N = amount();
+	char* path = get_Path();
+	int N = amount(path);
 	allocate_workers(&w, N);
-	adding(w);
+	adding(w,path);
 	higher_education(w, N);
 	free_workers(&w, N);
 }
