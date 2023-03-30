@@ -20,7 +20,7 @@ Producer getProducerFromFile(std::ifstream& file) {
 
 	getline(file, name, ' ');
 	getline(file, surname);
-    
+
 	Producer p = { name, surname };
 	return p;
 }
@@ -63,7 +63,7 @@ Film ReadFilmEntity(std::ifstream& file) {
 	int film_budget = stoi(film_budget_s);
 
 	std::string film_fees_s;
-	std::getline (file, film_fees_s);
+	std::getline(file, film_fees_s);
 	int film_fees = stoi(film_fees_s);
 
 	Film new_film = { film_name, p, country, film_year, film_budget, film_fees };
@@ -114,7 +114,7 @@ std::ostream& operator<<(std::ostream& output_stream, const Producer& p) {
 	return output_stream;
 }
 
-bool Producer::operator==(const Producer& p) const{
+bool Producer::operator==(const Producer& p) const {
 	if (Name == p.Name && Surname == p.Surname) {
 		return true;
 	}
