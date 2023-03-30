@@ -45,22 +45,17 @@ int main(int argc,char *argv[]) {
 
 
  }
-	int num_agencies = 0;
-	int* num_services;
-	num_agencies = CountAgencies(num_agencies, fptr);
-	num_services = (int*)malloc(sizeof(int) * num_agencies);
-	num_services = CountTServices(num_services,num_agencies, fptr);
 	int i = 0;
 	TAgency** my_list_agencies;//create massive pointers
-	file_reader(fptr, &my_list_agencies,num_agencies,num_services);//reading data on file
+	file_reader(fptr, &my_list_agencies);//reading data on file
 //	output_all_data(fptr, my_list_agencies,num_agencies,num_services);//all data
 	char* p_ezone[20];//massive pointers
 	for (i = 0; i < 20; i++) {
 		p_ezone[i] = &euro_zone[i][0];//get adresses strings of list
 	}
-	output_data_EZONES(fptr, my_list_agencies, p_ezone, num_agencies, num_services);
+	output_data_EZONES(fptr, my_list_agencies, p_ezone);
 
-	free_memory(my_list_agencies,num_agencies,num_services);//wash hands
+	free_memory(&my_list_agencies,fptr);//wash hands
 
 	return 0;
 }
