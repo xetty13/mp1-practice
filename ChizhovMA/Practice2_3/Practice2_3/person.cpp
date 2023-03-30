@@ -8,23 +8,23 @@ using namespace std;
 
 Person::Person()
 {
-	string surname = " ";
-	string name = " ";
-	string patronymic = " ";
-	string gender = " ";
-	string nation = " ";
-	string date = " ";
-	string height = " ";
-	string weight = " ";
-	string num_phone = " ";
-	string postal_code = " ";
-	string country = " ";
-	string region = " ";
-	string city = " ";
-	string district = " ";
-	string street = " ";
-	string house = " ";
-	string apartament = " ";
+	surname = " ";
+	name = " ";
+	patronymic = " ";
+	gender = " ";
+	nation = " ";
+	date = " ";
+	height = " ";
+	weight = " ";
+	num_phone = " ";
+	postal_code = " ";
+	ad.country = " ";
+	ad.region = " ";
+	ad.city = " ";
+	ad.district = " ";
+	ad.street = " ";
+	ad.house = " ";
+	ad.apartament = " ";
 }
 
 Person::Person(string surname, string name, string patronymic, string gender, string nation, string date, string height, string weight, string num_phone, string postal_code, string country, string region, string city, string district, string street, string house, string apartament)
