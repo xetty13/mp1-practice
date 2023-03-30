@@ -5,6 +5,22 @@
 #include "workers.h";
 #define N 100
 
+char* get_Path() {
+	char* path = (char*)malloc(_MAX_PATH * sizeof(char));
+	do {
+		printf("Enter the file path:");
+		gets(path);
+		FILE* file = fopen(path, "r");
+		if (file == NULL) {
+			printf("Ooops.....Something went wrong......\n");
+		}
+		else {
+			fclose(file);
+			return path;
+		}
+	} while (1);
+}
+
 void allocate_workers(worker** w, int n)
 {
 	(*w) = (worker*)malloc(sizeof(worker) * n);
@@ -15,15 +31,13 @@ void allocate_workers(worker** w, int n)
 		(*w + i)->last_job = (char*)malloc(sizeof(char) * N);
 		(*w + i)->rsn_dismiss = (char*)malloc(sizeof(char) * N);
 		(*w + i)->family_status = (char*)malloc(sizeof(char) * N);
-
 	}
 }
 
-int amount() {
+int amount(char* path) {
 	int amount = 0;
 	char* str = (char*)malloc(N * sizeof(char));
-	FILE* file = fopen("label exchange.txt", "r");
-	if (file == NULL) { printf("Can't open file"); return 1; }
+	FILE* file = fopen(path, "r");
 	while (1) {
 		if (fgets(str, N, file) != NULL) {
 			if (strcmp(str, "\n") != 0) {
@@ -34,19 +48,17 @@ int amount() {
 			break;
 		}
 	}
-	fclose(file);
 	free(str);
 	return amount;
 }
 
-void adding(worker* w) {
+void adding(worker* w, char* path) {
 	char* token;
 	char srch[] = ";\n";
 	int i = 0;
 	int j = 0;
-	FILE* file = fopen("label exchange.txt", "r");
+	FILE* file = fopen(path, "r");
 	char* str = (char*)malloc(1024 * sizeof(char));
-	if (file == NULL) { printf("Can't open file"); return 1; }
 	while (1) {
 		if (fgets(str, 1000, file) != NULL) {
 			for (token = strtok(str, srch); token; token = strtok(NULL, srch)) {
@@ -83,14 +95,10 @@ void adding(worker* w) {
 		}
 	}
 	free(str);
-	fclose(file);
 }
 
 void higher_education(worker* w, int count) {
 	float counter = 0;
-	FILE* file;
-	file = fopen("label exchange.txt", "r");
-	if (file == NULL) { printf("Can't open file"); return 1; }
 	int i;
 	printf("All employees with higher education from the database:\n");
 	for (i = 0; i < count ; i++) {
@@ -102,7 +110,6 @@ void higher_education(worker* w, int count) {
 printf("Percentage of employees with higher education:%.3f%%\n ", (counter / count) * 100);
 system("pause");
 system("cls");
-fclose(file);
 }
 
 void free_workers(worker** w, int n)
