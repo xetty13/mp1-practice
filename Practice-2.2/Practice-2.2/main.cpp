@@ -7,5 +7,6 @@ int main() {
 	int N = amount(path);
 	worker* w = new worker[N];
 	adding(w, path, N);
+	higher_education(w, N);
 	delete[] w;
 }
