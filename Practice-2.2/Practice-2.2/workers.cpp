@@ -5,28 +5,14 @@
 #include "workers.h";
 #define N 100
 
-//void allocate_workers(worker** w, int n)
-//{
-//	(*w) = (worker*)malloc(sizeof(worker) * n);
-//	for (int i = 0; i < n; i++) {
-//		(*w + i)->id = (char*)malloc(sizeof(char) * N);
-//		(*w + i)->profession = (char*)malloc(sizeof(char) * N);
-//		(*w + i)->education = (char*)malloc(sizeof(char) * N);
-//		(*w + i)->last_job = (char*)malloc(sizeof(char) * N);
-//		(*w + i)->rsn_dismiss = (char*)malloc(sizeof(char) * N);
-//		(*w + i)->family_status = (char*)malloc(sizeof(char) * N);
-//
-//	}
-//}
-
-string GetPath() {
+string get_Path() {
 	string path;
 	do {
-		cout << "Enter the file path..." << endl;
+		cout << "Enter the file path:";
 		cin >> path;
 		ifstream in(path);
 		if (!in.is_open()) {
-			cout << "ERROR: Could not open file!\n";
+			cout << "Ooops.....Something went wrong......\n";
 		}
 		else {
 			in.close();
@@ -49,82 +35,62 @@ int amount(string path) {
 	return count;
 }
 
-//void adding(worker* w) {
-//	char* token;
-//	char srch[] = ";\n";
-//	int i = 0;
-//	int j = 0;
-//	FILE* file = fopen("label exchange.txt", "r");
-//	char* str = (char*)malloc(1024 * sizeof(char));
-//	if (file == NULL) { printf("Can't open file"); return 1; }
-//	while (1) {
-//		if (fgets(str, 1000, file) != NULL) {
-//			for (token = strtok(str, srch); token; token = strtok(NULL, srch)) {
-//				switch (i) {
-//				case 0:
-//					strcpy(w[j].id, token);
-//					break;
-//				case 1:
-//					strcpy(w[j].profession, token);
-//					break;
-//				case 2:
-//					strcpy(w[j].education, token);
-//					break;
-//				case 3:
-//					strcpy(w[j].last_job, token);
-//					break;
-//				case 4:
-//					strcpy(w[j].rsn_dismiss, token);
-//					break;
-//				case 5:
-//					strcpy(w[j].family_status, token);
-//					break;
-//				case 6:
-//					w[j].contact_info = atoi(token);
-//					i = -1;
-//					j++;
-//					break;
-//				}
-//				i++;
-//			}
-//		}
-//		else {
-//			break;
-//		}
-//	}
-//	free(str);
-//	fclose(file);
-//}
+void adding(worker* w, string path, int n) {
+	int i = 0, j = 0;
+	string line, s;
+	ifstream in(path);
+	string* buff = new string[n];
+	while (getline(in, line))
+	{
+		if (line == "\0") {
+			continue;
+		}
+		stringstream ss(line);
+		while (getline(ss, s, ';')) {
+			switch (i) {
+			case 0:
+				buff[j] = s;
+				break;
+			case 1:
+				w[j].id = s;
+				break;
+			case 2:
+				w[j].profession = s;
+				break;
+			case 3:
+				w[j].education = s;
+				break;
+			case 4:
+				w[j].last_job = s;
+			case 5:
+				w[j].rsn_dismiss = s;
+			case 6:
+				w[j].family_status = s;
+			case 7:
+				w[j].contact_info = stof(s);
+				i = -1;
+				j++;
+				break;
+			}
+			i++;
+		}
+	}
+	in.close();
+	delete[] buff;
+}
 
-//void higher_education(worker* w, int count) {
-//	float counter = 0;
-//	FILE* file;
-//	file = fopen("label exchange.txt", "r");
-//	if (file == NULL) { printf("Can't open file"); return 1; }
-//	int i;
-//	printf("All employees with higher education from the database:\n");
-//	for (i = 0; i < count; i++) {
-//		if (strcmp(w[i].education, "no") != 0) {
-//			printf("%-5s %20s\n", w[i].id, w[i].education);
-//			counter++;
-//		}
-//	}
-//	printf("Percentage of employees with higher education:%.3f%%\n ", (counter / count) * 100);
-//	system("pause");
-//	system("cls");
-//	fclose(file);
-//}
-
-//void free_workers(worker** w, int n)
-//{
-//	for (int i = 0; i < n; i++) {
-//		free((*w + i)->id);
-//		free((*w + i)->profession);
-//		free((*w + i)->education);
-//		free((*w + i)->last_job);
-//		free((*w + i)->rsn_dismiss);
-//		free((*w + i)->family_status);
-//	}
-//	free(*w);
-//}
+void higher_education(worker* w, int count) {
+	float counter = 0;
+	int i;
+	printf("All employees with higher education from the database:\n");
+	for (i = 0; i < count; i++) {
+		if (strcmp(w[i].education, "no") != 0) {
+			printf("%-5s %20s\n", w[i].id, w[i].education);
+			counter++;
+		}
+	}
+	printf("Percentage of employees with higher education:%.3f%%\n ", (counter / count) * 100);
+	system("pause");
+	system("cls");
+}
 
