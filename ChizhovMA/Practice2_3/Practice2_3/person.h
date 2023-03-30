@@ -34,7 +34,7 @@ public:
 	friend ostream& operator<<(ostream& out, const Person& p);
 	friend void read(Person*& p, int& n);
 	friend void fill_data(Person*& p, int n, string& f);
-	friend void Sort(Person*& p, int n);;
+	friend void Sort(Person*& p, int n);
 };
 
 int cntStruct(string& f);
