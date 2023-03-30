@@ -19,13 +19,13 @@ int main() {
 		cin >> t;
 		for (int i = 0; i < n; i++) {
 			if (t == 1)
-				CountSquare(triangles[i]);
+				triangles[i].CountSquare();
 			else if (t == 2)
-				CountPerimeter(triangles[i]);
+				triangles[i].CountPerimeter();
 			else if (t == 3)
-				Height(triangles[i]);
+				triangles[i].Height();
 			else if (t == 4)
-				TriangleType(triangles[i]);
+				triangles[i].TriangleType();
 		}
 
 	    cout << "If you want to exit, enter 0: ";

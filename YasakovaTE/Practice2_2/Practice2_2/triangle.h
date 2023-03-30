@@ -8,15 +8,16 @@ struct Coord {
 
 struct Triangle {
 	Coord vertices[3];
+	void CountSquare();
+	void CountPerimeter();
+	float* Sides();
+	void Height();
+	void TriangleType();
+
 };
 
 
 int read(Triangle*& triangles, const string& f);
-void CountSquare(const Triangle& triangle);
-void CountPerimeter(const Triangle& triangle);
-float* Sides(const Triangle& triangle);
-void Height(const Triangle& triangle);
-void TriangleType(const Triangle& triangle);
 
 
 #endif _TRIANGLE_H

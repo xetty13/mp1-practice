@@ -32,45 +32,45 @@ int read(Triangle*& triangles, const string& f)
 }
 
 
-void CountSquare(const Triangle& triangle)
+void Triangle:: CountSquare()
 {
-    float s = (abs(((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[2].y - triangle.vertices[0].y)) - ((triangle.vertices[2].x - triangle.vertices[0].x) * (triangle.vertices[1].y - triangle.vertices[0].y)))) / 2;
+    float s = (abs(((vertices[1].x - vertices[0].x) * (vertices[2].y - vertices[0].y)) - ((vertices[2].x - vertices[0].x) * (vertices[1].y - vertices[0].y)))) / 2;
     cout <<"S =  " << s << endl;
 }
 
 
-float* Sides(const Triangle& triangle)
+float* Triangle::Sides()
 {
     float sides[3];
-    sides[0] = sqrt((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[1].x - triangle.vertices[0].x) + (triangle.vertices[1].y - triangle.vertices[0].y) * (triangle.vertices[1].y - triangle.vertices[0].y));
-    sides[1] = sqrt((triangle.vertices[2].x - triangle.vertices[0].x) * (triangle.vertices[2].x - triangle.vertices[0].x) + (triangle.vertices[2].y - triangle.vertices[0].y) * (triangle.vertices[2].y - triangle.vertices[0].y));
-    sides[2] = sqrt((triangle.vertices[2].x - triangle.vertices[1].x) * (triangle.vertices[2].x - triangle.vertices[1].x) + (triangle.vertices[2].y - triangle.vertices[1].y) * (triangle.vertices[2].y - triangle.vertices[1].y));
+    sides[0] = sqrt((vertices[1].x - vertices[0].x) * (vertices[1].x - vertices[0].x) + (vertices[1].y - vertices[0].y) * (vertices[1].y - vertices[0].y));
+    sides[1] = sqrt((vertices[2].x - vertices[0].x) * (vertices[2].x - vertices[0].x) + (vertices[2].y - vertices[0].y) * (vertices[2].y - vertices[0].y));
+    sides[2] = sqrt((vertices[2].x - vertices[1].x) * (vertices[2].x - vertices[1].x) + (vertices[2].y - vertices[1].y) * (vertices[2].y - vertices[1].y));
 
     return sides;
 }
 
 
-void CountPerimeter(const Triangle& triangle)
+void Triangle::CountPerimeter()
 {
-    float* sides = Sides(triangle);
+    float* sides = Sides();
     float p = sides[0] + sides[1] + sides[2];
     cout << "P =  " << p << endl;
 }
 
-void Height(const Triangle& triangle)
+void Triangle::Height()
 {
-    float s = (abs(((triangle.vertices[1].x - triangle.vertices[0].x) * (triangle.vertices[2].y - triangle.vertices[0].y)) - ((triangle.vertices[2].x - triangle.vertices[0].x) * (triangle.vertices[1].y - triangle.vertices[0].y)))) / 2;
+    float s = (abs(((vertices[1].x - vertices[0].x) * (vertices[2].y - vertices[0].y)) - ((vertices[2].x - vertices[0].x) * (vertices[1].y - vertices[0].y)))) / 2;
     float heights[3];
-    float* sides = Sides(triangle);
+    float* sides = Sides();
     heights[0] = 2 * s / sides[0];
     heights[1] = 2 * s / sides[1];
     heights[2] = 2 * s / sides[2];
     cout << "H1 = " << heights[0] << "; " << "H2 = " << heights[1] << "; " << "H3 = " << heights[2] << "; " <<  endl;
 }
 
-void TriangleType(const Triangle& triangle)
+void Triangle::TriangleType()
 {
-    float* sides = Sides(triangle);
+    float* sides = Sides();
     int max;
     max = sides[0];
     for (int i = 0; i < 3; i++)
