@@ -108,8 +108,6 @@ void higher_education(worker* w, int count) {
 		}
 	}
 printf("Percentage of employees with higher education:%.3f%%\n ", (counter / count) * 100);
-system("pause");
-system("cls");
 }
 
 void free_workers(worker** w, int n)
