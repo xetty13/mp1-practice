@@ -1,7 +1,7 @@
-#include <string>
-#include <cstring>
 #ifndef _HEADER_H
 #define _HEADER_H
+#include <string>
+#include <cstring>
 using namespace std;
 
 struct Product
@@ -20,9 +20,10 @@ struct Date
 };
 
 int cntLines(const string filename);
+void allocate_sklad(Product*& p, Date*& d, int size);
 void fill_sklad(Product*& p, Date*& d, int size, const string filename);
 void find_null(Product*& p, Date*& d, int size);
-
+void free_sklad(Product*& p, Date*& d, int size);
 
 
 #endif
