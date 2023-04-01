@@ -45,21 +45,13 @@ int main(int argc, char* argv[]) {
 		if (file.is_open() == 0) {
 			throw ifstream();
 		}
-		int num_agencies = 0;
-		int* num_services;
-		num_agencies = CountAgencies(num_agencies,file);
-		num_services = new int[num_agencies];
-		for (int i = 0; i < num_agencies; i++) {
-			num_services[i] = 0;
-		}
-		num_services = CountTServices(num_services,num_agencies, file);
 		int i = 0;
 		TAgency** my_list_agencies;
-		file_reader(file, my_list_agencies,num_agencies,num_services);
-	//	output_all_data(my_list_agencies,num_agencies,num_services);
-		output_data_EZONES(my_list_agencies, euro_zone,num_agencies,num_services);
+		file_reader(file, my_list_agencies);
+	//		output_all_data(file,my_list_agencies);
+		output_data_EZONES(file,my_list_agencies, euro_zone);
 		file.close();
-		free_memory(my_list_agencies,num_agencies,num_services);
+		free_memory(file,my_list_agencies);
 
 	}
 	catch (const ifstream& exeption) {
