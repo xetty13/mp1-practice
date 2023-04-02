@@ -28,7 +28,6 @@ void allocate_TAgency(TAgency*& pointer, int count_services);//allocating guide 
 void file_reader(ifstream& file, TAgency**& list);//reading data
 void search_string(ifstream& file);
 void output_all_data(ifstream& file,TAgency**& pointer);//all data
-void output_data_EZONES(ifstream& file,TAgency**& list, string  e_zone[]);//data about euro zones
+void output_data_EZONES(ifstream& file,TAgency**& list,const string*& EU);//data about euro zones
 void free_memory(ifstream& file, TAgency**& pointer);
-
 #endif

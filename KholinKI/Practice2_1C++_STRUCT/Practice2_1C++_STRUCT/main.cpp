@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 
 	try {
 		 ifstream file;//creating file var
-
+		 string* EU;
 
 		file.open("C://TouristAgences.txt");//open the file for reading
 
@@ -47,9 +47,10 @@ int main(int argc, char* argv[]) {
 		}
 		int i = 0;
 		TAgency** my_list_agencies;
+		EU = euro_zone;
 		file_reader(file, my_list_agencies);
 	//		output_all_data(file,my_list_agencies);
-		output_data_EZONES(file,my_list_agencies, euro_zone);
+		output_data_EZONES(file,my_list_agencies, EU);
 		file.close();
 		free_memory(file,my_list_agencies);
 

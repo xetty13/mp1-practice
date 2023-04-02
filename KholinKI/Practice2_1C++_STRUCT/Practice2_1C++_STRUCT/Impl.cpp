@@ -2,6 +2,24 @@
 #include <stdio.h>
 #include "prototypes.h"
 
+ifstream create_file() {
+	try {
+		ifstream file;//creating file var
+
+
+		file.open("C://TouristAgences.txt");//open the file for reading
+
+		if (file.is_open() == 0) {
+			throw ifstream();
+		}
+		return file;
+	}
+	catch (const ifstream& exeption) {
+		cout << "Unable open file!" << endl;
+		exit(-1);
+	}
+}
+
 int CountAgencies(ifstream& file) {
 	string str;
 	string buffer = "List agencies:";
@@ -159,11 +177,10 @@ void file_reader(ifstream& file, TAgency**& list) {
 	delete[] num_services;
 }
 void output_all_data(ifstream& file,TAgency**& list) {
-	int num_agencies = CountAgencies(file);
 	int i = 0;
 	int j = 0;
 	int num;
-	for(i=0;i < num_agencies;i++){
+	for(i=0;i < CountAgencies(file);i++){
 		cout << list[i]->name << endl;
 		for (j = 0; j < list[i]->num_services; j++) {
 			cout << list[i]->services[j].country << endl;
@@ -176,7 +193,7 @@ void output_all_data(ifstream& file,TAgency**& list) {
 	}
 }
 
-void output_data_EZONES(ifstream& file,TAgency**& list,string  e_zone[]) {
+void output_data_EZONES(ifstream& file,TAgency**& list,const string*&  e_zone) {
 	int num_agencies = CountAgencies(file);
 	int i = 0;
 	int j = 0;
@@ -202,6 +219,7 @@ void output_data_EZONES(ifstream& file,TAgency**& list,string  e_zone[]) {
 		j = 0;
 	}
 }
+
 
 void free_memory(ifstream& file,TAgency**& pointer) {
 	int num_agencies = CountAgencies(file);
