@@ -9,10 +9,11 @@ int main() {
 	system("chcp 1251");
 
 	Constellation* constellations;
+	int cns_count;
 
-	read_data(&constellations);
-	cnst_table(constellations);
-	choice(constellations);
+	read_data(&constellations, &cns_count);
+	cnst_table(constellations, cns_count);
+	choice(constellations, cns_count);
 	
 	return 0;
 }
