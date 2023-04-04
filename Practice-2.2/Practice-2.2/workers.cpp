@@ -82,16 +82,30 @@ void adding(worker* w, string path, int n) {
 void higher_education(worker* w, int count) {
 	float counter = 0;
 	int i;
-	printf("All employees with higher education from the database:\n");
+	cout << "All employees with higher education from the database:\n"<<endl;
 	for (i = 0; i < count; i++) {
 		if (w[i].education=="no") {
-			printf("%-5s %20s\n", w[i].id, w[i].education);
+			cout << w[i];
 			counter++;
 		}
 	}
 	printf("Percentage of employees with higher education:%.3f%%\n ", (counter / count) * 100);
 	system("pause");
 	system("cls");
+}
+
+ostream& operator<<(ostream& out, const worker& w)
+{
+	out << "<===========================================>" << endl;
+	out << "ID: " << w.id << endl;
+	out << "Profession: " << w.profession << endl;
+	out << "Education: " << w.education << endl;
+	out << "Last Job: " << w.last_job << endl;
+	out << "Reason of dismiss: " << w.rsn_dismiss << endl;
+	out << "Family status: " << w.rsn_dismiss << endl;
+	out << "Contact information: " << w.contact_info << endl;
+	out << "<===========================================>" << endl;
+	return out;
 }
 
 
