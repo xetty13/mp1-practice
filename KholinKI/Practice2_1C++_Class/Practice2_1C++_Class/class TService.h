@@ -11,5 +11,4 @@ public:		//здесь всё норм,нужно конструктор доделать
 	string ticket_price;
 
 	TService(void);
-	TService(string country, string travel_conditions, string excursion_services, string host_service, string ticket_price);
 };

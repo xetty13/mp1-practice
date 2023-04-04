@@ -2,25 +2,29 @@
 #include <iostream>
 #include "class TService.h"
 #include "class TAgency.h"
+#include "prototypes.h"
 
 
 TAgency::TAgency() {
-	num_agencies = 0;
 	num_services = NULL;
 	name = "";
 	services = NULL;
 }
 
-TAgency::TAgency(int num_services,int num_agencies) {
-	this->num_agencies = num_agencies;
-	this->num_services = num_services;
+TAgency::TAgency(int count_services) {
+		this->num_services = count_services;
+		this->services = new TService[count_services];//creating a service structure for each facility ;automatic call constructor
 }
 
 TAgency::~TAgency() {
-	for (int is = 0; is < num_agencies; is++) {
-		delete[] this[is].services;
+	ifstream file;
+	file = create_file();
+	int num_agencies = CountAgencies(file);
+	for (int i = 0; i < num_agencies; i++) {
+		delete[] this[i].services;
 	}
 	delete[] this;
+	file.close();
 }
 
 TService::TService() {
@@ -31,6 +35,6 @@ TService::TService() {
 	ticket_price = "";
 }
 
-TService::TService(string country, string travel_conditions, string excursion_services, string host_service, string ticket_price) {
 
-}//додумать как заполнить через конструктор
+
+
