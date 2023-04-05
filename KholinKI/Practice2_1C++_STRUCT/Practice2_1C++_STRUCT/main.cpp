@@ -1,6 +1,5 @@
-#include <iostream>
+
 #include <clocale>
-#include <fstream>
 #include "Impl.cpp"
 
 
@@ -38,7 +37,7 @@ int main(int argc, char* argv[]) {
 
 	try {
 		 ifstream file;//creating file var
-		 string* EU;
+		 const string* EU;
 
 		file.open("C://TouristAgences.txt");//open the file for reading
 

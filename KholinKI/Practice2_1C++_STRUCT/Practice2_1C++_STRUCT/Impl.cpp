@@ -1,5 +1,5 @@
-#pragma once
-#include <stdio.h>
+
+#include <iostream>
 #include "prototypes.h"
 
 ifstream create_file() {
@@ -212,6 +212,9 @@ void output_data_EZONES(ifstream& file,TAgency**& list,const string*&  e_zone) {
 					break;
 				}
 				k++;
+				if (k == 20 && list[i]->num_services == 1) {
+					cout << "(No suitable destination found!)" << endl;
+				}
 			}
 			k = 0;
 			j++;

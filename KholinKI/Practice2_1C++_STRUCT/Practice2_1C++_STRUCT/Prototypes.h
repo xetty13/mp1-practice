@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _prototypes_h
 #define _prototypes_h
 
