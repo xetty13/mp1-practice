@@ -13,8 +13,8 @@ typedef struct {
 	int  contact_info;
 }worker;
 
-string get_Path();
-int amount(string path);
-void adding(worker* w, string path, int n);
+string GetFilePath();
+int amount(string& path);
+void adding(worker* w, string& path, int n);
 void higher_education(worker* w, int count);
 #endif 
