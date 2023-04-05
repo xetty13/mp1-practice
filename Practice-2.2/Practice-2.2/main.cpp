@@ -3,10 +3,11 @@
 using namespace std;
 
 int main() {
-	string path = get_Path();
+	string path = GetFilePath();
 	int N = amount(path);
 	worker* w = new worker[N];
-	adding(w, path, N);
-	higher_education(w, N);
-	delete[] w;
+	//adding(w, path, N);
+	//higher_education(w, N);
+	//delete[] w;
+	return 0;
 }
