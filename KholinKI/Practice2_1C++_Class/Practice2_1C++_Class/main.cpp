@@ -1,6 +1,5 @@
-#include <iostream>
+
 #include <clocale>
-#include <fstream>
 #include "Impl.cpp"
 
 
@@ -45,5 +44,5 @@ int main(int argc, char* argv[]) {
 		cout << "Unable open file!" << endl;
 		exit(-1);
 	}
-	
+
 }

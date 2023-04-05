@@ -1,5 +1,4 @@
-#pragma once
-#include <stdio.h>
+
 #include "class TAgency.h"
 #include "prototypes.h"
 #include "class TService.h"
@@ -93,7 +92,7 @@ int CountAgencies(ifstream& file) {
 	return num_agencies;
 }
 
-int*CountTServices(ifstream& file) {
+int* CountTServices(ifstream& file) {
 	file.seekg(0, ios_base::beg);
 	int num_agencies = 0;
 	int* num_services = 0;
@@ -164,65 +163,65 @@ void TAgency::file_reader(ifstream& file, TAgency*& list) {
 	int len_directs = directions.length();
 	int j = 0;
 	int c;
+	search_string(file);
+	getline(file, buffer);
+	if (buffer.compare(0, len_list, list_agencies, 0, len_list) == 0 || buffer.compare(0, len_directs, directions, 0, len_directs) == 0) {
+		do {
+			c = file.get();
+		} while (c == 10);
+		file.seekg(-1, ios_base::cur);
+		getline(file, list->name);
+	}
+	else list->name = buffer;
+	for (j = 0; j < list->num_services; j++) {
 		search_string(file);
-		getline(file, buffer);
-		if (buffer.compare(0, len_list, list_agencies, 0, len_list) == 0 || buffer.compare(0, len_directs, directions, 0, len_directs) == 0) {
+		if (j == 0) {
 			do {
 				c = file.get();
-			} while (c == 10);
-			file.seekg(-1, ios_base::cur);
-			getline(file, list->name);
+			} while (c != 10);
 		}
-		else list->name = buffer;
-		for (j = 0; j < list->num_services; j++) {
-			search_string(file);
-			if (j == 0) {
-				do {
-					c = file.get();
-				} while (c != 10);
-			}
-			getline(file, list->services[j].country);
-			getline(file, list->services[j].travel_conditions);
-			getline(file, list->services[j].excursion_services);
-			getline(file, list->services[j].host_service);
-			getline(file, list->services[j].ticket_price);
-		}
+		getline(file, list->services[j].country);
+		getline(file, list->services[j].travel_conditions);
+		getline(file, list->services[j].excursion_services);
+		getline(file, list->services[j].host_service);
+		getline(file, list->services[j].ticket_price);
+	}
 
 }
-void output_all_data(TAgency*& list){//all data
+void output_all_data(TAgency*& list) {//all data
 	int j = 0;
-		cout << list->name << endl;
-		for (j = 0; j < list->num_services; j++) {
-			cout << list->services[j].country << endl;
-			cout << list->services[j].travel_conditions << endl;
-			cout << list->services[j].excursion_services << endl;
-			cout << list->services[j].host_service << endl;
-			cout << list->services[j].ticket_price << endl;
-			cout << endl;
-		}
+	cout << list->name << endl;
+	for (j = 0; j < list->num_services; j++) {
+		cout << list->services[j].country << endl;
+		cout << list->services[j].travel_conditions << endl;
+		cout << list->services[j].excursion_services << endl;
+		cout << list->services[j].host_service << endl;
+		cout << list->services[j].ticket_price << endl;
+		cout << endl;
+	}
 }
 
 void output_data_EZONES(TAgency*& list, const string*& e_zone) {
 	int j = 0;
 	int k = 0;
-		cout << list->name << endl;
-		while (j < list->num_services) {
-			while (k < 20) {
-				if (list->services[j].country == e_zone[k]) {
-					cout << list->services[j].country << endl;
-					cout << list->services[j].travel_conditions << endl;
-					cout << list->services[j].excursion_services << endl;
-					cout << list->services[j].host_service << endl;
-					cout << list->services[j].ticket_price << endl;
-					cout << endl;
-					break;
-				}
-				k++;
+	cout << list->name << endl;
+	while (j < list->num_services) {
+		while (k < 20) {
+			if (list->services[j].country == e_zone[k]) {
+				cout << list->services[j].country << endl;
+				cout << list->services[j].travel_conditions << endl;
+				cout << list->services[j].excursion_services << endl;
+				cout << list->services[j].host_service << endl;
+				cout << list->services[j].ticket_price << endl;
+				cout << endl;
+				break;
 			}
-			k = 0;
-			j++;
+			k++;
 		}
-		j = 0;
+		k = 0;
+		j++;
+	}
+	j = 0;
 }
 
 /*ostream& operator<<(ostream& stream, const TAgency*& list) {
