@@ -42,7 +42,8 @@ void Triangle:: CountSquare()
 float* Triangle::Sides()
 {
     float sides[3];
-    sides[0] = sqrt((vertices[1].x - vertices[0].x) * (vertices[1].x - vertices[0].x) + (vertices[1].y - vertices[0].y) * (vertices[1].y - vertices[0].y));
+    sides[0] = sqrt((vertices[1].x - vertices[0].x) * (vertices[1].x - vertices[0].x) +
+                    (vertices[1].y - vertices[0].y) * (vertices[1].y - vertices[0].y));
     sides[1] = sqrt((vertices[2].x - vertices[0].x) * (vertices[2].x - vertices[0].x) + (vertices[2].y - vertices[0].y) * (vertices[2].y - vertices[0].y));
     sides[2] = sqrt((vertices[2].x - vertices[1].x) * (vertices[2].x - vertices[1].x) + (vertices[2].y - vertices[1].y) * (vertices[2].y - vertices[1].y));
 

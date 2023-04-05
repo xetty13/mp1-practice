@@ -33,5 +33,6 @@ int main() {
 		if (t == 0)
 			break;
 	}
+	delete[] triangles;
 	return 0;
 }
