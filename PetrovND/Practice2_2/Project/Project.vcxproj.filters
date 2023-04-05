@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="card.cpp">
+    <ClCompile Include="lib.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="card.h">
+    <ClInclude Include="lib.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

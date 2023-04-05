@@ -1,16 +1,10 @@
-#include "card.h"
+#include "lib.h"
 
 int main() {
-	set <string> sections;
-	string path = menu();
-	int stringCount = strCount(path);
-	int act = authorsCount(path, stringCount);
-	cardIndex* cards = alloc(stringCount, act);
-
-	readFile(cards, path, stringCount, act);
-	sections = booksBySection(cards, stringCount, act);
-	selectBook(cards, sections, stringCount, act);
-
-	del(stringCount, cards);
-	return 0;
+    string path = menu();
+    int count = strCount(path);
+    lib library(path, count);
+    set <string> sections = booksBySection(library);
+    searchBook(library, sections);
+    return 0;
 }
