@@ -3,15 +3,17 @@
 #include <string>
 using namespace std;
 
-typedef struct {
+struct worker {
 	string  id;
 	string  profession;
 	string  education;
 	string  last_job;
 	string  rsn_dismiss;
 	string  family_status;
-	int  contact_info;
-}worker;
+	string  contact_info;
+	bool operator ==(const string& otherTitle) const;
+	friend ostream& operator<<(ostream& out, const worker& w);
+};
 
 string GetFilePath();
 int amount(string& path);
