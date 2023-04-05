@@ -10,11 +10,11 @@
 string GetFilePath() {
 	string path;
 	do {
-		cout << "Enter the file path..." << endl;
+		cout << "Enter the file path:";
 		cin >> path;
 		ifstream in(path);
 		if (!in.is_open()) {
-			cout << "ERROR: Could not open file!\n";
+			cout << "Ooops.....Something went wrong......" << endl;
 		}
 		else {
 			in.close();
@@ -23,26 +23,26 @@ string GetFilePath() {
 	} while (true);
 }
 
-
-int amount(string& f)
+int amount(string &path )
 {
 	fstream file;
-	file.open(f);
-	char* str = new char[1024];
-	int count = 0;
-	if (!file.is_open())
-		throw "File open error";
-	while (!file.eof())
+	file.open(path);
+	string line;
+	int count{ 0 };
+	ifstream in(path);
+	while (getline(in, line))
 	{
-		file.getline(str, 1024, '\n');
-		count++;
+		if (line != "\0") {
+			count++;
+		}
 	}
-	delete[]str;
-	file.close();
+	in.close();
 	return count;
 }
 
 void adding(worker* w, string& path, int n) {
+	fstream file;
+	file.open(path);
 	int i = 0, j = 0;
 	string line, s;
 	ifstream in(path);
@@ -74,7 +74,7 @@ void adding(worker* w, string& path, int n) {
 			case 6:
 				w[j].family_status = s;
 			case 7:
-				w[j].contact_info = stof(s);
+				w[j].contact_info = s;
 				i = -1;
 				j++;
 				break;
@@ -89,20 +89,19 @@ void adding(worker* w, string& path, int n) {
 void higher_education(worker* w, int count) {
 	float counter = 0;
 	int i;
-	cout << "All employees with higher education from the database:\n"<<endl;
+	cout << "All employees with higher education from the database:"<<endl;
 	for (i = 0; i < count; i++) {
 		if (w[i].education=="no") {
-			printf("%-5s %20s\n", w[i].id, w[i].education);
+			cout << w[i];
 			counter++;
 		}
 	}
-	printf("Percentage of employees with higher education:%.3f%%\n ", (counter / count) * 100);
-	system("pause");
-	system("cls");
+	cout << "All employees with higher education from the database:"<< (counter / count) * 100 <<" % " << endl;
 }
 
 ostream& operator<<(ostream& out, const worker& w)
 {
+	out << "-----------------------" << endl;
 	out << "ID: " << w.id << endl;
 	out << "Profession: " << w.profession << endl;
 	out << "Education: " << w.education << endl;
@@ -110,8 +109,14 @@ ostream& operator<<(ostream& out, const worker& w)
 	out << "Reason of dismiss: " << w.rsn_dismiss << endl;
 	out << "Family status: " << w.rsn_dismiss << endl;
 	out << "Contact information: " << w.contact_info << endl;
+	out << "-----------------------" << endl;
 	return out;
 }
+
+bool worker::operator==(const string&w2) const {
+	return (education == w2);
+}
+
 
 
 
