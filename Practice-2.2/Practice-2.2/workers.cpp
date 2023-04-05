@@ -2,40 +2,47 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string.h>
+#include <string>
 #include "workers.h";
 #define N 100
 
-string get_Path() {
+string GetFilePath() {
 	string path;
 	do {
-		cout << "Enter the file path:";
+		cout << "Enter the file path..." << endl;
 		cin >> path;
 		ifstream in(path);
 		if (!in.is_open()) {
-			cout << "Ooops.....Something went wrong......\n";
+			cout << "ERROR: Could not open file!\n";
 		}
 		else {
 			in.close();
 			return path;
 		}
 	} while (true);
-	}
+}
 
-int amount(string path) {
-	int count{ 0 };
-	string line;
-	ifstream in(path);
-	while (getline(in, line))
+
+int amount(string& f)
+{
+	fstream file;
+	file.open(f);
+	char* str = new char[1024];
+	int count = 0;
+	if (!file.is_open())
+		throw "File open error";
+	while (!file.eof())
 	{
-		if (line != "\0") {
-			count++;
-		}
+		file.getline(str, 1024, '\n');
+		count++;
 	}
-	in.close();
+	delete[]str;
+	file.close();
 	return count;
 }
 
-void adding(worker* w, string path, int n) {
+void adding(worker* w, string& path, int n) {
 	int i = 0, j = 0;
 	string line, s;
 	ifstream in(path);
@@ -85,7 +92,7 @@ void higher_education(worker* w, int count) {
 	cout << "All employees with higher education from the database:\n"<<endl;
 	for (i = 0; i < count; i++) {
 		if (w[i].education=="no") {
-			cout << w[i];
+			printf("%-5s %20s\n", w[i].id, w[i].education);
 			counter++;
 		}
 	}
@@ -96,7 +103,6 @@ void higher_education(worker* w, int count) {
 
 ostream& operator<<(ostream& out, const worker& w)
 {
-	out << "<===========================================>" << endl;
 	out << "ID: " << w.id << endl;
 	out << "Profession: " << w.profession << endl;
 	out << "Education: " << w.education << endl;
@@ -104,8 +110,9 @@ ostream& operator<<(ostream& out, const worker& w)
 	out << "Reason of dismiss: " << w.rsn_dismiss << endl;
 	out << "Family status: " << w.rsn_dismiss << endl;
 	out << "Contact information: " << w.contact_info << endl;
-	out << "<===========================================>" << endl;
 	return out;
 }
+
+
 
 
