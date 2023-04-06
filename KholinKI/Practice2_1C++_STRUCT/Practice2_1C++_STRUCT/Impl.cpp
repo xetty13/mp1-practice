@@ -2,23 +2,29 @@
 #include <iostream>
 #include "prototypes.h"
 
-ifstream create_file() {
-	try {
-		ifstream file;//creating file var
+#define NUM_EUROPE_COUNTRIES 20
 
-
-		file.open("C://TouristAgences.txt");//open the file for reading
-
-		if (file.is_open() == 0) {
-			throw ifstream();
-		}
-		return file;
-	}
-	catch (const ifstream& exeption) {
-		cout << "Unable open file!" << endl;
-		exit(-1);
-	}
-}
+string euro_zone[20] = {//list of eurozone countries
+	"Austria",
+	"Belgium",
+	"Cyprus",
+	"Estonia",
+	"Finland",
+	"France",
+	"Germany",
+	"Greece",
+	"Ireland",
+	"Italy",
+	"Latvia",
+	"Lithuania",
+	"Luxembourg",
+	"Malta",
+	"Netherlands",
+	"Portugal",
+	"Slovakia",
+	"Slovenia",
+	"Croatia"
+};
 
 int CountAgencies(ifstream& file) {
 	string str;
@@ -130,7 +136,7 @@ void search_string(ifstream& file) {//look for the first occurrence of the strin
 	file.seekg(-1, ios_base::cur);
 }
 
-void file_reader(ifstream& file, TAgency**& list) {
+int file_reader(ifstream& file, TAgency**& list) {
 	int num_agencies = CountAgencies(file);//count agencies
 	int* num_services = CountTServices(file);//count directions
 	int num = 0;
@@ -175,12 +181,13 @@ void file_reader(ifstream& file, TAgency**& list) {
 	}
 	file.seekg(0, ios_base::beg);
 	delete[] num_services;
+	return num_agencies;
 }
-void output_all_data(ifstream& file,TAgency**& list) {
+void output_all_data(ifstream& file,TAgency**& list,int num_agencies) {
 	int i = 0;
 	int j = 0;
 	int num;
-	for(i=0;i < CountAgencies(file);i++){
+	for(i=0;i <num_agencies;i++){
 		cout << list[i]->name << endl;
 		for (j = 0; j < list[i]->num_services; j++) {
 			cout << list[i]->services[j].country << endl;
@@ -193,8 +200,7 @@ void output_all_data(ifstream& file,TAgency**& list) {
 	}
 }
 
-void output_data_EZONES(ifstream& file,TAgency**& list,const string*&  e_zone) {
-	int num_agencies = CountAgencies(file);
+void output_data_EZONES(ifstream& file,TAgency**& list,int num_agencies) {
 	int i = 0;
 	int j = 0;
 	int k = 0;
@@ -202,7 +208,7 @@ void output_data_EZONES(ifstream& file,TAgency**& list,const string*&  e_zone) {
 		cout << list[i]->name << endl;
 		while (j < list[i]->num_services) {
 			while(k < 20){
-				if (list[i]->services[j].country == e_zone[k]) {
+				if (list[i]->services[j].country == euro_zone[k]) {
 					cout << list[i]->services[j].country << endl;
 					cout << list[i]->services[j].travel_conditions << endl;
 					cout << list[i]->services[j].excursion_services << endl;
@@ -224,8 +230,7 @@ void output_data_EZONES(ifstream& file,TAgency**& list,const string*&  e_zone) {
 }
 
 
-void free_memory(ifstream& file,TAgency**& pointer) {
-	int num_agencies = CountAgencies(file);
+void free_memory(TAgency**& pointer,int num_agencies) {
 	for (int i = 0; i < num_agencies; i++) {
 		delete[] pointer[i]->services;
 	}

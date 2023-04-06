@@ -9,27 +9,6 @@
 
 
 
-string euro_zone[20] = {//list of eurozone countries
-	"Austria",
-	"Belgium",
-	"Cyprus",
-	"Estonia",
-	"Finland",
-	"France",
-	"Germany",
-	"Greece",
-	"Ireland",
-	"Italy",
-	"Latvia",
-	"Lithuania",
-	"Luxembourg",
-	"Malta",
-	"Netherlands",
-	"Portugal",
-	"Slovakia",
-	"Slovenia",
-	"Croatia"
-};
 
 int main(int argc, char* argv[]) {
 	system("chcp 1251");
@@ -37,21 +16,20 @@ int main(int argc, char* argv[]) {
 
 	try {
 		 ifstream file;//creating file var
-		 const string* EU;
+		 int num_agencies;
+		 TAgency** my_list_agencies;
 
 		file.open("C://TouristAgences.txt");//open the file for reading
 
 		if (file.is_open() == 0) {
 			throw ifstream();
 		}
-		int i = 0;
-		TAgency** my_list_agencies;
-		EU = euro_zone;
-		file_reader(file, my_list_agencies);
-	//		output_all_data(file,my_list_agencies);
-		output_data_EZONES(file,my_list_agencies, EU);
+		num_agencies = file_reader(file, my_list_agencies);
+
+		output_data_EZONES(file,my_list_agencies, num_agencies);
+
 		file.close();
-		free_memory(file,my_list_agencies);
+		free_memory(my_list_agencies,num_agencies);
 
 	}
 	catch (const ifstream& exeption) {
