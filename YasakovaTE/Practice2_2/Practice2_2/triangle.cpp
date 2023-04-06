@@ -44,8 +44,12 @@ float* Triangle::Sides()
     float sides[3];
     sides[0] = sqrt((vertices[1].x - vertices[0].x) * (vertices[1].x - vertices[0].x) +
                     (vertices[1].y - vertices[0].y) * (vertices[1].y - vertices[0].y));
-    sides[1] = sqrt((vertices[2].x - vertices[0].x) * (vertices[2].x - vertices[0].x) + (vertices[2].y - vertices[0].y) * (vertices[2].y - vertices[0].y));
-    sides[2] = sqrt((vertices[2].x - vertices[1].x) * (vertices[2].x - vertices[1].x) + (vertices[2].y - vertices[1].y) * (vertices[2].y - vertices[1].y));
+
+    sides[1] = sqrt((vertices[2].x - vertices[0].x) * (vertices[2].x - vertices[0].x) + 
+                    (vertices[2].y - vertices[0].y) * (vertices[2].y - vertices[0].y));
+
+    sides[2] = sqrt((vertices[2].x - vertices[1].x) * (vertices[2].x - vertices[1].x) +
+                    (vertices[2].y - vertices[1].y) * (vertices[2].y - vertices[1].y));
 
     return sides;
 }
@@ -71,20 +75,28 @@ void Triangle::Height()
 
 void Triangle::TriangleType()
 {
-    float* sides = Sides();
-    int max;
+    float sides[3];
+    sides[0] = sqrt((vertices[1].x - vertices[0].x) * (vertices[1].x - vertices[0].x) +
+        (vertices[1].y - vertices[0].y) * (vertices[1].y - vertices[0].y));
+
+    sides[1] = sqrt((vertices[2].x - vertices[0].x) * (vertices[2].x - vertices[0].x) +
+        (vertices[2].y - vertices[0].y) * (vertices[2].y - vertices[0].y));
+
+    sides[2] = sqrt((vertices[2].x - vertices[1].x) * (vertices[2].x - vertices[1].x) +
+        (vertices[2].y - vertices[1].y) * (vertices[2].y - vertices[1].y));
+    float max;
     max = sides[0];
-    for (int i = 0; i < 3; i++)
+    for (int i = 1; i < 3; i++)
     {
         if (sides[i] > max)
         {
             max = sides[i];
         }
     }
-
-    int min;
+    
+    float min;
     min = sides[0];
-    for (int i = 0; i < 3; i++)
+    for (int i = 1; i < 3; i++)
     {
         if (sides[i] <min)
         {
@@ -92,11 +104,11 @@ void Triangle::TriangleType()
         }
     }
     float sr = sides[0] + sides[1] + sides[2] - max - min;
-    if (max * max < (min * min + sr * sr))
-
-        cout << "The triangle is sharp"<< endl;
-    else if (max * max == (min * min + sr * sr))
-        cout << "The triangle is straight" << endl;
+    float eps = 0.0001;
+    if (abs(max * max - (min * min + sr * sr)) < eps)
+      cout << "The triangle is straight" << endl;
+    else if (max * max < (min * min + sr * sr))
+        cout << "The triangle is sharp" << endl;
     else if (max * max > (min * min + sr * sr))
         cout << "The triangle is blunt" << endl;
 
