@@ -13,7 +13,9 @@ Person::Person()
 	patronymic = " ";
 	gender = " ";
 	nation = " ";
-	date = " ";
+	date.day = 0;
+	date.month = 0;
+	date.year = 0;
 	height = " ";
 	weight = " ";
 	num_phone = " ";
@@ -27,14 +29,20 @@ Person::Person()
 	ad.apartament = " ";
 }
 
-Person::Person(string surname, string name, string patronymic, string gender, string nation, string date, string height, string weight, string num_phone, string postal_code, string country, string region, string city, string district, string street, string house, string apartament)
+Person::Person(string surname, string name, string patronymic, string gender,
+	string nation, int day, int month, int year, string height,
+	string weight, string num_phone, string postal_code, string country,
+	string region, string city, string district, string street,
+	string house, string apartament)
 {
 	this->surname = surname;
 	this->name = name;
 	this->patronymic = patronymic;
 	this->gender = gender;
 	this->nation = nation;
-	this->date = date;
+	this->date.day = day;
+	this->date.month = month;
+	this->date.year = year;
 	this->height = height;
 	this->weight = weight;
 	this->num_phone = num_phone;
@@ -47,67 +55,99 @@ Person::Person(string surname, string name, string patronymic, string gender, st
 	this->ad.apartament = apartament;
 }
 
-void read(Person*& p, int& n)
+void Person::set_info(const string& p_surname, const string& p_name, const string& p_patronymic,
+	const string& p_gender, const string& p_nation, const int& p_day, const int& p_month,
+	const int& p_year, const string& p_height, const string& p_weight,
+	const string& p_num_phone, const string& p_postal_code, const string& p_country,
+	const string& p_region, const string& p_city, const string& p_district,
+	const string& p_street, const string& p_house, const string& p_apartament)
 {
-	string f;
-	cout << "Enter filename or path: ";
-	cin >> f;
-	n = cntStruct(f);
-	p = new Person[n];
-	fill_data(p, n, f);
+	surname = p_surname;
+	name = p_name;
+	patronymic = p_patronymic;
+	gender = p_gender;
+	nation = p_nation;
+	date.day = p_day;
+	date.month = p_month;
+	date.year = p_year;
+	height = p_height;
+	weight = p_weight;
+	num_phone = p_num_phone;
+	postal_code = p_postal_code;
+	ad.country = p_country;
+	ad.region = p_region;
+	ad.city = p_city;
+	ad.district = p_district;
+	ad.street = p_street;
+	ad.house = p_house;
+	ad.apartament = p_apartament;
 }
 
-void fill_data(Person*& p, int n, string& f)
+void read(Person** p, int n, string& f)
 {
+
 	fstream file;
 	file.open(f);
 	if (!file.is_open())
 		throw "File open error";
+	string surname, name, patronymic, nation, gender, height, weight,
+		num_phone, postal_code, country, region, city,
+		district, street, house, apartament;
+	int day, month, year;
 	for (int i = 0; i < n; i++)
 	{
 		string str = "";
 		int flag = 0;
-		while ((getline(file, str, ';')) && (flag < 16))
+		while ((getline(file, str, ';')) && (flag < 18))
 		{
 			if (flag == 0)
 			{
 				if (i != 0)
 					removeFirstN(str, 1);
-				p[i].surname = str;
+				surname = str;
 			}
 			if (flag == 1)
-				p[i].name = str;
+				name = str;
 			if (flag == 2)
-				p[i].patronymic = str;
+				patronymic = str;
 			if (flag == 3)
-				p[i].nation = str;
+				gender = str;
 			if (flag == 4)
-				p[i].gender = str;
+				nation = str;
 			if (flag == 5)
-				p[i].date = str;
+				day = stoi(str);
 			if (flag == 6)
-				p[i].height = str;
+				month = stoi(str);
 			if (flag == 7)
-				p[i].weight = str;
+				year = stoi(str);
 			if (flag == 8)
-				p[i].num_phone = str;
+				height = str;
 			if (flag == 9)
-				p[i].postal_code = str;
+				weight = str;
 			if (flag == 10)
-				p[i].ad.country = str;
+				num_phone = str;
 			if (flag == 11)
-				p[i].ad.region = str;
+				postal_code = str;
 			if (flag == 12)
-				p[i].ad.city = str;
+				country = str;
 			if (flag == 13)
-				p[i].ad.district = str;
+				region = str;
 			if (flag == 14)
-				p[i].ad.street = str;
+				city = str;
 			if (flag == 15)
-				p[i].ad.house = str;
+				district = str;
+			if (flag == 16)
+				street = str;
+			if (flag == 17)
+				house = str;
 			flag++;
 		}
-		p[i].ad.apartament = str;
+		apartament = str;
+
+		p[i] = new Person();
+		p[i]->set_info(surname, name, patronymic, gender, nation, day, month, year,
+			height, weight, num_phone, postal_code, country, region, city, district,
+			street, house, apartament);
 	}
 	file.close();
 }
@@ -117,7 +157,7 @@ ostream& operator<<(ostream& out, const Person& p)
 	out << "FIO: " << p.surname << " " << p.name << " " << p.patronymic << endl;
 	out << "Gender: " << p.gender << endl;
 	out << "Nation: " << p.nation << endl;
-	out << "Date: " << p.date << endl;
+	out << "Date: " << p.date.day << "." << p.date.month << "." << p.date.year << endl;
 	out << "Height: " << p.height << endl;
 	out << "Weight: " << p.weight << endl;
 	out << "Phone number: " << p.num_phone << endl;
@@ -153,28 +193,28 @@ int cntStruct(string& f)
 	return i;
 }
 
-void Sort(Person*& p, int n)
+void Sort(Person** p, int n)
 {
-	Person* tmp = new Person[1];
+	Person* tmp;
 	for (int i = 0; i < n; i++)
 		for (int j = i + 1; j < n; j++)
 		{
-			if (p[j].surname != p[i].surname)
+			if (p[j]->get_surname() != p[i]->get_surname())
 			{
-				if (p[j].surname < p[i].surname)
+				if (p[j]->get_surname() < p[i]->get_surname())
 				{
-					*tmp = p[i];
+					tmp = p[i];
 					p[i] = p[j];
-					p[j] = *tmp;
+					p[j] = tmp;
 				}
 			}
 			else
 			{
-				if (p[j].name < p[i].name)
+				if (p[j]->get_name() < p[i]->get_name())
 				{
-					*tmp = p[i];
+					tmp = p[i];
 					p[i] = p[j];
-					p[j] = *tmp;
+					p[j] = tmp;
 				}
 			}
 		}

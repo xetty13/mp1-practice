@@ -9,11 +9,16 @@ using namespace std;
 int main()
 {
     int n, a;
-    Person* p;
-    read(p, n);
+    string f;
+    cout << "Enter filename or path: ";
+    cin >> f;
+    n = cntStruct(f);
+    Person** p = new Person*[n];
+
+    read(p, n, f);
 
     for (int i = 0; i < n; i++)
-        cout << p[i];
+        cout << *(p[i]);
     Sort(p, n);
 
     do {
@@ -23,15 +28,17 @@ int main()
         {
             cout << "\n";
             for (int i = 0; i < n; i++)
-                cout << p[i];
+                cout << *(p[i]);
         }
         if (a == 2)
         {
             cout << "\n";
             for (int i = n - 1; i >= 0; i--)
-                cout << p[i];
+                cout << *(p[i]);
         }
     } while ((a <= 0) || (a > 2));
+    for (int i = 0; i < n; i++)
+        delete p[i];
     delete[]p;
     return 0;
 }
