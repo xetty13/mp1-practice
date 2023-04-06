@@ -34,6 +34,7 @@ void read_data(Constellation** cns, int* count) {
 			fscanf(fp, "%s %f %f %f %f %f", (*cns)[i].stars[j].name, &(*cns)[i].stars[j].dist, &(*cns)[i].stars[j].magnitude, &(*cns)[i].stars[j].deg, &(*cns)[i].stars[j].min, &(*cns)[i].stars[j].sec);
 		}
 	}
+	free(path);
 	fclose(fp);
 }
 void print_data(Constellation* cns, int n) {
