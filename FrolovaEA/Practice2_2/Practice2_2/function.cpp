@@ -6,102 +6,44 @@
 #include "header.h"
 using namespace std;
 
-int cntLines(const string filename) {
+int cntLines(const string &filename) {
 
     string line;
     int f = 0;
     ifstream file(filename); // окрываем файл для чтения
-
+    
     if (!file.is_open())
-        throw "File open error";
+        throw "File open error";                          
 
     if (file.is_open())
     {
         while (getline(file, line))
         {
-            //            cout << line << endl;
+//            cout << line << endl;
             f++;
         }
     }
 
     file.close();     // закрываем файл
-    //    cout << f << endl;
+//    cout << f << endl;
 
-    //    cout << "End of program" << endl;
+//    cout << "End of program" << endl;
     return f;
 
 }
 
-void allocate_sklad(Product*& p, Date*& d, int size)
+void allocate_sklad(Product*& p, int size)
 {
     p = new Product[size];
-    d = new Date[size];
 }
 
-
-/*
-void fill_sklad(Product*& p, Date*& d, int size,const string filename)
-{
-    int flag = 0;
-    ifstream file(filename);
-    for (int i = 0; i < size; i++)
-    {
-        string line{};
-
-        while ((getline(file >> ws, line, ';')) && (flag < 5))
-        {
-            cout << "flag=" << flag << endl;
-
-
-
-            if (flag == 0)
-            {
-                p[i].name = line;
-                cout << p[i].name << endl;
-
-            }
-
-/*            if (flag == 1)
-            {
-                p[i].unit = line;
-                cout << p[i].unit << endl;
-            }
-
-            if (flag == 2)
-            {
-                p[i].price = stof(line);
-                cout << p[i].price << endl;
-            }
-
-            if (flag == 3)
-            {
-                p[i].number = stoi(line);
-                cout << p[i].number << endl;
-            }
-            if (flag == 4)
-            {
-                cout << "ok" << endl;
-            }
-            flag++;
-
-        }
-        flag = 0;
-
-    }
-    file.close();
-
-}
-*/
-
-
-
-void fill_sklad(Product*& p, Date*& d, int size, const string filename)
+void fill_sklad(Product*& p, int size, const string& filename)
 {
     string line;
     char str[200];
     char* istr;
     ifstream file(filename); // окрываем файл для чтения
-    int j = 0, flag = 0;
+    int j = 0,flag=0;
 
     if (!file.is_open())
         throw "File open error";
@@ -116,8 +58,8 @@ void fill_sklad(Product*& p, Date*& d, int size, const string filename)
                 istr = strtok(str, ";/");
                 flag++;
                 if (flag == 1) {
-                    (p[j].name) = string(istr);
-                    //                    cout << p[j].name << endl;
+                    (p[j].name)=string( istr);
+;
                 }
                 while (istr != NULL)
                 {
@@ -125,33 +67,33 @@ void fill_sklad(Product*& p, Date*& d, int size, const string filename)
                     flag++;
 
                     if (flag == 2) {
-                        (p[j].unit) = string(istr);
-                        //                        cout << p[j].unit << endl;
+                        (p[j].unit)=string(istr);
+
                     }
 
                     if (flag == 3) {
                         p[j].price = atoi(istr);
-                        //                        cout << p[j].price << endl;                         
+                        
                     }
 
                     if (flag == 4) {
                         p[j].number = atoi(istr);
-                        //                        cout << p[j].number << endl;              
+             
                     }
 
                     if (flag == 5) {
-                        d[j].day = atoi(istr);
-                        //                        cout << d[j].day << endl;
+                        p[j].data.day = atoi(istr);
+
                     }
 
                     if (flag == 6) {
-                        d[j].month = atoi(istr);
-                        //                        cout << d[j].month << endl;                
+                        p[j].data.month = atoi(istr);
+                
                     }
 
                     if (flag == 7) {
-                        d[j].year = atoi(istr);
-                        //                        cout << d[j].year << endl;                
+                        p[j].data.year = atoi(istr);
+                
                     }
 
 
@@ -160,35 +102,33 @@ void fill_sklad(Product*& p, Date*& d, int size, const string filename)
                 j++;
             }
 
-        }
+            }
+            
 
-
-
+            
 
     }
 
-    file.close();     // закрываем файл
-
-
+    file.close();     
+   
+   
 }
 
-void find_null(Product*& p, Date*& d, int size)
+void find_null(Product*& p, int size)
 {
     for (int i = 0; i < size; i++)
     {
         if (p[i].number == 0) {
             cout << p[i].name << "\t" << p[i].unit << "\t" << p[i].price << "\t" << p[i].number << "\t";
-            cout << d[i].day << "." << d[i].month << "." << d[i].year << endl;
-
+            cout<< p[i].data.day << "." << p[i].data.month << "."<< p[i].data.year << endl;
+            
 
         }
     }
 }
 
-void free_sklad(Product*& p, Date*& d, int size)
+void free_sklad(Product*& p, int size)
 {
-    delete[] d;
     delete[] p;
 }
-
 

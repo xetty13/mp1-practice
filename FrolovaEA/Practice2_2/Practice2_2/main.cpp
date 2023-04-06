@@ -9,16 +9,16 @@ int main()
 {
 
     int size = cntLines("sklad.txt");
+    
+    Product* p;
 
-    Product* p;// = new Product[size];
-    Date* d;// = new Date[size];
+    allocate_sklad(p, size);
 
-    allocate_sklad(p, d, size);
+    fill_sklad(p, size, "sklad.txt");
+    find_null(p,size);
 
-    fill_sklad(p, d, size, "sklad.txt");
-    find_null(p, d, size);
+    free_sklad(p, size);
 
-    free_sklad(p, d, size);
-    //    delete[] d;
-    //    delete[] p;
+
 }
+
