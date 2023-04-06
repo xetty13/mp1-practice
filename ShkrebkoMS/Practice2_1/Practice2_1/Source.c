@@ -1,18 +1,38 @@
+#include "Header.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Header.h"
 #include <locale.h>
 #include <stdbool.h>
 
-#define LONGLINE 255
-#define LONTAUTHORNAME 255
+int count_books(char* str)
+{
+	int count = 0;
+	char line[LINE];
+
+	printf("Введите название файла\n");
+	gets(str);
+	FILE* file = fopen(str, "r");
+
+	if (file == NULL)
+	{
+		printf("Нет такого файла");
+		return -1;
+	}
+
+	while (fgets(line, LONGLINE, file) != NULL)
+	{
+		count++;
+	}
+	fclose(file);
+	return count;
+}
 void setAuthors(char* strTmp,TBook* book)
 {
 	char* pos1;
 	char find[] = ",";
 	int i,count = 0;
-	char strTmp1[100];
+	char strTmp1[LINE];
 	strcpy(strTmp1, strTmp);
 	pos1 = strtok(strTmp, find);
 
@@ -24,7 +44,7 @@ void setAuthors(char* strTmp,TBook* book)
 
 	}
 	book->Couaut = count;
-	(book->Author) = malloc(sizeof( *(book->Author)) * count);
+	(book->Author) = malloc(sizeof(*(book->Author)) * count);
 	for (i = 0; i < count; i++)
 	{
 		book->Author[i] = malloc(LONTAUTHORNAME);
@@ -42,14 +62,15 @@ void setAuthors(char* strTmp,TBook* book)
 
 
 }
-void read(FILE* file,TBook* book, int* couaut)
+void read(char* str, TBook* book)
 
 {	
 	int n,j=0,count=0;
 	char line[LONGLINE];
 	char* pos1;
 	char find[] = ";";
-	char strTmp[100];
+	char strTmp[LINE];
+	FILE* file = fopen(str, "r");
 	while (fgets(line, LONGLINE, file) != NULL)
 	{
 		pos1 = strtok(line, find);
@@ -110,8 +131,69 @@ void read(FILE* file,TBook* book, int* couaut)
 		setAuthors(strTmp, book);
 		book++;
 	}
+	fclose(file);
+}
+
+
+int count_unic(TBook* book, int count)
+{
+	int unic = 0;
+	int i, j;
+	int flag;
+	for (i = 0; i < count; i++)
+	{
+		flag = 0;
+		for (j=i+1;j<count;j++)
+		{
+
+			if (strcmp(book[i].Section, book[j].Section) == 0)
+			{
+				flag++;
+				break;
+			}
+
+
+		}
+		if (flag == 0)
+			unic++;
+	}
+	return unic;
 
 }
+
+char** create_section(TBook* book, int unic, int count)
+{
+	int i,flag,k,j;
+	char** unic_section;
+	unic_section = (char**)malloc(sizeof(char*) * unic);
+	k = 0;
+	for (i = 0; i < unic; i++)
+	{
+		unic_section[i] = (char*)malloc(sizeof(char)*LINE);
+	}
+	for (i = 0; i < count; i++)
+	{
+		flag = 0;
+		for (j = i + 1; j < count; j++)
+		{
+
+			if (strcmp(book[i].Section, book[j].Section) == 0)
+			{
+				flag++;
+				break;
+			}
+
+
+		}
+		if (flag == 0)
+		{
+			strcpy(unic_section[k], book[i].Section);
+			k++;
+		}
+	}
+	return unic_section;
+}
+
 void print_book(TBook* book,int count)
 {
 	int i,j;
@@ -173,7 +255,28 @@ void print_section(TBook* book, int count, char* word)
 	}
 	
 }
+void print_choose_book(TBook* lib, int count,int unic,char** unic_section)
+{
+	int a,i;
+	char word[20];
+	do 
+	{
+		printf("\nКакой жанр вы хотите увидеть?\n");
+		for (i = 0; i < unic; i++)
+		{
+			printf("%d - %s\n",i+1, unic_section[i]);
+		}
+		printf("Если хотите выйти, введите 0\n");
+		scanf("%d", &a);
 
+		
+		
+		if ((a > 0) && (a <= unic))
+		{
+			print_section(lib, count, unic_section[a-1]);
+		}
+	} while (a != 0);
+}
 void free_mas(TBook* book,int count)
 {
 	int i,j;
@@ -187,6 +290,17 @@ void free_mas(TBook* book,int count)
 		}
 		free(book[i].Author);
 	}
+	free(book);
+}
+void free_unic(char** unic_section, int unic)
+{
+	int i;
+
+	for (i = 0; i < unic; i++)
+	{
+		free(unic_section[i]);
+	}
+	free(unic_section);
 }
 
 
