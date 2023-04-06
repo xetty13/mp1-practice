@@ -4,7 +4,9 @@
 #include "class TService.h"
 #include <string>
 
-string euro_zone[20] = {//list of eurozone countries
+#define NUM_EUROPE_COUNTRIES 20
+
+string euro_zone[NUM_EUROPE_COUNTRIES] = {//list of eurozone countries
 	"Austria",
 	"Belgium",
 	"Cyprus",
@@ -152,10 +154,11 @@ void search_string(ifstream& file) {//look for the first occurrence of the strin
 }
 
 
-void TAgency::file_reader(ifstream& file, TAgency*& list) {
+int TAgency::file_reader(ifstream& file, TAgency**& list) {
 	ifstream file_copy;
 	file_copy = create_file();
 	int num_agencies = CountAgencies(file_copy);
+	int* num_services = CountTServices(file);//count directions
 	string buffer;
 	const string list_agencies = "List agencies:";
 	const string directions = "Directions:";
@@ -163,89 +166,113 @@ void TAgency::file_reader(ifstream& file, TAgency*& list) {
 	int len_directs = directions.length();
 	int j = 0;
 	int c;
-	search_string(file);
-	getline(file, buffer);
-	if (buffer.compare(0, len_list, list_agencies, 0, len_list) == 0 || buffer.compare(0, len_directs, directions, 0, len_directs) == 0) {
-		do {
-			c = file.get();
-		} while (c == 10);
-		file.seekg(-1, ios_base::cur);
-		getline(file, list->name);
+	list = new TAgency *[num_agencies]; //create a dynamic array of objects
+	int i = 0;
+	for (i = 0; i < num_agencies; i++) {
+		list[i] = new TAgency(num_services[i]);
 	}
-	else list->name = buffer;
-	for (j = 0; j < list->num_services; j++) {
+	for (i = 0; i < num_agencies; i++) {
 		search_string(file);
-		if (j == 0) {
+		getline(file, buffer);
+		if (buffer.compare(0, len_list, list_agencies, 0, len_list) == 0 || buffer.compare(0, len_directs, directions, 0, len_directs) == 0) {
 			do {
 				c = file.get();
-			} while (c != 10);
+			} while (c == 10);
+			file.seekg(-1, ios_base::cur);
+			getline(file, list[i]->name);
 		}
-		getline(file, list->services[j].country);
-		getline(file, list->services[j].travel_conditions);
-		getline(file, list->services[j].excursion_services);
-		getline(file, list->services[j].host_service);
-		getline(file, list->services[j].ticket_price);
+		else list[i]->name = buffer;
+		for (j = 0; j < list[i]->num_services; j++) {
+			search_string(file);
+			if (j == 0) {
+				do {
+					c = file.get();
+				} while (c != 10);
+			}
+			getline(file, list[i]->services[j].country);
+			getline(file, list[i]->services[j].travel_conditions);
+			getline(file, list[i]->services[j].excursion_services);
+			getline(file, list[i]->services[j].host_service);
+			getline(file, list[i]->services[j].ticket_price);
+		}
 	}
-
+	return num_agencies;
 }
-void output_all_data(TAgency*& list) {//all data
+void TAgency::output_all_data(TAgency**& list,int num_agencies) {//all data
+	int i = 0;
 	int j = 0;
-	cout << list->name << endl;
-	for (j = 0; j < list->num_services; j++) {
-		cout << list->services[j].country << endl;
-		cout << list->services[j].travel_conditions << endl;
-		cout << list->services[j].excursion_services << endl;
-		cout << list->services[j].host_service << endl;
-		cout << list->services[j].ticket_price << endl;
-		cout << endl;
+	for (i = 0; i < num_agencies; i++) {
+		cout << list[i]->name << endl;
+		for (j = 0; j < list[i]->num_services; j++) {
+			cout << list[i]->services[j].country << endl;
+			cout << list[i]->services[j].travel_conditions << endl;
+			cout << list[i]->services[j].excursion_services << endl;
+			cout << list[i]->services[j].host_service << endl;
+			cout << list[i]->services[j].ticket_price << endl;
+			cout << endl;
+		}
 	}
 }
 
-void output_data_EZONES(TAgency*& list, const string*& e_zone) {
+void TAgency::output_data_EZONES(TAgency**& list, int num_agencies) {
+	int i = 0;
 	int j = 0;
 	int k = 0;
-	cout << list->name << endl;
-	while (j < list->num_services) {
-		while (k < 20) {
-			if (list->services[j].country == e_zone[k]) {
-				cout << list->services[j].country << endl;
-				cout << list->services[j].travel_conditions << endl;
-				cout << list->services[j].excursion_services << endl;
-				cout << list->services[j].host_service << endl;
-				cout << list->services[j].ticket_price << endl;
-				cout << endl;
-				break;
+	for (i = 0; i < num_agencies; i++) {
+		cout << list[i]->name << endl;
+		while (j < list[i]->num_services) {
+			while (k < NUM_EUROPE_COUNTRIES) {
+				if (list[i]->services[j].country == euro_zone[k]) {
+					cout << list[i]->services[j].country << endl;
+					cout << list[i]->services[j].travel_conditions << endl;
+					cout << list[i]->services[j].excursion_services << endl;
+					cout << list[i]->services[j].host_service << endl;
+					cout << list[i]->services[j].ticket_price << endl;
+					cout << endl;
+					break;
+				}
+				k++;
+				if (k == 20 && list[i]->num_services == 1) {
+					cout << "(No suitable destination found!)" << endl;
+				}
 			}
-			k++;
+			k = 0;
+			j++;
 		}
-		k = 0;
-		j++;
+		j = 0;
 	}
-	j = 0;
+	
 }
 
-/*ostream& operator<<(ostream& stream, const TAgency*& list) {
-	const string* EU = euro_zone;
+const ostream& operator<<(ostream& stream, const TAgency**& list) {
+	ifstream file;
+	file = create_file();
+	int num_agencies = CountAgencies(file);
+	int i = 0;
 	int j = 0;
 	int k = 0;
-	cout << list->name << endl;
-	while (j < list->num_services) {
-		while (k < 20) {
-			if (list->services[j].country == euro_zone[k]) {
-				stream << list->services[j].country << endl;
-				stream << list->services[j].travel_conditions << endl;
-				stream << list->services[j].excursion_services << endl;
-				stream << list->services[j].host_service << endl;
-				stream << list->services[j].ticket_price << endl;
-				stream << endl;
-				break;
+	for (i = 0; i < num_agencies; i++) {
+		stream << list[i]->name << endl;
+		while (j < list[i]->num_services) {
+			while (k < NUM_EUROPE_COUNTRIES) {
+				if (list[i]->services[j].country == euro_zone[k]) {
+					stream << list[i]->services[j].country << endl;
+					stream << list[i]->services[j].travel_conditions << endl;
+					stream << list[i]->services[j].excursion_services << endl;
+					stream << list[i]->services[j].host_service << endl;
+					stream << list[i]->services[j].ticket_price << endl;
+					stream << endl;
+					break;
+				}
+				k++;
+				if (k == NUM_EUROPE_COUNTRIES && list[i]->num_services == 1) {
+					stream << "(No suitable destination found!)" << endl;
+				}
 			}
-			k++;
+			k = 0;
+			j++;
 		}
-		k = 0;
-		j++;
+		j = 0;
 	}
-	j = 0;
 	return stream;
 }
-*/
