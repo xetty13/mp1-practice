@@ -11,7 +11,6 @@ struct worker {
 	string  rsn_dismiss;
 	string  family_status;
 	string  contact_info;
-	bool operator ==(const string& otherTitle) const;
 	friend ostream& operator<<(ostream& out, const worker& w);
 };
 
