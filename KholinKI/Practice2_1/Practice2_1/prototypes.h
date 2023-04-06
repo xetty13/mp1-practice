@@ -22,11 +22,11 @@ typedef struct // Tourist agency
 int CountAgencies(FILE* fptr);//count agencies
 int* CountTServices(FILE* fptr);//count directions
 
-void allocate_TAgency(TAgency** pointer, int count_services);//allocating guide list...
-void allocate_TServices(TAgency** ptr);//allocating list of service
-void file_reader(FILE* fptr, TAgency*** list);//reading data
+void allocate_TAgency(TAgency** pointer);//allocating guide list...
+void allocate_TServices(TAgency* ptr, int count_services);//allocating list of service
+int file_reader(FILE* fptr, TAgency*** list);//reading data
 void search_string(FILE* fptr);
-void output_all_data(FILE* fptr, TAgency** list);//all data
-void output_data_EZONES(FILE* fptr, TAgency** list, char* e_zone[]);//data about euro zones
-void free_memory(TAgency*** pointer, FILE* fptr);//freeing up memory
+void output_all_data(FILE* fptr, TAgency** list, int num_agencies);//all data
+void output_data_EZONES(FILE* fptr, TAgency** list, int num_agencies);//data about euro zones
+void free_memory(TAgency*** pointer, int num_agencies);//freeing up memory
 #endif
