@@ -23,7 +23,7 @@ string GetFilePath() {
 	} while (true);
 }
 
-int amount(string &path )
+int amount(string &path)
 {
 	fstream file;
 	file.open(path);
@@ -69,10 +69,13 @@ void adding(worker* w, string& path, int n) {
 				break;
 			case 4:
 				w[j].last_job = s;
+				break;
 			case 5:
 				w[j].rsn_dismiss = s;
+				break;
 			case 6:
 				w[j].family_status = s;
+				break;
 			case 7:
 				w[j].contact_info = s;
 				i = -1;
@@ -96,7 +99,7 @@ void higher_education(worker* w, int count) {
 			counter++;
 		}
 	}
-	cout << "All employees with higher education from the database:"<< (counter / count) * 100 <<" % " << endl;
+	cout << "Percentage of employees with higher education:"<< (counter / count) * 100 <<" % " << endl;
 }
 
 ostream& operator<<(ostream& out, const worker& w)
@@ -116,7 +119,6 @@ ostream& operator<<(ostream& out, const worker& w)
 bool worker::operator==(const string&w2) const {
 	return (education == w2);
 }
-
 
 
 
