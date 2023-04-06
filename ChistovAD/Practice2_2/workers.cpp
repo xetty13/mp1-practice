@@ -89,7 +89,7 @@ void higher_education(worker* w, int count) {
 	int i;
 	cout << "All employees with higher education from the database:" << endl;
 	for (i = 0; i < count; i++) {
-		if (w[i].education == "no") {
+		if (w[i].education != "no") {
 			cout << w[i];
 			counter++;
 		}
