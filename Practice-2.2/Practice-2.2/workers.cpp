@@ -46,7 +46,6 @@ void adding(worker* w, string& path, int n) {
 	int i = 0, j = 0;
 	string line, s;
 	ifstream in(path);
-	string* buff = new string[n];
 	while (getline(in, line))
 	{
 		if (line == "\0") {
@@ -56,27 +55,24 @@ void adding(worker* w, string& path, int n) {
 		while (getline(ss, s, ';')) {
 			switch (i) {
 			case 0:
-				buff[j] = s;
-				break;
-			case 1:
 				w[j].id = s;
 				break;
-			case 2:
+			case 1:
 				w[j].profession = s;
 				break;
-			case 3:
+			case 2:
 				w[j].education = s;
 				break;
-			case 4:
+			case 3:
 				w[j].last_job = s;
 				break;
-			case 5:
+			case 4:
 				w[j].rsn_dismiss = s;
 				break;
-			case 6:
+			case 5:
 				w[j].family_status = s;
 				break;
-			case 7:
+			case 6:
 				w[j].contact_info = s;
 				i = -1;
 				j++;
@@ -86,7 +82,6 @@ void adding(worker* w, string& path, int n) {
 		}
 	}
 	in.close();
-	delete[] buff;
 }
 
 void higher_education(worker* w, int count) {
@@ -115,11 +110,6 @@ ostream& operator<<(ostream& out, const worker& w)
 	out << "-----------------------" << endl;
 	return out;
 }
-
-bool worker::operator==(const string&w2) const {
-	return (education == w2);
-}
-
 
 
 
