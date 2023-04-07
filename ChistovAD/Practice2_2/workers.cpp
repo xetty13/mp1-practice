@@ -7,7 +7,7 @@
 #include "workers.h";
 #define N 100
 
-string GetFilePath() {
+string get_path() {
 	string path;
 	do {
 		cout << "Enter the file path:";
@@ -73,7 +73,7 @@ void adding(worker* w, string& path, int n) {
 				w[j].family_status = s;
 				break;
 			case 6:
-				w[j].contact_info = s;
+				w[j].contact_info =stoi(s);
 				i = -1;
 				j++;
 				break;
@@ -97,17 +97,23 @@ void higher_education(worker* w, int count) {
 	cout << "Percentage of employees with higher education:" << (counter / count) * 100 << " % " << endl;
 }
 
+//ostream& operator<<(ostream& out, const worker& w)
+//{
+//	out << "-----------------------" << endl;
+//	out << "ID: " << w.id << endl;
+//	out << "Profession: " << w.profession << endl;
+//	out << "Education: " << w.education << endl;
+//	out << "Last Job: " << w.last_job << endl;
+//	out << "Reason of dismiss: " << w.rsn_dismiss << endl;
+//	out << "Family status: " << w.rsn_dismiss << endl;
+//	out << "Contact information: " << w.contact_info << endl;
+//	out << "-----------------------" << endl;
+//	return out;
+//}
+
 ostream& operator<<(ostream& out, const worker& w)
 {
-	out << "-----------------------" << endl;
-	out << "ID: " << w.id << endl;
-	out << "Profession: " << w.profession << endl;
-	out << "Education: " << w.education << endl;
-	out << "Last Job: " << w.last_job << endl;
-	out << "Reason of dismiss: " << w.rsn_dismiss << endl;
-	out << "Family status: " << w.rsn_dismiss << endl;
-	out << "Contact information: " << w.contact_info << endl;
-	out << "-----------------------" << endl;
+	out << w.id <<" " << w.education << endl;
 	return out;
 }
 
