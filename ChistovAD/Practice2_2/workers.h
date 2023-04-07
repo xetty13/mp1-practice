@@ -10,11 +10,11 @@ struct worker {
 	string  last_job;
 	string  rsn_dismiss;
 	string  family_status;
-	string  contact_info;
+	int  contact_info;
 	friend ostream& operator<<(ostream& out, const worker& w);
 };
 
-string GetFilePath();
+string get_path();
 int amount(string& path);
 void adding(worker* w, string& path, int n);
 void higher_education(worker* w, int count);
