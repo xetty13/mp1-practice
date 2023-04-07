@@ -3,7 +3,6 @@
 #include <fstream>
 #include <sstream>
 #include <string.h>
-#include <string>
 #include "workers.h";
 #define N 100
 
