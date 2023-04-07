@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-	string path = GetFilePath();
+	string path = get_path();
 	int N = amount(path);
 	worker* w = new worker[N];
 	adding(w, path, N);
