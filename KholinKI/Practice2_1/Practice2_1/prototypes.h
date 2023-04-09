@@ -1,7 +1,7 @@
 #ifndef _prototypes_h
 #define _prototypes_h
 
-#define LEN 512
+#define LEN 1024
 
 typedef struct // list of service
 {
@@ -28,5 +28,5 @@ int file_reader(FILE* fptr, TAgency*** list);//reading data
 void search_string(FILE* fptr);
 void output_all_data(FILE* fptr, TAgency** list, int num_agencies);//all data
 void output_data_EZONES(FILE* fptr, TAgency** list, int num_agencies);//data about euro zones
-void free_memory(TAgency*** pointer, int num_agencies);//freeing up memory
+void free_memory(TAgency** pointer, int num_agencies);//freeing up memory
 #endif

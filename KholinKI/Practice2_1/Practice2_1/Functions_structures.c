@@ -112,7 +112,6 @@ void allocate_TAgency(TAgency** pointer) {
 }
 
 void allocate_TServices(TAgency* ptr, int count_services) {
-		int i = 0;
 		ptr->num_services = count_services;
 		ptr->services = (TService*)malloc(sizeof(TService) * count_services);//creating a service structure for each facility
 		for (int i = 0; i < ptr->num_services; i++) {
@@ -220,27 +219,30 @@ void output_data_EZONES(FILE* fptr, TAgency** list, int num_agencies) {
 					printf("%s", list[i]->services[j].ticket_price);
 					printf("\n");
 				}
+				if (k == NUM_EUROPE_COUNTRIES && list[i]->num_services == 1) {
+					printf("(No suitable destination found!)");
+				}
 			}
 		}
 	}
 }
 
-void free_memory(TAgency*** pointer, int num_agencies){
+void free_memory(TAgency** pointer, int num_agencies){
 	int i, j;
 	for ( i = 0; i < num_agencies; i++) {//Freeing up memory from dynamic fields
-		for (j = 0; j < (*pointer)[i]->num_services; j++) {
-			free((*pointer)[i]->services[j].country);
-			free((*pointer)[i]->services[j].travel_conditions);
-			free((*pointer)[i]->services[j].excursion_services);
-			free((*pointer)[i]->services[j].host_service);
-			free((*pointer)[i]->services[j].ticket_price);
+		for (j = 0; j < pointer[i]->num_services; j++) {
+			free(pointer[i]->services[j].country);
+			free(pointer[i]->services[j].travel_conditions);
+			free(pointer[i]->services[j].excursion_services);
+			free(pointer[i]->services[j].host_service);
+			free(pointer[i]->services[j].ticket_price);
 		}
 	}
 
 	for (i = 0; i < num_agencies; i++) {
-		free((*pointer)[i]->name);
-		free((*pointer)[i]->services);//massive  TService
-		free((*pointer)[i]);//object	
+		free(pointer[i]->name);
+		free(pointer[i]->services);//massive  TService
+		free(pointer[i]);//object	
 	}
-	free((*pointer));//freeing up memory massive pointers
+	free(pointer);//freeing up memory massive pointers
 }

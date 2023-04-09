@@ -20,7 +20,7 @@ int main(int argc,char *argv[]) {
 	output_data_EZONES(fptr, my_list_agencies, num_agencies);
 
 	fclose(fptr);
-	free_memory(my_list_agencies,fptr);//wash hands
+	free_memory(my_list_agencies,num_agencies);//wash hands
 
 	return 0;
 }
