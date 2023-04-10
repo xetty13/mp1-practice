@@ -28,13 +28,15 @@ private:
 	string name;
 	string surname;
 	string patronymic;
-	Data date;
 	string carnum;
 	unsigned long gibdd;
 	string phnum;
 	unsigned long tehpas;
+	string data1;
 public:
-	friend istream& operator>>(istream& in, Owner*& o);
+	Data date;
+	string getData()const { return data1; }
+	friend istream& operator>>(istream& in, Owner& o);
 	friend ostream& operator<<(ostream& out, const Owner& o);
 	unsigned long getGibdd()const { return gibdd; }
 };

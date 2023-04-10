@@ -29,8 +29,34 @@ Owner* read_inf(int& n)
 	}
 	infile >> n;
 	Owner* o = new Owner[n];
-	infile >> o;
+	string data;
+	string* razdel = new string[3];
+	for (int i = 0; i < n; i++)
+	{
+		infile >> o[i];
+		const char delim = '.';
+		vector<string> out;
+		data = o[i].getData();
+		token_size(data, delim, out);
+		int j = 0;
+		for (auto& data : out)
+		{
+			razdel[j++] = data;
+		}
+		try
+		{
+			int k = 0;
+			o[i].date.setDay(stoi(razdel[k++]));
+			o[i].date.setMonth(stoi(razdel[k++]));
+			o[i].date.setYear(stoi(razdel[k++]));
+		}
+		catch (invalid_argument e)
+		{
+			cout << "caught invalid argiment in date";
+		}
+	}
 	infile.close();
+	delete[] razdel;
 	return o;
 }
 
@@ -70,34 +96,9 @@ Owner* search_owner(Owner* o, int& n)
 
 
 
-istream& operator>>(istream& in, Owner*& o)
+istream& operator>>(istream& in, Owner& o)
 {
-	string data;
-	string* razdel = new string[3];
-	for (int i = 0; i < n; i++)
-	{
-		in >> o[i].surname >> o[i].name >> o[i].patronymic >> data >> o[i].carnum >> o[i].gibdd >> o[i].phnum >> o[i].tehpas;
-		const char delim = '.';
-		vector<string> out;
-		token_size(data, delim, out);
-		int j = 0;
-		for (auto& data : out)
-		{
-			razdel[j++] = data;
-		}
-		try
-		{
-			int k = 0;
-			o[i].date.setDay(stoi(razdel[k++]));
-			o[i].date.setMonth(stoi(razdel[k++]));
-			o[i].date.setYear(stoi(razdel[k++]));
-		}
-		catch (invalid_argument e)
-		{
-			cout << "caught invalid argiment in date";
-		}
-	}
-	delete[] razdel;
+	in >> o.surname >> o.name >> o.patronymic >> o.data1 >> o.carnum >> o.gibdd >> o.phnum >> o.tehpas;
 	return in;
 }
 
