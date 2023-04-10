@@ -4,9 +4,9 @@ using namespace std;
 
 struct Data
 {
-	int day;
-	int month;
-	int year;
+	string day;
+	string month;
+	string year;
 };
 struct Owner
 {
@@ -18,7 +18,7 @@ struct Owner
 	unsigned long gibdd;
 	string phnum;
 	unsigned long tehpas;
-	friend istream& operator>>(istream& in, Owner*& o);
+	friend istream& operator>>(istream& in, Owner& o);
 	friend ostream& operator<<(ostream& out, const Owner& o);
 };
 
