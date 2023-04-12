@@ -7,14 +7,14 @@ using namespace std;
 int main() {
 	system("chcp 1251");
 	Constellation* constellations;
+	int count;
 
-	allocate(&constellations);
-	read_data(constellations);
+	read_data(constellations, count);
 
-	cnst_table(constellations);
-	choice(constellations);
+	cnst_table(constellations, count);
+	choice(constellations, count);
 
-	cfree(&constellations);
+	cfree(constellations);
 
 	return 0;
 }

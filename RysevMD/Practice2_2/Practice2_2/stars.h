@@ -11,17 +11,19 @@ struct Star {
 };
 
 struct Constellation {
+	int count;
 	std::string name;
 	Star* stars;
 };
 
-void allocate(Constellation** cns);
-void cfree(Constellation** cns);
+void allocate(Constellation*& cns, int cnt);
+void allocate(Star*& st, int cnt);
+void cfree(Constellation*& cns);
 
-void cnst_table(Constellation* cns);
-void read_data(Constellation* cns);
+void cnst_table(Constellation* cns, int count);
+void read_data(Constellation*& cns, int& cnt);
 void print_data(Constellation* cns, int num);
-void choice(Constellation* cns);
+void choice(Constellation* cns, int count);
 #endif 
 
 

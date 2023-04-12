@@ -4,24 +4,33 @@
 
 using namespace std;
 
-void allocate(Constellation** cns) {
-	(*cns) = new Constellation[10];
-	for (int i = 0; i < 10; i++) {
-		(*cns)[i].stars = new Star[5];
-	}
+void allocate(Constellation*& cns, int cnt) {
+	cns = new Constellation[cnt];
 }
-void cfree(Constellation** cns) {
-	delete [] (*cns)->stars;
-	delete []  (*cns);
+void allocate(Star*& st, int cnt) {
+	st = new Star[cnt];
 }
 
-void read_data(Constellation* cns) {
+void cfree(Constellation*& cns) {
+	delete [] cns->stars;
+	delete []  cns;
+}
+
+void read_data(Constellation*& cns, int& cnt) {
 	ifstream in;
-	in.open("data.txt");
+	string path;
+	int st_cnt;
+	cout << endl << "Enter the path: ";
+	cin >> path;
+	in.open(path);
 	if (in.is_open()) {
-		for (int i = 0; i < 10; i++) {
-			in >> cns[i].name;
-			for (int j = 0; j < 5; j++) {
+		in >> cnt;
+		allocate(cns, cnt);
+		for (int i = 0; i < cnt; i++) {
+			in >> cns[i].name >> st_cnt;
+			cns[i].count = st_cnt;
+			allocate(cns[i].stars, st_cnt);
+			for (int j = 0; j < st_cnt; j++) {
 				in >> cns[i].stars[j].name;
 				in >> cns[i].stars[j].dist >> cns[i].stars[j].magnitude >> cns[i].stars[j].deg >> cns[i].stars[j].min >> cns[i].stars[j].sec;
 			}
@@ -29,28 +38,36 @@ void read_data(Constellation* cns) {
 	}
 	in.close();
 }
-void cnst_table(Constellation* cns) {
-	for (int i = 0; i < 5; i++) {
+void cnst_table(Constellation* cns, int count) {
+	for (int i = 0; i < count / 2; i++) {
 		cout << i + 1 << "." << cns[i].name << " \t\t " << i + 6 << "." << cns[i + 5].name << endl;
 	}
 	cout << "\nOutput format:\n\n  name distance magnitude coordinates(deg, min, sec)\n\n";
 }
 void print_data(Constellation* cns, int num) {
 	cout << endl << cns[num].name << endl;
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < cns[num].count; i++) {
 		cout << "  " << cns[num].stars[i].name << " " << cns[num].stars[i].dist << " " << cns[num].stars[i].magnitude << " ";
 		cout << cns[num].stars[i].deg << "° " << cns[num].stars[i].min << "' " << cns[num].stars[i].sec << "\"" << endl;
 	}
 
 
 }
-void choice(Constellation* cns) {
-	int num = -1;
+void choice(Constellation* cns, int count) {
+	string con;
 	cout << "Choice a constellation" << endl;
-	while (num != 0) {
-		cout << endl << ">> number: ";
-		cin >> num;
-		if (num < 0 || num > 10) cout << "Number not found" << endl;
-		else if (num != 0) print_data(cns, num - 1);
-	}
+	do {
+		int flag = 0;
+		cout << endl << ">> ";
+		cin >> con;
+		if (con == "stop") flag = 1;
+		for (int i = 0; i < count && flag == 0; i++) {
+			if (cns[i].name == con) {
+				print_data(cns, i);
+				flag = 1;
+			}
+		}
+		if (!flag) cout << "Not found. Please, choose constellation from table" << endl;
+
+	} while (con != "stop");
 }
