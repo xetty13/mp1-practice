@@ -1,17 +1,11 @@
-#ifndef FILM_H
-
-#define FILM_H
+#ifndef _TRIANGLE_H
+#define _TRIANGLE_H
 #include <string>
+#include <iostream>
 using namespace std;
 
-
-class Coord
-{
-public:
+struct Coord {
 	float x, y;
-	Coord();
-	Coord(float a, float b);
-
 };
 
 
@@ -23,12 +17,20 @@ public:
 	Triangle();
 	Triangle(Coord* vertices_);
 
-	void CountSquare();
-	void CountPerimeter();
-	float* Sides();
-	void Height();
-	void TriangleType();
+	void CountSquare() const;
+	void CountPerimeter() const;
+	float* Sides() const;
+	void Height() const;
+	void TriangleType() const;
+	friend std::ostream& operator<<(ostream& output_stream, const Triangle& triangles);
+	
 };
+enum types
+{
+	straight,
+	sharp,
+	blunt
 
+};
 int read(Triangle*& triangles, const string& f);
-#endif
+#endif _TRIANGLE_H

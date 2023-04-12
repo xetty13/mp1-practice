@@ -11,7 +11,11 @@ int main() {
 	cin >> f;
 
 	int n = read(triangles, f);
-
+	for (int i = 0; i < n; i++)
+	{
+		cout << triangles[i];
+	}
+	
 	int t = 0;
 	while (1)
 	{
