@@ -147,7 +147,6 @@
   <ItemGroup>
     <ClInclude Include="Impl.cpp" />
     <ClInclude Include="class TAgency.h" />
-    <ClInclude Include="prototypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

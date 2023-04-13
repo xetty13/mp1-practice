@@ -32,8 +32,5 @@
     <ClInclude Include="Impl.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="prototypes.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
