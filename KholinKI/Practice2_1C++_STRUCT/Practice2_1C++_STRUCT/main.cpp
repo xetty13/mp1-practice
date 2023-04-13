@@ -15,9 +15,10 @@ int main(int argc, char* argv[]) {
 	setlocale(LC_ALL, "rus");
 
 	try {
-		 ifstream file;//creating file var
-		 int num_agencies;
-		 TAgency** my_list_agencies;
+		ifstream file;//creating file var
+		int num_agencies;
+		TAgency** my_list_agencies;//old mass
+		TAgency** European_massive;//new mass
 
 		file.open("C://TouristAgences.txt");//open the file for reading
 
@@ -26,11 +27,13 @@ int main(int argc, char* argv[]) {
 		}
 		num_agencies = file_reader(file, my_list_agencies);
 
-		output_data_EZONES(file,my_list_agencies, num_agencies);
+		European_massive = find_euro_countries(my_list_agencies, num_agencies);//create new corrected massive
+
+		output_data_EZONES(European_massive, num_agencies);
 
 		file.close();
-		free_memory(my_list_agencies,num_agencies);
-
+		free_memory(my_list_agencies, num_agencies);
+		free_european_memory(European_massive, num_agencies);
 	}
 	catch (const ifstream& exeption) {
 		cout << "Unable open file!" << endl;
