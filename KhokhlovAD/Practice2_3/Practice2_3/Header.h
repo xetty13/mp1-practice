@@ -32,10 +32,9 @@ private:
 	unsigned long gibdd;
 	string phnum;
 	unsigned long tehpas;
-	string data1;
-public:
 	Data date;
-	string getData()const { return data1; }
+public:
+	void setData(int a, int b, int c) { date.setDay(a); date.setMonth(b); date.setYear(c); }
 	friend istream& operator>>(istream& in, Owner& o);
 	friend ostream& operator<<(ostream& out, const Owner& o);
 	unsigned long getGibdd()const { return gibdd; }
