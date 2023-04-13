@@ -89,7 +89,7 @@ lib::lib(const string& path, int count) {
         getline(ss, card.section, ';');
         string availabilityStr;
         getline(ss, availabilityStr, ';');
-        if (availabilityStr == "available") {
+        if (availabilityStr == "Available") {
             card.avb = available;
         }
         else {
