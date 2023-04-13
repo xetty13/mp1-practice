@@ -22,7 +22,7 @@ Triangle::Triangle(Coord* vertices_)
 
  ostream& operator<<(ostream &output_stream, const Triangle &triangles)
 {
-    output_stream << "Coordinates: (" << triangles.vertices[0].x << ", " << triangles.vertices[0].y << "),  (" << triangles.vertices[1].x << ", " << triangles.vertices[1].y << "),(" << triangles.vertices[2].x << ", " << triangles.vertices[2].y << ") "  <<  endl;
+    output_stream << "Coordinates: (" << triangles.vertices[0].x << ", " << triangles.vertices[0].y << "), (" << triangles.vertices[1].x << ", " << triangles.vertices[1].y << "), (" << triangles.vertices[2].x << ", " << triangles.vertices[2].y << ") "  <<  endl;
     return output_stream;
 }
 
@@ -90,7 +90,7 @@ void Triangle::Height() const
     cout << "H1 = " << heights[0] << "; " << "H2 = " << heights[1] << "; " << "H3 = " << heights[2] << "; " << endl;
 }
 
-void Triangle::TriangleType() const
+ int Triangle::TriangleType() const
 {
     float sides[3];
     sides[0] = sqrt((vertices[1].x - vertices[0].x) * (vertices[1].x - vertices[0].x) +
@@ -129,6 +129,6 @@ void Triangle::TriangleType() const
         t = types::sharp;
     else if (max * max > (min * min + sr * sr))
         t = types::blunt;
-    cout << "Type of triangle: " << t << endl;
+    return t;
 
 }

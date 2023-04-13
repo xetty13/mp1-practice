@@ -21,7 +21,7 @@ public:
 	void CountPerimeter() const;
 	float* Sides() const;
 	void Height() const;
-	void TriangleType() const;
+	int TriangleType() const;
 	friend std::ostream& operator<<(ostream& output_stream, const Triangle& triangles);
 	
 };

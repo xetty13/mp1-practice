@@ -17,6 +17,7 @@ int main() {
 	}
 	
 	int t = 0;
+	int type;
 	while (1)
 	{
 		printf("Select an operation : 1 - area, 2 - perimeter, 3 - height, 4 - type of triangle:  ");
@@ -28,8 +29,15 @@ int main() {
 				triangles[i].CountPerimeter();
 			else if (t == 3)
 				triangles[i].Height();
-			else if (t == 4)
-				triangles[i].TriangleType();
+			else if (t == 4) {
+				type = triangles[i].TriangleType();
+				if (type == 0)
+					cout << "straight" << endl;
+				else if (type == 1)
+					cout << "sharp" << endl;
+				else if (type == 2)
+					cout << "blunt" << endl;
+			}
 		}
 
 		cout << "If you want to exit, enter 0: ";
