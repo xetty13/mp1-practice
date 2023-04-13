@@ -24,5 +24,5 @@ struct Owner
 
 Owner* read_inf(int& n);
 void print_inf(Owner* o, int n);
-Owner* search_owner(Owner* o, int& n);
+Owner* search_owner(Owner* o, int& n, int& k);
 #endif
