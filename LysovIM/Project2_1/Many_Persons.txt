@@ -1,0 +1,5 @@
+Ivanov;Ivan;Ivanovich;M;Russia;1978;12;24;176;64;89875678237;123456;Russia;Kostromskaya;Miloti;Kostroma;Russkay;78;134
+Titov;Anton;Markocich;M;Belarus;2006;4;15;163;56;89765904390;321456;Belarus;Minskay;Zeleniy;Minsk;Lygovay;65;23
+Ivanova;Olga;Nikitishna;F;Vengria;1998;6;9;166;62;67890098765;876205;Vengria;Sounth;Sounth;Kopeda;Mirovay;44;74
+Zizyna;Natalia;Artemovich;F;Russia;2003;9;23;184;74;57483925843;485230;Russia;Tombovskay;Tambovskiy;Tambov;Pushkina;57;241
+Titov;Oleg;Stanislavovich;M;Russia;1999;1;1;151;72;57483925844;654890;Columbia;Arauka;Malta;Bogota;Trushina;53;123
