@@ -43,7 +43,7 @@ string menu() {
     }
 }
 
-int strCount(const string& path) {
+int lib::strCount(const string& path) {
     int count = 0;
     string line;
     ifstream file(path);
@@ -56,9 +56,9 @@ int strCount(const string& path) {
     return count;
 }
 
-lib::lib(const string& path, int count) {
+lib::lib(const string& path) {
     int j = 0;
-    this->count = count;
+    this->count = strCount(path);
     this->cards = new cardIndex[count];
     ifstream file(path);
     string line;
@@ -112,23 +112,23 @@ lib::~lib() {
     delete[] this->cards;
 }
 
-set <string> booksBySection(const lib& library) {
+set <string> lib::booksBySection() {
     set <string> sections;
-    for (int i = 0; i < library.count; i++) {
-        sections.insert(library.cards[i].section);
+    for (int i = 0; i < this->count; i++) {
+        sections.insert(this->cards[i].section);
     }
     for (string s : sections) {
         cout << "\nBooks from " << s << endl;
-        for (int j = 0; j < library.count; j++) {
-            if (library.cards[j].section == s) {
-                cout << library.cards[j];
+        for (int j = 0; j < this->count; j++) {
+            if (this->cards[j].section == s) {
+                cout << this->cards[j];
             }
         }
     }
     return sections;
 }
 
-vector <cardIndex> findBooks(const lib& library, const set <string>& sections) {
+vector <cardIndex> lib::findBooks(const set <string>& sections) {
     vector <cardIndex> books;
     cout << "Available sections:" << endl;
     for (auto it = sections.begin(); it != sections.end(); it++) {
@@ -144,16 +144,16 @@ vector <cardIndex> findBooks(const lib& library, const set <string>& sections) {
         }
     } while (true);
     cout << "Books in section \"" << requestedSection << "\":" << endl;
-    for (int i = 0; i < library.count; i++) {
-        if (library.cards[i].section == requestedSection) {
-            books.push_back(library.cards[i]);
-            cout << "- " << library.cards[i].title << endl;
+    for (int i = 0; i < this->count; i++) {
+        if (this->cards[i].section == requestedSection) {
+            books.push_back(this->cards[i]);
+            cout << "- " << this->cards[i].title << endl;
         }
     }
     return books;
 }
 
-void getBook(const vector <cardIndex>& books) {
+void lib::getBook(const vector <cardIndex>& books) {
     string requestedTitle;
     do {
         cout << "Enter the title of the book you are interested in: ";
