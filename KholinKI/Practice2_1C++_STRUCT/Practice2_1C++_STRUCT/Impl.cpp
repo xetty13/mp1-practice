@@ -270,11 +270,7 @@ void output_data_EZONES(TAgency**& new_list, int num_agencies) {
 		if (new_list[i]->num_services != 0) {
 			cout << new_list[i]->name << endl;
 			while (j < new_list[i]->num_services) {
-				cout << new_list[i]->services[j].country << endl;
-				cout << new_list[i]->services[j].travel_conditions << endl;
-				cout << new_list[i]->services[j].excursion_services << endl;
-				cout << new_list[i]->services[j].host_service << endl;
-				cout << new_list[i]->services[j].ticket_price << endl;
+				cout << *(new_list[i]);
 				cout << endl;
 				j++;
 			}
@@ -283,7 +279,14 @@ void output_data_EZONES(TAgency**& new_list, int num_agencies) {
 	}
 }
 
-
+ostream& operator<<(ostream& stream, const TAgency& obj) {
+	cout << obj.services->country << endl;
+	cout << obj.services->travel_conditions << endl;
+	cout << obj.services->excursion_services << endl;
+	cout << obj.services->host_service << endl;
+	cout << obj.services->ticket_price << endl;
+	return stream;
+}
 
 
 void free_memory(TAgency**& pointer, int num_agencies) {

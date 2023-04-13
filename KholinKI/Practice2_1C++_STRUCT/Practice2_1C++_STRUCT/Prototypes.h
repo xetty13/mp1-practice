@@ -33,6 +33,7 @@ void output_all_data(TAgency**& pointer, int num_agencies);//all data
 int* counter_euro_countries(TAgency**& list, int num_agencies);//count euro countries
 TAgency** find_euro_countries(TAgency**& list, int num_agencies);//find european countries and create european massive
 void output_data_EZONES(TAgency**& new_list, int num_agencies);//output european massive!:)
-void free_memory(TAgency**& pointer, int num_agencies);
-void free_european_memory(TAgency**& euro_pointer, int num_agencies);
+ostream& operator<<(ostream& stream, const TAgency& obj);
+void free_memory(TAgency**& pointer, int num_agencies);//delete memory old massive
+void free_european_memory(TAgency**& euro_pointer, int num_agencies);//delete memore new massive
 #endif
