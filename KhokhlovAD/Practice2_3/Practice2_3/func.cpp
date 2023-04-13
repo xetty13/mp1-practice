@@ -68,7 +68,7 @@ void print_inf(Owner* o, int n)
 	}
 }
 
-Owner* search_owner(Owner* o, int& n)
+Owner* search_owner(Owner* o, int& n, int& k)
 {
 	Owner* o1 = new Owner[n];
 	int flag = 0, g;
@@ -90,7 +90,7 @@ Owner* search_owner(Owner* o, int& n)
 			cout << "incorrect number of gibdd" << endl;
 		}
 	}
-	n = flag;
+	k = flag;
 	return o1;
 }
 
