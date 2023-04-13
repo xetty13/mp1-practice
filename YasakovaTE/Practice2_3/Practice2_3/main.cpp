@@ -31,11 +31,11 @@ int main() {
 				triangles[i].Height();
 			else if (t == 4) {
 				type = triangles[i].TriangleType();
-				if (type == 0)
+				if (type == straight)
 					cout << "straight" << endl;
-				else if (type == 1)
+				else if (type == sharp)
 					cout << "sharp" << endl;
-				else if (type == 2)
+				else if (type == blunt)
 					cout << "blunt" << endl;
 			}
 		}
