@@ -5,6 +5,7 @@ int main() {
     int count = strCount(path);
     lib library(path, count);
     set <string> sections = booksBySection(library);
-    searchBook(library, sections);
+    vector <cardIndex> books = findBooks(library, sections);
+    getBook(books);
     return 0;
 }

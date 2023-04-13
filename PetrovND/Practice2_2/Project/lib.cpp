@@ -128,7 +128,8 @@ set <string> booksBySection(const lib& library) {
     return sections;
 }
 
-void searchBook(const lib& library, const set <string>& sections) {
+vector <cardIndex> findBooks(const lib& library, const set <string>& sections) {
+    vector <cardIndex> books;
     cout << "Available sections:" << endl;
     for (auto it = sections.begin(); it != sections.end(); it++) {
         cout << *it << endl;
@@ -145,16 +146,21 @@ void searchBook(const lib& library, const set <string>& sections) {
     cout << "Books in section \"" << requestedSection << "\":" << endl;
     for (int i = 0; i < library.count; i++) {
         if (library.cards[i].section == requestedSection) {
+            books.push_back(library.cards[i]);
             cout << "- " << library.cards[i].title << endl;
         }
     }
+    return books;
+}
+
+void getBook(const vector <cardIndex>& books) {
     string requestedTitle;
     do {
         cout << "Enter the title of the book you are interested in: ";
         getline(cin, requestedTitle);
-        for (int i = 0; i < library.count; i++) {
-            if (library.cards[i] == requestedTitle) {
-                cout << library.cards[i];
+        for (int i = 0; i < books.size(); i++) {
+            if (books[i] == requestedTitle) {
+                cout << books[i];
                 return;
             }
         }

@@ -2,6 +2,7 @@
 #define _CARD_H
 
 #include <string>
+#include <vector>
 #include <set>
 using namespace std;
 
@@ -34,6 +35,7 @@ struct lib {
 string menu();
 int strCount(const string& path);
 set <string> booksBySection(const lib& library);
-void searchBook(const lib& library, const set <string>& sections);
+vector <cardIndex> findBooks(const lib& library, const set <string>& sections);
+void getBook(const vector <cardIndex>& books);
 
 #endif // !_CARD_H
