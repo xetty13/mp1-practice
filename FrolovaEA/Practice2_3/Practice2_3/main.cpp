@@ -8,21 +8,20 @@ using namespace std;
 int main()
 {
     Product* p;
-    Date* d;
 
     int size = cntLines("sklad.txt");
 
     cout << size << endl;
 
-    allocate_stock(p, d, size);
+    allocate_stock(p, size);
 
-    fill_sklad(p, size, d, "sklad.txt");
-//    fill_sklad(d, size, "sklad.txt");
-    find_NULL(p, size,d);
+    fill_sklad(p,size, "sklad.txt");
 
-
+    find_NULL(p, size);
 
 
 
-    free_stock(p, d);
+
+
+    free_stock(p);
 }
