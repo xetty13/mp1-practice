@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define N 1023
+
 int new_initializing(Scommandbook* phonebook) {
 	if (phonebook->comands != NULL) {
 		//SPhone* copy = phonebook->phones;
@@ -27,14 +29,14 @@ int new_initializing(Scommandbook* phonebook) {
 }
 
 void scan(Scommandbook* book) {
-
-
+	int len;
+	int length;
 	char filename[1023];
 	printf("Enter file path: ");
 //	scanf("%s", filename);
-	fgets(filename, 1023,stdin);
+	fgets(filename, N,stdin);
 	FILE* f;
-	int len;
+
 	len = strlen(filename);
 	filename[len-1] = 0;
 	f = fopen(filename, "r");
@@ -43,7 +45,6 @@ void scan(Scommandbook* book) {
 		return 1;
 	}
 
-	int length;
 	fscanf(f,"%d",&length);
 	book->length = length;
 
