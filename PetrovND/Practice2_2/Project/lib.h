@@ -28,14 +28,14 @@ struct cardIndex {
 struct lib {
     cardIndex* cards;
     int count;
-    lib(const string& path, int count);
+    lib(const string& path);
     ~lib();
+    set <string> booksBySection();
+    vector <cardIndex> findBooks(const set <string>& sections);
+    void getBook(const vector <cardIndex>& books);
+    int strCount(const string& path);
 };
 
 string menu();
-int strCount(const string& path);
-set <string> booksBySection(const lib& library);
-vector <cardIndex> findBooks(const lib& library, const set <string>& sections);
-void getBook(const vector <cardIndex>& books);
 
 #endif // !_CARD_H
