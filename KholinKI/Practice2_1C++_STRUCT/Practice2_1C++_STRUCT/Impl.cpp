@@ -279,7 +279,7 @@ void output_data_EZONES(TAgency**& new_list, int num_agencies) {
 	}
 }
 
-ostream& operator<<(ostream& stream, const TAgency& obj) {
+const ostream& operator<<(ostream& stream, const TAgency& obj) {
 	cout << obj.services->country << endl;
 	cout << obj.services->travel_conditions << endl;
 	cout << obj.services->excursion_services << endl;
