@@ -22,7 +22,7 @@ string get_path() {
 	} while (true);
 }
 
-int amount(string& path)
+int labor::amount(const string& path)
 {
 	fstream file;
 	file.open(path);
@@ -39,7 +39,9 @@ int amount(string& path)
 	return count;
 }
 
-void adding(worker* w, string& path, int n) {
+labor::labor(const string& path) {
+	this->n = amount(path);
+	this->w = new worker[n];
 	fstream file;
 	file.open(path);
 	int i = 0, j = 0;
@@ -83,32 +85,22 @@ void adding(worker* w, string& path, int n) {
 	in.close();
 }
 
-void higher_education(worker* w, int count) {
+void labor::higher_education(const string& path) {
 	float counter = 0;
 	int i;
 	cout << "All employees with higher education from the database:" << endl;
-	for (i = 0; i < count; i++) {
+	for (i = 0; i < n; i++) {
 		if (w[i].education != "no") {
 			cout << w[i];
 			counter++;
 		}
 	}
-	cout << "Percentage of employees with higher education:" << (counter / count) * 100 << " % " << endl;
+	cout << "Percentage of employees with higher education:" << (counter / n) * 100 << " % " << endl;
 }
 
-//ostream& operator<<(ostream& out, const worker& w)
-//{
-//	out << "-----------------------" << endl;
-//	out << "ID: " << w.id << endl;
-//	out << "Profession: " << w.profession << endl;
-//	out << "Education: " << w.education << endl;
-//	out << "Last Job: " << w.last_job << endl;
-//	out << "Reason of dismiss: " << w.rsn_dismiss << endl;
-//	out << "Family status: " << w.rsn_dismiss << endl;
-//	out << "Contact information: " << w.contact_info << endl;
-//	out << "-----------------------" << endl;
-//	return out;
-//}
+labor::~labor() {
+	delete[] this->w;
+}
 
 ostream& operator<<(ostream& out, const worker& w)
 {
