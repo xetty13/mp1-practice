@@ -14,8 +14,14 @@ struct worker {
 	friend ostream& operator<<(ostream& out, const worker& w);
 };
 
+struct labor {
+	worker* w;
+	int n;
+	int amount(const string& path);
+	labor(const string& path);
+	void higher_education(const string& path);
+	~labor();
+};
+
 string get_path();
-int amount(string& path);
-void adding(worker* w, string& path, int n);
-void higher_education(worker* w, int count);
 #endif 
