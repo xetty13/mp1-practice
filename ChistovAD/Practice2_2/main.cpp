@@ -4,10 +4,7 @@ using namespace std;
 
 int main() {
 	string path = get_path();
-	int N = amount(path);
-	worker* w = new worker[N];
-	adding(w, path, N);
-	higher_education(w, N);
-	delete[] w;
+	labor labor_exchange(path);
+	labor_exchange.higher_education(path);
 	return 0;
 }
