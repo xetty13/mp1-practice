@@ -182,18 +182,6 @@ void print_all_info(University_t* uns, int c) {
     }
 }
 
-void free_memory(University_t* uns, int c) {
-    for (int i = 0; i < c; i++) {
-        for (int j = 0; j < uns[i].n_spec; j++) {
-            delete[] uns[i].specs[j].forms;
-            delete[] uns[i].specs[j].examScores;
-            delete[] uns[i].specs[j].costs;
-        }
-        delete[] uns[i].specs;
-    }
-    delete[] uns;
-}
-
 int try_to_open_file(std::string& fname) {
     int c = -1;
     while (c == -1) {

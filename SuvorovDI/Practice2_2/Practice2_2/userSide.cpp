@@ -96,14 +96,14 @@ void about_univercity(Univ_database_t& unsdata, int c) {
     
     if (in == "1") {
         std::cout << "Вы выбрали 'Всё о конкретном ВУЗе'\nВведите название вуза:\n";
-        University_t curr_univ = getting_univ(unsdata, c, in);
+        University_t& curr_univ = getting_univ(unsdata, c, in);
         std::cout << curr_univ;
     }
-    else if (in == "2") {
+    /*else if (in == "2") {
         std::cout << "вы выбрали 'специальность с минимальным баллом в конкретном вузе'\nвведите название вуза:\n";
         University_t curr_univ = getting_univ(unsdata, c, in);
         print_minimal_spec(unsdata, curr_univ);
-    }
+    }*/
 }
 
  // Specialty at a university:
@@ -126,67 +126,89 @@ void getting_spec(Univ_database_t& unsdata, int c, std::string& name_spec) {
     }
 }
 
-void print_all_about_spec(Univ_database_t& unsdata, int c, std::string name_spec) {
+void print_all_about_spec(Spec_t* spec_arr, int c, std::string* names_univs) {
     std::string name_form;
     EducationalForm edForm;
-    std::cout << "Специальность " << name_spec << " присутствует в следующем перечне ВУЗов:\n";
+    std::cout << "Специальность " << spec_arr[0].name << " присутствует в следующем перечне ВУЗов:\n";
 
     for (int i = 0; i < c; i++) {
-        for (int j = 0; j < unsdata[i].n_spec; j++)  {
-            if (unsdata[i].specs[j].name == name_spec) {
-                std::cout << unsdata[i].name << ":\n";
-                std::cout << "  В этом ВУЗе по этой специальности представлено " << unsdata[i].specs[j].n_form << " форм:\n";
-                for (int z = 0; z < unsdata[i].specs[j].n_form; z++) {
-                    edForm = unsdata[i].specs[j].forms[z];
-                    name_form = switch_form(edForm);
-                    std::cout << "    " << name_form << "::проходные баллы : " << unsdata[i].specs[j].examScores[z];
-                    std::cout << "; стоимость обучения : " << unsdata[i].specs[j].costs[z] << " \n";
-                }
-            }
+        std::cout << names_univs[i] << ":\n";
+        std::cout << "  В этом ВУЗе по этой специальности представлено " << spec_arr[i].n_form << " форм:\n";
+        for (int z = 0; z < spec_arr[i].n_form; z++) {
+            edForm = spec_arr[i].forms[z];
+            name_form = switch_form(edForm);
+            std::cout << "    " << name_form << "::проходные баллы : " << spec_arr[i].examScores[z];
+            std::cout << "; стоимость обучения : " << spec_arr[i].costs[z] << " \n";
         }
     }
 }
 
-void print_min_score_for_spec(Univ_database_t& unsdata, int c, std::string name_spec) {
+void print_min_score_for_spec(Spec_t* spec_arr, int c, std::string* names_univs) {
     int min = 1000;
     std::string name_form, name_univ;
     EducationalForm edForm;
+    
     for (int i = 0; i < c; i++) {
-        for (int j = 0; j < unsdata[i].n_spec; j++) {
-            if (unsdata[i].specs[j].name == name_spec) {
-                for (int z = 0; z < unsdata[i].specs[j].n_form; z++) {
-                    if (unsdata[i].specs[j].examScores[z] < min) {
-                        min = unsdata[i].specs[j].examScores[z];
-                        edForm = unsdata[i].specs[j].forms[z];
-                        name_form = switch_form(edForm);
-                        name_univ = unsdata[i].name;
-                    }
-                }
-
+        for (int z = 0; z < spec_arr[i].n_form; z++) {
+            if (spec_arr[i].examScores[z] < min) {
+                min = spec_arr[i].examScores[z];
+                edForm = spec_arr[i].forms[z];
+                name_form = switch_form(edForm);
+                name_univ = names_univs[i];
             }
         }
     }
+
     std::cout << "По указанной специальности минимальный проходной балл по ВУЗам НН составляет: " << min << ". ВУЗ: ";
     std::cout << name_univ << ", форма обучения: " << name_form << std::endl;
 }
 
+int get_specs(Univ_database_t& unsdata, int c, std::string name_spec, Spec_t** specs, std::string** names_univs) {
+    int count = 0;
+    for (int i = 0; i < c; i++) {
+        for (int j = 0; j < unsdata[i].n_spec; j++) {
+            if (unsdata[i].specs[j].name == name_spec) {
+                count++;
+            }
+        }
+    }
+    *specs = new Spec_t[count];
+    *names_univs = new std::string[count];
+    int ind = 0;
+    for (int i = 0; i < c; i++) {
+        for (int j = 0; j < unsdata[i].n_spec; j++) {
+            if (unsdata[i].specs[j].name == name_spec) {
+                *specs[ind] = unsdata[i].specs[j];
+                *names_univs[ind] = unsdata[i].name;
+                ind++;
+            }
+        }
+    }
+    return count;
+}
+
 void about_spec(Univ_database_t& unsdata, int c) {
     std::string in;
+    int count_such_specs;
+    Spec_t* specs;
+    std::string* names_univ;
     std::cout << "Выберите интересующую вас информацию:\n";
     std::cout << "Всё о специальности - введите 1;\nМинимальный балл по специальности среди вузов - введите 2;\n";
     in = entering_mode();
-
-    if (in == "1") {
+    
+    /*if (in == "1") {
         printf("Вы выбрали 'Всё о специальности'\nВведите название специальности:\n");
         getting_spec(unsdata, c, in);
-        print_all_about_spec(unsdata, c, in);
+        int count_such_specs = get_specs(unsdata, c, in, &specs, &names_univ);
+        print_all_about_spec(specs, count_such_specs, names_univ);
     }
     else if (in == "2")
     {
         printf("Вы выбрали 'Минимальный балл по специальности среди вузов'\nВведите название специальности:\n");
         getting_spec(unsdata, c, in);
-        print_min_score_for_spec(unsdata, c, in);
-    }
+        int count_such_specs = get_specs(unsdata, c, in, &specs, &names_univ);
+        print_min_score_for_spec(specs, count_such_specs, names_univ);
+    }*/
 }
 
 void working_with_user(Univ_database_t& unsdata, const int c) {
