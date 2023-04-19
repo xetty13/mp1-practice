@@ -2,72 +2,28 @@
 
 #include "action.h"
 #include <iostream>
-#include <stdlib.h>
-#include <string>
 #include <fstream>
-#include <cstring>
+#include "action.h"
 
 using namespace std;
 
-
-int new_initializing(Steamarray* phonebook) {
-	if (phonebook->teams != nullptr) {
-		//SPhone* copy = phonebook->phones;
-		if (phonebook->teams == new Steam[100]) {
-			phonebook->length = 100;
-		}
-		else
-		{
-			cout << "You have too many contacts" << endl;
-			return 0;
-		}
-	}
-	else
+void My_scan(teamarray& book) {
+	string filepath;
+	cin >> filepath;
+	ifstream file(filepath);
+	file >> book.length;
+	book.teams = new team[book.length];
+	for (size_t i = 0; i < book.length; i++)
 	{
-		if (!(phonebook->teams == new Steam[100])) {
-			cout << "Something went wrong" << endl;
-			return 0;
-		}
-		phonebook->length = 100;
+		file >> book.teams[i];
 	}
-	return 1;
 }
-
-void My_scan(Steamarray* book) {
-	string filename;
-	cout << "Enter file path: ";
-	cin >> filename;
-	ifstream f(filename);
-	if (!f) {
-		cout << "I can not open " << filename;
-		return;
-	}
-	int length;
-	f >> length;
-	book->length = length;
-	book->teams = new Steam[length];
-	for (int i = 0; i < length; i++) {
-		string name, city;
-		int games, points, players;
-		f >> name;
-		f >> city;
-		f >> games >> points >> players;
-//		f.ignore();
-		book->teams[i].Name = name;
-		book->teams[i].City = city;
-		book->teams[i].Games = games;
-		book->teams[i].Points = points;
-		book->teams[i].Players = players;
-	}
-	f.close();
-}
-
 
 void output() {
-	Steamarray book;
+	teamarray book;
 	book.teams = NULL;
 	book.length = 0;
-	My_scan(&book);
+	My_scan(book);
 	size_t best_id = 0;
 	if (book.teams != NULL) {
 		for (size_t i = 1; i < book.length; i++)
@@ -75,8 +31,13 @@ void output() {
 			if (book.teams[best_id].Points < book.teams[i].Points)
 				best_id = i;
 		}
-		cout << book.teams[best_id].Name << endl << book.teams[best_id].City <<
+		/*cout << book.teams[best_id].Name << endl << book.teams[best_id].City <<
 			endl <<book.teams[best_id].Games << endl << book.teams[best_id].Players
-			<< endl << book.teams[best_id].Points;
+			<< endl << book.teams[best_id].Points;*/
+			/*cout << book.teams[best_id];*/
+		cout << book.teams[best_id];
 	}
 }
+
+using namespace std;
+

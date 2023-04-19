@@ -1,26 +1,56 @@
 #pragma once
-#ifndef _actionh_
-#define _actionh_
+//#ifndef _actionh_
+//#define _actionh_
 
 #include <string>
+#include <ostream>
+#include <istream>
 
 using namespace std;
 
-#define STRLEN 10
-
 void output();
 
-typedef struct team {
+struct team {
 	string Name;
 	string City;
 	int Games;
 	int Points;
 	int Players;
-} Steam;
+	team(string Name, string City, int Games, int Points, int Players) {
+		this->Name = Name;
+		this->City = City;
+		this->Games = Games;
+		this->Points = Points;
+		this->Players = Players;
+	}
+	team() : team("", "", 0, 0, 0) {
 
-typedef struct teamarray {
-	Steam* teams;
+	}
+};
+
+ostream& operator<< (ostream& stream, const team& team) {
+	stream << team.Name << endl << team.City << endl << team.Games << endl << team.Points << endl << team.Players << endl;
+	return stream;
+}
+
+istream& operator>> (istream& stream, team& team) {
+	stream >> team.Name >> team.City >> team.Games >> team.Points >> team.Players;
+	return stream;
+}
+
+struct teamarray {
+	team* teams;
 	size_t length;
-} Steamarray;
+	~teamarray() {
+		if (teams != nullptr) {
+			delete[] teams;
+		}
+	}
+};
 
-#endif
+
+
+
+
+
+//#endif
