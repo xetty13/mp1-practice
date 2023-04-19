@@ -11,19 +11,24 @@ struct Star {
 };
 
 struct Constellation {
+	Constellation(std::string Cname, int n);
+	~Constellation();
 	int count;
 	std::string name;
 	Star* stars;
 };
+struct Constellation_library {
+	Constellation_library(int n);
+	~Constellation_library();
+	Constellation** cns;
+	int count;
+};
 
-void allocate(Constellation*& cns, int cnt);
-void allocate(Star*& st, int cnt);
-void cfree(Constellation*& cns);
+std::ostream& operator<< (std::ostream& out, const Constellation* cns);
 
-void cnst_table(Constellation* cns, int count);
-void read_data(Constellation*& cns, int& cnt);
-void print_data(Constellation* cns, int num);
-void choice(Constellation* cns, int count);
+void cnst_table(Constellation_library* cns, int count);
+void read_data(Constellation_library*& lib, int& cnt);
+void choice(Constellation_library* cns, int count);
 #endif 
 
 

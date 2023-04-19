@@ -4,56 +4,59 @@
 
 using namespace std;
 
-void allocate(Constellation*& cns, int cnt) {
-	cns = new Constellation[cnt];
+Constellation_library:: Constellation_library(int n) {
+	cns = new Constellation*[n];
 }
-void allocate(Star*& st, int cnt) {
-	st = new Star[cnt];
-}
-
-void cfree(Constellation*& cns) {
-	delete [] cns->stars;
-	delete []  cns;
+Constellation_library:: ~Constellation_library() {
+	delete (*cns);
+	delete[] cns;
 }
 
-void read_data(Constellation*& cns, int& cnt) {
+Constellation:: Constellation(std::string Cname, int n) {
+	count = n;
+	name = Cname;
+	stars = new Star[n];
+}
+Constellation:: ~Constellation() {
+	delete[] stars;
+}
+
+void read_data(Constellation_library*& lib, int& cnt) {
 	ifstream in;
-	string path;
+	string path, name;
 	int st_cnt;
 	cout << endl << "Enter the path: ";
 	cin >> path;
 	in.open(path);
 	if (in.is_open()) {
 		in >> cnt;
-		allocate(cns, cnt);
+		lib = new Constellation_library(cnt);
 		for (int i = 0; i < cnt; i++) {
-			in >> cns[i].name >> st_cnt;
-			cns[i].count = st_cnt;
-			allocate(cns[i].stars, st_cnt);
+			in >> name >> st_cnt;
+			lib->cns[i] = new Constellation(name, st_cnt);
 			for (int j = 0; j < st_cnt; j++) {
-				in >> cns[i].stars[j].name;
-				in >> cns[i].stars[j].dist >> cns[i].stars[j].magnitude >> cns[i].stars[j].deg >> cns[i].stars[j].min >> cns[i].stars[j].sec;
+				in >> lib->cns[i]->stars[j].name;
+				in >> lib->cns[i]->stars[j].dist >> lib->cns[i]->stars[j].magnitude >> lib->cns[i]->stars[j].deg >> lib->cns[i]->stars[j].min >> lib->cns[i]->stars[j].sec;
 			}
 		}
 	}
 	in.close();
 }
-void cnst_table(Constellation* cns, int count) {
+void cnst_table(Constellation_library* lib, int count) {
 	for (int i = 0; i < count / 2; i++) {
-		cout << i + 1 << "." << cns[i].name << " \t\t " << i + 6 << "." << cns[i + 5].name << endl;
+		cout << i + 1 << "." << lib->cns[i]->name << " \t\t " << i + 6 << "." << lib->cns[i + 5]->name << endl;
 	}
 	cout << "\nOutput format:\n\n  name distance magnitude coordinates(deg, min, sec)\n\n";
 }
-void print_data(Constellation* cns, int num) {
-	cout << endl << cns[num].name << endl;
-	for (int i = 0; i < cns[num].count; i++) {
-		cout << "  " << cns[num].stars[i].name << " " << cns[num].stars[i].dist << " " << cns[num].stars[i].magnitude << " ";
-		cout << cns[num].stars[i].deg << "° " << cns[num].stars[i].min << "' " << cns[num].stars[i].sec << "\"" << endl;
+std::ostream& operator<< (std::ostream& out, const Constellation* cns) {
+	cout << endl << cns->name << endl;
+	for (int i = 0; i < cns->count; i++) {
+		cout << "  " << cns->stars[i].name << " " << cns->stars[i].dist << " " << cns->stars[i].magnitude << " ";
+		cout << cns->stars[i].deg << "° " << cns->stars[i].min << "' " << cns->stars[i].sec << "\"" << endl;
 	}
-
-
+	return out;
 }
-void choice(Constellation* cns, int count) {
+void choice(Constellation_library* lib, int count) {
 	string con;
 	cout << "Choice a constellation" << endl;
 	do {
@@ -62,12 +65,13 @@ void choice(Constellation* cns, int count) {
 		cin >> con;
 		if (con == "stop") flag = 1;
 		for (int i = 0; i < count && flag == 0; i++) {
-			if (cns[i].name == con) {
-				print_data(cns, i);
+			if (lib->cns[i]->name == con) {
+				cout << lib->cns[i];
 				flag = 1;
 			}
 		}
 		if (!flag) cout << "Not found. Please, choose constellation from table" << endl;
 
 	} while (con != "stop");
+	delete lib;
 }

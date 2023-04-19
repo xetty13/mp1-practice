@@ -6,15 +6,13 @@ using namespace std;
 
 int main() {
 	system("chcp 1251");
-	Constellation* constellations;
+	Constellation_library* lib;
 	int count;
 
-	read_data(constellations, count);
+	read_data(lib, count);
 
-	cnst_table(constellations, count);
-	choice(constellations, count);
-
-	cfree(constellations);
+	cnst_table(lib, count);
+	choice(lib, count);
 
 	return 0;
 }
