@@ -7,16 +7,11 @@ int main() {
 
 	std::string fname;
 	int count_univ = -1;
-	University_t* uns;
 
 	count_univ = try_to_open_file(fname);
+	Univ_database_t unsdata(fname, count_univ);
 
-	uns = fill_univ(fname, count_univ);
-	/*print_all_info(uns, count_univ);*/
-
-	working_with_user(uns, count_univ);
-
-	free_memory(uns, count_univ);
+	working_with_user(unsdata, count_univ);
 
 	return 0;
 }
