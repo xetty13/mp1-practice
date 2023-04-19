@@ -55,18 +55,44 @@ int quantity(Shop* shop, int records) {
 	}
 	return count;
 }
-int* array_our(Shop* shop, int nums, int records) {
-	int* arr = new int[nums];
+Shop* our(Shop* shop,int quantity, int records) {
+	Shop* shops = new Shop[quantity];
 	const string str1 = "Products";
 	const string str2 = "AllDay";
 	int j = 0;
-	while (j < nums) {
+	while (j < quantity) {
 		for (int i = 0; i < records; i++) {
 			if (((shop[i].specialization.compare(str1)) == 0) && ((shop[i].opening_hours.compare(str2)) == 0)) {
-				arr[j] = i;
+				shops[j] = shop[i];
 				j++;
 			}
 		}
 	}
-	return arr;
+	return shops;
 }
+void print_inf(Shop* shop, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		cout << shop[i];
+	}
+}
+ostream& operator<<(ostream& os,const Shop& shop) {
+	os << "\nName: " << shop.name << "\nAdress: " << shop.adress << "\nPhone num: " << shop.phone_number << "\nSpecialization : " << shop.specialization << "\nOpening hours: " << shop.opening_hours << "\nOpening days: " << shop.opening_days << "\nForm of ownership: " << shop.form_of_ownership << endl;
+	return os;
+}
+//int* array_our(Shop* shop, int nums, int records) {
+//	int* arr = new int[nums];
+//	const string str1 = "Products";
+//	const string str2 = "AllDay";
+//	int j = 0;
+//	while (j < nums) {
+//		for (int i = 0; i < records; i++) {
+//			if (((shop[i].specialization.compare(str1)) == 0) && ((shop[i].opening_hours.compare(str2)) == 0)) {
+//				arr[j] = i;
+//				j++;
+//			}
+//		}
+//	}
+//	return arr;
+//}

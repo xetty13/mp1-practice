@@ -6,11 +6,18 @@ int main() {
 	int shop_count = count_shops(adress);
 	//cout << shop_count << endl;
 	Shop* shops = info(shop_count, adress);
-	print_str(shops, shop_count);
+	//print_str(shops, shop_count);
+	print_inf(shops, shop_count);
 	int nums = quantity(shops, shop_count);
 	//cout << nums<<endl;
-	int* arr = array_our(shops, nums,shop_count);
-	print_str(shops, nums, arr);
+	Shop* our_shop = our(shops,nums, shop_count);
+	//print_str(our_shop, nums);
+	cout << "\nSituable shops: " << endl;
+	print_inf(our_shop, nums);
+	
+	//int* arr = array_our(shops, nums,shop_count);
+	//print_str(shops, nums, arr);
+	free_struct(&our_shop);
 	free_struct(&shops);
 	return 0;
 }
