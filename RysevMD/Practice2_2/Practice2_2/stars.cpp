@@ -5,6 +5,7 @@
 using namespace std;
 
 Constellation_library:: Constellation_library(int n) {
+	count = n;
 	cns = new Constellation*[n];
 }
 Constellation_library:: ~Constellation_library() {
@@ -34,14 +35,12 @@ void read_data(Constellation_library*& lib, int& cnt) {
 		for (int i = 0; i < cnt; i++) {
 			in >> name >> st_cnt;
 			lib->cns[i] = new Constellation(name, st_cnt);
-			for (int j = 0; j < st_cnt; j++) {
-				in >> lib->cns[i]->stars[j].name;
-				in >> lib->cns[i]->stars[j].dist >> lib->cns[i]->stars[j].magnitude >> lib->cns[i]->stars[j].deg >> lib->cns[i]->stars[j].min >> lib->cns[i]->stars[j].sec;
-			}
+			in >> lib->cns[i];
 		}
+		in.close();
 	}
-	in.close();
 }
+
 void cnst_table(Constellation_library* lib, int count) {
 	for (int i = 0; i < count / 2; i++) {
 		cout << i + 1 << "." << lib->cns[i]->name << " \t\t " << i + 6 << "." << lib->cns[i + 5]->name << endl;
@@ -56,6 +55,14 @@ std::ostream& operator<< (std::ostream& out, const Constellation* cns) {
 	}
 	return out;
 }
+std::istream& operator>> (std::istream& in, const Constellation* cns) {
+	for (int j = 0; j < cns->count; j++) {
+		in >> cns->stars[j].name;
+		in >> cns->stars[j].dist >> cns->stars[j].magnitude >> cns->stars[j].deg >> cns->stars[j].min >> cns->stars[j].sec;
+	}
+	return in;
+}
+
 void choice(Constellation_library* lib, int count) {
 	string con;
 	cout << "Choice a constellation" << endl;

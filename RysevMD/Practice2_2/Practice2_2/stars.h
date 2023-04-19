@@ -25,6 +25,7 @@ struct Constellation_library {
 };
 
 std::ostream& operator<< (std::ostream& out, const Constellation* cns);
+std::istream& operator>> (std::istream& in, const Constellation* cns);
 
 void cnst_table(Constellation_library* cns, int count);
 void read_data(Constellation_library*& lib, int& cnt);
