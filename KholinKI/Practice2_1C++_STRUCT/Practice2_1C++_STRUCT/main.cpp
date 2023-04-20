@@ -1,7 +1,7 @@
 
-#include <clocale>
-#include "Impl.cpp"
 
+#include "Prototypes.h"
+#include <clocale>
 
 //Tourist Guide.The guide contains a list of travel agenciesand the services they offer
 //(country, city or itinerary of the cruise, accommodation and travel conditions, excursions, host service, price of the trip).
@@ -14,32 +14,16 @@ int main(int argc, char* argv[]) {
 	system("chcp 1251");
 	setlocale(LC_ALL, "rus");
 
-	try {
-		ifstream file;//creating file var
-		int num_agencies;
-		TAgency** European_massive;//new mass
+	std::string path = "C://TouristAgences.txt";//creating file var
+	TAgency* agencies = NULL;
+	TAgencyBook my_list(agencies, path);
 
-		TAgencyBook my_list_agencies;
+	TAgencyBook European_massive(my_list);//new mass
 
-		file.open("C://TouristAgences.txt");//open the file for reading
+	European_massive.find_euro_countries();//create new corrected massive
 
-		if (file.is_open() == 0) {
-			throw ifstream();
-		}
-		num_agencies = file_reader(file, my_list_agencies);
+	European_massive.output_data_EZONES();
 
-		European_massive = find_euro_countries(my_list_agencies, num_agencies);//create new corrected massive
-
-		output_data_EZONES(European_massive, num_agencies);
-
-		file.close();
-		free_memory(my_list_agencies, num_agencies);
-		free_european_memory(European_massive, num_agencies);
-	}
-	catch (const ifstream& exeption) {
-		cout << "Unable open file!" << endl;
-		exit(-1);
-	}
 	return 0;
 }
 
