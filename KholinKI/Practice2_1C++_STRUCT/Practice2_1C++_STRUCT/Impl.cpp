@@ -26,6 +26,22 @@ string euro_zone[20] = {//list of eurozone countries
 	"Croatia"
 };
 
+
+TAgencyBook::TAgencyBook(void) {
+	agencies = nullptr;
+	count = 0;
+}
+TAgencyBook::TAgencyBook(TAgency* agencies, int count,ifstream& file) {
+	count = CountAgencies(file);
+	int* num_services = CountTServices(file);//count directions
+	agencies = new TAgency[count];
+	int i = 0;
+	for (i = 0; i < count; i++) {
+		allocate_TAgency(agencies[i], num_services[i]);//Give the same pointer to create the structure
+	}
+}
+
+
 int CountAgencies(ifstream& file) {
 	string str;
 	string buffer = "List agencies:";
@@ -137,20 +153,12 @@ void search_string(ifstream& file) {//look for the first occurrence of the strin
 }
 
 int file_reader(ifstream& file, TAgency**& list) {
-	int num_agencies = CountAgencies(file);//count agencies
-	int* num_services = CountTServices(file);//count directions
-	int num = 0;
 	string buffer;
 	const string list_agencies = "List agencies:";
 	const string directions = "Directions:";
 	int len_list = list_agencies.length();
 	int len_directs = directions.length();
-	list = new TAgency * [num_agencies]; //create a dynamic array of objects
 	int i = 0;
-	for (i = 0; i < num_agencies; i++) {
-		num = num_services[i];
-		allocate_TAgency(list[i], num);//Give the same pointer to create the structure
-	}
 	int j = 0;
 	int c;
 	int count = 0;
@@ -279,7 +287,7 @@ void output_data_EZONES(TAgency**& new_list, int num_agencies) {
 	}
 }
 
-const ostream& operator<<(ostream& stream, const TAgency& obj) {
+ostream& operator<<(ostream& stream, const TAgency& obj) {
 	cout << obj.services->country << endl;
 	cout << obj.services->travel_conditions << endl;
 	cout << obj.services->excursion_services << endl;

@@ -17,8 +17,9 @@ int main(int argc, char* argv[]) {
 	try {
 		ifstream file;//creating file var
 		int num_agencies;
-		TAgency** my_list_agencies;//old mass
 		TAgency** European_massive;//new mass
+
+		TAgencyBook my_list_agencies;
 
 		file.open("C://TouristAgences.txt");//open the file for reading
 
