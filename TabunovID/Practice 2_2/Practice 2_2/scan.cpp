@@ -31,10 +31,6 @@ void output() {
 			if (book.teams[best_id].Points < book.teams[i].Points)
 				best_id = i;
 		}
-		/*cout << book.teams[best_id].Name << endl << book.teams[best_id].City <<
-			endl <<book.teams[best_id].Games << endl << book.teams[best_id].Players
-			<< endl << book.teams[best_id].Points;*/
-			/*cout << book.teams[best_id];*/
 		cout << book.teams[best_id];
 	}
 }
