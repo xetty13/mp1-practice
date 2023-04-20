@@ -102,7 +102,7 @@ void print_file(TSchool* school, int n) {
 }
 
 void sorting(TSchool* school, int n) {
-	int i = 0, j;
+	int i = 0, j, k = 1;
 	TSchool tmp;
 	for (; i < n - 1; i++) {
 		for (j = i + 1; j < n; j++) {
@@ -113,10 +113,11 @@ void sorting(TSchool* school, int n) {
 			}
 		}
 	}
-	for (i = 0; i < n; i++) {
-		while (school[i].Class == 1) {
+	i = 0;
+	while (i < n) {
+		while (school[i].Class == k) {
 			j = i + 1;
-			while (school[j].Class == 1) {
+			while (school[j].Class == k) {
 				if (strcmp(school[i].FIO, school[j].FIO) > 0) {
 					tmp = school[i];
 					school[i] = school[j];
@@ -126,53 +127,6 @@ void sorting(TSchool* school, int n) {
 			}
 			i++;
 		}
-		while (school[i].Class == 2) {
-			j = i + 1;
-			while (school[j].Class == 2) {
-				if (strcmp(school[i].FIO, school[j].FIO) > 0) {
-					tmp = school[i];
-					school[i] = school[j];
-					school[j] = tmp;
-				}
-				j++;
-			}
-			i++;
-		}
-		while (school[i].Class == 3) {
-			j = i + 1;
-			while (school[j].Class == 3) {
-				if (strcmp(school[i].FIO, school[j].FIO) > 0) {
-					tmp = school[i];
-					school[i] = school[j];
-					school[j] = tmp;
-				}
-				j++;
-			}
-			i++;
-		}
-		while (school[i].Class == 4) {
-			j = i + 1;
-			while (school[j].Class == 4) {
-				if (strcmp(school[i].FIO, school[j].FIO) > 0) {
-					tmp = school[i];
-					school[i] = school[j];
-					school[j] = tmp;
-				}
-				j++;
-			}
-			i++;
-		}
-		while (school[i].Class == 5) {
-			j = i + 1;
-			while (school[j].Class == 5) {
-				if (strcmp(school[i].FIO, school[j].FIO) > 0) {
-					tmp = school[i];
-					school[i] = school[j];
-					school[j] = tmp;
-				}
-				j++;
-			}
-			i++;
-		}
+		k++;
 	}
 }

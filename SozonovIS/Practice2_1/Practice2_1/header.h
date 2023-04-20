@@ -16,7 +16,6 @@ int counting();
 void read_file(TSchool* school);
 void print_file(TSchool* school, int n);
 
-bool compareTwoStudents(TSchool a, TSchool b);
 void sorting(TSchool* school, int n);
 
 #endif
