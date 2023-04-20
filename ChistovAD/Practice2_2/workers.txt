@@ -1,0 +1,10 @@
+ worker 1;baker 1;no;construction;bad luck;not married;81 231 234 567;
+worker 2;baker 2;UNN named after Lobachevsky;construction;bad luck;not married;82 231 234 567;
+worker 3;baker 3;no;construction;bad luck;not married;83 231 234 567;
+worker 4;baker 4;UNN named after Lobachevsky;construction;bad luck;not married;84 231 234 567;
+worker 5;baker 5;UNN named after Lobachevsky;construction;bad luck;not married;85 231 234 567;
+worker 6;baker 6;UNN named after Lobachevsky;construction;bad luck;not married;86 231 234 567;
+worker 7;baker 7;UNN named after Lobachevsky;construction;bad luck;not married;87 231 234 567;
+worker 8;baker 8;UNN named after Lobachevsky;construction;bad luck;not married;88 231 234 567;
+worker 9;baker 9;UNN named after Lobachevsky;construction;bad luck;not married;89 231 234 567;
+worker 10;baker 10;no;construction;bad luck;not married;90 231 234 567;
