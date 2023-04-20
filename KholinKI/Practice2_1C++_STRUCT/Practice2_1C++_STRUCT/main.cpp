@@ -2,6 +2,7 @@
 
 #include "Prototypes.h"
 #include <clocale>
+#include <iostream>
 
 //Tourist Guide.The guide contains a list of travel agenciesand the services they offer
 //(country, city or itinerary of the cruise, accommodation and travel conditions, excursions, host service, price of the trip).
