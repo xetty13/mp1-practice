@@ -5,6 +5,6 @@
 #include <string>
 #include <Windows.h>
 
-void working_with_user(Univ_database_t& unsdata, const int c);
+void working_with_user(Univ_database_t& unsdata);
 
 #endif

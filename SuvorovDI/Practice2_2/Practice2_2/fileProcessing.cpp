@@ -1,12 +1,13 @@
 #include "fileProcessing.h"
 
-Univ_database_t::Univ_database_t(const std::string fname, const int c) {
+Univ_database_t::Univ_database_t(const std::string& fname) {
     int i = 0;
     std::string line;
     std::ifstream file(fname);
-    univs = new University_t[c];
+    count = find_num_univ(fname);
+    univs = new University_t[count];
 
-    while (i < c) {
+    while (i < count) {
         getline(file, univs[i].name, ';');
         getline(file, line, ';');
         univs[i].n_spec = atoi(line.c_str());
@@ -57,22 +58,22 @@ Univ_database_t::Univ_database_t(const std::string fname, const int c) {
 }
 
 Univ_database_t::~Univ_database_t() {
-    delete univs;
+    delete []univs;
 }
 University_t::~University_t() {
-    delete specs;
+    delete []specs;
 }
 Spec_t::~Spec_t() {
-    delete forms;
-    delete examScores;
-    delete costs;
+    delete []forms;
+    delete []examScores;
+    delete []costs;
 }
 
 University_t& Univ_database_t::operator[] (const int ind) {
     return univs[ind];
 }
 
-std::ostream& operator << (std::ostream& out, const University_t& un) {
+std::ostream& operator<<(std::ostream& out, const University_t& un) {
     int i, j, sum_costs = 0, sum_examRes = 0, count = 0;
     std::cout << "Информация о ВУЗе " << un.name << ":\n";
     std::cout << "ВУЗ " << un.name << " имеет " << un.n_spec << " специальностей:\n";
@@ -94,7 +95,7 @@ std::ostream& operator << (std::ostream& out, const University_t& un) {
     return out;
 }
 
-int find_num_univ(const std::string fname) {
+int Univ_database_t::find_num_univ(const std::string& fname) {
     std::string line;
     int c = 0;
 
@@ -111,82 +112,11 @@ int find_num_univ(const std::string fname) {
     return c;
 }
 
-//University_t* fill_univ(std::string fname, int c) {
-//    int i = 0;
-//    std::string line;
-//    std::ifstream file(fname);
-//    University_t* uns = new University_t[c];
-//
-//    while (i < c) {
-//        getline(file, uns[i].name, ';');
-//        getline(file, line, ';');
-//        uns[i].n_spec = atoi(line.c_str());
-//        uns[i].specs = new Spec_t[uns[i].n_spec];
-//
-//        for (int j = 0; j < uns[i].n_spec; j++) {
-//            getline(file, uns[i].specs[j].name, ';');
-//            getline(file, line, ';');
-//            uns[i].specs[j].n_form = atoi(line.c_str());
-//
-//            uns[i].specs[j].forms = new EducationalForm[uns[i].specs[j].n_form];
-//            uns[i].specs[j].costs = new int[uns[i].specs[j].n_form];
-//            uns[i].specs[j].examScores = new int[uns[i].specs[j].n_form];
-//
-//            for (int z = 0; z < uns[i].specs[j].n_form; z++) {
-//                std::string type_form;
-//                getline(file, line, ';');
-//                type_form = line;
-//
-//                if (type_form == "дневная") {
-//                    uns[i].specs[j].forms[z] = DNEV;
-//                    getline(file, line, ';');
-//                    uns[i].specs[j].examScores[z] = atoi(line.c_str());
-//                    getline(file, line, ';');
-//                    uns[i].specs[j].costs[z] = atoi(line.c_str());
-//                }
-//                if (type_form == "вечерняя") {
-//                    uns[i].specs[j].forms[z] = VECHER;
-//                    getline(file, line, ';');
-//                    uns[i].specs[j].examScores[z] = atoi(line.c_str());
-//                    getline(file, line, ';');
-//                    uns[i].specs[j].costs[z] = atoi(line.c_str());
-//                }
-//                if (type_form == "заочная") {
-//                    uns[i].specs[j].forms[z] = ZAOCH;
-//                    getline(file, line, ';');
-//                    uns[i].specs[j].examScores[z] = atoi(line.c_str());
-//                    getline(file, line, ';');
-//                    uns[i].specs[j].costs[z] = atoi(line.c_str());
-//                }
-//            }
-//        }
-//        i++;
-//        file.get();
-//    }
-//
-//    file.close();
-//    return uns;
-//}
-
-void print_all_info(University_t* uns, int c) {
-    for (int i = 0; i < c; i++) {
-        std::cout << uns[i].name << "   " << uns[i].n_spec << " специальностей:\n";
-         
-        for (int j = 0; j < uns[i].n_spec; j++) {
-            std::cout << "   " << uns[i].specs[j].name << "  " << uns[i].specs[j].n_form << " форм обучения:\n";
-
-            for (int z = 0; z < uns[i].specs[j].n_form; z++) {
-                std::cout << "      " << uns[i].specs[j].examScores[z] << "  " << uns[i].specs[j].costs[z] << "\n";
-            }
-        }
-    }
-}
-
-int try_to_open_file(std::string& fname) {
+int Univ_database_t::try_to_open_file(const std::string& fname) {
     int c = -1;
     while (c == -1) {
         try {
-            getline(std::cin, fname);
+            getline(std::cin, const_cast<std::string&>(fname));
             c = find_num_univ(fname);
         }
         catch (int err) {

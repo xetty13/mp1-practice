@@ -38,9 +38,9 @@ std::string entering_mode() {
 }
 
 // University info:
-int check_index_univ(Univ_database_t& unsdata, int c, std::string name_univ) {
+int check_index_univ(Univ_database_t& unsdata, std::string name_univ) {
     int i;
-    for (i = 0; i < c; i++) {
+    for (i = 0; i < unsdata.count; i++) {
         if (name_univ == unsdata[i].name) {
             return i;
         }
@@ -48,12 +48,12 @@ int check_index_univ(Univ_database_t& unsdata, int c, std::string name_univ) {
     throw 1;
 }
 
-University_t& getting_univ(Univ_database_t& unsdata, int c, std::string& name) {
+University_t& getting_univ(Univ_database_t& unsdata, std::string& name) {
     int ind = -1;
     do {
         getline(std::cin, name);
         try {
-            ind = check_index_univ(unsdata, c, name);
+            ind = check_index_univ(unsdata, name);
         }
         catch (int ex) {
             std::cout << "Такого ВУЗа нет, попробуйте ещё раз\n";
@@ -87,7 +87,7 @@ void print_minimal_spec(Univ_database_t& unsdata, const University_t& un) {
     std::cout << "Это " << name_form << " форма обучения по специальности: " << name_spec << "\n";
 }
 
-void about_univercity(Univ_database_t& unsdata, int c) {
+void about_univercity(Univ_database_t& unsdata) {
     std::string in;
     int univ_ind;
     std::cout << "Выберите интересующую вас информацию:\n";
@@ -96,7 +96,7 @@ void about_univercity(Univ_database_t& unsdata, int c) {
     
     if (in == "1") {
         std::cout << "Вы выбрали 'Всё о конкретном ВУЗе'\nВведите название вуза:\n";
-        University_t& curr_univ = getting_univ(unsdata, c, in);
+        University_t& curr_univ = getting_univ(unsdata, in);
         std::cout << curr_univ;
     }
     /*else if (in == "2") {
@@ -107,8 +107,8 @@ void about_univercity(Univ_database_t& unsdata, int c) {
 }
 
  // Specialty at a university:
-int check_existing_spec(Univ_database_t& unsdata, int c, std::string name_spec) {
-    for (int i = 0; i < c; i++) {
+int check_existing_spec(Univ_database_t& unsdata, std::string name_spec) {
+    for (int i = 0; i < unsdata.count; i++) {
         for (int j = 0; j < unsdata[i].n_spec; j++) {
             if (unsdata[i].specs[j].name == name_spec){
                 return 1;
@@ -118,9 +118,9 @@ int check_existing_spec(Univ_database_t& unsdata, int c, std::string name_spec) 
     return 0;
 }
 
-void getting_spec(Univ_database_t& unsdata, int c, std::string& name_spec) {
+void getting_spec(Univ_database_t& unsdata, std::string& name_spec) {
     getline(std::cin ,name_spec);
-    while (!check_existing_spec(unsdata, c, name_spec)) {
+    while (!check_existing_spec(unsdata, name_spec)) {
         std::cout << "Такой специальности не нашлось ни у одного ВУЗа из нашей базы, попробуйте ещё раз\n";
         getline(std::cin, name_spec);
     }
@@ -163,9 +163,9 @@ void print_min_score_for_spec(Spec_t* spec_arr, int c, std::string* names_univs)
     std::cout << name_univ << ", форма обучения: " << name_form << std::endl;
 }
 
-int get_specs(Univ_database_t& unsdata, int c, std::string name_spec, Spec_t** specs, std::string** names_univs) {
+int get_specs(Univ_database_t& unsdata, std::string name_spec, Spec_t** specs, std::string** names_univs) {
     int count = 0;
-    for (int i = 0; i < c; i++) {
+    for (int i = 0; i < unsdata.count; i++) {
         for (int j = 0; j < unsdata[i].n_spec; j++) {
             if (unsdata[i].specs[j].name == name_spec) {
                 count++;
@@ -175,7 +175,7 @@ int get_specs(Univ_database_t& unsdata, int c, std::string name_spec, Spec_t** s
     *specs = new Spec_t[count];
     *names_univs = new std::string[count];
     int ind = 0;
-    for (int i = 0; i < c; i++) {
+    for (int i = 0; i < unsdata.count; i++) {
         for (int j = 0; j < unsdata[i].n_spec; j++) {
             if (unsdata[i].specs[j].name == name_spec) {
                 *specs[ind] = unsdata[i].specs[j];
@@ -187,7 +187,7 @@ int get_specs(Univ_database_t& unsdata, int c, std::string name_spec, Spec_t** s
     return count;
 }
 
-void about_spec(Univ_database_t& unsdata, int c) {
+void about_spec(Univ_database_t& unsdata) {
     std::string in;
     int count_such_specs;
     Spec_t* specs;
@@ -211,7 +211,7 @@ void about_spec(Univ_database_t& unsdata, int c) {
     }*/
 }
 
-void working_with_user(Univ_database_t& unsdata, const int c) {
+void working_with_user(Univ_database_t& unsdata) {
     int end = 1;
     std::cout << "Что бы вы хотели узнать?\n";
     while (end) {
@@ -222,10 +222,10 @@ void working_with_user(Univ_database_t& unsdata, const int c) {
         in = main_entering_mode();
 
         if (in == "1") {
-            about_univercity(unsdata, c);
+            about_univercity(unsdata);
         }
         else if (in == "2") {
-            about_spec(unsdata, c);
+            about_spec(unsdata);
 
         }
         else if (in == "0") {

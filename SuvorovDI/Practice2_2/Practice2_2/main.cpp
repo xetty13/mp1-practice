@@ -1,3 +1,4 @@
+#include <iostream>
 #include "fileProcessing.h"
 #include "userSide.h"
 
@@ -6,12 +7,10 @@ int main() {
 	SetConsoleOutputCP(1251);
 
 	std::string fname;
-	int count_univ = -1;
+	std::cin >> fname;
+	Univ_database_t unsdata(fname);
 
-	count_univ = try_to_open_file(fname);
-	Univ_database_t unsdata(fname, count_univ);
-
-	working_with_user(unsdata, count_univ);
+	working_with_user(unsdata);
 
 	return 0;
 }

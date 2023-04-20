@@ -17,6 +17,7 @@ struct Spec_t {
     EducationalForm* forms;
     int* examScores;
     int* costs;
+    // конструктор копирования и т.д.
     ~Spec_t();
 };
 
@@ -24,19 +25,30 @@ struct University_t {
     std::string name;
     int n_spec;
     Spec_t* specs;
+
+    Spec_t SearchMinScoreSpeciality();
+    float ComputeAverageScore() const;
+    float ComputeAverageCost() const;
     ~University_t();
 };
 
 struct Univ_database_t {
     University_t* univs;
-    Univ_database_t(std::string fname, int c);
+    int count;
+    
+    Univ_database_t(int count);
+    Univ_database_t(const std::string& fname);
+    Univ_database_t(const Univ_database_t&);
     ~Univ_database_t();
+
+    University_t SearchVUZInfo(const std::string& name) const;
+    Univ_database_t SearchBySpeciality(const std::string& name);
     University_t& operator[] (const int ind);
+
+    int find_num_univ(const std::string& fname);
+    int try_to_open_file(const std::string& fname);
 };
 
-int find_num_univ(std::string fname);
-void print_all_info(University_t* uns, int c);
-int try_to_open_file(std::string& fname);
-std::ostream& operator << (std::ostream& out, University_t& un);
+std::ostream& operator<<(std::ostream& out, const University_t& un);
 
 #endif
