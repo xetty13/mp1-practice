@@ -1,6 +1,8 @@
 
-#include <iostream>
+
 #include "Prototypes.h"
+#include <iostream>
+#include <fstream>
 
 #define NUM_EUROPE_COUNTRIES 20
 
@@ -28,84 +30,6 @@ string euro_zone[20] = {//list of eurozone countries
 	"Croatia"
 };
 
-TAgencyBook::TAgencyBook(const TAgencyBook& object) {
-	count = object.count;
-	agencies = new TAgency[count];
-	for (int i = 0; i < count; i++) {
-		agencies[i].num_services = object.agencies[i].num_services;
-		agencies[i].services = new TService[agencies[i].num_services];
-	}
-}
-
-TAgencyBook::TAgencyBook(TAgency* agencies, string path) {
-	try {
-		ifstream file(path);
-		if (file.is_open() == 0) {
-			throw ifstream();
-		}
-		count = CountAgencies(file);
-		int* num_services = CountTServices(file);//count directions
-		agencies = new TAgency[count];
-		int i = 0;
-		for (i = 0; i < count; i++) {
-			allocate_TAgency(agencies[i], num_services[i]);//Give the same pointer to create the structure
-		}
-		file_reader(file);
-	}
-	catch (const ifstream& exeption) {
-		cout << "Unable open file!" << endl;
-		exit(-1);
-	}
-}
-
-
-
-
-int TAgencyBook::CountAgencies(ifstream& file) {
-	string str;
-	string buffer = "List agencies:";
-	int num_agencies = 0;
-	int c = 0;
-	int j = 0;
-	int ch = 0;
-	int num;
-	int len_buffer = buffer.length();
-	num_agencies = 0;
-	while (!file.eof()) {
-		getline(file, str);
-		int len_str = str.length();
-		file.seekg(-1, ios_base::cur);
-		if (str.compare(0, len_buffer, buffer, 0, len_buffer) == 0) {
-			int i = 0;
-			for (i = 0; i < len_str; i++) {
-				c = str[i];
-				if (c >= 49 && c < 58) {
-					int q = 1;
-					while (str[i] != '\0') {
-						ch = str[i];
-						num = static_cast<int>(ch) - 48;
-						num_agencies *= q;
-						num_agencies += num;
-						if (q == 1) {
-							q *= 10;
-						}
-						i++;
-					}
-					break;
-				}
-			}
-		}
-		if (num_agencies != 0) {
-			file.seekg(1, ios_base::cur);
-			break;
-		}
-		if (num_agencies == 0) {
-			file.seekg(1, ios_base::cur);
-		}
-	}
-	file.seekg(0, ios_base::beg);
-	return num_agencies;
-}
 
 int* TAgencyBook::CountTServices(ifstream& file) {
 	int num_agencies = 0;
@@ -155,10 +79,89 @@ int* TAgencyBook::CountTServices(ifstream& file) {
 	return num_services;
 }
 
+
+int TAgencyBook::CountAgencies(ifstream& file) {
+	string str;
+	string buffer = "List agencies:";
+	int num_agencies = 0;
+	int c = 0;
+	int j = 0;
+	int ch = 0;
+	int num;
+	int len_buffer = buffer.length();
+	num_agencies = 0;
+	while (!file.eof()) {
+		getline(file, str);
+		int len_str = str.length();
+		file.seekg(-1, ios_base::cur);
+		if (str.compare(0, len_buffer, buffer, 0, len_buffer) == 0) {
+			int i = 0;
+			for (i = 0; i < len_str; i++) {
+				c = str[i];
+				if (c >= 49 && c < 58) {
+					int q = 1;
+					while (str[i] != '\0') {
+						ch = str[i];
+						num = static_cast<int>(ch) - 48;
+						num_agencies *= q;
+						num_agencies += num;
+						if (q == 1) {
+							q *= 10;
+						}
+						i++;
+					}
+					break;
+				}
+			}
+		}
+		if (num_agencies != 0) {
+			file.seekg(1, ios_base::cur);
+			break;
+		}
+		if (num_agencies == 0) {
+			file.seekg(1, ios_base::cur);
+		}
+	}
+	file.seekg(0, ios_base::beg);
+	return num_agencies;
+}
+
 void TAgencyBook::allocate_TAgency(TAgency& object, int count_services) {
 	object.num_services = count_services;
 	object.services = new TService[count_services];//creating a service structure for each facility
 }
+
+
+TAgencyBook::TAgencyBook(TAgency* agencies, string path) {
+	try {
+		file.open(path);
+		if (file.is_open() == 0) {
+			throw ifstream();
+		}
+		count = CountAgencies(file);
+		int* num_services = CountTServices(file);//count directions
+		agencies = new TAgency[count];
+		int i = 0;
+		for (i = 0; i < count; i++) {
+			allocate_TAgency(agencies[i], num_services[i]);//Give the same pointer to create the structure
+		}
+		file_reader(file);
+	}
+	catch (const ifstream& exeption) {
+		cout << "Unable open file!" << endl;
+		exit(-1);
+	}
+}
+
+TAgencyBook::TAgencyBook(const TAgencyBook& object) {
+	count = object.count;
+	agencies = new TAgency[count];
+	for (int i = 0; i < count; i++) {
+		agencies[i].num_services = object.agencies[i].num_services;
+		agencies[i].services = new TService[agencies[i].num_services];
+	}
+}
+
 
 void TAgencyBook::search_string(ifstream& file) {//look for the first occurrence of the string	
 	string str;

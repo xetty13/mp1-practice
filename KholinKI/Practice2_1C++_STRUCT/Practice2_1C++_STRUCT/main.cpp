@@ -3,8 +3,9 @@
 #include "Prototypes.h"
 #include <clocale>
 #include <iostream>
+#include <fstream>
 
-//Tourist Guide.The guide contains a list of travel agenciesand the services they offer
+//Tourist Guide.The guide contains a list of travel agencies and the services they offer
 //(country, city or itinerary of the cruise, accommodation and travel conditions, excursions, host service, price of the trip).
 //Provide a list of travel agencies offering tours to Eurozone countries.
 
@@ -22,6 +23,8 @@ int main(int argc, char* argv[]) {
 	TAgencyBook European_massive(my_list);//new mass
 
 	European_massive.find_euro_countries();//create new corrected massive
+
+	European_massive.output_data_EZONES();
 
 	European_massive.output_data_EZONES();
 

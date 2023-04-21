@@ -24,6 +24,7 @@ struct TAgency // Tourist agency
 
 struct TAgencyBook
 {
+    ifstream file;
     TAgency* agencies;
     int count;
     TAgencyBook(TAgency* agencies, string path);
@@ -39,7 +40,7 @@ struct TAgencyBook
     int* counter_euro_countries();//count euro countries
     void find_euro_countries();//find european countries and create european massive
     void output_data_EZONES();//output european massive!:)
-    friend ostream& operator<<(ostream& stream, const TAgency& obj);
+    
 };
-
+ostream& operator<<(ostream& stream, const TAgency& obj);
 #endif
