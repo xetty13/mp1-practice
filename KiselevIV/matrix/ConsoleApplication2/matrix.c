@@ -12,6 +12,11 @@ void alloc_matrix(TMatrix** matrix, int n)
 
 }
 
+void size_matrix(int size) {
+	
+	printf("VVedite rasmer matrix");
+	scanf("%d", size);
+}
 void scan_matrix(TMatrix* matrix)
 {
 

@@ -8,16 +8,16 @@
 
 int main()
 {
-	TMatrix* matrix_d, *m1, *m2, *res;
+	TMatrix* matrix_d, *m1, *m2, *res, *size;
 
-
-	alloc_matrix(&matrix_d, 2);//vyvod
+	size_matrix(& size);
+	alloc_matrix(&matrix_d,size);//vyvod
 	scan_matrix(matrix_d);
 	print_matrix(matrix_d);
 	free_matrix(&matrix_d);
 
-	alloc_matrix(&m1, 3);//scan m1,m2
-	alloc_matrix(&m2, 3);
+	alloc_matrix(&m1, size);//scan m1,m2
+	alloc_matrix(&m2, size);
 	scan_matrix(m1);
 	scan_matrix(m2);
 
@@ -33,6 +33,8 @@ int main()
 	print_matrix(res);
 	free_matrix(&res);
 
+	free(&m1);
+	free(&m2);
 
 
 
