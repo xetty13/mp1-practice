@@ -32,5 +32,8 @@
     <ClInclude Include="Impl.cpp">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="TAgencyBook.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,44 +1,29 @@
+#include "TAgencyBook.h"
+#include <clocale>
+#include <iostream>
+#include <fstream>
 
-
-#include "Impl.cpp"
-
-
-//Tourist Guide.The guide contains a list of travel agenciesand the services they offer
+//Tourist Guide.The guide contains a list of travel agencies and the services they offer
 //(country, city or itinerary of the cruise, accommodation and travel conditions, excursions, host service, price of the trip).
 //Provide a list of travel agencies offering tours to Eurozone countries.
 
 
 
-
 int main(int argc, char* argv[]) {
+	system("chcp 1251");
+	setlocale(LC_ALL, "rus");
 
-	try {
-		ifstream file;//creating file va
-		int num_agencies;
-		TAgency* linker = nullptr;
-		TAgency** my_list_agencies;
-		TAgency** new_agency_list;
+	std::string path = "C://TouristAgences.txt";//creating file var
+	TAgency* agencies = NULL;
+	TAgencyBook my_list(agencies, path);
 
-		file.open("C://TouristAgences.txt");//open the file for reading
+	TAgencyBook European_massive(my_list);//new mass
 
-		if (file.is_open() == 0) {
-			throw ifstream();
-		}
+	European_massive.find_euro_countries();//create new corrected massive
 
-		num_agencies = linker->file_reader(file, my_list_agencies);//read
+	European_massive.output_data_EZONES();
 
+	European_massive.output_data_EZONES();
 
-		new_agency_list = linker->find_euro_countries(my_list_agencies, num_agencies);
-
-		new_agency_list[0]->output_data_EZONES(new_agency_list, num_agencies);
-		file.close();
-		linker->free_memory(my_list_agencies, num_agencies);
-		linker->free_european_memory(new_agency_list, num_agencies);
-		return 0;
-	}
-	catch (const ifstream& exeption) {
-		cout << "Unable open file!" << endl;
-		exit(-1);
-	}
-
+	return 0;
 }
