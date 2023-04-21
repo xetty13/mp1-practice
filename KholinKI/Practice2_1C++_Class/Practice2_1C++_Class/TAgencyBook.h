@@ -10,12 +10,12 @@ class TAgencyBook
 public:
 	ifstream file;
 	TAgency* agencies;
-	int count;
+    int count;
 	TAgencyBook(TAgency* agencies, string path);
 	TAgencyBook(const TAgencyBook& object);
 	~TAgencyBook();
 
-	int CountAgencies(ifstream& file); //count agencies
+	int  CountAgencies(ifstream& file); //count agencies
     int* CountTServices(ifstream& file);//count directions
     void allocate_TAgency(TAgency& object, int count_services);//allocating guide list...
     void file_reader(ifstream& file);

@@ -23,7 +23,5 @@ int main(int argc, char* argv[]) {
 
 	European_massive.output_data_EZONES();
 
-	European_massive.output_data_EZONES();
-
 	return 0;
 }
