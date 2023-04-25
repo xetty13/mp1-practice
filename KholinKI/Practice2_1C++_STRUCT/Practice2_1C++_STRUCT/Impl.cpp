@@ -78,9 +78,9 @@ int* TAgencyBook::CountTServices(ifstream& file) {
 	file.seekg(0, ios_base::beg);
 	return num_services;
 }
+int TAgencyBook::
 
-
-int TAgencyBook::CountAgencies(ifstream& file) {
+CountAgencies(ifstream& file) {
 	string str;
 	string buffer = "List agencies:";
 	int num_agencies = 0;
@@ -317,3 +317,4 @@ TAgencyBook::~TAgencyBook() {
 	delete[] agencies;
 }
 
+//hi!
