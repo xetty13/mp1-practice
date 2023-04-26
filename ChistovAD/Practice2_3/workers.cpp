@@ -42,6 +42,17 @@ worker::worker(const string  id, const string  profession, const string  educati
 	this->contact_info = contact_info;
 }
 
+void worker::adding(string _id, string _profession, string _education, string last_job, string _rsn_dismiss, string  _family_status, int contact_info)
+{
+	id = _id;
+	profession = _profession;
+	education = _education;
+	last_job = last_job;
+	rsn_dismiss = _rsn_dismiss;
+	family_status = _family_status;
+	contact_info = contact_info;
+
+}
 int labor::amount(const string& path)
 {
 	fstream file;
@@ -61,8 +72,9 @@ int labor::amount(const string& path)
 
 labor::labor(const string& path) {
 	this->n = amount(path);
-	this->w = new worker[n];
 	fstream file;
+	string   id, profession, education, last_job, rsn_dismiss, family_status;
+	int  contact_info;
 	file.open(path);
 	int i = 0, j = 0;
 	string line, s;
@@ -76,29 +88,31 @@ labor::labor(const string& path) {
 		while (getline(ss, s, ';')) {
 			switch (i) {
 			case 0:
-				w[j].id = s;
+				id = s;
 				break;
 			case 1:
-				w[j].profession = s;
+				profession = s;
 				break;
 			case 2:
-				w[j].education = s;
+				education = s;
 				break;
 			case 3:
-				w[j].last_job = s;
+				last_job = s;
 				break;
 			case 4:
-				w[j].rsn_dismiss = s;
+				rsn_dismiss = s;
 				break;
 			case 5:
-				w[j].family_status = s;
+				family_status = s;
 				break;
 			case 6:
-				w[j].contact_info = stoi(s);
+				contact_info = stoi(s);
 				i = -1;
 				j++;
 				break;
 			}
+			this->w[i] = new worker();
+			this->w[i] = adding(id, profession, education, last_job, rsn_dismiss, family_status, contact_info);
 			i++;
 		}
 	}
@@ -127,3 +141,4 @@ ostream& operator<<(ostream& out, const worker& w)
 	out << w.id << " " << w.education << endl;
 	return out;
 }
+
