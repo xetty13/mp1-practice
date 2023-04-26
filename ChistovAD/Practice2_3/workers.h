@@ -18,7 +18,6 @@ public:
 	friend ostream& operator<<(ostream& out, const worker& w);
 	void adding(string _id, string _profession, string _education, string last_job, string _rsn_dismiss, string  _family_status, int contact_info);
 	string get_education();
-	~worker();
 };
 
 class labor {
