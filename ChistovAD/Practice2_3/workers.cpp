@@ -42,7 +42,7 @@ worker::worker(const string  id, const string  profession, const string  educati
 	this->contact_info = contact_info;
 }
 
-void worker::adding(string _id, string _profession, string _education, string last_job, string _rsn_dismiss, string  _family_status, int contact_info)
+void worker::adding(string _id, string _profession, string _education, string _last_job, string _rsn_dismiss, string  _family_status, int _contact_info)
 {
 	id = _id;
 	profession = _profession;
@@ -50,9 +50,9 @@ void worker::adding(string _id, string _profession, string _education, string la
 	last_job = last_job;
 	rsn_dismiss = _rsn_dismiss;
 	family_status = _family_status;
-	contact_info = contact_info;
-
+	contact_info = _contact_info;
 }
+
 int labor::amount(const string& path)
 {
 	fstream file;
@@ -72,6 +72,7 @@ int labor::amount(const string& path)
 
 labor::labor(const string& path) {
 	this->n = amount(path);
+	this->w = new worker[n];
 	fstream file;
 	string   id, profession, education, last_job, rsn_dismiss, family_status;
 	int  contact_info;
@@ -111,20 +112,23 @@ labor::labor(const string& path) {
 				j++;
 				break;
 			}
-			this->w[i] = new worker();
-			this->w[i] = adding(id, profession, education, last_job, rsn_dismiss, family_status, contact_info);
+			w[i].adding(id, profession, education, last_job, rsn_dismiss, family_status, contact_info);
 			i++;
 		}
 	}
 	in.close();
 }
 
+string worker::get_education()
+{
+	return education;
+}
 void labor::higher_education(const string& path) {
 	float counter = 0;
 	int i;
 	cout << "All employees with higher education from the database:" << endl;
 	for (i = 0; i < n; i++) {
-		if (w[i].education != "no") {
+		if ((w[i].get_education()) != "no") {
 			cout << w[i];
 			counter++;
 		}
@@ -141,4 +145,3 @@ ostream& operator<<(ostream& out, const worker& w)
 	out << w.id << " " << w.education << endl;
 	return out;
 }
-
