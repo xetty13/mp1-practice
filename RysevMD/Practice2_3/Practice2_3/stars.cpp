@@ -4,13 +4,27 @@
 
 using namespace std;
 
-Constellation_library::Constellation_library(int n) {
-	count = n;
-	cns = new Constellation * [n];
+Constellation_library::Constellation_library(string& path) {
+	ifstream in;
+	int st_cnt;
+	string name;
+	in.open(path);
+	if (in.is_open()) {
+		in >> count;
+		cns = new Constellation[count];
+		for (int i = 0; i < count; i++) {
+			in >> name >> st_cnt;
+			Constellation tmp(name, st_cnt);
+			in >> &tmp;
+			cns[i] = tmp;
+		}
+		in.close();
+	}
 }
 Constellation_library:: ~Constellation_library() {
-	delete (*cns);
 	delete[] cns;
+	cns = nullptr;
+	count = 0;
 }
 
 Constellation::Constellation(std::string Cname, int n) {
@@ -20,33 +34,27 @@ Constellation::Constellation(std::string Cname, int n) {
 }
 Constellation:: ~Constellation() {
 	delete[] stars;
+	stars = nullptr;
+	count = 0;
+	name = "";
 }
 
-void read_data(Constellation_library*& lib, int& cnt) {
+string read_path() {
 	ifstream in;
-	string path, name;
-	int st_cnt;
+	string path;
 	cout << endl << "Enter the path: ";
 	cin >> path;
-	in.open(path);
-	if (in.is_open()) {
-		in >> cnt;
-		lib = new Constellation_library(cnt);
-		for (int i = 0; i < cnt; i++) {
-			in >> name >> st_cnt;
-			lib->cns[i] = new Constellation(name, st_cnt);
-			in >> lib->cns[i];
-		}
-		in.close();
-	}
+	return path;
 }
 
 void cnst_table(Constellation_library* lib, int count) {
 	for (int i = 0; i < count / 2; i++) {
-		cout << i + 1 << "." << lib->cns[i]->name << " \t\t " << i + 6 << "." << lib->cns[i + 5]->name << endl;
+		cout << i + 1 << "." << lib->getCns(i)->getName() << " \t\t " << i + 6 << "." << lib->getCns(i + 5)->getName() << endl;
 	}
 	cout << "\nOutput format:\n\n  name distance magnitude coordinates(deg, min, sec)\n\n";
 }
+
+
 std::ostream& operator<< (std::ostream& out, const Constellation* cns) {
 	cout << endl << cns->name << endl;
 	for (int i = 0; i < cns->count; i++) {
@@ -63,6 +71,26 @@ std::istream& operator>> (std::istream& in, const Constellation* cns) {
 	return in;
 }
 
+Constellation& Constellation::operator=(const Constellation& obj) {
+	this->count = obj.count;
+	this->name = obj.name;
+	this->stars = new Star[count];
+	for (int i = 0; i < this->count; i++) {
+		this->stars[i] = obj.stars[i];
+	}
+	return *this;
+}
+
+Star& Star::operator=(const Star& obj) {
+	deg = obj.deg;
+	dist = obj.dist;
+	magnitude = obj.magnitude;
+	min = obj.min;
+	name = obj.name;
+	sec = obj.sec;
+	return *this;
+}
+
 void choice(Constellation_library* lib, int count) {
 	string con;
 	cout << "Choice a constellation" << endl;
@@ -72,13 +100,12 @@ void choice(Constellation_library* lib, int count) {
 		cin >> con;
 		if (con == "stop") flag = 1;
 		for (int i = 0; i < count && flag == 0; i++) {
-			if (lib->cns[i]->name == con) {
-				cout << lib->cns[i];
+			if (lib->getCns(i)->getName() == con) {
+				cout << lib->getCns(i);
 				flag = 1;
 			}
 		}
 		if (!flag) cout << "Not found. Please, choose constellation from table" << endl;
 
 	} while (con != "stop");
-	delete lib;
 }

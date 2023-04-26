@@ -1,36 +1,43 @@
 #ifndef _Star
 #define _Star
 
-class Star {
-	public:
-		std::string name;
-		float dist;
-		float magnitude;
-		float deg;
-		float min;
-		float sec;
+struct Star {
+	std::string name;
+	float dist;
+	float magnitude;
+	float deg;
+	float min;
+	float sec;
+	Star& operator=(const Star& obj);
 };
 
 class Constellation {
 	public:
 		Constellation(std::string Cname, int n);
+		Constellation() { count = 0; name = ""; stars = nullptr; };
 		~Constellation();
+		int getCount() const { return count; }
+		std::string getName() { return name; }
+		friend std::ostream& operator<< (std::ostream& out, const Constellation* cns);
+		friend std::istream& operator>> (std::istream& in, const Constellation* cns);
+		Constellation& operator=(const Constellation& obj);
+	private:
 		int count;
 		std::string name;
 		Star* stars;
 };
 class Constellation_library {
 	public:
-		Constellation_library(int n);
+		Constellation_library(std::string& path);
 		~Constellation_library();
-		Constellation** cns;
+		int getCount() const { return count; }
+		Constellation* getCns(int n) const { return &cns[n]; }
+	private:
+		Constellation* cns;
 		int count;
 };
 
-std::ostream& operator<< (std::ostream& out, const Constellation* cns);
-std::istream& operator>> (std::istream& in, const Constellation* cns);
-
-void cnst_table(Constellation_library* cns, int count);
-void read_data(Constellation_library*& lib, int& cnt);
-void choice(Constellation_library* cns, int count);
+std::string read_path();
+void cnst_table(Constellation_library* lib, int count);
+void choice(Constellation_library* lib, int count);
 #endif

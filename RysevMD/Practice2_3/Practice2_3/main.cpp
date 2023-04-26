@@ -6,13 +6,13 @@ using namespace std;
 
 int main() {
 	system("chcp 1251");
-	Constellation_library* lib;
-	int count;
+	string path = read_path();
+	Constellation_library lib(path);
+	int count = lib.getCount();
 
-	read_data(lib, count);
+	cnst_table(&lib, count);
+	choice(&lib, count);
 
-	cnst_table(lib, count);
-	choice(lib, count);
-
+	//delete &lib;
 	return 0;
 }
