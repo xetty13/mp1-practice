@@ -108,16 +108,17 @@ labor::labor(const string& path) {
 				break;
 			case 6:
 				contact_info = stoi(s);
-				i = -1;
+				w[j].adding(id, profession, education, last_job, rsn_dismiss, family_status, contact_info);
 				j++;
+				i = -1;
 				break;
 			}
-			w[i].adding(id, profession, education, last_job, rsn_dismiss, family_status, contact_info);
 			i++;
 		}
 	}
 	in.close();
 }
+
 
 string worker::get_education()
 {
@@ -145,3 +146,4 @@ ostream& operator<<(ostream& out, const worker& w)
 	out << w.id << " " << w.education << endl;
 	return out;
 }
+
