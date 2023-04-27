@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{45701c78-717a-4ac9-8f78-999e29e7ca68}</ProjectGuid>
-    <RootNamespace>Practice21CSTRUCT</RootNamespace>
+    <ProjectGuid>{faafc357-5d17-4d32-8a60-39cfe1204c4d}</ProjectGuid>
+    <RootNamespace>Practice22</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -117,7 +117,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,11 +141,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="realization.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Impl.cpp">
-      <DeploymentContent>true</DeploymentContent>
-    </ClInclude>
     <ClInclude Include="Prototypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
