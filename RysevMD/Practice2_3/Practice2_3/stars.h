@@ -32,12 +32,12 @@ class Constellation_library {
 		~Constellation_library();
 		int getCount() const { return count; }
 		Constellation* getCns(int n) const { return &cns[n]; }
+		friend std::ostream& operator<< (std::ostream& out, const Constellation_library& lib);
 	private:
 		Constellation* cns;
 		int count;
 };
 
 std::string read_path();
-void cnst_table(Constellation_library* lib, int count);
-void choice(Constellation_library* lib, int count);
+void choice(Constellation_library* lib);
 #endif

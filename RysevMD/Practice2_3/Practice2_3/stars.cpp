@@ -38,7 +38,6 @@ Constellation:: ~Constellation() {
 	count = 0;
 	name = "";
 }
-
 string read_path() {
 	ifstream in;
 	string path;
@@ -47,15 +46,14 @@ string read_path() {
 	return path;
 }
 
-void cnst_table(Constellation_library* lib, int count) {
-	for (int i = 0; i < count / 2; i++) {
-		cout << i + 1 << "." << lib->getCns(i)->getName() << " \t\t " << i + 6 << "." << lib->getCns(i + 5)->getName() << endl;
+ostream& operator<<(ostream& out, const Constellation_library& lib) {
+	for (int i = 0; i < lib.getCount() / 2; i++) {
+		out << i + 1 << "." << lib.getCns(i)->getName() << " \t\t " << i + 6 << "." << lib.getCns(i + 5)->getName() << endl;
 	}
-	cout << "\nOutput format:\n\n  name distance magnitude coordinates(deg, min, sec)\n\n";
+	out << "\nOutput format:\n\n  name distance magnitude coordinates(deg, min, sec)\n\n";
+	return out;
 }
-
-
-std::ostream& operator<< (std::ostream& out, const Constellation* cns) {
+ostream& operator<< (ostream& out, const Constellation* cns) {
 	cout << endl << cns->name << endl;
 	for (int i = 0; i < cns->count; i++) {
 		cout << "  " << cns->stars[i].name << " " << cns->stars[i].dist << " " << cns->stars[i].magnitude << " ";
@@ -63,14 +61,13 @@ std::ostream& operator<< (std::ostream& out, const Constellation* cns) {
 	}
 	return out;
 }
-std::istream& operator>> (std::istream& in, const Constellation* cns) {
+istream& operator>> (istream& in, const Constellation* cns) {
 	for (int j = 0; j < cns->count; j++) {
 		in >> cns->stars[j].name;
 		in >> cns->stars[j].dist >> cns->stars[j].magnitude >> cns->stars[j].deg >> cns->stars[j].min >> cns->stars[j].sec;
 	}
 	return in;
 }
-
 Constellation& Constellation::operator=(const Constellation& obj) {
 	this->count = obj.count;
 	this->name = obj.name;
@@ -80,7 +77,6 @@ Constellation& Constellation::operator=(const Constellation& obj) {
 	}
 	return *this;
 }
-
 Star& Star::operator=(const Star& obj) {
 	deg = obj.deg;
 	dist = obj.dist;
@@ -91,17 +87,18 @@ Star& Star::operator=(const Star& obj) {
 	return *this;
 }
 
-void choice(Constellation_library* lib, int count) {
+void choice(Constellation_library& lib) {
 	string con;
+	cout << lib;
 	cout << "Choice a constellation" << endl;
 	do {
 		int flag = 0;
 		cout << endl << ">> ";
 		cin >> con;
 		if (con == "stop") flag = 1;
-		for (int i = 0; i < count && flag == 0; i++) {
-			if (lib->getCns(i)->getName() == con) {
-				cout << lib->getCns(i);
+		for (int i = 0; i < lib.getCount() && flag == 0; i++) {
+			if (lib.getCns(i)->getName() == con) {
+				cout << lib.getCns(i);
 				flag = 1;
 			}
 		}
