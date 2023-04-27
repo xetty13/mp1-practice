@@ -20,25 +20,32 @@ struct TAgency // Tourist agency
     int num_services;
     string name;
     TService* services;
+    TAgency();
+    TAgency(int num_services);//инициализация объектов TAgency
+    TAgency(const TAgency& object);//копирование объекта
+    ~TAgency();
 };
 
 struct TAgencyBook
 {
-    ifstream file;
     TAgency* agencies;
-    int count;
-    TAgencyBook(TAgency* agencies, string path);
-    TAgencyBook(const TAgencyBook& object);
+    int count;//количество европейских стран
+    TAgencyBook(int count);
+    TAgencyBook(const string path);//ifstream& file here и через методы чтения далее проводим.
+    TAgencyBook(const TAgencyBook& object);//копирование объекта
     ~TAgencyBook();
 
-    int CountAgencies(ifstream& fptr); //count agencies
+    void CountAgencies(ifstream& fptr); //count agencies
     int* CountTServices(ifstream& file);//count directions
-    void allocate_TAgency(TAgency& object, int count_services);//allocating guide list...
     void file_reader(ifstream& file);
     void search_string(ifstream& file);
+    
+    void allocate_TAgency(TAgency& object, int count_services);//allocating guide list... (constructor initialising)
+    
     void show_all_data();//all data
+
     int* counter_euro_countries();//count euro countries
-    void find_euro_countries();//find european countries and create european massive
+    TAgencyBook find_euro_countries();//find european countries and create european massive
     void output_data_EZONES();//output european massive!:)
     
 };
