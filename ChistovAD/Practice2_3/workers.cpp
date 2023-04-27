@@ -124,7 +124,7 @@ string worker::get_education()
 {
 	return education;
 }
-void labor::higher_education(const string& path) {
+float labor::higher_education() {
 	float counter = 0;
 	int i;
 	cout << "All employees with higher education from the database:" << endl;
@@ -134,7 +134,7 @@ void labor::higher_education(const string& path) {
 			counter++;
 		}
 	}
-	cout << "Percentage of employees with higher education:" << (counter / n) * 100 << " % " << endl;
+	return (counter / n) * 100;
 }
 
 labor::~labor() {
@@ -146,4 +146,6 @@ ostream& operator<<(ostream& out, const worker& w)
 	out << w.id << " " << w.education << endl;
 	return out;
 }
+
+
 
