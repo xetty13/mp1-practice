@@ -3,8 +3,8 @@
 Univ_database_t::Univ_database_t(const std::string& fname) {
     int i = 0;
     std::string line;
+    count = try_to_open_file(fname);
     std::ifstream file(fname);
-    count = find_num_univ(fname);
     univs = new University_t[count];
 
     while (i < count) {
@@ -58,15 +58,15 @@ Univ_database_t::Univ_database_t(const std::string& fname) {
 }
 
 Univ_database_t::~Univ_database_t() {
-    delete []univs;
+    delete[]univs;
 }
 University_t::~University_t() {
-    delete []specs;
+    delete[]specs;
 }
 Spec_t::~Spec_t() {
-    delete []forms;
-    delete []examScores;
-    delete []costs;
+    delete[]forms;
+    delete[]examScores;
+    delete[]costs;
 }
 
 University_t& Univ_database_t::operator[] (const int ind) {
@@ -74,24 +74,34 @@ University_t& Univ_database_t::operator[] (const int ind) {
 }
 
 std::ostream& operator<<(std::ostream& out, const University_t& un) {
-    int i, j, sum_costs = 0, sum_examRes = 0, count = 0;
     std::cout << "Информация о ВУЗе " << un.name << ":\n";
     std::cout << "ВУЗ " << un.name << " имеет " << un.n_spec << " специальностей:\n";
 
-    for (i = 0; i < un.n_spec; i++) {
+    for (int i = 0; i < un.n_spec; i++) {
         std::cout << "   " << un.specs[i].name << std::endl;
     }
 
-    for (i = 0; i < un.n_spec; i++) {
-        for (j = 0; j < un.specs[i].n_form; j++) {
-            sum_costs += un.specs[i].costs[j];
-            sum_examRes += un.specs[i].examScores[j];
-            count++;
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const Spec_t& s) {
+    std::cout << "Название специальности: " << s.name << ":\n";
+    std::cout << "Колличество форм обучения: " << s.n_form << "\n";
+
+    for (int i = 0; i < s.n_form; i++) {
+        std::string name_form;
+        switch (s.forms[i])
+        {
+        case 0: name_form = "Дневная";
+        case 1: name_form = "Вечерняя";
+        case 2: name_form = "Заочная";
         }
+        std::cout << "   Форма обучения: " << name_form << std::endl;
+        std::cout << "   Стоимость: " << s.costs[i] << std::endl;
+        std::cout << "   Проходные баллы: " << s.examScores[i] << std::endl;
+
     }
 
-    std::cout << "Средний балл для поступления по ВУЗу: " << double(sum_examRes) / count << std::endl;
-    std::cout << "Средняя стоимость обучения по ВУЗу : " << double(sum_costs) / count << "\n\n";
     return out;
 }
 
@@ -100,9 +110,9 @@ int Univ_database_t::find_num_univ(const std::string& fname) {
     int c = 0;
 
     std::ifstream file(fname);
-    
+
     if (file.fail())
-        throw -1;
+        throw - 1;
 
     while (getline(file, line)) {
         c++;
@@ -124,4 +134,140 @@ int Univ_database_t::try_to_open_file(const std::string& fname) {
         }
     }
     return c;
+}
+
+Spec_t::Spec_t() {
+    name = "";
+    n_form = 0;
+    forms = nullptr;
+    examScores = nullptr;
+    costs = nullptr;
+}
+
+University_t::University_t() {
+    name = "";
+    n_spec = 0;
+    specs = nullptr;
+}
+
+Spec_t::Spec_t(const Spec_t& s) {
+    name = s.name;
+    n_form = s.n_form;
+    forms = new EducationalForm[n_form];
+    costs = new int[n_form];
+    examScores = new int[n_form];
+
+    for (int i = 0; i < n_form; i++) {
+        forms[i] = s.forms[i];
+        costs[i] = s.costs[i];
+        examScores[i] = s.examScores[i];
+    }
+}
+
+University_t::University_t(const University_t& u) {
+    name = u.name;
+    n_spec = u.n_spec;
+    specs = new Spec_t[n_spec];
+
+    for (int i = 0; i < n_spec; i++) {
+        specs[i] = u.specs[i];
+    }
+}
+
+Univ_database_t::Univ_database_t(const Univ_database_t& ud) {
+    count = ud.count;
+    univs = new University_t[count];
+
+    for (int i = 0; i < count; i++) {
+        univs[i] = ud.univs[i];
+    }
+}
+
+int Univ_database_t::SearchVUZ(const std::string& name, University_t& u) const {
+    for (int i = 0; i < count; i++) {
+        if (univs[i].name == name) {
+            u = univs[i];
+            return 1;
+        }
+    }
+    return -1;
+}
+
+float University_t::ComputeAverageScore() const {
+    float sum_examRes = 0, count = 0;
+    for (int i = 0; i < n_spec; i++) {
+        for (int j = 0; j < specs[i].n_form; j++) {
+            sum_examRes += specs[i].examScores[j];
+            count++;
+        }
+    }
+    return sum_examRes / count;
+}
+
+float University_t::ComputeAverageCost() const {
+    float sum_costs = 0, count = 0;
+    for (int i = 0; i < n_spec; i++) {
+        for (int j = 0; j < specs[i].n_form; j++) {
+            sum_costs += specs[i].costs[j];
+            count++;
+        }
+    }
+    return sum_costs / count;
+}
+
+University_t& University_t::operator=(const University_t& u) {
+    if (this != &u) {
+        name = u.name;
+        n_spec = u.n_spec;
+
+        specs = new Spec_t[n_spec];
+
+        for (int i = 0; i < n_spec; i++) {
+            specs[i] = u.specs[i];
+        }
+    }
+    return *this;
+}
+
+Spec_t& Spec_t::operator=(const Spec_t& s) {
+    if (this != &s) {
+        name = s.name;
+        n_form = s.n_form;
+        forms = new EducationalForm[n_form];
+        costs = new int[n_form];
+        examScores = new int[n_form];
+
+        for (int i = 0; i < n_form; i++) {
+            forms[i] = s.forms[i];
+            costs[i] = s.costs[i];
+            examScores[i] = s.examScores[i];
+        }
+    }
+    return *this;
+}
+
+void University_t::SearchMinScoreSpeciality(std::string& spec_name, int& score, std::string& form) {
+    int min = 1000;
+    EducationalForm edForm;
+    std::string name_form, name_spec;
+    
+    for (int i = 0; i < n_spec; i++) {
+        for (int j = 0; j < specs[i].n_form; j++) {
+            if (specs[i].examScores[j] < min) {
+                min = specs[i].examScores[j];
+                edForm = specs[i].forms[j];
+                name_spec = specs[i].name;
+            }
+        }
+    }
+    switch (edForm)
+    {
+    case 0: name_form = "Дневная";
+    case 1: name_form = "Вечерняя";
+    case 2: name_form = "Заочная";
+    }
+
+    score = min;
+    form = name_form;
+    spec_name = name_spec;
 }

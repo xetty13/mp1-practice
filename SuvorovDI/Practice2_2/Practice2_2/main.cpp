@@ -7,7 +7,6 @@ int main() {
 	SetConsoleOutputCP(1251);
 
 	std::string fname;
-	std::cin >> fname;
 	Univ_database_t unsdata(fname);
 
 	working_with_user(unsdata);
