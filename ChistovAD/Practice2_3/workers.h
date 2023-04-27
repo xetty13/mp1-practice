@@ -24,14 +24,15 @@ class labor {
 private:
 	worker* w;
 	int n;
-public:
 	int amount(const string& path);
+public:
 	labor(const string& path);
-	void higher_education(const string& path);
+	float higher_education();
 	~labor();
 };
 
 string get_path();
 #endif 
+
 
 
