@@ -18,21 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="class TService.h">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Constructors.cpp">
+    <ClCompile Include="Impl.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="class TAgency.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Impl.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="TAgencyBook.h">
+    <ClInclude Include="Prototypes.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
