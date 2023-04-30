@@ -35,7 +35,7 @@ void choosesaving(int sumvkl, int your_month, bankstruct ** banki,vkladstruct* v
 void choosedebit(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, bestbank** bests, int stringcount);
 void choosecumulative(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, bestbank** bests, int stringcount);
 
-//void choose(bestbank* bests);
+void chooseprint(bestbank** bests,int n);
 
 void freebanki(bankstruct** banki, int stringciunt);
 void freevklads(vkladstruct* vklads);

@@ -24,7 +24,7 @@ int main() {
 	choosedebit(sumvkl, your_month, banki, vklads, bests, stringcount);
 	choosecumulative(sumvkl, your_month, banki, vklads, bests, stringcount);
 	
-	//choose(bests);
+	chooseprint(bests, n);
 		
 	freebanki(banki, stringcount);
 	freevklads(vklads);
