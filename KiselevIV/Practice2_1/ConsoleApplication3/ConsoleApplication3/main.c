@@ -7,7 +7,7 @@ int main() {
 	char* path = "C:\\Users\\abobi\\OneDrive\\Рабочий стол\\banki2.txt";
 	int stringcount= strcount(path);
 
-	bankstruct* banki = allocbanki(stringcount);
+	bankstruct** banki = allocbanki(stringcount);
 	vkladstruct* vklads = allocvklads(stringcount);
 	workfile(banki, vklads, path, stringcount);
 
@@ -24,7 +24,7 @@ int main() {
 	
 	//choose(sumvkl, your_month, banki, vklads, stringcount);
 		
-	freebanki(banki);
+	freebanki(banki, stringcount);
 	freevklads(vklads);
 	return 0;
 

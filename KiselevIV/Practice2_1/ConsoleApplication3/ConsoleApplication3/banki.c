@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "banki.h"
 #define LENGTH 512
-#define LEN 100
+#define LEN 30
 
 int strcount(char* path) {
     int count = 0;
@@ -28,16 +28,26 @@ int strcount(char* path) {
     return count;
 }
 
-bankstruct* allocbanki(int stringcount) {
-    bankstruct* banki = (bankstruct*)malloc(sizeof(bankstruct) * stringcount);
+
+bankstruct** allocbanki(int stringcount) {
+    int i = 0;
+    bankstruct** banki = (bankstruct**)malloc(sizeof(bankstruct*) * stringcount);
+    for (i = 0; i < stringcount; i++) {
+        banki[i] = (bankstruct*)malloc(sizeof(bankstruct));
+        banki[i]->bankname = (char*)malloc(sizeof(char) * LEN);
+        banki[i]->banktype = (char*)malloc(sizeof(char) * LEN);
+    }
+
+   
     return banki;
 }
-
 vkladstruct* allocvklads(int stringcount) {
     vkladstruct* banki = (vkladstruct*)malloc(sizeof(vkladstruct) * stringcount);
     return banki;
 }
-void workfile(bankstruct* banki,vkladstruct* vklads, char* path, int stringcount) {
+
+
+void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcount) {
     char* token;
     char delim[] = ",\n";
     int i = 0;
@@ -53,10 +63,10 @@ void workfile(bankstruct* banki,vkladstruct* vklads, char* path, int stringcount
             for (token = strtok(str, delim); token; token = strtok(NULL, delim)) {
                 switch (i) {
                 case 0:
-                    strcpy(banki[j].bankname, token);
+                    strcpy(banki[j]->bankname, token);
                     break;
                 case 1:
-                    strcpy(banki[j].banktype, token);
+                    strcpy(banki[j]->banktype, token);
                     break;
                 case 2:
                     vklads[j].saving = strtof(token, NULL);
@@ -89,11 +99,10 @@ void workfile(bankstruct* banki,vkladstruct* vklads, char* path, int stringcount
     fclose(file);
 
 }
-void choosesaving(int sumvkl, int your_month, bankstruct* banki,vkladstruct* vklads, int stringcount) {
+void choosesaving(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].saving;
-
     int koef=0;
     for (i = 1; i < stringcount; i++) {
         if (vklads[i].saving > maxproc && your_month >= vklads[i].saving_month) {
@@ -112,10 +121,10 @@ void choosesaving(int sumvkl, int your_month, bankstruct* banki,vkladstruct* vkl
     for (j = 0; j < koef; j++) {
         summa *= (1 + maxproc / 100);
     }
-    printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
+    printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
 }
 
-void choosedebit(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, int stringcount) {
+void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].debit;
@@ -138,10 +147,10 @@ void choosedebit(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vkl
     for (j = 0; j < koef; j++) {
         summa *= (1 + maxproc / 100);
     }
-    printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
+    printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
 }
 
-void choosecumulative(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, int stringcount) {
+void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].cumulative;
@@ -165,7 +174,7 @@ void choosecumulative(int sumvkl, int your_month, bankstruct* banki, vkladstruct
         summa *= (1 + maxproc / 100);
     }
     
-    printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
+    printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
 }
 
 /*
@@ -180,7 +189,17 @@ void choose(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, 
     }
 }*/
 
-void freebanki(bankstruct* banki) {
+void freebanki(bankstruct** banki, int stringcount) {
+    int i = 0;
+    for (i = 0; i < stringcount; i++) {
+        if (banki[i]->bankname != NULL) {
+            free(banki[i]->bankname);
+        }
+        if (banki[i]->banktype) {
+            free(banki[i]->banktype);
+        }
+        free (banki[i]);
+    }
     free(banki);
 }
 void freevklads(vkladstruct* vklad) {
