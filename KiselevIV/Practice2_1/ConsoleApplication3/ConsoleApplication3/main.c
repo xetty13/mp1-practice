@@ -12,12 +12,17 @@ int main() {
 	workfile(banki, vklads, path, stringcount);
 
 	int sumvkl=0;
+	int your_month=0;
 	printf("Enter count of money\n");
 	scanf("%d", &sumvkl);
+	printf("For how long is the contribution made\n");
+	scanf("%d", &your_month);
+
+	choosesaving(sumvkl, your_month, banki, vklads, stringcount);
+	choosedebit(sumvkl, your_month, banki, vklads, stringcount);
+	choosecumulative(sumvkl, your_month, banki, vklads, stringcount);
 	
-	choosesaving(sumvkl, banki, vklads, stringcount);
-	choosedebit(sumvkl, banki, vklads, stringcount);
-	choosecumulative(sumvkl, banki, vklads, stringcount);
+	//choose(sumvkl, your_month, banki, vklads, stringcount);
 		
 	freebanki(banki);
 	freevklads(vklads);

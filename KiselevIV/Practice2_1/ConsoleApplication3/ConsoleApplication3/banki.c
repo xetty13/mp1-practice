@@ -66,6 +66,15 @@ void workfile(bankstruct* banki,vkladstruct* vklads, char* path, int stringcount
                     break;
                 case 4:
                     vklads[j].cumulative = strtof(token, NULL);
+                    break;
+                case 5:
+                    vklads[j].saving_month = strtof(token, NULL);
+                    break;
+                case 6:
+                    vklads[j].debit_month = strtof(token, NULL);
+                    break;
+                case 7:
+                    vklads[j].cumulative_month = strtof(token, NULL);
                     i = -1;
                     j++;
                     break;
@@ -80,50 +89,96 @@ void workfile(bankstruct* banki,vkladstruct* vklads, char* path, int stringcount
     fclose(file);
 
 }
-void choosesaving(int sumvkl, bankstruct* banki,vkladstruct* vklads, int stringcount) {
+void choosesaving(int sumvkl, int your_month, bankstruct* banki,vkladstruct* vklads, int stringcount) {
     int maxI = 0;
-    int i = 0;
+    int i;
     float maxproc = vklads[0].saving;
-        
+
+    int koef=0;
     for (i = 1; i < stringcount; i++) {
-        if (vklads[i].saving > maxproc) {
+        if (vklads[i].saving > maxproc && your_month >= vklads[i].saving_month) {
+            koef =(int) your_month / vklads[i].saving_month;
             maxproc = vklads[i].saving;
             maxI = i;
         }
+        else if (your_month < vklads[i].saving_month) {
+            continue;
+        }
+
     }
-    double summa = sumvkl * (1 + maxproc / 100);
+
+    int j;
+    double summa = sumvkl;
+    for (j = 0; j < koef; j++) {
+        summa *= (1 + maxproc / 100);
+    }
     printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
 }
 
-void choosedebit(int sumvkl, bankstruct* banki, vkladstruct* vklads, int stringcount) {
+void choosedebit(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, int stringcount) {
     int maxI = 0;
-    int i = 0;
+    int i;
     float maxproc = vklads[0].debit;
+    int koef=0;
 
     for (i = 1; i < stringcount; i++) {
-        if (vklads[i].debit > maxproc) {
+        if (vklads[i].debit > maxproc && your_month >= vklads[i].debit_month) {
+            koef = (int) your_month / vklads[i].debit_month;
             maxproc = vklads[i].debit;
             maxI = i;
         }
+        else if (your_month < vklads[i].debit_month) {
+            continue;
+        }
+
     }
-    double summa = sumvkl * (1 + maxproc / 100);
+
+    int j;
+    double summa = sumvkl;
+    for (j = 0; j < koef; j++) {
+        summa *= (1 + maxproc / 100);
+    }
     printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
 }
 
-void choosecumulative(int sumvkl, bankstruct* banki, vkladstruct* vklads, int stringcount) {
+void choosecumulative(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, int stringcount) {
     int maxI = 0;
-    int i = 0;
+    int i;
     float maxproc = vklads[0].cumulative;
+    int koef=0;
 
     for (i = 1; i < stringcount; i++) {
-        if (vklads[i].cumulative > maxproc) {
+        if (vklads[i].cumulative > maxproc && your_month>= vklads[i].cumulative_month) {
+            koef = (int) your_month / vklads[i].cumulative_month;
             maxproc = vklads[i].cumulative;
             maxI = i;
         }
+        else if (your_month < vklads[i].cumulative_month) {
+            continue;
+        }
+        
     }
-    double summa = sumvkl * (1 + maxproc / 100);
+
+    int j;
+    double summa = sumvkl;
+    for (j = 0; j < koef; j++) {
+        summa *= (1 + maxproc / 100);
+    }
+    
     printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
 }
+
+/*
+void choose(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, int stringcount) {
+    int i;
+    int j;
+    for (i = 0; i < 3; i++) {
+
+        for (j = 0; j < stringcount; j++) {
+
+        }
+    }
+}*/
 
 void freebanki(bankstruct* banki) {
     free(banki);
