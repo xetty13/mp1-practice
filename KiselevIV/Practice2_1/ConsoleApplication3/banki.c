@@ -28,12 +28,16 @@ int strcount(char* path) {
     return count;
 }
 
-bankstruct* alloc(int stringcount) {
+bankstruct* allocbanki(int stringcount) {
     bankstruct* banki = (bankstruct*)malloc(sizeof(bankstruct) * stringcount);
     return banki;
 }
 
-void workfile(bankstruct* banki, char* path, int stringcount) {
+vkladstruct* allocvklads(int stringcount) {
+    vkladstruct* banki = (vkladstruct*)malloc(sizeof(vkladstruct) * stringcount);
+    return banki;
+}
+void workfile(bankstruct* banki,vkladstruct* vklads, char* path, int stringcount) {
     char* token;
     char delim[] = ",\n";
     int i = 0;
@@ -55,13 +59,13 @@ void workfile(bankstruct* banki, char* path, int stringcount) {
                     strcpy(banki[j].banktype, token);
                     break;
                 case 2:
-                    banki[j].saving = strtof(token, NULL);
+                    vklads[j].saving = strtof(token, NULL);
                     break;
                 case 3:
-                    banki[j].debit = strtof(token, NULL);
+                    vklads[j].debit = strtof(token, NULL);
                     break;
                 case 4:
-                    banki[j].cumulative = strtof(token, NULL);
+                    vklads[j].cumulative = strtof(token, NULL);
                     i = -1;
                     j++;
                     break;
@@ -76,14 +80,14 @@ void workfile(bankstruct* banki, char* path, int stringcount) {
     fclose(file);
 
 }
-void choosesaving(int sumvkl, bankstruct* banki, int stringcount) {
+void choosesaving(int sumvkl, bankstruct* banki,vkladstruct* vklads, int stringcount) {
     int maxI = 0;
     int i = 0;
-    float maxproc = banki[0].saving;
+    float maxproc = vklads[0].saving;
         
     for (i = 1; i < stringcount; i++) {
-        if (banki[i].saving > maxproc) {
-            maxproc = banki[i].saving;
+        if (vklads[i].saving > maxproc) {
+            maxproc = vklads[i].saving;
             maxI = i;
         }
     }
@@ -91,14 +95,14 @@ void choosesaving(int sumvkl, bankstruct* banki, int stringcount) {
     printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
 }
 
-void choosedebit(int sumvkl, bankstruct* banki, int stringcount) {
+void choosedebit(int sumvkl, bankstruct* banki, vkladstruct* vklads, int stringcount) {
     int maxI = 0;
     int i = 0;
-    float maxproc = banki[0].debit;
+    float maxproc = vklads[0].debit;
 
     for (i = 1; i < stringcount; i++) {
-        if (banki[i].debit > maxproc) {
-            maxproc = banki[i].debit;
+        if (vklads[i].debit > maxproc) {
+            maxproc = vklads[i].debit;
             maxI = i;
         }
     }
@@ -106,14 +110,14 @@ void choosedebit(int sumvkl, bankstruct* banki, int stringcount) {
     printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI].bankname, summa);
 }
 
-void choosecumulative(int sumvkl, bankstruct* banki, int stringcount) {
+void choosecumulative(int sumvkl, bankstruct* banki, vkladstruct* vklads, int stringcount) {
     int maxI = 0;
     int i = 0;
-    float maxproc = banki[0].cumulative;
+    float maxproc = vklads[0].cumulative;
 
     for (i = 1; i < stringcount; i++) {
-        if (banki[i].cumulative > maxproc) {
-            maxproc = banki[i].cumulative;
+        if (vklads[i].cumulative > maxproc) {
+            maxproc = vklads[i].cumulative;
             maxI = i;
         }
     }
@@ -123,5 +127,7 @@ void choosecumulative(int sumvkl, bankstruct* banki, int stringcount) {
 
 void freebanki(bankstruct* banki) {
     free(banki);
-
+}
+void freevklads(vkladstruct* vklad) {
+    free(vklad);
 }
