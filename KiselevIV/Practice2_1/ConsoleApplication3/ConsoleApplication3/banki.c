@@ -45,7 +45,16 @@ vkladstruct* allocvklads(int stringcount) {
     vkladstruct* banki = (vkladstruct*)malloc(sizeof(vkladstruct) * stringcount);
     return banki;
 }
-
+bestbank** allocbest(int n) {
+    int i = 0;
+    bestbank** bests = (bestbank**)malloc(sizeof(bestbank*) * n);
+    for (i = 0; i < n; i++) {
+        bests[i] = (bestbank*)malloc(sizeof(bestbank));
+        bests[i]->bestname = (char*)malloc(sizeof(char) * LEN);
+        bests[i]->besttype = (char*)malloc(sizeof(char) * LEN);
+    }
+    return bests;
+}
 
 void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcount) {
     char* token;
@@ -99,7 +108,7 @@ void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcoun
     fclose(file);
 
 }
-void choosesaving(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, int stringcount) {
+void choosesaving(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, bestbank** bests, int stringcount) {
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
@@ -118,10 +127,6 @@ void choosesaving(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vk
                 maxproc = vklads[i].saving;
                 maxI = i;
             }
-            else if (your_month < vklads[i].saving_month) {
-                continue;
-            }
-
         }
 
         
@@ -130,11 +135,14 @@ void choosesaving(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vk
         for (a = 0; a < koef; a++) {
             summa *= (1 + maxproc / 100);
         }
+        strcpy(bests[0]->bestname, banki[maxI]->bankname);
+        strcpy(bests[0]->besttype, "saving");
+        bests[0]->bestsum = summa;
         printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
     }
 }
 
-void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, int stringcount) {
+void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].debit;
@@ -160,11 +168,14 @@ void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vk
         for (j = 0; j < koef; j++) {
             summa *= (1 + maxproc / 100);
         }
+        strcpy(bests[1]->bestname, banki[maxI]->bankname);
+        strcpy(bests[0]->besttype, "debit");
+        bests[1]->bestsum = summa;
         printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
     }
 }
 
-void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, int stringcount) {
+void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].cumulative;
@@ -190,7 +201,9 @@ void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruc
         for (j = 0; j < koef; j++) {
             summa *= (1 + maxproc / 100);
         }
-
+        strcpy(bests[2]->bestname, banki[maxI]->bankname);
+        strcpy(bests[0]->besttype, "cumulative");
+        bests[2]->bestsum = summa;
         printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
     }
     else {
@@ -213,16 +226,21 @@ void choose(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, 
 void freebanki(bankstruct** banki, int stringcount) {
     int i = 0;
     for (i = 0; i < stringcount; i++) {
-        if (banki[i]->bankname != NULL) {
-            free(banki[i]->bankname);
-        }
-        if (banki[i]->banktype) {
-            free(banki[i]->banktype);
-        }
+        free(banki[i]->bankname);
+        free(banki[i]->banktype);
         free (banki[i]);
     }
     free(banki);
 }
 void freevklads(vkladstruct* vklad) {
     free(vklad);
+}
+void freebests(bestbank** bests, int n) {
+    int i = 0;
+    for (i = 0; i < n; i++) {
+        free(bests[i]->bestname);
+        free(bests[i]->besttype);
+        free(bests[i]);
+    }
+    free(bests);
 }

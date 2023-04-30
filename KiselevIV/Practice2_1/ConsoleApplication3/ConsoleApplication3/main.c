@@ -18,14 +18,17 @@ int main() {
 	printf("For how long is the contribution made\n");
 	scanf("%d", &your_month);
 
-	choosesaving(sumvkl, your_month, banki, vklads, stringcount);
-	choosedebit(sumvkl, your_month, banki, vklads, stringcount);
-	choosecumulative(sumvkl, your_month, banki, vklads, stringcount);
+	int n = 3;
+	bestbank** bests = allocbest(n);
+	choosesaving(sumvkl, your_month, banki, vklads, bests, stringcount);
+	choosedebit(sumvkl, your_month, banki, vklads, bests, stringcount);
+	choosecumulative(sumvkl, your_month, banki, vklads, bests, stringcount);
 	
-	//choose(sumvkl, your_month, banki, vklads, stringcount);
+	//choose(bests);
 		
 	freebanki(banki, stringcount);
 	freevklads(vklads);
+	freebests(bests, n);
 	return 0;
 
 }
