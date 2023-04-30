@@ -7,7 +7,6 @@
 using namespace std;
 
 class TService// list of service
-    //добавить private
 {
 private:
     string country;
@@ -23,34 +22,36 @@ public:
     string get_host_service() { return host_service; }
     string get_ticket_price() { return ticket_price; }
 
-    
+    void set_service(TService& object, ifstream& file);//file version
+    void set_service(const TService& object);//no file version
 };
 
 class TAgency // Tourist agency
 {
     friend ostream& operator<<(ostream& stream, const TAgency& obj);//overloading for TAgency
-//добавить private
 private:
     int num_services;
+    TService* services;
     string name;
 public:
-    TService* services;//?????
+
     TAgency(void);
     TAgency(int num_services);//initialisation of TAgency objects
     TAgency(const TAgency& object);//copy object
-    //сюда деструктор
+    ~TAgency();
     string get_name() { return name; }
-   
     int get_num_services() { return num_services; }
+    TService*& get_TService() { return services; }
+   
 
+    void set_name(string name_) { name = name_; }
     void set_num_services(int argument) { num_services = argument; }
 };
 
 class TAgencyBook
-//добавить private
 {
 private:
-    TAgency* agencies;
+    TAgency** agencies;
     int count_agencies;//num no european countries
 public:
     TAgencyBook(void);

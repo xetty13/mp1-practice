@@ -131,9 +131,26 @@ void TAgencyBook::search_string(ifstream& file) {//look for the first occurrence
 	file.seekg(-1, ios_base::cur);
 }
 
+void TService::set_service(TService& object, ifstream& file) {
+	getline(file, object.country);
+	getline(file, object.travel_conditions);
+	getline(file, object.excursion_services);
+	getline(file, object.host_service);
+	getline(file, object.ticket_price);
+}
+
+void TService::set_service(const TService& object) {
+	country = object.country;
+	travel_conditions = object.travel_conditions;
+	excursion_services = object.excursion_services;
+	host_service = object.host_service;
+	ticket_price = object.ticket_price;
+}
+
 void TAgencyBook::file_reader(ifstream& file) {
 	string buffer;
 	string name;
+	
 	int* num_services = CountTServices(file);
 	const string list_agencies = "List agencies:";
 	const string directions = "Directions:";
@@ -142,9 +159,9 @@ void TAgencyBook::file_reader(ifstream& file) {
 	int i = 0;
 	int j = 0;
 	int c;
-	agencies = new TAgency[count_agencies];
+	agencies = new TAgency*[count_agencies];
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i] = TAgency(num_services[i]);
+		agencies[i] = new TAgency(num_services[i]);
 	}
 	for (i = 0; i < count_agencies; i++) {
 		this->search_string(file);
@@ -154,26 +171,24 @@ void TAgencyBook::file_reader(ifstream& file) {
 				c = file.get();
 			} while (c == 10);
 			file.seekg(-1, ios_base::cur);
-			name = agencies[i].get_name();
+
 			getline(file, name);
+			agencies[i]->set_name(name);
 		}
-		else name = buffer;
-		for (j = 0; j < agencies[i].get_num_services(); j++) {
+		else { name = buffer; agencies[i]->set_name(name); }
+
+		for (j = 0; j < agencies[i]->get_num_services(); j++) {
 			search_string(file);
 			if (j == 0) {
 				do {
 					c = file.get();
 				} while (c != 10);
 			}
+			
+			agencies[i]->get_TService()[j].set_service(agencies[i]->get_TService()[j], file);
+			
 
 			
-			
-
-			getline(file, agencies[i].services[j].country);
-			getline(file, agencies[i].services[j].travel_conditions);
-			getline(file, agencies[i].services[j].excursion_services);
-			getline(file, agencies[i].services[j].host_service);
-			getline(file, agencies[i].services[j].ticket_price);
 		}
 	}
 	file.seekg(0, ios_base::beg);
@@ -183,15 +198,13 @@ void TAgencyBook::file_reader(ifstream& file) {
 
 void TAgencyBook::show_all_data() {
 	int i = 0;
-	int j = 0;
-	int num;
+	string name;
 	for (i = 0; i < count_agencies; i++) {
-		cout << agencies[i].get_name() << endl;
-		for (j = 0; j < agencies[i].get_num_services(); j++) {
-			cout << agencies[j];//Give the i-th object of the TAgency array
+		name = agencies[i]->get_name();
+		cout << name;
+		cout << *(agencies[i]);//Give the i-th object of the TAgency array
 		}
 	}
-}
 
 int* TAgencyBook::counter_euro_countries() {
 	int i = 0;
@@ -202,9 +215,9 @@ int* TAgencyBook::counter_euro_countries() {
 		num_euro_countries[i] = 0;
 	}
 	for (i = 0; i < count_agencies; i++) {
-		while (j < agencies[i].get_num_services()) {
+		while (j < agencies[i]->get_num_services()) {
 			while (k < NUM_EUROPE_COUNTRIES) {
-				if (agencies[i].services[j].get_country() == euro_zone[k]) {
+				if (agencies[i]->get_TService()[j].get_country() == euro_zone[k]) {
 					num_euro_countries[i]++;
 					break;
 				}
@@ -224,21 +237,17 @@ void TAgencyBook::create(TAgencyBook& Object) {//find european countries and cre
 	int z = 0;//counter new_agencies_list
 	int* num_euro_countries = Object.counter_euro_countries();
 	int i = 0;//counter num_agencies
-	agencies = new TAgency[count_agencies];//copy TAgency_array
+	agencies = new TAgency*[count_agencies];//copy TAgency_array
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i] = TAgency(Object.agencies[i]);//copy TAgency_objects
+		agencies[i] = new TAgency(*(Object.agencies[i]));//copy TAgency_objects
 	}
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i].set_num_services(num_euro_countries[i]);//overwriting the number of referrals
+		agencies[i]->set_num_services(num_euro_countries[i]);//overwriting the number of referrals
 	}
 	for (i = 0; i < count_agencies; i++) {
-		while (k < NUM_EUROPE_COUNTRIES && z < agencies[i].get_num_services()) {
-			if (Object.agencies[i].services[j].get_country() == euro_zone[k]) {
-				agencies[i].services[z].get_country() = Object.agencies[i].services[j].get_country();
-				agencies[i].services[z].get_travel_conditions() = Object.agencies[i].services[j].get_travel_conditions();
-				agencies[i].services[z].get_excursion_services() = Object.agencies[i].services[j].get_excursion_services();
-				agencies[i].services[z].get_host_service() = Object.agencies[i].services[j].get_host_service();
-				agencies[i].services[z].get_ticket_price() = Object.agencies[i].services[j].get_ticket_price();
+		while (k < NUM_EUROPE_COUNTRIES && z < agencies[i]->get_num_services()) {
+			if (Object.agencies[i]->get_TService()[j].get_country() == euro_zone[k]) {
+				agencies[i]->get_TService()[z].set_service(Object.agencies[i]->get_TService()[j]);//set service
 				z++;
 				j++;
 				k = 0;
@@ -271,9 +280,9 @@ void TAgencyBook::output_data_EZONES() {
 	int j = 0;
 	int k = 0;
 	for (i = 0; i < count_agencies; i++) {
-		if (agencies[i].get_num_services() != 0) {
-			cout << agencies[i].get_name() << endl;
-			cout << agencies[i];
+		if (agencies[i]->get_num_services() != 0) {
+			cout << agencies[i]->get_name() << endl;
+			cout << *(agencies[i]);
 			cout << endl;
 		}
 	}
@@ -283,15 +292,18 @@ void TAgencyBook::output_data_EZONES() {
 
 TAgencyBook::TAgencyBook(const TAgencyBook& object) {
 	count_agencies = object.count_agencies;
-	agencies = new TAgency[count_agencies];
+	agencies = new TAgency*[count_agencies];
+}
+
+TAgency::~TAgency() {
+	delete services;
 }
 
 TAgencyBook::~TAgencyBook() {
-	for (int i = 0; i < count_agencies; i++) {
-		delete[] agencies[i].services;
-	}
 	delete[] agencies;
 }
+
+
 
 TAgency::TAgency() {
 	num_services = 0;
@@ -319,7 +331,7 @@ TService::TService(void) {
 }
 
 ostream& operator<<(ostream& stream, const TAgency& obj) {
-
+	cout << endl;
 	for (int i = 0; i < obj.num_services; i++) {
 		cout << obj.services[i].get_country() << endl;
 		cout << obj.services[i].get_travel_conditions() << endl;
