@@ -100,28 +100,38 @@ void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcoun
 
 }
 void choosesaving(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, int stringcount) {
-    int maxI = 0;
-    int i;
-    float maxproc = vklads[0].saving;
-    int koef=0;
-    for (i = 1; i < stringcount; i++) {
-        if (vklads[i].saving > maxproc && your_month >= vklads[i].saving_month) {
-            koef =(int) your_month / vklads[i].saving_month;
-            maxproc = vklads[i].saving;
-            maxI = i;
+    int j = 0;
+    int k = 0;
+    for (j = 0; j < stringcount; j++) {
+        if (your_month < vklads[j].saving_month || vklads[j].saving_month==0) {
+            k += 1;
         }
-        else if (your_month < vklads[i].saving_month) {
-            continue;
+    }
+    if (k != stringcount) {
+        int maxI = 0;
+        int i;
+        float maxproc = vklads[0].saving;
+        int koef = 0;
+        for (i = 1; i < stringcount; i++) {
+            if (vklads[i].saving > maxproc && your_month >= vklads[i].saving_month) {
+                koef = (int)your_month / vklads[i].saving_month;
+                maxproc = vklads[i].saving;
+                maxI = i;
+            }
+            else if (your_month < vklads[i].saving_month) {
+                continue;
+            }
+
         }
 
+        
+        double summa = sumvkl;
+        int a = 0;
+        for (a = 0; a < koef; a++) {
+            summa *= (1 + maxproc / 100);
+        }
+        printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
     }
-
-    int j;
-    double summa = sumvkl;
-    for (j = 0; j < koef; j++) {
-        summa *= (1 + maxproc / 100);
-    }
-    printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
 }
 
 void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, int stringcount) {
@@ -129,25 +139,29 @@ void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vk
     int i;
     float maxproc = vklads[0].debit;
     int koef=0;
-
-    for (i = 1; i < stringcount; i++) {
-        if (vklads[i].debit > maxproc && your_month >= vklads[i].debit_month) {
-            koef = (int) your_month / vklads[i].debit_month;
-            maxproc = vklads[i].debit;
-            maxI = i;
+    int j = 0;
+    int k = 0;
+    for (j = 0; j < stringcount; j++) {
+        if (your_month < vklads[j].saving_month || vklads[j].saving_month==0) {
+            k += 1;
         }
-        else if (your_month < vklads[i].debit_month) {
-            continue;
+    }
+    if (k != stringcount) {
+        for (i = 1; i < stringcount; i++) {
+            if (vklads[i].debit > maxproc && your_month >= vklads[i].debit_month) {
+                koef = (int)your_month / vklads[i].debit_month;
+                maxproc = vklads[i].debit;
+                maxI = i;
+            }          
         }
 
+        
+        double summa = sumvkl;
+        for (j = 0; j < koef; j++) {
+            summa *= (1 + maxproc / 100);
+        }
+        printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
     }
-
-    int j;
-    double summa = sumvkl;
-    for (j = 0; j < koef; j++) {
-        summa *= (1 + maxproc / 100);
-    }
-    printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
 }
 
 void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, int stringcount) {
@@ -155,26 +169,33 @@ void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruc
     int i;
     float maxproc = vklads[0].cumulative;
     int koef=0;
-
-    for (i = 1; i < stringcount; i++) {
-        if (vklads[i].cumulative > maxproc && your_month>= vklads[i].cumulative_month) {
-            koef = (int) your_month / vklads[i].cumulative_month;
-            maxproc = vklads[i].cumulative;
-            maxI = i;
+    int j = 0;
+    int k = 0;
+    for (j = 0; j < stringcount; j++) {
+        if (your_month < vklads[j].saving_month || vklads[j].saving_month==0) {
+            k += 1;
         }
-        else if (your_month < vklads[i].cumulative_month) {
-            continue;
+    }
+    if (k != stringcount) {
+        for (i = 1; i < stringcount; i++) {
+            if (vklads[i].cumulative > maxproc && your_month >= vklads[i].cumulative_month) {
+                koef = (int)your_month / vklads[i].cumulative_month;
+                maxproc = vklads[i].cumulative;
+                maxI = i;
+            }
         }
-        
-    }
 
-    int j;
-    double summa = sumvkl;
-    for (j = 0; j < koef; j++) {
-        summa *= (1 + maxproc / 100);
+       
+        double summa = sumvkl;
+        for (j = 0; j < koef; j++) {
+            summa *= (1 + maxproc / 100);
+        }
+
+        printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
     }
-    
-    printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+    else {
+        printf("The minimum term among the cumulative deposit is more than available to us\n");
+    }
 }
 
 /*
