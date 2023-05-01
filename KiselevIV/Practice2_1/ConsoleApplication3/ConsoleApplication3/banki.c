@@ -114,7 +114,7 @@ void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcoun
 
 
 
-void choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
+int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
@@ -139,15 +139,20 @@ void choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* v
         double summa = sumvkl;
         int a = 0;
         for (a = 0; a < koef; a++) {
-            summa *= (1 + maxproc / 100);
+            summa *= (double) (1.00 + maxproc / 100);
         }
         strcpy(bests[0]->bestname, banki[maxI]->bankname);
         strcpy(bests[0]->besttype, "saving");
         bests[0]->bestsum = summa;
-        printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        //printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        return 0;
+    }
+    else if (k == stringcount) {
+        printf("The saving invest is not suitable for the terms\n");
+        return 1;
     }
 }
-void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
+ int choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].debit;
@@ -171,15 +176,20 @@ void choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vk
         
         double summa = sumvkl;
         for (j = 0; j < koef; j++) {
-            summa *= (1 + maxproc / 100);
+            summa *= (double) (1.00 + maxproc / 100);
         }
         strcpy(bests[1]->bestname, banki[maxI]->bankname);
         strcpy(bests[1]->besttype, "debit");
         bests[1]->bestsum = summa;
-        printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        //printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        return 0;
+    }
+    else if (k == stringcount) {
+        printf("The debit invest is not suitable for the terms\n");
+        return 1;
     }
 }
-void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
+int choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].cumulative;
@@ -203,15 +213,17 @@ void choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruc
        
         double summa = sumvkl;
         for (j = 0; j < koef; j++) {
-            summa *= (1 + maxproc / 100);
+            summa *=(double) (1.00 + maxproc / 100);
         }
         strcpy(bests[2]->bestname, banki[maxI]->bankname);
         strcpy(bests[2]->besttype, "cumulative");
         bests[2]->bestsum = summa;
-        printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        //printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        return 0;
     }
-    else {
-        printf("The minimum term among the cumulative deposit is more than available to us\n");
+    else if (k == stringcount) {
+        printf("The debit invest is not suitable for the terms\n");
+        return 1;
     }
 }
 

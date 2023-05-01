@@ -31,9 +31,10 @@ vkladstruct* allocvklads(int stringcount);
 bestbank** allocbest(int n);
 void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcount);
 
-void choosesaving(int sumvkl, int your_month, bankstruct ** banki,vkladstruct* vklads, bestbank** bests, int stringcount);
-void choosedebit(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, bestbank** bests, int stringcount);
-void choosecumulative(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, bestbank** bests, int stringcount);
+int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount);
+int choosedebit(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, bestbank** bests, int stringcount);
+int choosecumulative(int sumvkl, int your_month, bankstruct** banki,vkladstruct* vklads, bestbank** bests, int stringcount);
+
 
 void chooseprint(bestbank** bests,int n);
 
