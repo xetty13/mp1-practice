@@ -23,7 +23,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Prototypes.h">
+    <ClInclude Include="TService.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="TAgency.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="TAgencyBook.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>

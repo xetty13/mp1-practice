@@ -143,7 +143,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Prototypes.h" />
+    <ClInclude Include="TAgency.h" />
+    <ClInclude Include="TAgencyBook.h" />
+    <ClInclude Include="TService.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

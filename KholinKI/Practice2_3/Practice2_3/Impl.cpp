@@ -1,4 +1,4 @@
-#include "Prototypes.h"
+#include "TAgencyBook.h"
 
 #include <fstream>
 #include <iostream>
@@ -6,7 +6,7 @@
 #define NUM_EUROPE_COUNTRIES 19
 #define NUM_PARAMS 5
 
-
+enum FileExeption { NullPtrFile = -1 };
 
 string euro_zone[NUM_EUROPE_COUNTRIES] = {//list of eurozone countries
 	"Austria",
@@ -266,13 +266,19 @@ TAgencyBook::TAgencyBook() {
 }
 
 TAgencyBook::TAgencyBook(const string& path) : TAgencyBook() {
-	ifstream file;
-	file.open(path);
-	if (file.is_open() == 0) {
-		abort();
+	try {
+		ifstream file;
+		file.open(path);
+		if (file.is_open() == 0) {
+			FileExeption f_ex = NullPtrFile;
+			throw f_ex;
+		}
+		CountAgencies(file);
+		file_reader(file);
 	}
-	CountAgencies(file);
-	file_reader(file);
+	catch (enum FileExeption f_ex) {
+		cout << "File not found!  The programm is over with code " << f_ex << endl;
+	}
 }
 
 void TAgencyBook::output_data_EZONES() {
