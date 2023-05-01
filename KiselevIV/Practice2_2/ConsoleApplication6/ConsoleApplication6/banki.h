@@ -5,13 +5,13 @@
 using namespace std;
 
 
-typedef struct {
+struct bankstruct {
 
 	string bankname;
 	string banktype;
-}bankstruct;
+};
 
-typedef struct {
+struct vkladstruct{
 	float saving;
 	float debit;
 	float cumulative;
@@ -19,29 +19,32 @@ typedef struct {
 	int debit_month;
 	int cumulative_month;
 
-}vkladstruct;
+};
 
-typedef struct {
-	string bestname;
-	string besttype;
-	float bestsum;
-}bestbank;
+struct bestbank {
+	bankstruct* banki;
+	vkladstruct* vklads;
+
+	void allocbanki(int stringcount);
+	void allocvklads(int stringcount);
+
+	void workfile(string path, int stringcount);
+
+	int choosesaving(int sumvkl, int your_month, int stringcount);
+	int choosedebit(int sumvkl, int your_month, int stringcount);
+	int choosecumulative(int sumvkl, int your_month, int stringcount);
+
+
+	void chooseprint(int n);
+
+	void freebanki(int stringciunt);
+	void freevklads();
+
+	string bestname[3];
+	string besttype[3];
+	float bestsum[3];
+};
 
 int strcount(string path);
 
-bankstruct* allocbanki(int stringcount);
-vkladstruct* allocvklads(int stringcount);
-bestbank* allocbest(int n);
-void workfile(bankstruct* banki, vkladstruct* vklads, string path, int stringcount);
-
-int choosesaving(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, bestbank* bests, int stringcount);
-int choosedebit(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, bestbank* bests, int stringcount);
-int choosecumulative(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, bestbank* bests, int stringcount);
-
-
-void chooseprint(bestbank* bests, int n);
-
-void freebanki(bankstruct* banki, int stringciunt);
-void freevklads(vkladstruct* vklads);
-void freebests(bestbank* bests, int n);
 #endif
