@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "banki.h"
@@ -48,48 +49,81 @@ int strcount(string path) {
 
 
 
-bankstruct** allocbanki(int stringcount) {
-    int i = 0;
-    bankstruct** banki = (bankstruct**)malloc(sizeof(bankstruct*) * stringcount);
-    for (i = 0; i < stringcount; i++) {
-        banki[i] = (bankstruct*)malloc(sizeof(bankstruct));
-        banki[i]->bankname = (char*)malloc(sizeof(char) * LEN);
-        banki[i]->banktype = (char*)malloc(sizeof(char) * LEN);
-    }
+bankstruct* allocbanki(int stringcount) {
+    bankstruct* banki = new bankstruct[stringcount];
 
-   
     return banki;
 }
 vkladstruct* allocvklads(int stringcount) {
-    vkladstruct* banki = (vkladstruct*)malloc(sizeof(vkladstruct) * stringcount);
+    vkladstruct* banki = new vkladstruct[stringcount];
     return banki;
 }
-bestbank** allocbest(int n) {
-    int i = 0;
-    bestbank** bests = (bestbank**)malloc(sizeof(bestbank*) * n);
-    for (i = 0; i < n; i++) {
-        bests[i] = (bestbank*)malloc(sizeof(bestbank));
-        bests[i]->bestname = (char*)malloc(sizeof(char) * LEN);
-        bests[i]->besttype = (char*)malloc(sizeof(char) * LEN);
-    }
+bestbank* allocbest(int n) {
+    bestbank* bests = new bestbank[n];
     return bests;
 }
 
 
 
-void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcount) {
-    char* token;
-    char delim[] = ",\n";
+void workfile(bankstruct* banki, vkladstruct* vklads, string path, int stringcount) {
     int i = 0;
     int j = 0;
-    FILE* file = fopen(path, "r");
+    ifstream file(path);
+    if (!file.is_open()) {
+        cout << "ERROR: Could not open file!" << endl;
+    }
+    else {
+        string str;
+        string line;
+        string token;
+        ifstream file(path);
+        while (getline(file, line))
+        {
+            if (line == "\0") {
+                continue;
+            }
+            stringstream ss(line);
+            while (getline(ss, token, ',')) {
+                switch (i) {
+                case 0:
+                    banki[j].bankname = token;
+                    break;
+                case 1:
+                    banki[j].banktype = token;
+                    break;
+                case 2:
+                    vklads[j].saving = stoi(token);
+                    break;
+                case 3:
+                    vklads[j].debit = stoi(token);
+                    break;
+                case 4:
+                    vklads[j].cumulative = stoi(token);
+                    break;
+                case 5:
+                    vklads[j].saving_month = stoi(token);
+                    break;
+                case 6:
+                    vklads[j].debit_month = stoi(token);
+                    break;
+                case 7:
+                    vklads[j].cumulative_month = stoi(token);
+                    i = -1;
+                    j++;
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+    /*FILE* file = fopen(path, "r");
     char str[LENGTH];
     if (file == NULL) {//проверка
         cout <<"ERROR: Could not open file!"<< endl;
         //return 1;
     }
     while (1) {
-        if (fgets(str, 512, file) != NULL) {
+        if (getline(str, 512, file) != NULL) {
             for (token = strtok(str, delim); token; token = strtok(NULL, delim)) {
                 switch (i) {
                 case 0:
@@ -127,12 +161,12 @@ void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcoun
         }
     }
     fclose(file);
-
+    */
 }
 
 
 
-int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
+int choosesaving(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, bestbank* bests, int stringcount) {
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
@@ -157,28 +191,28 @@ int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vk
         double summa = sumvkl;
         int a = 0;
         for (a = 0; a < koef; a++) {
-            summa *= (double) (1.00 + maxproc / 100);
+            summa *= (double)(1.00 + maxproc / 100);
         }
-        strcpy(bests[0]->bestname, banki[maxI]->bankname);
-        strcpy(bests[0]->besttype, "saving");
-        bests[0]->bestsum = summa;
+        bests[0].bestname = banki[maxI].bankname;
+        bests[0].besttype = "saving";
+        bests[0].bestsum = summa;
         //cout<<("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
         return 0;
     }
     else if (k == stringcount) {
-        cout<<"The saving invest is not suitable for the terms"<< endl;
+        cout << "The saving invest is not suitable for the terms" << endl;
         return 1;
     }
 }
- int choosedebit(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
+int choosedebit(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, bestbank* bests, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].debit;
-    int koef=0;
+    int koef = 0;
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
-        if (your_month < vklads[j].saving_month || vklads[j].saving_month==0) {
+        if (your_month < vklads[j].saving_month || vklads[j].saving_month == 0) {
             k += 1;
         }
     }
@@ -188,34 +222,34 @@ int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vk
                 koef = (int)your_month / vklads[i].debit_month;
                 maxproc = vklads[i].debit;
                 maxI = i;
-            }          
+            }
         }
 
-        
+
         double summa = sumvkl;
         for (j = 0; j < koef; j++) {
-            summa *= (double) (1.00 + maxproc / 100);
+            summa *= (double)(1.00 + maxproc / 100);
         }
-        strcpy(bests[1]->bestname, banki[maxI]->bankname);
-        strcpy(bests[1]->besttype, "debit");
-        bests[1]->bestsum = summa;
+        bests[1].bestname = banki[maxI].bankname;
+        bests[1].besttype = "debit";
+        bests[1].bestsum = summa;
         //cout << ("Best debit invest: BANK- banki[maxI]->bankname, in the next year you will receive summa" )<<endl;
         return 0;
     }
     else if (k == stringcount) {
-        cout <<"The debit invest is not suitable for the terms"<< endl;
+        cout << "The debit invest is not suitable for the terms" << endl;
         return 1;
     }
 }
-int choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
+int choosecumulative(int sumvkl, int your_month, bankstruct* banki, vkladstruct* vklads, bestbank* bests, int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].cumulative;
-    int koef=0;
+    int koef = 0;
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
-        if (your_month < vklads[j].saving_month || vklads[j].saving_month==0) {
+        if (your_month < vklads[j].saving_month || vklads[j].saving_month == 0) {
             k += 1;
         }
     }
@@ -228,59 +262,46 @@ int choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct
             }
         }
 
-       
+
         double summa = sumvkl;
         for (j = 0; j < koef; j++) {
-            summa *=(double) (1.00 + maxproc / 100);
+            summa *= (double)(1.00 + maxproc / 100);
         }
-        strcpy(bests[2]->bestname, banki[maxI]->bankname);
-        strcpy(bests[2]->besttype, "cumulative");
-        bests[2]->bestsum = summa;
+        bests[2].bestname = banki[maxI].bankname;
+        bests[2].besttype ="cumulative";
+        bests[2].bestsum = summa;
         //cout << ("Best cumulative invest: BANK- banki[maxI]->bankname, in the next year you will receive summa")<< endl;
         return 0;
     }
     else if (k == stringcount) {
-        cout <<"The debit invest is not suitable for the terms" << endl;
+        cout << "The debit invest is not suitable for the terms" << endl;
         return 1;
     }
 }
 
 
 
-void chooseprint(bestbank** bests, int n) {
+void chooseprint(bestbank* bests, int n) {
     int i = 0;
     int k = 0;
-    double maxsum = bests[0]->bestsum;
+    double maxsum = bests[0].bestsum;
     for (i = 0; i < n; i++) {
-        if (bests[i]->bestsum > maxsum) {
-            maxsum = bests[i]->bestsum;
+        if (bests[i].bestsum > maxsum) {
+            maxsum = bests[i].bestsum;
             k = i;
         }
-
-        cout << "The best invest: BANK " << bests[k]->bestname << ", his type -" << bests[k]->besttype << ". The amount after receiving the deposit will be" << maxsum << endl;
     }
+    cout << "The best invest: BANK " << bests[k].bestname << ", his type -" << bests[k].besttype << ". The amount after receiving the deposit will be " << maxsum << endl;
 }
 
 
 
-void freebanki(bankstruct** banki, int stringcount) {
-    int i = 0;
-    for (i = 0; i < stringcount; i++) {
-        delete(banki[i]->bankname);
-        delete(banki[i]->banktype);
-        delete (banki[i]);
-    }
-    delete(banki);
+void freebanki(bankstruct* banki, int stringcount) {
+    delete[] banki;
 }
 void freevklads(vkladstruct* vklad) {
-    delete(vklad);
+    delete[] vklad;
 }
-void freebests(bestbank** bests, int n) {
-    int i = 0;
-    for (i = 0; i < n; i++) {
-        delete(bests[i]->bestname);
-        delete(bests[i]->besttype);
-        delete(bests[i]);
-    }
-    delete(bests);
+void freebests(bestbank* bests, int n) {
+    delete[] bests;
 }

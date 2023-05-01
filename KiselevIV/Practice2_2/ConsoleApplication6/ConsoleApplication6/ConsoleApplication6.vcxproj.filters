@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="banki.c">
+    <ClCompile Include="banki.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="banki.h">
+    <ClInclude Include="banki.h">
       <Filter>Файлы заголовков</Filter>
-    </None>
+    </ClInclude>
   </ItemGroup>
 </Project>
