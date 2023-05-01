@@ -139,9 +139,9 @@ void TAgencyBook::file_reader(ifstream& file) {
 	int i = 0;
 	int j = 0;
 	int c;
-	agencies = new TAgency[count_agencies];
+	agencies = new TAgency*[count_agencies];
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i] = TAgency(num_services[i]);
+		agencies[i] = new TAgency(num_services[i]);
 	}
 	for (i = 0; i < count_agencies; i++) {
 		this->search_string(file);
@@ -151,21 +151,21 @@ void TAgencyBook::file_reader(ifstream& file) {
 				c = file.get();
 			} while (c == 10);
 			file.seekg(-1, ios_base::cur);
-			getline(file, agencies[i].name);
+			getline(file, agencies[i]->name);
 		}
-		else agencies[i].name = buffer;
-		for (j = 0; j < agencies[i].num_services; j++) {
+		else agencies[i]->name = buffer;
+		for (j = 0; j < agencies[i]->num_services; j++) {
 			search_string(file);
 			if (j == 0) {
 				do {
 					c = file.get();
 				} while (c != 10);
 			}
-			getline(file, agencies[i].services[j].country);
-			getline(file, agencies[i].services[j].travel_conditions);
-			getline(file, agencies[i].services[j].excursion_services);
-			getline(file, agencies[i].services[j].host_service);
-			getline(file, agencies[i].services[j].ticket_price);
+			getline(file, agencies[i]->services[j].country);
+			getline(file, agencies[i]->services[j].travel_conditions);
+			getline(file, agencies[i]->services[j].excursion_services);
+			getline(file, agencies[i]->services[j].host_service);
+			getline(file, agencies[i]->services[j].ticket_price);
 		}
 	}
 	file.seekg(0, ios_base::beg);
@@ -178,9 +178,9 @@ void TAgencyBook::show_all_data() {
 	int j = 0;
 	int num;
 	for (i = 0; i < count_agencies; i++) {
-		cout << agencies[i].name << endl;
-		for (j = 0; j < agencies[i].num_services; j++) {
-			cout << agencies[j];//Give the i-th object of the TAgency array
+		cout << agencies[i]->name << endl;
+		for (j = 0; j < agencies[i]->num_services; j++) {
+			cout << *(agencies[j]);//Give the i-th object of the TAgency array
 		}
 	}
 }
@@ -194,9 +194,9 @@ int* TAgencyBook::counter_euro_countries() {
 		num_euro_countries[i] = 0;
 	}
 	for (i = 0; i < count_agencies; i++) {
-		while (j < agencies[i].num_services) {
+		while (j < agencies[i]->num_services) {
 			while (k < NUM_EUROPE_COUNTRIES) {
-				if (agencies[i].services[j].country == euro_zone[k]) {
+				if (agencies[i]->services[j].country == euro_zone[k]) {
 					num_euro_countries[i]++;
 					break;
 				}
@@ -216,21 +216,21 @@ void TAgencyBook::create(TAgencyBook& Object) {//find european countries and cre
 	int z = 0;//counter new_agencies_list
 	int* num_euro_countries = Object.counter_euro_countries();
 	int i = 0;//counter num_agencies
-	agencies = new TAgency[count_agencies];//copy TAgency_array
+	agencies = new TAgency*[count_agencies];//copy TAgency_array
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i] = TAgency(Object.agencies[i]);//copy TAgency_objects
+		agencies[i] = new TAgency(*(Object.agencies[i]));//copy TAgency_objects
 	}
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i].num_services = num_euro_countries[i];//overwriting the number of referrals
+		agencies[i]->num_services = num_euro_countries[i];//overwriting the number of referrals
 	}
 	for (i = 0; i < count_agencies; i++) {
-			while (k < NUM_EUROPE_COUNTRIES && z < agencies[i].num_services) {
-				if (Object.agencies[i].services[j].country == euro_zone[k]) {
-					agencies[i].services[z].country = Object.agencies[i].services[j].country;
-					agencies[i].services[z].travel_conditions = Object.agencies[i].services[j].travel_conditions;
-					agencies[i].services[z].excursion_services = Object.agencies[i].services[j].excursion_services;
-					agencies[i].services[z].host_service = Object.agencies[i].services[j].host_service;
-					agencies[i].services[z].ticket_price = Object.agencies[i].services[j].ticket_price;
+			while (k < NUM_EUROPE_COUNTRIES && z < agencies[i]->num_services) {
+				if (Object.agencies[i]->services[j].country == euro_zone[k]) {
+					agencies[i]->services[z].country = Object.agencies[i]->services[j].country;
+					agencies[i]->services[z].travel_conditions = Object.agencies[i]->services[j].travel_conditions;
+					agencies[i]->services[z].excursion_services = Object.agencies[i]->services[j].excursion_services;
+					agencies[i]->services[z].host_service = Object.agencies[i]->services[j].host_service;
+					agencies[i]->services[z].ticket_price = Object.agencies[i]->services[j].ticket_price;
 					z++;
 					j++;
 					k = 0;
@@ -249,13 +249,19 @@ TAgencyBook::TAgencyBook(){
 }
 
 TAgencyBook::TAgencyBook(const string& path): TAgencyBook() {
-	ifstream file;
-	file.open(path);
-	if (file.is_open() == 0) {
-		abort();
-	}
+	try {
+		ifstream file;
+		file.open(path);
+		if (file.is_open() == 0) {
+			FileExeption f_ex = NullPtrFile;
+			throw  f_ex;//generate object type of exeption
+		}
 	CountAgencies(file);
 	file_reader(file);
+	}
+	catch (enum FileExeption f_ex) {
+		cout << "File not found! The programm is over with code " << f_ex << endl;
+	}
 }
 
 void TAgencyBook::output_data_EZONES() {
@@ -263,9 +269,9 @@ void TAgencyBook::output_data_EZONES() {
 	int j = 0;
 	int k = 0;
 	for (i = 0; i < count_agencies; i++) {
-		if (agencies[i].num_services != 0) {
-			cout << agencies[i].name << endl;
-				cout << agencies[i];
+		if (agencies[i]->num_services != 0) {
+			cout << agencies[i]->name << endl;
+				cout << *(agencies[i]);
 				cout << endl;
 		}
 	}
@@ -275,13 +281,17 @@ void TAgencyBook::output_data_EZONES() {
 
 TAgencyBook::TAgencyBook(const TAgencyBook& object) {
 	count_agencies = object.count_agencies;
-	agencies = new TAgency[count_agencies];
+	agencies = new TAgency*[count_agencies];
+
 }
 
+TAgency::~TAgency() {
+	delete[] services;
+}
+
+
 TAgencyBook::~TAgencyBook() {
-	for (int i = 0; i < count_agencies; i++) {
-		delete[] agencies[i].services;
-	}
+
 	delete[] agencies;
 }
 
@@ -312,6 +322,14 @@ ostream& operator<<(ostream& stream, const TAgency& obj) {
 		cout << endl;
 	}
 	return stream;
+}
+
+TService::TService(void) {
+	country = "";
+	travel_conditions = "";
+	excursion_services = "";
+	host_service = "";
+	ticket_price = "";
 }
 
 

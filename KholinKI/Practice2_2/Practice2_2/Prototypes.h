@@ -6,6 +6,8 @@
 
 using namespace std;
 
+
+enum FileExeption { NullPtrFile = -1 };//enumeration for file errors
 struct TService// list of service
 {
     string country;
@@ -13,6 +15,8 @@ struct TService// list of service
     string excursion_services;
     string host_service;
     string ticket_price;
+
+    TService(void);
 };
 
 struct TAgency // Tourist agency
@@ -23,13 +27,13 @@ struct TAgency // Tourist agency
     TAgency(void);
     TAgency(int num_services);//initialisation of TAgency objects
     TAgency(const TAgency& object);//copy object
-
+    ~TAgency();
 };
 
 struct TAgencyBook
    
 {
-    TAgency* agencies;
+    TAgency** agencies;
     int count_agencies;//num no european countries
     TAgencyBook(void);
     TAgencyBook(const string& path);//initialising TAgencyBook + call constructor TAgency

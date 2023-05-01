@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-	const string path = "C://TouristAgences.txt";
+	const string path = "C://TourisAgences.txt";
 	TAgencyBook Object(path);	
 
 	TAgencyBook European_Object;
