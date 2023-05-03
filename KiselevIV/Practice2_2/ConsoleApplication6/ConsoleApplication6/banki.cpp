@@ -26,31 +26,28 @@ int strcount(string path) {
         file.close();
     }
     return stringcount;
-    /*char* s = (char*)malloc(1000 * sizeof(char));
-    //FILE* file = fopen(path, "r");
-    if (file == NULL) {
-        cout<<"ERROR: Could not open file!"<< endl;
-        return 1;
-    }
-    while (1) {
-        if (fgets(s, 1000, file) != NULL) {
-            if (strcmp(s, "\n") != 0) {
-                count++;
-            }
-        }
-        else {
-            break;
-        }
-    }
-    fclose(file);
-    free(s);
-    return count;*/
 }
 
 
 bestbank::bestbank(int stringcount) {
     this->banki = new bankstruct[stringcount];
     this->vklads = new vkladstruct[stringcount];
+}
+
+string getfile() {
+    string path;
+    while (true) {
+        cout << "Enter the full location of the file" << endl;
+        getline(cin, path);
+        ifstream file(path);
+        if (file.good()) {
+            file.close();
+            return path;
+        }
+        else {
+            cout << "ERROR: Could not open file!\n" << endl;
+        }
+    }
 }
 
 void bestbank::workfile(string path, int stringcount) {

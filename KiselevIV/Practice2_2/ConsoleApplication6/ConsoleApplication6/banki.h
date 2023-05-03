@@ -24,9 +24,9 @@ struct vkladstruct{
 struct bestbank {
 	bankstruct* banki;
 	vkladstruct* vklads;
+
 	bestbank(int stringcount);
 	~bestbank();
-
 	void workfile(string path, int stringcount);
 
 	int choosesaving(int sumvkl, int your_month, int stringcount);
@@ -43,5 +43,5 @@ struct bestbank {
 };
 
 int strcount(string path);
-
+string getfile();
 #endif
