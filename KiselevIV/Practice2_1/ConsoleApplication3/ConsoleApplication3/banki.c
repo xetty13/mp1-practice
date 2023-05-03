@@ -128,6 +128,20 @@ void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcoun
 }
 
 
+void chooseall(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
+    int n = 3;
+    int m = 0;
+    int sav = choosesaving(sumvkl, your_month, banki, vklads, bests, stringcount);
+    int deb = choosedebit(sumvkl, your_month, banki, vklads, bests, stringcount);
+    int cum = choosecumulative(sumvkl, your_month, banki, vklads, bests, stringcount);
+    if ((sav + deb + cum) == 3) {
+        printf("It is impossible to make a profit because the selected period is less than the minimum\n");
+        return 0;
+    }
+    else {
+        chooseprint(bests, n);
+    }
+}
 
 int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
     int j = 0;

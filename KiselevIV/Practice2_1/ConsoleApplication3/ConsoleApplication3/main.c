@@ -21,19 +21,8 @@ int main() {
 	scanf("%d", &your_month);
 
 	int n = 3;
-	int m = 0;
 	bestbank** bests = allocbest(n);
-	int sav = choosesaving(sumvkl, your_month, banki, vklads, bests, stringcount);
-	int deb = choosedebit(sumvkl, your_month, banki, vklads, bests, stringcount);
-	int cum = choosecumulative(sumvkl, your_month, banki, vklads, bests, stringcount);
-	
-	if ((sav+deb+cum)==3) {
-		printf("It is impossible to make a profit because the selected period is less than the minimum\n");
-		return 0;
-	}
-	else {
-		chooseprint(bests, n);
-	}
+	chooseall(sumvkl, your_month, banki, vklads, bests, stringcount);
 	freeall(bests, n, vklads, banki, stringcount);
 	return 0;
 
