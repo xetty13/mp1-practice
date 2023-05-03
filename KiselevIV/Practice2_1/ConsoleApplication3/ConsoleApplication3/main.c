@@ -4,7 +4,9 @@
 #include "banki.h"
 
 int main() {
-	char* path = "C:\\Users\\abobi\\OneDrive\\Рабочий стол\\banki2.txt";
+	//C:\Users\abobi\banki2.txt
+	//char* path = "C:\\Users\\abobi\\OneDrive\\Рабочий стол\\banki2.txt";
+	char* path = getfile();
 	int stringcount= strcount(path);
 
 	bankstruct** banki = allocbanki(stringcount);
@@ -32,10 +34,7 @@ int main() {
 	else {
 		chooseprint(bests, n);
 	}
-
-	freebanki(banki, stringcount);
-	freevklads(vklads);
-	freebests(bests, n);
+	freeall(bests, n, vklads, banki, stringcount);
 	return 0;
 
 }

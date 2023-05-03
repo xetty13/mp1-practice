@@ -28,6 +28,21 @@ int strcount(char* path) {
     return count;
 }
 
+char* getfile() {
+    char* path = (char*)malloc(_MAX_PATH * sizeof(char)); //!!!!!(free)
+    do {
+        printf("Enter the full location of the file\n");
+        scanf("%s", path);
+        FILE* file = fopen(path, "r");
+        if (file == NULL) {
+            printf("ERROR: Could not open file!\n");
+        }
+        else {
+            fclose(file);
+            return path;
+        }
+    } while (1);
+}
 
 
 bankstruct** allocbanki(int stringcount) {
@@ -208,9 +223,7 @@ int choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct
                 maxproc = vklads[i].cumulative;
                 maxI = i;
             }
-        }
-
-       
+        }     
         double summa = sumvkl;
         for (j = 0; j < koef; j++) {
             summa *=(double) (1.00 + maxproc / 100);
@@ -242,7 +255,11 @@ void chooseprint(bestbank** bests,int n) {
     printf ("The best invest: BANK- %s, his type- %s .The amount after receiving the deposit will be %.2lf \n", bests[k]->bestname, bests[k]->besttype,maxsum);
 }
 
-
+void freeall(bestbank** bests, int n, vkladstruct* vklads, bankstruct** banki, int stringcount) {
+    void freebanki(bankstruct * *banki, int stringcount);
+    void freevklads(vkladstruct * vklad);
+    void freebests(bestbank * *bests, int n);
+}
 
 void freebanki(bankstruct** banki, int stringcount) {
     int i = 0;
