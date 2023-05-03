@@ -32,6 +32,7 @@ vkladstruct* allocvklads(int stringcount);
 bestbank** allocbest(int n);
 void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcount);
 
+void data_input(int* sumvkl, int* your_month);
 void chooseall(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount);
 
 int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount);

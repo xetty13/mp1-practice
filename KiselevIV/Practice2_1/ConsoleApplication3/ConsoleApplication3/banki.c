@@ -127,10 +127,16 @@ void workfile(bankstruct** banki,vkladstruct* vklads, char* path, int stringcoun
 
 }
 
+void data_input(int* sumvkl, int* your_month) {
+    printf("Enter count of money\n");
+    scanf("%d", sumvkl);
+    printf("For how long is the contribution made\n");
+    scanf("%d", your_month);
+}
+
 
 void chooseall(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vklads, bestbank** bests, int stringcount) {
     int n = 3;
-    int m = 0;
     int sav = choosesaving(sumvkl, your_month, banki, vklads, bests, stringcount);
     int deb = choosedebit(sumvkl, your_month, banki, vklads, bests, stringcount);
     int cum = choosecumulative(sumvkl, your_month, banki, vklads, bests, stringcount);
@@ -163,17 +169,13 @@ int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vk
                 maxI = i;
             }
         }
-
-
         double summa = sumvkl;
-        int a = 0;
-        for (a = 0; a < koef; a++) {
+        for (j = 0; j < koef; j++) {
             summa *= (double) (1.00 + maxproc / 100);
         }
         strcpy(bests[0]->bestname, banki[maxI]->bankname);
         strcpy(bests[0]->besttype, "saving");
-        bests[0]->bestsum = summa;
-        //printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        bests[0]->bestsum = summa;//printf("Best saving invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
         return 0;
     }
     else if (k == stringcount) {
@@ -200,17 +202,14 @@ int choosesaving(int sumvkl, int your_month, bankstruct** banki, vkladstruct* vk
                 maxproc = vklads[i].debit;
                 maxI = i;
             }          
-        }
-
-        
+        }   
         double summa = sumvkl;
         for (j = 0; j < koef; j++) {
             summa *= (double) (1.00 + maxproc / 100);
         }
         strcpy(bests[1]->bestname, banki[maxI]->bankname);
         strcpy(bests[1]->besttype, "debit");
-        bests[1]->bestsum = summa;
-        //printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        bests[1]->bestsum = summa;//printf("Best debit invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
         return 0;
     }
     else if (k == stringcount) {
@@ -244,8 +243,7 @@ int choosecumulative(int sumvkl, int your_month, bankstruct** banki, vkladstruct
         }
         strcpy(bests[2]->bestname, banki[maxI]->bankname);
         strcpy(bests[2]->besttype, "cumulative");
-        bests[2]->bestsum = summa;
-        //printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
+        bests[2]->bestsum = summa;//printf("Best cumulative invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->bankname, summa);
         return 0;
     }
     else if (k == stringcount) {
