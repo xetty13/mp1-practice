@@ -103,9 +103,14 @@ void bestbank::workfile(string path, int stringcount) {
     }
 }
 
+void bestbank::data_input() {
+    cout << "Enter count of money" << endl;
+    cin >> sumvkl;
+    cout << "For how long is the contribution made" << endl;
+    cin >> your_month;
+}
 
-
-int bestbank::choosesaving(int sumvkl, int your_month, int stringcount) {
+int bestbank::choosesaving(int stringcount) {
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
@@ -143,7 +148,7 @@ int bestbank::choosesaving(int sumvkl, int your_month, int stringcount) {
         return 1;
     }
 }
-int bestbank::choosedebit(int sumvkl, int your_month, int stringcount) {
+int bestbank::choosedebit(int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].debit;
@@ -180,7 +185,7 @@ int bestbank::choosedebit(int sumvkl, int your_month, int stringcount) {
         return 1;
     }
 }
-int bestbank::choosecumulative(int sumvkl, int your_month, int stringcount) {
+int bestbank::choosecumulative(int stringcount) {
     int maxI = 0;
     int i;
     float maxproc = vklads[0].cumulative;
@@ -200,21 +205,31 @@ int bestbank::choosecumulative(int sumvkl, int your_month, int stringcount) {
                 maxI = i;
             }
         }
-
-
         double summa = sumvkl;
         for (j = 0; j < koef; j++) {
             summa *= (double)(1.00 + maxproc / 100);
         }
         this->bestname[2] = banki[maxI].bankname;
         this->besttype[2] ="cumulative";
-        this->bestsum[2] = summa;
-        //cout << ("Best cumulative invest: BANK- banki[maxI]->bankname, in the next year you will receive summa")<< endl;
+        this->bestsum[2] = summa;//cout << ("Best cumulative invest: BANK- banki[maxI]->bankname, in the next year you will receive summa")<< endl;
         return 0;
     }
     else if (k == stringcount) {
         cout << "The debit invest is not suitable for the terms" << endl;
         return 1;
+    }
+}
+
+void bestbank::chooseall(int stringcount) {
+    int n = 3;
+    int sav = choosesaving(stringcount);
+    int deb = choosedebit(stringcount);
+    int cum = choosecumulative(stringcount);
+    if ((sav + deb + cum) == 3) {
+        cout<<"It is impossible to make a profit because the selected period is less than the minimum" << endl;
+    }
+    else {
+        chooseprint(n);
     }
 }
 

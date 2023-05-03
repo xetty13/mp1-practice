@@ -24,14 +24,19 @@ struct vkladstruct{
 struct bestbank {
 	bankstruct* banki;
 	vkladstruct* vklads;
-
+	int sumvkl;
+	int your_month;
 	bestbank(int stringcount);
 	~bestbank();
 	void workfile(string path, int stringcount);
 
-	int choosesaving(int sumvkl, int your_month, int stringcount);
-	int choosedebit(int sumvkl, int your_month, int stringcount);
-	int choosecumulative(int sumvkl, int your_month, int stringcount);
+	void data_input();
+
+	void chooseall(int stringcount);
+
+	int choosesaving(int stringcount);
+	int choosedebit(int stringcount);
+	int choosecumulative(int stringcount);
 
 
 	void chooseprint(int n);
