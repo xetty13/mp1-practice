@@ -24,9 +24,8 @@ struct vkladstruct{
 struct bestbank {
 	bankstruct* banki;
 	vkladstruct* vklads;
-
-	void allocbanki(int stringcount);
-	void allocvklads(int stringcount);
+	bestbank(int stringcount);
+	~bestbank();
 
 	void workfile(string path, int stringcount);
 
@@ -37,8 +36,6 @@ struct bestbank {
 
 	void chooseprint(int n);
 
-	void freebanki(int stringciunt);
-	void freevklads();
 
 	string bestname[3];
 	string besttype[3];

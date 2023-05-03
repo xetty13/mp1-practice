@@ -48,15 +48,10 @@ int strcount(string path) {
 }
 
 
-
-void bestbank::allocbanki(int stringcount) {
+bestbank::bestbank(int stringcount) {
     this->banki = new bankstruct[stringcount];
-}
-void bestbank::allocvklads(int stringcount) {
     this->vklads = new vkladstruct[stringcount];
-} 
-
-
+}
 
 void bestbank::workfile(string path, int stringcount) {
     int i = 0;
@@ -243,9 +238,8 @@ void bestbank::chooseprint(int n) {
 
 
 
-void bestbank::freebanki(int stringcount) {
+
+bestbank::~bestbank() {
     delete[] banki;
-}
-void bestbank::freevklads() {
     delete[] vklads;
 }

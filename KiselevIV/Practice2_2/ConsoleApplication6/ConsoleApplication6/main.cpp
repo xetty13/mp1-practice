@@ -9,12 +9,10 @@ using namespace std;
 
 int main() {
 
-	bestbank bank;
 	string path = "C:\\Users\\abobi\\OneDrive\\Рабочий стол\\banki2.txt";
 	int stringcount = strcount(path);
-
-	bank.allocbanki(stringcount);
-	bank.allocvklads(stringcount);
+	bestbank bank(stringcount);
+	
 	bank.workfile(path, stringcount);
 
 	int sumvkl = 0;
@@ -25,7 +23,6 @@ int main() {
 	cin >> your_month;
 
 	int n = 3;
-	int m = 0;
 	int sav = bank.choosesaving(sumvkl, your_month, stringcount);
 	int deb = bank.choosedebit(sumvkl, your_month, stringcount);
 	int cum = bank.choosecumulative(sumvkl, your_month, stringcount);
@@ -38,8 +35,6 @@ int main() {
 		bank.chooseprint(n);
 	}
 
-	bank.freebanki(stringcount);
-	bank.freevklads();
 	return 0;
 
 }
