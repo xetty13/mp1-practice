@@ -173,18 +173,6 @@ void TAgencyBook::file_reader(ifstream& file) {
 }
 
 
-void TAgencyBook::show_all_data() {
-	int i = 0;
-	int j = 0;
-	int num;
-	for (i = 0; i < count_agencies; i++) {
-		cout << agencies[i]->name << endl;
-		for (j = 0; j < agencies[i]->num_services; j++) {
-			cout << agencies[j];//Give the i-th object of the TAgency array
-		}
-	}
-}
-
 int TAgencyBook::counter_euro_agencies() {
 	int i = 0;
 	int j = 0;
