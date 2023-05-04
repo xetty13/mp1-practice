@@ -1,5 +1,38 @@
 #include "fileProcessing.h"
 
+University_t::University_t(std::string name_u, int spec_count, Spec_t* specialties) {
+    name = name_u;
+    n_spec = spec_count;
+    specs = new Spec_t[spec_count];
+    for (int i = 0; i < n_spec; i++) {
+        specs[i] = specialties[i];
+    }
+}
+
+Univ_database_t Univ_database_t::SearchBySpeciality(const std::string& name) {
+    int c = 0;
+    for (int i = 0; i < count; i++) {
+        for (int j = 0; j < univs[i].n_spec; j++) {
+            if (univs[i].specs[j].name == name) {
+                c++;
+            }
+        }
+    }
+    Univ_database_t univ_with_such_specs(c);
+
+    int k = 0;
+    for (int i = 0; i < count; i++) {
+        for (int j = 0; j < univs[i].n_spec; j++) {
+            if (univs[i].specs[j].name == name) {
+                University_t u(univs[i].name, 1, &univs[i].specs[j]);
+                univ_with_such_specs[k] = u;
+                k++;
+            }
+        }
+    }
+    return univ_with_such_specs;
+}
+
 Univ_database_t::Univ_database_t(const std::string& fname) {
     int i = 0;
     std::string line;
@@ -56,6 +89,14 @@ Univ_database_t::Univ_database_t(const std::string& fname) {
 
     file.close();
 }
+Univ_database_t::Univ_database_t(int c) {
+    count = c;
+    univs = new University_t[count];
+}
+Univ_database_t::Univ_database_t() {
+    count = -1;
+    univs = nullptr;
+}
 
 Univ_database_t::~Univ_database_t() {
     delete[]univs;
@@ -105,7 +146,7 @@ std::ostream& operator<<(std::ostream& out, const Spec_t& s) {
     return out;
 }
 
-int Univ_database_t::find_num_univ(const std::string& fname) {
+int Univ_database_t::find_num_univ(const std::string& fname) const {
     std::string line;
     int c = 0;
 
@@ -270,4 +311,27 @@ void University_t::SearchMinScoreSpeciality(std::string& spec_name, int& score, 
     score = min;
     form = name_form;
     spec_name = name_spec;
+}
+
+int Univ_database_t::SearchSpecialties(const std::string& name, Spec_t*& specs, std::string*& names_univ) const {
+    int c_spec = 0;
+    for (int i = 0; i < count; i++) {
+        for (int j = 0; j < univs[i].n_spec; j++) {
+            if (univs[i].specs[j].name == name)
+                c_spec++;
+        }
+    }
+    specs = new Spec_t[c_spec];
+    names_univ = new std::string[c_spec];
+    int k = 0;
+    for (int i = 0; i < count; i++) {
+        for (int j = 0; j < univs[i].n_spec; j++) {
+            if (univs[i].specs[j].name == name) {
+                specs[k] = univs[i].specs[j];
+                names_univ[k] = univs[i].name;
+                k++;
+            }
+        }
+    }
+    return c_spec;
 }

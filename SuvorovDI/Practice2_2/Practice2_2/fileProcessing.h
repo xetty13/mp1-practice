@@ -17,6 +17,7 @@ struct Spec_t {
     EducationalForm* forms;
     int* examScores;
     int* costs;
+
     Spec_t();
     Spec_t(const Spec_t&);
     ~Spec_t();
@@ -29,6 +30,7 @@ struct University_t {
     Spec_t* specs;
 
     University_t();
+    University_t(std::string name_u, int spec_count, Spec_t* specialties);
     University_t(const University_t&);
     ~University_t();
     University_t& operator=(const University_t&);
@@ -42,20 +44,21 @@ struct Univ_database_t {
     int count;
     University_t* univs;
 
+    Univ_database_t();
     Univ_database_t(int count);
     Univ_database_t(const std::string& fname);
     Univ_database_t(const Univ_database_t&);
     ~Univ_database_t();
-
-    Univ_database_t SearchBySpeciality(const std::string& name);
     University_t& operator[] (const int ind);
 
+    Univ_database_t SearchBySpeciality(const std::string& name);
     int SearchVUZ(const std::string& name, University_t& u) const;
-    int find_num_univ(const std::string& fname);
+    int SearchSpecialties(const std::string& name, Spec_t*& specs, std::string*& names_univ) const;
+    int find_num_univ(const std::string& fname) const;
     int try_to_open_file(const std::string& fname);
 };
 
 std::ostream& operator<<(std::ostream& out, const University_t& un);
-std::ostream& operator<<(std::ostream& out, const Spec_t& un);
+std::ostream& operator<<(std::ostream& out, const Spec_t& sp);
 
 #endif
