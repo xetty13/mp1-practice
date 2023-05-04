@@ -3,10 +3,12 @@
 #define _TAGENCYBOOK_H
 
 #include "TAgency.h"
-
+enum class FileExeption { NullPtrFile = -1 };//enumeration for file errors
 class TAgencyBook
 {
+   
 private:
+
     TAgency** agencies;
     int count_agencies;//num no european countries
 public:
@@ -18,13 +20,16 @@ public:
     void CountAgencies(ifstream& file);
     int* CountTServices(ifstream& file);//count directions
     int* counter_euro_countries();//count euro countries
+    int counter_euro_agencies();//count euro agencies
 
     void search_string(ifstream& file);//look for the first occurrence of the string
     void file_reader(ifstream& file);
-    void show_all_data();//all data
-    void output_data_EZONES();//output european massive!:)
 
-    void create(TAgencyBook& object);//find european countries and create european massive
+    TAgencyBook* Get_Europe_Countries();//find european countries and create european massive
+
+    friend ostream& operator<<(ostream& stream, const TAgencyBook& obj);//overloading for TAgencyBook
+    TAgencyBook& operator=(const TAgencyBook& obj);
 
 };
+
 #endif

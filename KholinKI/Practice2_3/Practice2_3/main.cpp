@@ -3,14 +3,10 @@
 
 using namespace std;
 
-int main() {
-	const string path = "C://TouristAgences.txt";
-	TAgencyBook Object(path);
-
-
-	TAgencyBook European_Object(Object);
-
-	European_Object.create(Object);
-	European_Object.output_data_EZONES();
-	return 0;
-}//delete: European_Object->Object;
+int main(){
+const string path = "C://TouristAgences.txt";
+TAgencyBook Object(path);
+TAgencyBook* europeCountries = Object.Get_Europe_Countries();
+cout << *(europeCountries);
+return 0;
+}
