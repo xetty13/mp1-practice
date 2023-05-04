@@ -4,7 +4,7 @@
 
 using namespace std;
 
-typedef struct
+struct TBook
 {
 	int Couaut;
 	string* Author;
@@ -13,22 +13,37 @@ typedef struct
 	string Section;
 	bool Availability;
 	int Score;
-}TBook;
 
-int count_books(string& str);
-
-
-TBook* read(string str, TBook* book, int count);
-
-int count_unic(TBook* book, int count);
-string* create_section(TBook* book, int unic, int count);
-
-void print_book(TBook* book, int count);
-
-void print_section(TBook* book, int count, string word);
-void print_choose_book(TBook* lib, int count, int unic, string* unic_section);
+	TBook();
+	~TBook();
+	TBook& operator=(const TBook&);
+};
+struct TLib
+{
+	TBook* books;
+	int count;
+	int CountUnic;
+	string* unic_section;
 
 
-void free_mas(TBook* book, int count);
+	TLib();
+	TLib(const string& path);
+	TLib(const TLib& lib);
+	TLib& operator=(const TLib&);
+	
+
+	~TLib();
+
+	int count_books(const string& path) const;
+	int count_unic() const;
+	void create_section();
+	void print_unique_sections();
+	TLib search_by_section(const string& section_name);
+};
+
+string get_path();
+ostream& operator << (ostream& out, TBook& book);
+ostream& operator << (ostream& out, TLib& lib);
 
 #endif _BOOK_H
+

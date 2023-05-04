@@ -8,36 +8,26 @@
 
 int main()
 {
-
-
-	string line;
-	string* unic_section;
-
 	setlocale(LC_ALL, "Rus");
+	string path = get_path();
+	TLib full_library(path);
+	cout << full_library;
+	int choose_section_number;
+	TLib sectionLibrary;
+	do
+	{
+		full_library.print_unique_sections();
+		cin >> choose_section_number;
+
+		if (choose_section_number != 0)
+		{
+			sectionLibrary = full_library.search_by_section(full_library.unic_section[choose_section_number - 1]);
+			cout << sectionLibrary;
+		}
+		
+	} while (choose_section_number != 0);
 	
-	string str;
 
-	int count = count_books(str);
-
-
-	
-	TBook* lib = new TBook[count];
-	read(str, lib, count);
-
-	int  unic;
-	unic = count_unic(lib, count);
-
-	
-	unic_section = create_section(lib, unic, count);
-	print_book(lib, count);
-
-
-
-	print_choose_book(lib, count, unic, unic_section);
-
-
-	free_mas(lib, count);
-	delete[] unic_section;
 	return 0;
 }
 
