@@ -43,13 +43,15 @@ struct TAgencyBook
    void CountAgencies(ifstream& file);
    int* CountTServices(ifstream& file);//count directions
    int* counter_euro_countries();//count euro countries
+   int counter_euro_agencies();//count euro agencies
 
    void search_string(ifstream& file);//look for the first occurrence of the string
    void file_reader(ifstream& file);
    void show_all_data();//all data
 
-   ???TAgencyBook& Get_Europe_Countries();//find european countries and create european massive
+   TAgencyBook* Get_Europe_Countries();//find european countries and create european massive
 
+   TAgencyBook& operator=(const TAgencyBook& obj);
   
 };
 ostream& operator<<(ostream& stream, const TAgencyBook& obj);//overloading for TAgencyBook
