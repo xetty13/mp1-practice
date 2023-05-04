@@ -30,12 +30,11 @@ struct University_t {
     Spec_t* specs;
 
     University_t();
-    University_t(std::string name_u, int spec_count, Spec_t* specialties);
     University_t(const University_t&);
     ~University_t();
     University_t& operator=(const University_t&);
 
-    void SearchMinScoreSpeciality(std::string& spec_name, int& score, std::string& form);
+    void SearchMinScoreSpeciality(std::string& spec_name, int& score, std::string& form) const;
     float ComputeAverageScore() const;
     float ComputeAverageCost() const;
 };
@@ -51,7 +50,6 @@ struct Univ_database_t {
     ~Univ_database_t();
     University_t& operator[] (const int ind);
 
-    Univ_database_t SearchBySpeciality(const std::string& name);
     int SearchVUZ(const std::string& name, University_t& u) const;
     int SearchSpecialties(const std::string& name, Spec_t*& specs, std::string*& names_univ) const;
     int find_num_univ(const std::string& fname) const;
