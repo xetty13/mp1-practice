@@ -180,7 +180,7 @@ void TAgencyBook::show_all_data() {
 	for (i = 0; i < count_agencies; i++) {
 		cout << agencies[i]->name << endl;
 		for (j = 0; j < agencies[i]->num_services; j++) {
-			cout << *(agencies[j]);//Give the i-th object of the TAgency array
+			cout << agencies[j];//Give the i-th object of the TAgency array
 		}
 	}
 }
@@ -210,27 +210,29 @@ int* TAgencyBook::counter_euro_countries() {
 	return num_euro_countries;
 }
 
-void TAgencyBook::create(TAgencyBook& Object) {//find european countries and create european massive}
+TAgencyBook& TAgencyBook::Get_Europe_Countries() {//find european countries and create european massive}
 	int j = 0;//counter num_services
 	int k = 0;//counter euro_zones
 	int z = 0;//counter new_agencies_list
-	int* num_euro_countries = Object.counter_euro_countries();
+	int* num_euro_countries = counter_euro_countries();
 	int i = 0;//counter num_agencies
-	agencies = new TAgency*[count_agencies];//copy TAgency_array
+	TAgencyBook europeCountries;
+	europeCountries.count_agencies = count_agencies;
+	europeCountries.agencies = new TAgency*[count_agencies];//copy TAgency_array
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i] = new TAgency(*(Object.agencies[i]));//copy TAgency_objects
+		europeCountries.agencies[i] = new TAgency(*(agencies[i]));//copy TAgency_objects
 	}
 	for (i = 0; i < count_agencies; i++) {
-		agencies[i]->num_services = num_euro_countries[i];//overwriting the number of referrals
+		europeCountries.agencies[i]->num_services = num_euro_countries[i];//overwriting the number of referrals
 	}
 	for (i = 0; i < count_agencies; i++) {
-			while (k < NUM_EUROPE_COUNTRIES && z < agencies[i]->num_services) {
-				if (Object.agencies[i]->services[j].country == euro_zone[k]) {
-					agencies[i]->services[z].country = Object.agencies[i]->services[j].country;
-					agencies[i]->services[z].travel_conditions = Object.agencies[i]->services[j].travel_conditions;
-					agencies[i]->services[z].excursion_services = Object.agencies[i]->services[j].excursion_services;
-					agencies[i]->services[z].host_service = Object.agencies[i]->services[j].host_service;
-					agencies[i]->services[z].ticket_price = Object.agencies[i]->services[j].ticket_price;
+			while (k < NUM_EUROPE_COUNTRIES && z < europeCountries.agencies[i]->num_services) {
+				if (agencies[i]->services[j].country == euro_zone[k]) {//find the European countries in the old array and insert them in the new one
+					europeCountries.agencies[i]->services[z].country = agencies[i]->services[j].country;
+					europeCountries.agencies[i]->services[z].travel_conditions = agencies[i]->services[j].travel_conditions;
+					europeCountries.agencies[i]->services[z].excursion_services = agencies[i]->services[j].excursion_services;
+					europeCountries.agencies[i]->services[z].host_service = agencies[i]->services[j].host_service;
+					europeCountries.agencies[i]->services[z].ticket_price = agencies[i]->services[j].ticket_price;
 					z++;
 					j++;
 					k = 0;
@@ -241,6 +243,7 @@ void TAgencyBook::create(TAgencyBook& Object) {//find european countries and cre
 		j = 0;
 	}
 	delete[] num_euro_countries;
+	return europeCountries;
 }
 
 TAgencyBook::TAgencyBook(){
@@ -253,27 +256,14 @@ TAgencyBook::TAgencyBook(const string& path): TAgencyBook() {
 		ifstream file;
 		file.open(path);
 		if (file.is_open() == 0) {
-			FileExeption f_ex = NullPtrFile;
+			FileExeption f_ex = FileExeption::NullPtrFile;
 			throw  f_ex;//generate object type of exeption
 		}
 	CountAgencies(file);
 	file_reader(file);
 	}
-	catch (enum FileExeption f_ex) {
-		cout << "File not found! The programm is over with code " << f_ex << endl;
-	}
-}
-
-void TAgencyBook::output_data_EZONES() {
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	for (i = 0; i < count_agencies; i++) {
-		if (agencies[i]->num_services != 0) {
-			cout << agencies[i]->name << endl;
-				cout << *(agencies[i]);
-				cout << endl;
-		}
+	catch (FileExeption f_ex) {
+		cout << "File not found! The programm is over with code " << static_cast<int>(f_ex) << endl;
 	}
 }
 
@@ -312,19 +302,25 @@ TAgency::TAgency(const TAgency& object) {
 	name = object.name;
 }
 
-ostream& operator<<(ostream& stream, const TAgency& obj) {
-	for (int i = 0; i <obj.num_services; i++) {
-		cout << obj.services[i].country << endl;
-		cout << obj.services[i].travel_conditions << endl;
-		cout << obj.services[i].excursion_services << endl;
-		cout << obj.services[i].host_service << endl;
-		cout << obj.services[i].ticket_price << endl;
-		cout << endl;
+ostream& operator<<(ostream& stream, const TAgencyBook& obj) {
+
+	for (int i = 0; i < obj.count_agencies; i++) {
+		if (obj.agencies[i]->num_services != 0) {
+			cout << obj.agencies[i]->name << endl;
+			for (int j = 0; j < obj.agencies[i]->num_services; j++) {
+				cout << obj.agencies[i]->services[i].country << endl;
+				cout << obj.agencies[i]->services[i].travel_conditions << endl;
+				cout << obj.agencies[i]->services[i].excursion_services << endl;
+				cout << obj.agencies[i]->services[i].host_service << endl;
+				cout << obj.agencies[i]->services[i].ticket_price << endl;
+				cout << endl;
+			}
+		}
 	}
 	return stream;
 }
 
-TService::TService(void) {
+TService::TService() {
 	country = "";
 	travel_conditions = "";
 	excursion_services = "";

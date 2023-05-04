@@ -7,7 +7,7 @@
 using namespace std;
 
 
-enum FileExeption { NullPtrFile = -1 };//enumeration for file errors
+enum class FileExeption { NullPtrFile = -1 };//enumeration for file errors
 struct TService// list of service
 {
     string country;
@@ -47,11 +47,10 @@ struct TAgencyBook
    void search_string(ifstream& file);//look for the first occurrence of the string
    void file_reader(ifstream& file);
    void show_all_data();//all data
-   void output_data_EZONES();//output european massive!:)
 
-   void create(TAgencyBook& object);//find european countries and create european massive
+   ???TAgencyBook& Get_Europe_Countries();//find european countries and create european massive
 
   
 };
-ostream& operator<<(ostream& stream, const TAgency& obj);//overloading for TAgency
+ostream& operator<<(ostream& stream, const TAgencyBook& obj);//overloading for TAgencyBook
 #endif
