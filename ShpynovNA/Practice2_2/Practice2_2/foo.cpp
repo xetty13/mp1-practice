@@ -134,12 +134,12 @@ void createmem(int n, char* filename, employee** g_empls, pasport** g_pspts)
 	file.close();
 }
 void age_scan(int n, employee* g_empls, pasport* g_pspts) {
-	cout << "all employees:" << endl << endl;
+	cout << "all employees:" << endl;
 	for (int i = 0; i < n; i++)
 		cout << g_empls[i].name << " - " << g_pspts[i].birth.day << "."
 		<< g_pspts[i].birth.month << ".19"
 		<< g_pspts[i].birth.year << endl;
-	cout << "elderly ones:" << endl;
+	cout << endl << "elderly ones:" << endl;
 	for (int i = 0; i < n; i++)
 		if (g_pspts[i].isElderly())
 			cout << g_empls[i].name << " - " << g_pspts[i].birth.day << "."
