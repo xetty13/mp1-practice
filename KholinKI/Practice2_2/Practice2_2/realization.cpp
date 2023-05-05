@@ -236,40 +236,41 @@ TAgencyBook* TAgencyBook::Get_Europe_Countries() {//find european countries and 
 	TAgencyBook* europeCountries = new TAgencyBook();
 	europeCountries->count_agencies = counter_euro_agencies();
 
-	europeCountries->agencies = new TAgency*[europeCountries->count_agencies];//copy TAgency_array
-	for (i = 0; i <count_agencies; i++) {
+	europeCountries->agencies = new TAgency * [europeCountries->count_agencies];//copy TAgency_array
+	for (i = 0; i < count_agencies; i++) {
 		if (num_euro_countries[i] == 0) {
 			continue;
 		}
-		else { j++; europeCountries->agencies[j] = new TAgency(num_euro_countries[i]);  }
-	
+		else { j++; europeCountries->agencies[j] = new TAgency(num_euro_countries[i]); }
+
 	}
 	j = i = 0;
 	for (i = 0; i < count_agencies; i++) {
 		i_saved++;
 		if (num_euro_countries[i] == 0) { i_saved--;  continue; }
 		europeCountries->agencies[i_saved]->name = agencies[i]->name;
-			while (k < NUM_EUROPE_COUNTRIES && z < num_euro_countries[i]) {
-				
-				if (agencies[i]->services[j].country == euro_zone[k]) {//find the European countries in the old array and insert them in the new one
-					europeCountries->agencies[i_saved]->services[z].country = agencies[i]->services[j].country;
-					europeCountries->agencies[i_saved]->services[z].travel_conditions = agencies[i]->services[j].travel_conditions;
-					europeCountries->agencies[i_saved]->services[z].excursion_services = agencies[i]->services[j].excursion_services;
-					europeCountries->agencies[i_saved]->services[z].host_service = agencies[i]->services[j].host_service;
-					europeCountries->agencies[i_saved]->services[z].ticket_price = agencies[i]->services[j].ticket_price;
-					z++;
-					j++;
-					k = 0;
-				}
-				else { k++; if (k == NUM_EUROPE_COUNTRIES) { j++; k = 0; } }
+		while (k < NUM_EUROPE_COUNTRIES && z < num_euro_countries[i]) {
+
+			if (agencies[i]->services[j].country == euro_zone[k]) {//find the European countries in the old array and insert them in the new one
+				europeCountries->agencies[i_saved]->services[z].country = agencies[i]->services[j].country;
+				europeCountries->agencies[i_saved]->services[z].travel_conditions = agencies[i]->services[j].travel_conditions;
+				europeCountries->agencies[i_saved]->services[z].excursion_services = agencies[i]->services[j].excursion_services;
+				europeCountries->agencies[i_saved]->services[z].host_service = agencies[i]->services[j].host_service;
+				europeCountries->agencies[i_saved]->services[z].ticket_price = agencies[i]->services[j].ticket_price;
+				z++;
+				j++;
+				k = 0;
 			}
-	
+			else { k++; if (k == NUM_EUROPE_COUNTRIES) { j++; k = 0; } }
+		}
+
 		z = 0;
 		j = 0;
 	}
 	delete[] num_euro_countries;
 	return europeCountries;
 }
+
 
 TAgencyBook::TAgencyBook(){
 	agencies = nullptr;
@@ -328,28 +329,7 @@ TAgency::TAgency(const TAgency& object) {
 }
 
 
-TAgencyBook& TAgencyBook::operator=(const TAgencyBook& obj) {
-	count_agencies = obj.count_agencies;
-	agencies = new TAgency*[count_agencies];
-	for (int i = 0; i < count_agencies;i++) {
-		agencies[i]->num_services = obj.agencies[i]->num_services;
-		agencies[i]->name = obj.agencies[i]->name;
-		agencies[i]->num_services = obj.agencies[i]->num_services;
-		for (int j = 0; j < agencies[i]->num_services; j++) {
-			agencies[j]->services = new TService[agencies[j]->num_services];
-		}
-		for (int i = 0; i < count_agencies; i++) {
-			for (int j = 0; j < agencies[i]->num_services; j++) {
-				agencies[i]->services[j].country = obj.agencies[i]->services[j].country;
-				agencies[i]->services[j].travel_conditions = obj.agencies[i]->services[j].travel_conditions;
-				agencies[i]->services[j].excursion_services = obj.agencies[i]->services[j].excursion_services;
-				agencies[i]->services[j].host_service = obj.agencies[i]->services[j].country;
-				agencies[i]->services[j].ticket_price = obj.agencies[i]->services[j].ticket_price;
-			}
-		}
-	}
-	return *this;
-}
+
 
 ostream& operator<<(ostream& stream, const TAgencyBook& obj) {
 
@@ -363,7 +343,6 @@ ostream& operator<<(ostream& stream, const TAgencyBook& obj) {
 				cout << obj.agencies[i]->services[j].ticket_price << endl;
 				cout << endl;
 			}
-		
 	}
 	return stream;
 }

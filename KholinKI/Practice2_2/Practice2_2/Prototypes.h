@@ -31,7 +31,6 @@ struct TAgency // Tourist agency
 };
 
 struct TAgencyBook
-   
 {
     TAgency** agencies;
     int count_agencies;//num no european countries
@@ -47,11 +46,9 @@ struct TAgencyBook
 
    void search_string(ifstream& file);//look for the first occurrence of the string
    void file_reader(ifstream& file);
-   void show_all_data();//all data
 
    TAgencyBook* Get_Europe_Countries();//find european countries and create european massive
 
-   TAgencyBook& operator=(const TAgencyBook& obj);
   
 };
 ostream& operator<<(ostream& stream, const TAgencyBook& obj);//overloading for TAgencyBook

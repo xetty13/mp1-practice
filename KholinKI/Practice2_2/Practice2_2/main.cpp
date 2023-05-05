@@ -8,5 +8,6 @@ int main() {
 	TAgencyBook Object(path);
 	TAgencyBook* europeCountries = Object.Get_Europe_Countries();
 	cout << *(europeCountries);
+	delete europeCountries;
 	return 0;
 }
