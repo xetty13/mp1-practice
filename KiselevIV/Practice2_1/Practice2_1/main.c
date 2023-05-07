@@ -7,8 +7,8 @@ int main() {
 	int stringcount= strcount(path);
 
 	bankstruct** banki = allocbanki(stringcount);
-	vkladstruct* vklads = allocvklads(stringcount);
-	workfile(banki, vklads, path, stringcount);
+	//vkladstruct* vklads = allocvklads(stringcount);
+	workfile(banki, path, stringcount);
 
 	int sumvkl = 0;
 	int your_month = 0;
@@ -16,7 +16,7 @@ int main() {
 
 	int n = 3;
 	bestbank** bests = allocbest(n);
-	chooseall(sumvkl, your_month, banki, vklads, bests, stringcount);
-	freeall(bests, n, vklads, banki, stringcount);
+	chooseall(sumvkl, your_month, banki, bests, stringcount);
+	freeall(bests, n, banki, stringcount);
 	return 0;
 }
