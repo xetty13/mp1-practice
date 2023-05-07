@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33328.57
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication3", "ConsoleApplication3\ConsoleApplication3.vcxproj", "{5E17DE48-79AF-4729-9A9B-B697E564B506}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Practice2_1", "Practice2_1\Practice2_1.vcxproj", "{5E17DE48-79AF-4729-9A9B-B697E564B506}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

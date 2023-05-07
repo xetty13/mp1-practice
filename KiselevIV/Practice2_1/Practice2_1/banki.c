@@ -4,6 +4,7 @@
 #include "banki.h"
 #define LENGTH 512
 #define LEN 30
+#define _CRT_SECURE_NO_WARNINGS
 
 int strcount(char* path) {
     int count = 0;

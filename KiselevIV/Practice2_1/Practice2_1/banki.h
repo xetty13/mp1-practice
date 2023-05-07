@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _BANKI_H
 #define _BANKI_H
+#define _CRT_SECURE_NO_WARNINGS
 
 typedef struct {
 	
