@@ -5,13 +5,10 @@
 void main()
 {
 	int n = 12;
-	char filename[31];
-	if (fgets(filename, 30, stdin) != NULL)
-		filename[strlen(filename) - 1] = '\0';
+	string filename;
+	cin >> filename;
 	employee* g_empls = new employee[n];
-	pasport* g_pspts = new pasport[n];
-	createmem(n, filename, &g_empls, &g_pspts);
-	age_scan(n, g_empls, g_pspts);
+	createmem(n, filename, &g_empls);
+	age_scan(n, g_empls);
 	delete[] g_empls;
-	delete[] g_pspts;
 }

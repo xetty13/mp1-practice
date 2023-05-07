@@ -3,45 +3,15 @@
 
 using namespace std;
 
-typedef struct dates_t {
+struct date {
 	int day;
 	int month;
 	int year;
-} date;
 
-typedef struct employees_t {
-	enum field {
-		e_name,
-		e_edu,
-		e_spec,
-		e_unit,
-		e_appnt,
-		e_dateofappnt,
-		e_lastdate,
-	};
+	void create_data(string str);
+};
 
-	string name;
-	string edu;
-	string spec;
-	string unit;
-	string appnt;
-	date dateofappnt;
-	date lastdate;
-
-	void create_data(ifstream& file, employees_t::field field, int n);
-
-
-} employee;
-
-typedef struct pasports_t {
-	enum field {
-		e_series,
-		e_number,
-		e_auth,
-		e_issue,
-		e_birth,
-		e_reg,
-	};
+struct pasport {
 	int series;
 	int number;
 	string auth;
@@ -51,21 +21,28 @@ typedef struct pasports_t {
 
 
 	bool isElderly();
-	void create_data(ifstream& file, pasports_t::field field, int n);
-}pasport;
+	void create_data(string* str);
+};
 
-void* get_target(void* base, int size, int index);
+struct employee {
+	pasport pspt;
+	string name;
+	string edu;
+	string spec;
+	string unit;
+	string appnt;
+	date dateofappnt;
+	date lastdate;
 
-void set_data(void* base, int size, int index, char* value);
+	void create_data(string str);
 
-void set_data(void* base, int size, int index, int value);
 
-void read_str(ifstream& file, int n, void* target, size_t struct_size);
+};
 
-void read_int(ifstream& file, int n, void* target, size_t struct_size);
+void createmem(int n, string filename, employee** g_empls);
 
-void createmem(int n, char* filename, employee** g_empls, pasport** g_pspts);
+void age_scan(int n, employee* g_empls);
 
-void age_scan(int n, employee* g_empls, pasport* g_pspts);
+string get_string(ifstream& file);
 
 #endif //!_HEADER_H
