@@ -21,32 +21,18 @@ typedef struct {
 }bankstruct;
 
 
-typedef struct {
-	char* bestname;
-	char* besttype;
-	float bestsum;
-}bestbank;
-
 char* getfile();
 int strcount(char* path);
 
 bankstruct** allocbanki(int stringcount);
-//vkladstruct* allocvklads(int stringcount);
-bestbank** allocbest(int n);
 void workfile(bankstruct** banki,char* path, int stringcount);
 
-void data_input(int* sumvkl, int* your_month);
-void chooseall(int sumvkl, int your_month, bankstruct** banki, bestbank** bests, int stringcount);
+void data_input(int* sumvkl, int* your_month, char* your_type);
+void chooseall(int sumvkl, int your_month, bankstruct** banki,int stringcount, char* your_type);
 
-int choosesaving(int sumvkl, int your_month, bankstruct** banki, bestbank** bests, int stringcount);
-int choosedebit(int sumvkl, int your_month, bankstruct** banki, bestbank** bests, int stringcount);
-int choosecumulative(int sumvkl, int your_month, bankstruct** banki, bestbank** bests, int stringcount);
+void choosesaving(int sumvkl, int your_month, bankstruct** banki,int stringcount);
+void choosedebit(int sumvkl, int your_month, bankstruct** banki,int stringcount);
+void choosecumulative(int sumvkl, int your_month, bankstruct** banki,int stringcount);
 
-
-void chooseprint(bestbank** bests,int n);
-
-void freeall(bestbank** bests, int n, bankstruct** banki, int stringcount);
 void freebanki(bankstruct** banki, int stringciunt);
-//void freevklads(vkladstruct* vklads);
-void freebests(bestbank** bests, int n);
 #endif
