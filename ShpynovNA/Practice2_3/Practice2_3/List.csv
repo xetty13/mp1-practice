@@ -1,13 +1,12 @@
-employee 1;employee 2;employee 3;employee 4;employee 5;employee 6;employee 7;employee 8;employee 9;employee 10;employee 11;employee 12;
-4138;8122;5966;3746;6360;8917;3786;7907;1771;7827;7778;6452;
-546482;739859;556249;701654;836261;175268;832392;302986;779116;183922;147854;375424;
-GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;GU MVD Moskovskoy oblasti;
-1.02.1977;17.07.1964;20.07.1977;24.01.1979;07.05.1950;11.01.1948;22.08.1955;24.08.1953;09.04.1965;14.03.1960;23.04.1954;27.12.1944;
-2.02.1977;09.07.1964;13.07.1977;15.01.1979;30.04.1950;02.01.1948;13.08.1955;15.08.1953;31.03.1965;05.03.1960;14.04.1954;18.12.1944;
-street 1;street 2;street 3;street 4;street 5;street 6;street 7;street 8;street 9;street 10;street 11;street 12;
-education 1;education 2;education 3;education 4;education 5;education 6;education 7;education 8;education 9;education 10;education 11;education 12;
-speciality 1;speciality 2;speciality 3;speciality 4;speciality 5;speciality 6;speciality 7;speciality 8;speciality 9;speciality 10;speciality 11;speciality 12;
-unit 1;unit 2;unit 3;unit 4;unit 5;unit 6;unit 7;unit 8;unit 9;unit 10;unit 11;unit 12;
-appointment 1;appointment 2;appointment 3;appointment 4;appointment 5;appointment 6;appointment 7;appointment 8;appointment 9;appointment 10;appointment 11;appointment 12;
-01.01.1000;02.01.1000;01.01.1001;02.01.1001;01.01.1002;02.01.1002;01.01.1003;02.01.1003;01.01.1004;02.01.1004;01.01.1005;02.01.1005;
-01.01.1001;02.01.1001;01.01.1002;02.01.1002;01.01.1003;02.01.1003;01.01.1004;02.01.1004;01.01.1005;02.01.1005;01.01.1006;02.01.1006;
+employee 1;4138;546482;GU MVD Moskovskoy oblasti;01.02.1977;02.02.1977;street 1;education 1;speciality 1;unit 1;appointment 1;01.01.1000;01.01.1001
+employee 2;8122;739859;GU MVD Moskovskoy oblasti;17.07.1964;09.07.1964;street 2;education 2;speciality 2;unit 2;appointment 2;02.01.1000;02.01.1001
+employee 3;5966;556249;GU MVD Moskovskoy oblasti;20.07.1977;13.07.1977;street 3;education 3;speciality 3;unit 3;appointment 3;01.01.1001;01.01.1002
+employee 4;3746;701654;GU MVD Moskovskoy oblasti;24.01.1979;15.01.1979;street 4;education 4;speciality 4;unit 4;appointment 4;02.01.1001;02.01.1002
+employee 5;6360;836261;GU MVD Moskovskoy oblasti;07.05.1950;30.04.1950;street 5;education 5;speciality 5;unit 5;appointment 5;01.01.1002;01.01.1003
+employee 6;8917;175268;GU MVD Moskovskoy oblasti;11.01.1948;02.01.1948;street 6;education 6;speciality 6;unit 6;appointment 6;02.01.1002;02.01.1003
+employee 7;3786;832392;GU MVD Moskovskoy oblasti;22.08.1955;13.08.1955;street 7;education 7;speciality 7;unit 7;appointment 7;01.01.1003;01.01.1004
+employee 8;7907;302986;GU MVD Moskovskoy oblasti;24.08.1953;15.08.1953;street 8;education 8;speciality 8;unit 8;appointment 8;02.01.1003;02.01.1004
+employee 9;1771;779116;GU MVD Moskovskoy oblasti;09.04.1965;31.03.1965;street 9;education 9;speciality 9;unit 9;appointment 9;01.01.1004;01.01.1005
+employee 10;7827;183922;GU MVD Moskovskoy oblasti;14.03.1960;05.03.1960;street 10;education 10;speciality 10;unit 10;appointment 10;02.01.1004;02.01.1005
+employee 11;7778;147854;GU MVD Moskovskoy oblasti;23.04.1954;14.04.1954;street 11;education 11;speciality 11;unit 11;appointment 11;01.01.1005;01.01.1006
+employee 12;6452;375424;GU MVD Moskovskoy oblasti;27.12.1944;18.12.1944;street 12;education 12;speciality 12;unit 12;appointment 12;02.01.1005;02.01.1006

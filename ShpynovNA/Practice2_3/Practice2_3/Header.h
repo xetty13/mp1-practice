@@ -3,63 +3,52 @@
 
 using namespace std;
 
-typedef class dates_t {
-public:
+class date {
+private:
 	int day;
 	int month;
 	int year;
-} date;
-
-typedef class employees_t {
-private:
-	string name;
-	string edu;
-	string spec;
-	string unit;
-	string appnt;
-	dates_t dateofappnt;
-	dates_t lastdate;
 public:
-	enum field {
-		e_name,
-		e_edu,
-		e_spec,
-		e_unit,
-		e_appnt,
-		e_dateofappnt,
-		e_lastdate,
-	};
-	void create_data(ifstream& file, employees_t::field field, int n);
-	void output();
-} employee;
+	void create_data(string str);
+	void give_data(int* day_dest, int* month_dest, int* year_dest);
+};
 
-typedef class pasports_t {
+class pasport {
 private:
 	int series;
 	int number;
 	string auth;
 	string reg;
-	dates_t issue;
-	dates_t birth;
+	date issue;
+	date birth;
 
 public:
-	enum field {
-		e_series,
-		e_number,
-		e_auth,
-		e_issue,
-		e_birth,
-		e_reg,
-	};
 	bool isElderly();
-	void create_data(ifstream& file, pasports_t::field field, int n);
+	void create_data(string* str);
 	void output();
-} pasport;
-
-void createmem(int n, char* filename, employees_t** g_empls, pasports_t** g_pspts);
-
-void age_scan(int n, employees_t* g_empls, pasports_t* g_pspts);
+};
 
 
+class employee {
+private:
+	pasport pspt;
+	string name;
+	string edu;
+	string spec;
+	string unit;
+	string appnt;
+	date dateofappnt;
+	date lastdate;
+public:
+	void create_data(string str);
+	void output();
+	bool isElderly();
+};
+
+void createmem(int n, string filename, employee** g_empls);
+
+void age_scan(int n, employee* g_empls);
+
+string get_string(ifstream& file);
 #endif //!_HEADER_H
 
