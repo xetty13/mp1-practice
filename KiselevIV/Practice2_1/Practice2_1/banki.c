@@ -30,7 +30,7 @@ int strcount(char* path) {
 }
 
 char* getfile() {
-    char* path = (char*)malloc(_MAX_PATH * sizeof(char)); //!!!!!(free)
+    char* path = (char*)malloc(_MAX_PATH * sizeof(char)); 
     do {
         printf("Enter the full location of the file\n");
         scanf("%s", path);
@@ -48,23 +48,23 @@ char* getfile() {
 
 bankstruct** allocbanki(int stringcount) {
     int i = 0;
+    int j = 0;
     bankstruct** banki = (bankstruct**)malloc(sizeof(bankstruct*) * stringcount);
     for (i = 0; i < stringcount; i++) {
         banki[i] = (bankstruct*)malloc(sizeof(bankstruct));
         banki[i]->bankname = (char*)malloc(sizeof(char) * LEN);
         banki[i]->banktype = (char*)malloc(sizeof(char) * LEN);
-        banki[i]->our_vklad = (vkladstruct*)malloc(sizeof(vkladstruct));
+        banki[i]->our_vklad = (vkladstruct**)malloc(sizeof(bankstruct*)*stringcount);
     }
-
-   
-    return banki;
+      return banki;
 }
 
 void workfile(bankstruct** banki, char* path, int stringcount) {
     char* token;
-    char delim[] = ",\n";
+    char delim[] = " ,\n";
     int i = 0;
     int j = 0;
+    int l = 0;
     FILE* file = fopen(path, "r");
     char str[LENGTH];
     if (file == NULL) {//проверка
@@ -77,29 +77,57 @@ void workfile(bankstruct** banki, char* path, int stringcount) {
                 switch (i) {
                 case 0:
                     strcpy(banki[j]->bankname, token);
+                    
                     break;
                 case 1:
                     strcpy(banki[j]->banktype, token);
                     break;
                 case 2:
-                    banki[j]->our_vklad->saving = strtof(token, NULL);
+                    banki[j]->count = strtof(token, NULL);
+
+                    for (l = 0; l < banki[j]->count; l++) {
+                        banki[j]->our_vklad[l] = (vkladstruct*)malloc(sizeof(vkladstruct) * banki[j]->count);
+                        banki[j]->our_vklad[l]->vkladname = (char*)malloc(sizeof(char) * LEN);
+                    }
                     break;
                 case 3:
-                    banki[j]->our_vklad->debit = strtof(token, NULL);
+                    strcpy(banki[j]->our_vklad[0]->vkladname, token);
                     break;
                 case 4:
-                    banki[j]->our_vklad->cumulative = strtof(token, NULL);
+                    banki[j]->our_vklad[0]->rate = strtof(token, NULL);
                     break;
                 case 5:
-                    banki[j]->our_vklad->saving_month = strtof(token, NULL);
+                    banki[j]->our_vklad[0]->times = strtof(token, NULL);
+                    if (banki[j]->count == 1) {
+                        i = -1;
+                        j++;
+                    }
                     break;
                 case 6:
-                    banki[j]->our_vklad->debit_month = strtof(token, NULL);
+                    strcpy(banki[j]->our_vklad[1]->vkladname, token);
                     break;
                 case 7:
-                    banki[j]->our_vklad->cumulative_month = strtof(token, NULL);
-                    i = -1;
-                    j++;
+                    banki[j]->our_vklad[1]->rate = strtof(token, NULL);
+                    break;
+                case 8:
+                    banki[j]->our_vklad[1]->times = strtof(token, NULL);
+                    if (banki[j]->count == 2) {
+                        i = -1;
+                        j++;
+                    }
+                    break;
+                case 9:
+                    strcpy(banki[j]->our_vklad[2]->vkladname, token);
+                    break;
+                case 10:
+                    banki[j]->our_vklad[2]->rate = strtof(token, NULL);
+                    break;
+                case 11:
+                    banki[j]->our_vklad[2]->times = strtof(token, NULL);
+                    if (banki[j]->count == 3) {
+                        i = -1;
+                        j++;
+                    }
                     break;
                 }
                 i++;
@@ -143,19 +171,19 @@ void choosesaving(int sumvkl, int your_month, bankstruct** banki,int stringcount
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
-        if (your_month < (banki[j]->our_vklad->saving_month) || banki[j]->our_vklad->saving_month == 0) {
+        if (your_month < (banki[j]->our_vklad[0]->times)) {
             k += 1;
         }
     }
     if (k != stringcount) {
         int maxI = 0;
         int i;
-        float maxproc = banki[0]->our_vklad->saving;
+        float maxproc = banki[0]->our_vklad[0]->rate;
         int koef = 0;
         for (i = 1; i < stringcount; i++) {
-            if (banki[i]->our_vklad->saving > maxproc && your_month >= banki[i]->our_vklad->saving_month) {
-                koef = (int)your_month / banki[i]->our_vklad->saving_month;
-                maxproc = banki[i]->our_vklad->saving;
+            if (banki[i]->our_vklad[0]->rate > maxproc && your_month >= banki[i]->our_vklad[0]->times) {
+                koef = (int)your_month / banki[i]->our_vklad[0]->times;
+                maxproc = banki[i]->our_vklad[0]->rate;
                 maxI = i;
             }
         }
@@ -173,21 +201,26 @@ void choosesaving(int sumvkl, int your_month, bankstruct** banki,int stringcount
  void choosedebit(int sumvkl, int your_month, bankstruct** banki,int stringcount) {
     int maxI = 0;
     int i;
-    float maxproc = banki[0]->our_vklad->debit;
+    float maxproc =-1;
     int koef=0;
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
-        if (your_month < banki[j]->our_vklad->saving_month || banki[j]->our_vklad->saving_month==0) {
+        if (banki[j]->count ==1){
+            k += 1;
+        }
+        else if (your_month < banki[j]->our_vklad[1]->times) {
             k += 1;
         }
     }
     if (k != stringcount) {
         for (i = 1; i < stringcount; i++) {
-            if (banki[i]->our_vklad->debit > maxproc && your_month >= banki[i]->our_vklad->debit_month) {
-                koef = (int)your_month / banki[i]->our_vklad->debit_month;
-                maxproc = banki[i]->our_vklad->debit;
-                maxI = i;
+            if (banki[i]->count >= 2){
+                if (banki[i]->our_vklad[1]->rate > maxproc && your_month >= banki[i]->our_vklad[1]->times) {
+                    koef = (int)your_month / banki[i]->our_vklad[1]->times;
+                    maxproc = banki[i]->our_vklad[1]->rate;
+                    maxI = i;
+                }
             }          
         }   
         double summa = sumvkl;
@@ -204,21 +237,26 @@ void choosesaving(int sumvkl, int your_month, bankstruct** banki,int stringcount
 void choosecumulative(int sumvkl, int your_month, bankstruct** banki, int stringcount) {
     int maxI = 0;
     int i;
-    float maxproc = banki[0]->our_vklad->cumulative;
+    float maxproc = -1;
     int koef=0;
     int j = 0;
     int k = 0;
     for (j = 0; j < stringcount; j++) {
-        if (your_month < banki[j]->our_vklad->saving_month || banki[j]->our_vklad->saving_month==0) {
+        if (banki[j]->count != 3) {
+            k += 1;
+        }
+        else if (your_month < banki[j]->our_vklad[1]->times) {
             k += 1;
         }
     }
     if (k != stringcount) {
         for (i = 1; i < stringcount; i++) {
-            if (banki[i]->our_vklad->cumulative > maxproc && your_month >= banki[i]->our_vklad->cumulative_month) {
-                koef = (int)your_month / banki[i]->our_vklad->cumulative_month;
-                maxproc = banki[i]->our_vklad->cumulative;
-                maxI = i;
+            if (banki[i]->count == 3) {
+                if (banki[i]->our_vklad[2]->rate > maxproc && your_month >= banki[i]->our_vklad[2]->times) {
+                    koef = (int)your_month / banki[i]->our_vklad[2]->times;
+                    maxproc = banki[i]->our_vklad[2]->rate;
+                    maxI = i;
+                }
             }
         }     
         double summa = sumvkl;
@@ -234,9 +272,13 @@ void choosecumulative(int sumvkl, int your_month, bankstruct** banki, int string
 
 void freebanki(bankstruct** banki, int stringcount) {
     int i = 0;
+    int j = 0;
     for (i = 0; i < stringcount; i++) {
         free(banki[i]->bankname);
         free(banki[i]->banktype);
+        for (j = 0; j < banki[i]->count; j++) {
+            free(banki[i]->our_vklad[j]->vkladname);
+        }
         free(banki[i]->our_vklad);
         free (banki[i]);
     }

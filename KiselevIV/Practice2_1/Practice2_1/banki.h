@@ -4,20 +4,23 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 typedef struct {
-	float saving;
+	/*float saving;
 	float debit;
 	float cumulative;
 	int saving_month;
 	int debit_month;
 	int cumulative_month;
-
+	*/
+	char* vkladname;
+	float rate;
+	int times;
 }vkladstruct;
 
 typedef struct {
-	
+	int count;
 	char* bankname;
 	char* banktype;
-	vkladstruct* our_vklad;
+	vkladstruct** our_vklad;
 }bankstruct;
 
 

@@ -14,7 +14,6 @@ int main() {
 	char your_type[15];
 	data_input(&sumvkl, &your_month, &your_type);
 
-	int n = 3;
 	chooseall(sumvkl, your_month, banki,stringcount, &your_type);
 	freebanki(banki, stringcount);
 	return 0;
