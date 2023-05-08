@@ -169,6 +169,7 @@ void TAgencyBook::file_reader(ifstream& file) {
 		}
 	}
 	file.seekg(0, ios_base::beg);
+	delete[] num_services;
 	file.close();
 }
 
