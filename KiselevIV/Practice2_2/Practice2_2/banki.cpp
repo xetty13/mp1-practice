@@ -210,7 +210,7 @@ int bestbank::choosecumulative(int stringcount) {
             summa *= (double)(1.00 + maxproc / 100);
         }
         this->bestname[2] = banki[maxI].bankname;
-        this->besttype[2] ="cumulative";
+        this->besttype[2] = "cumulative";
         this->bestsum[2] = summa;//cout << ("Best cumulative invest: BANK- banki[maxI]->bankname, in the next year you will receive summa")<< endl;
         return 0;
     }
@@ -226,7 +226,7 @@ void bestbank::chooseall(int stringcount) {
     int deb = choosedebit(stringcount);
     int cum = choosecumulative(stringcount);
     if ((sav + deb + cum) == 3) {
-        cout<<"It is impossible to make a profit because the selected period is less than the minimum" << endl;
+        cout << "It is impossible to make a profit because the selected period is less than the minimum" << endl;
     }
     else {
         chooseprint(n);

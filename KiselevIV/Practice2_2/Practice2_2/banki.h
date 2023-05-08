@@ -11,7 +11,7 @@ struct bankstruct {
 	string banktype;
 };
 
-struct vkladstruct{
+struct vkladstruct {
 	float saving;
 	float debit;
 	float cumulative;
