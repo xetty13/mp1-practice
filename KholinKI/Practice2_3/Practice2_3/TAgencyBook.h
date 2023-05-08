@@ -28,8 +28,7 @@ public:
     TAgencyBook* Get_Europe_Countries();//find european countries and create european massive
 
     friend ostream& operator<<(ostream& stream, const TAgencyBook& obj);//overloading for TAgencyBook
-    TAgencyBook& operator=(const TAgencyBook& obj);
-
+    
 };
 
 #endif
