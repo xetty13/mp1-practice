@@ -4,43 +4,31 @@
 #include <string>
 using namespace std;
 
-
+struct vkladstruct {
+	string vkladname;
+	float rate;
+	int times;
+};
 struct bankstruct {
-
+	int count;
 	string bankname;
 	string banktype;
-};
-
-struct vkladstruct {
-	float saving;
-	float debit;
-	float cumulative;
-	int saving_month;
-	int debit_month;
-	int cumulative_month;
-
+	vkladstruct* our_vklad;
 };
 
 struct bestbank {
 	bankstruct* banki;
-	vkladstruct* vklads;
 	int sumvkl;
 	int your_month;
+	string your_type;
+	int stringcount;//поле, ниже одноимённый параметр(он другой)
 	bestbank(int stringcount);
 	~bestbank();
-	void workfile(string path, int stringcount);
+	void workfile(string path);
 
 	void data_input();
 
-	void chooseall(int stringcount);
-
-	int choosesaving(int stringcount);
-	int choosedebit(int stringcount);
-	int choosecumulative(int stringcount);
-
-
-	void chooseprint(int n);
-
+	void choosebest();
 
 	string bestname[3];
 	string besttype[3];
