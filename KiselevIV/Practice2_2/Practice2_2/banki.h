@@ -29,10 +29,6 @@ struct bestbank {
 	void data_input();
 
 	void choosebest();
-
-	string bestname[3];
-	string besttype[3];
-	float bestsum[3];
 };
 
 int strcount(string path);

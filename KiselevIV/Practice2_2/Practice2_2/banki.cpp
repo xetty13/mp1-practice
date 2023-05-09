@@ -169,8 +169,9 @@ void bestbank::choosebest() {
         }
     }
     double summa = sumvkl;
+    double s = (double) banki[maxI].our_vklad[a].times / 12;
     for (j = 0; j < koef; j++) {
-        summa *= (double)(1.00 + maxproc / 100);
+        summa *= (double)(1.00 + maxproc* s/ 100);
     }
     if (maxproc == -1) {
         cout<<"The debit invest is not suitable for the terms"<< endl;
