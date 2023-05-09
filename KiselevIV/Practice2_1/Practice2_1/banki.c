@@ -167,8 +167,6 @@ void choosebest(int sumvkl, int your_month, bankstruct** banki, int stringcount,
     int i;
     float maxproc = -1;
     int koef = 0;
-    int j = 0;
-    int k = 0;
     for (i = 1; i < stringcount; i++) {
         if (banki[i]->count >= (a + 1)) {
             if (banki[i]->our_vklad[a]->rate > maxproc && your_month >= banki[i]->our_vklad[a]->times) {
@@ -178,9 +176,11 @@ void choosebest(int sumvkl, int your_month, bankstruct** banki, int stringcount,
             }
         }
     }
+    int j = 0;
     double summa = sumvkl;
+    double s = (double)banki[maxI]->our_vklad[a]->times / 12;
     for (j = 0; j < koef; j++) {
-        summa *= (double)(1.00 + maxproc / 100);
+        summa *= (double)(1.00 + maxproc * s / 100);
     }
     if (maxproc == -1) {
         printf("The debit invest is not suitable for the terms\n");
