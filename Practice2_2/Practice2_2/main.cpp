@@ -1,23 +1,16 @@
 #include "title.h"
-
-int main() {
-	setlocale(LC_ALL, "RU");
+void main() {
 	const string adress = "shops.txt";
 	int shop_count = count_shops(adress);
-	//cout << shop_count << endl;
 	Shop* shops = info(shop_count, adress);
-	//print_str(shops, shop_count);
-	print_inf(shops, shop_count);
-	int nums = quantity(shops, shop_count);
-	//cout << nums<<endl;
-	Shop* our_shop = our(shops,nums, shop_count);
-	//print_str(our_shop, nums);
-	cout << "\nSituable shops: " << endl;
-	print_inf(our_shop, nums);
-	
-	//int* arr = array_our(shops, nums,shop_count);
-	//print_str(shops, nums, arr);
-	free_struct(&our_shop);
-	free_struct(&shops);
-	return 0;
+	for (int i = 0; i < shop_count; i++) {
+		cout << shops[i];
+	}
+	int quantity = our_quantity(shops, shop_count);
+	cout << "\nOur shops: " << endl;
+	Shop* shop = correct_shop(shops, shop_count, quantity);
+	for (int i = 0; i < quantity; i++) {
+		cout << shop[i] ;
+	}
+	free_str(shops, shop_count);
 }
