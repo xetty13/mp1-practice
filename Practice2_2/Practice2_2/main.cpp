@@ -13,4 +13,5 @@ void main() {
 		cout << shop[i] ;
 	}
 	free_str(shops, shop_count);
+	free_str(shop, quantity);
 }
