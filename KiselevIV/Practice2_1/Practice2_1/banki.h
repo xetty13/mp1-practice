@@ -13,7 +13,7 @@ typedef struct {
 	int count;
 	char* bankname;
 	char* banktype;
-	vkladstruct** our_vklad;
+	vkladstruct* our_vklad;
 }bankstruct;
 
 char* getfile();

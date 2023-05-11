@@ -84,45 +84,44 @@ void workfile(bankstruct** banki, char* path, int stringcount) {
                 case 2:
                     banki[j]->count = strtof(token, NULL);
 
-                    for (l = 0; l < banki[j]->count; l++) {
-                        banki[j]->our_vklad[l] = (vkladstruct*)malloc(sizeof(vkladstruct) * banki[j]->count);
-                        banki[j]->our_vklad[l]->vkladname = (char*)malloc(sizeof(char) * LEN);
+                    for (l = 0; l < banki[j]->count; l++) {                 
+                        banki[j]->our_vklad[l].vkladname = (char*)malloc(sizeof(char) * LEN);
                     }
                     break;
                 case 3:
-                    strcpy(banki[j]->our_vklad[0]->vkladname, token);
+                    strcpy(banki[j]->our_vklad[0].vkladname, token);
                     break;
                 case 4:
-                    banki[j]->our_vklad[0]->rate = strtof(token, NULL);
+                    banki[j]->our_vklad[0].rate = strtof(token, NULL);
                     break;
                 case 5:
-                    banki[j]->our_vklad[0]->times = strtof(token, NULL);
+                    banki[j]->our_vklad[0].times = strtof(token, NULL);
                     if (banki[j]->count == 1) {
                         i = -1;
                         j++;
                     }
                     break;
                 case 6:
-                    strcpy(banki[j]->our_vklad[1]->vkladname, token);
+                    strcpy(banki[j]->our_vklad[1].vkladname, token);
                     break;
                 case 7:
-                    banki[j]->our_vklad[1]->rate = strtof(token, NULL);
+                    banki[j]->our_vklad[1].rate = strtof(token, NULL);
                     break;
                 case 8:
-                    banki[j]->our_vklad[1]->times = strtof(token, NULL);
+                    banki[j]->our_vklad[1].times = strtof(token, NULL);
                     if (banki[j]->count == 2) {
                         i = -1;
                         j++;
                     }
                     break;
                 case 9:
-                    strcpy(banki[j]->our_vklad[2]->vkladname, token);
+                    strcpy(banki[j]->our_vklad[2].vkladname, token);
                     break;
                 case 10:
-                    banki[j]->our_vklad[2]->rate = strtof(token, NULL);
+                    banki[j]->our_vklad[2].rate = strtof(token, NULL);
                     break;
                 case 11:
-                    banki[j]->our_vklad[2]->times = strtof(token, NULL);
+                    banki[j]->our_vklad[2].times = strtof(token, NULL);
                     if (banki[j]->count == 3) {
                         i = -1;
                         j++;
@@ -169,16 +168,16 @@ void choosebest(int sumvkl, int your_month, bankstruct** banki, int stringcount,
     int koef = 0;
     for (i = 1; i < stringcount; i++) {
         if (banki[i]->count >= (a + 1)) {
-            if (banki[i]->our_vklad[a]->rate > maxproc && your_month >= banki[i]->our_vklad[a]->times) {
-                koef = (int)your_month / banki[i]->our_vklad[a]->times;
-                maxproc = banki[i]->our_vklad[a]->rate;
+            if (banki[i]->our_vklad[a].rate > maxproc && your_month >= banki[i]->our_vklad[a].times) {
+                koef = (int)your_month / banki[i]->our_vklad[a].times;
+                maxproc = banki[i]->our_vklad[a].rate;
                 maxI = i;
             }
         }
     }
     int j = 0;
     double summa = sumvkl;
-    double s = (double)banki[maxI]->our_vklad[a]->times / 12;
+    double s = (double)banki[maxI]->our_vklad[a].times / 12;
     for (j = 0; j < koef; j++) {
         summa *= (double)(1.00 + maxproc * s / 100);
     }
@@ -186,7 +185,7 @@ void choosebest(int sumvkl, int your_month, bankstruct** banki, int stringcount,
         printf("The debit invest is not suitable for the terms\n");
     }
     else {
-        printf("Best %s invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->our_vklad[a]->vkladname, banki[maxI]->bankname, summa);
+        printf("Best %s invest: BANK- %s, in the next year you will receive %.2lf \n", banki[maxI]->our_vklad[a].vkladname, banki[maxI]->bankname, summa);
     }
 }
 
@@ -196,9 +195,7 @@ void freebanki(bankstruct** banki, int stringcount) {
     for (i = 0; i < stringcount; i++) {
         free(banki[i]->bankname);
         free(banki[i]->banktype);
-        for (j = 0; j < banki[i]->count; j++) {
-            free(banki[i]->our_vklad[j]->vkladname);
-        }
+        free(banki[i]->our_vklad[j].vkladname);
         free(banki[i]->our_vklad);
         free (banki[i]);
     }
