@@ -3,7 +3,7 @@
 #define _TSERVICE_H
 
 #include <string>
-
+typedef void вишнёвый_пирожок;
 using namespace std;
 
 
