@@ -227,37 +227,36 @@ int* TAgencyBook::counter_euro_countries() {
 	return num_euro_countries;
 }
 
-TAgencyBook* TAgencyBook::Get_Europe_Countries() {//find european countries and create european massive}
+TAgencyBook TAgencyBook::Get_Europe_Countries() {//find european countries and create european massive}
 	int j = -1;//counter num_services
 	int k = 0;//counter euro_zones
 	int z = 0;//counter new_agencies_list
-	int* num_euro_countries = counter_euro_countries();
+	TAgencyBook europeCountries;
+	europeCountries.count_agencies = counter_euro_agencies();
 	int i = 0;//counter num_agencies
 	int i_saved = -1;
-	TAgencyBook* europeCountries = new TAgencyBook();
-	europeCountries->count_agencies = counter_euro_agencies();
-
-	europeCountries->agencies = new TAgency * [europeCountries->count_agencies];//copy TAgency_array
+	int* num_euro_countries = counter_euro_countries();
+	europeCountries.agencies = new TAgency * [europeCountries.count_agencies];//copy TAgency_array
 	for (i = 0; i < count_agencies; i++) {
 		if (num_euro_countries[i] == 0) {
 			continue;
 		}
-		else { j++; europeCountries->agencies[j] = new TAgency(num_euro_countries[i]); }
+		else { j++; europeCountries.agencies[j] = new TAgency(num_euro_countries[i]); }
 
 	}
 	j = i = 0;
 	for (i = 0; i < count_agencies; i++) {
 		i_saved++;
 		if (num_euro_countries[i] == 0) { i_saved--;  continue; }
-		europeCountries->agencies[i_saved]->name = agencies[i]->name;
+		europeCountries.agencies[i_saved]->name = agencies[i]->name;
 		while (k < NUM_EUROPE_COUNTRIES && z < num_euro_countries[i]) {
 
 			if (agencies[i]->services[j].country == euro_zone[k]) {//find the European countries in the old array and insert them in the new one
-				europeCountries->agencies[i_saved]->services[z].country = agencies[i]->services[j].country;
-				europeCountries->agencies[i_saved]->services[z].travel_conditions = agencies[i]->services[j].travel_conditions;
-				europeCountries->agencies[i_saved]->services[z].excursion_services = agencies[i]->services[j].excursion_services;
-				europeCountries->agencies[i_saved]->services[z].host_service = agencies[i]->services[j].host_service;
-				europeCountries->agencies[i_saved]->services[z].ticket_price = agencies[i]->services[j].ticket_price;
+				europeCountries.agencies[i_saved]->services[z].country = agencies[i]->services[j].country;
+				europeCountries.agencies[i_saved]->services[z].travel_conditions = agencies[i]->services[j].travel_conditions;
+				europeCountries.agencies[i_saved]->services[z].excursion_services = agencies[i]->services[j].excursion_services;
+				europeCountries.agencies[i_saved]->services[z].host_service = agencies[i]->services[j].host_service;
+				europeCountries.agencies[i_saved]->services[z].ticket_price = agencies[i]->services[j].ticket_price;
 				z++;
 				j++;
 				k = 0;
@@ -294,12 +293,36 @@ TAgencyBook::TAgencyBook(const string& path): TAgencyBook() {
 	}
 }
 
+const TAgencyBook& TAgencyBook::operator=(const TAgencyBook& obj) {
+	count_agencies = obj.count_agencies;
+	agencies = new TAgency * [count_agencies];
+	for (int i = 0; i < count_agencies; i++) {
+		agencies[i]->num_services = obj.agencies[i]->num_services;
+		agencies[i]->name = obj.agencies[i]->name;
+		agencies[i]->num_services = obj.agencies[i]->num_services;
+		agencies[i]->services = new TService[agencies[i]->num_services];
+		for (int i = 0; i < count_agencies; i++) {
+			for (int j = 0; j < agencies[i]->num_services; j++) {
+				agencies[i]->services[j].country = obj.agencies[i]->services[j].country;
+				agencies[i]->services[j].travel_conditions = obj.agencies[i]->services[j].travel_conditions;
+				agencies[i]->services[j].excursion_services = obj.agencies[i]->services[j].excursion_services;
+				agencies[i]->services[j].host_service = obj.agencies[i]->services[j].country;
+				agencies[i]->services[j].ticket_price = obj.agencies[i]->services[j].ticket_price;
+			}
+		}
+	}
+	return *this;
+}
+
 
 
 TAgencyBook::TAgencyBook(const TAgencyBook& object) {
 	count_agencies = object.count_agencies;
 	agencies = new TAgency * [count_agencies];
-
+	for (int i = 0; i < object.count_agencies; i++)
+	{
+		agencies[i] = new TAgency(*(object.agencies[i]));
+	}
 }
 
 
@@ -327,6 +350,10 @@ TAgency::TAgency(const TAgency& object) {
 	num_services = object.num_services;
 	services = new TService[num_services];
 	name = object.name;
+	for (int i = 0; i < num_services; i++)
+	{
+		services[i] = TService(object.services[i]);
+	}
 }
 
 
@@ -354,6 +381,14 @@ TService::TService() {
 	excursion_services = "";
 	host_service = "";
 	ticket_price = "";
+}
+
+TService::TService(const TService& obj) {
+	country = obj.country;
+	travel_conditions = obj.travel_conditions;
+	excursion_services = obj.excursion_services;
+	host_service = obj.host_service;
+	ticket_price = obj.ticket_price;
 }
 
 
