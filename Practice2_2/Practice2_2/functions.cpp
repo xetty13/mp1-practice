@@ -18,20 +18,29 @@ int count_shops(const string adress) {
 	base.close();
 	return lines;
 }
-Shop* info(int& n, const string adress) {
+List* info(int& n, const string adress) {
+	List* list;
 	ifstream file(adress);
-	Shop* shop = new Shop[n];
+	list->count = n;
+	list->shop = new Shop[list->count];
 	for (int i = 0; i < n; i++) {
-		shop[i].op = new Opening_Hours[7];
+		list->shop[i].op = new Opening_Hours[7];
 	}
 
 	for (int i = 0; i < n; i++)
 	{
-		file >> shop[i].name >> shop[i].adress.street >> shop[i].phone_number >> shop[i].specialization >> shop[i].op[0].Day >> shop[i].op[0].open.hours >> shop[i].op[0].open.minutes >> shop[i].op[0].close.hours >> shop[i].op[0].close.minutes >> shop[i].op[1].Day >> shop[i].op[1].open.hours >> shop[i].op[1].open.minutes >> shop[i].op[1].close.hours >> shop[i].op[1].close.minutes >> shop[i].op[2].Day >> shop[i].op[2].open.hours >> shop[i].op[2].open.minutes >> shop[i].op[2].close.hours >> shop[i].op[2].close.minutes >> shop[i].op[3].Day >> shop[i].op[3].open.hours >> shop[i].op[3].open.minutes >> shop[i].op[3].close.hours >> shop[i].op[3].close.minutes >> shop[i].op[4].Day >> shop[i].op[4].open.hours >> shop[i].op[4].open.minutes >> shop[i].op[4].close.hours >> shop[i].op[4].close.minutes >> shop[i].op[5].Day >> shop[i].op[5].open.hours >> shop[i].op[5].open.minutes >> shop[i].op[5].close.hours >> shop[i].op[5].close.minutes >> shop[i].op[6].Day >> shop[i].op[6].open.hours >> shop[i].op[6].open.minutes >> shop[i].op[6].close.hours >> shop[i].op[6].close.minutes >> shop[i].form_of_ownership >> shop[i].adress.postcode;
+		file >> list->shop[i].name >> list->shop[i].adress.street >> list->shop[i].phone_number >> list->shop[i].specialization >> list->shop[i].op[0].Day >> list->shop[i].op[0].open.hours
+			>> list->shop[i].op[0].open.minutes >> list.shop[i].op[0].close.hours >> list.shop[i].op[0].close.minutes >> list.shop[i].op[1].Day >>  list.shop[i].op[1].open.hours >>
+			list.shop[i].op[1].open.minutes >> list.shop[i].op[1].close.hours >> list.shop[i].op[1].close.minutes >> list.shop[i].op[2].Day >> list.shop[i].op[2].open.hours >> 
+			list.shop[i].op[2].open.minutes >> list.shop[i].op[2].close.hours >> list.shop[i].op[2].close.minutes >> list.shop[i].op[3].Day >> list.shop[i].op[3].open.hours >> 
+			list.shop[i].op[3].open.minutes >> list.shop[i].op[3].close.hours >> list.shop[i].op[3].close.minutes >> list.shop[i].op[4].Day >> list.shop[i].op[4].open.hours >> 
+			list.shop[i].op[4].open.minutes >> list.shop[i].op[4].close.hours >> list.shop[i].op[4].close.minutes >> list.shop[i].op[5].Day >> list.shop[i].op[5].open.hours >>
+			list.shop[i].op[5].open.minutes >> list.shop[i].op[5].close.hours >> list.shop[i].op[5].close.minutes >> list.shop[i].op[6].Day >> list.shop[i].op[6].open.hours >>
+			list.shop[i].op[6].open.minutes >> list.shop[i].op[6].close.hours >> list.shop[i].op[6].close.minutes >> list.shop[i].form_of_ownership >> list.shop[i].adress.postcode;
 			
 	}
 	file.close();
-	return shop;
+	return list;
 }
 ostream& operator<<(ostream& os, const Shop& shop) {
 	os << "\nName: " << shop.name << "\nAdress: " << shop.adress.street << "\nPhone number: " << shop.phone_number << "\nSpecialization : " << shop.specialization << "\nForm of ownership: " << shop.form_of_ownership << "\nPostcode: " << shop.adress.postcode << endl;
