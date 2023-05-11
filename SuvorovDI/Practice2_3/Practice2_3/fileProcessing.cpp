@@ -145,7 +145,7 @@ std::ostream& operator<<(std::ostream& out, const University_t& un) {
 
 std::ostream& operator<<(std::ostream& out, const Spec_t& s) {
     std::cout << "Название специальности: " << s.GetName() << ":\n";
-    std::cout << "Колличество форм обучения: " << s.GetNum_form() << "\n";
+    std::cout << "Количество форм обучения: " << s.GetNum_form() << "\n";
 
     for (int i = 0; i < s.GetNum_form(); i++) {
         std::string name_form;
@@ -293,7 +293,7 @@ int Univ_database_t::try_to_open_file(const std::string& fname) {
             getline(std::cin, const_cast<std::string&>(fname));
             c = find_num_univ(fname);
         }
-        catch (int err) {
+        catch (...) {
             std::cout << "Такого файла нет" << std::endl;
         }
     }

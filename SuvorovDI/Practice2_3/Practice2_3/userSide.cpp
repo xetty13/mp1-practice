@@ -42,13 +42,13 @@ std::string entering_mode() {
 void about_univercity(Univ_database_t& unsdata) {
     std::string in;
     University_t curr_univ;
-    int univ_ind;
     std::cout << "Выберите интересующую вас информацию:\n";
     std::cout << "Всё о конкретном ВУЗе - введите 1;\nСпециальность с минимальным баллом в конкретном ВУЗе - введите 2;\n";
     in = entering_mode();
 
     if (in == "1") {
-        int cost, score, code;
+        float cost, score;
+        int code;
         std::string name;
         std::cout << "Вы выбрали 'Всё о конкретном ВУЗе'\nВведите название вуза:\n";
 
