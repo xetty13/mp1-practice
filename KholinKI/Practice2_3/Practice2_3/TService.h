@@ -16,5 +16,6 @@ struct TService// list of service
     string ticket_price;
 
     TService(void);
+    TService(const TService& obj);
 };
 #endif

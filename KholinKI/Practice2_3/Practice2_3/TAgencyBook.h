@@ -25,7 +25,8 @@ public:
     void search_string(ifstream& file);//look for the first occurrence of the string
     void file_reader(ifstream& file);
 
-    TAgencyBook* Get_Europe_Countries();//find european countries and create european massive
+    TAgencyBook Get_Europe_Countries();//find european countries and create european massive
+    const TAgencyBook& operator=(const TAgencyBook& obj);
 
     friend ostream& operator<<(ostream& stream, const TAgencyBook& obj);//overloading for TAgencyBook
     
