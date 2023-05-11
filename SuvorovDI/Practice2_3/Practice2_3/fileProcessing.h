@@ -23,6 +23,23 @@ public:
     Spec_t();
     Spec_t(const Spec_t&);
     ~Spec_t();
+
+    std::string GetName() const;
+    int GetNum_form() const;
+    EducationalForm Get_Form(int ind) const;
+    int Get_ExamScore(int ind) const;
+    int Get_Cost(int ind) const;
+
+    void SetName(const std::string name_s);
+    void SetNumForms(const int n);
+    void Set_Form(const int ind, EducationalForm form);
+    void Set_Cost(const int ind, int cost);
+    void Set_ExamScore(const int ind, int score);
+
+    void Set_Forms(const int num);
+    void Set_Costs(const int num);
+    void Set_ExamScores(const int num);
+
     Spec_t& operator=(const Spec_t&);
 };
 
@@ -34,10 +51,17 @@ private:
 
 public:
     University_t();
-    University_t(std::string name_u, int spec_count, Spec_t* specialties);
     University_t(const University_t&);
     ~University_t();
     University_t& operator=(const University_t&);
+
+    std::string GetName() const;
+    int GetNum_spec() const;
+    Spec_t& GetSpec(int ind) const;
+
+    void SetName(const std::string name_u);
+    void SetNumSpecs(const int n);
+    void SetSpecs(const int num);
 
     void SearchMinScoreSpeciality(std::string& spec_name, int& score, std::string& form);
     float ComputeAverageScore() const;
@@ -60,7 +84,6 @@ public:
     ~Univ_database_t();
     University_t& operator[] (const int ind);
 
-    Univ_database_t SearchBySpeciality(const std::string& name);
     int SearchVUZ(const std::string& name, University_t& u) const;
     int SearchSpecialties(const std::string& name, Spec_t*& specs, std::string*& names_univ) const;
     

@@ -80,14 +80,14 @@ void about_univercity(Univ_database_t& unsdata) {
         int min_score;
         std::string name_form, spec_name;
         curr_univ.SearchMinScoreSpeciality(spec_name, min_score, name_form);
-        std::cout << "Минимальный балл для поступления в ВУЗе " << curr_univ.name << ": " << min_score << "\n";
+        std::cout << "Минимальный балл для поступления в ВУЗе " << curr_univ.GetName() << ": " << min_score << "\n";
         std::cout << "Это специальность:  " << spec_name << ", Форма обучения: " << name_form << std::endl;
     }
 }
 
 // Specialty at a university:
 void print_all_about_spec(Spec_t* spec_arr, int c, std::string* names_univs) {
-    std::cout << "Специальность " << spec_arr[0].name << " присутствует в следующем перечне ВУЗов:\n";
+    std::cout << "Специальность " << spec_arr[0].GetName() << " присутствует в следующем перечне ВУЗов:\n";
 
     for (int i = 0; i < c; i++) {
         std::cout << "ВУЗ " << names_univs[i] << ":\n";
@@ -101,10 +101,10 @@ void print_min_score_for_spec(Spec_t* spec_arr, int c, std::string* names_univs)
     EducationalForm edForm;
 
     for (int i = 0; i < c; i++) {
-        for (int z = 0; z < spec_arr[i].n_form; z++) {
-            if (spec_arr[i].examScores[z] < min) {
-                min = spec_arr[i].examScores[z];
-                edForm = spec_arr[i].forms[z];
+        for (int z = 0; z < spec_arr[i].GetNum_form(); z++) {
+            if (spec_arr[i].Get_ExamScore(z) < min) {
+                min = spec_arr[i].Get_ExamScore(z);
+                edForm = spec_arr[i].Get_Form(z);
                 name_form = switch_form(edForm);
                 name_univ = names_univs[i];
             }
