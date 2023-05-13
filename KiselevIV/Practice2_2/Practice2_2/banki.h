@@ -8,12 +8,14 @@ struct vkladstruct {
 	string vkladname;
 	float rate;
 	int times;
+	friend ostream& operator<<(ostream& os, const vkladstruct& our_vklad);
 };
 struct bankstruct {
 	int count;
 	string bankname;
 	string banktype;
 	vkladstruct* our_vklad;
+	friend ostream& operator<<(ostream& os, const bankstruct& banki);
 };
 
 struct bestbank {
@@ -29,6 +31,7 @@ struct bestbank {
 	void data_input();
 
 	void choosebest();
+
 };
 
 int strcount(string path);

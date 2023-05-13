@@ -140,7 +140,21 @@ void bestbank::data_input() {
     }
 }
 
+ostream& operator<<(ostream& os, const bankstruct& banki) {
+    os << "-----------------------" << endl;
+    os << "Name of bank - " << banki.bankname << endl;
+    os << "Type of  bank - " << banki.banktype << endl;
+    os << "-----------------------" << endl;
+    return os;
+}
 
+ostream& operator<<(ostream& os, const vkladstruct& our_vklad) {
+    os << "Name of vklad - " << our_vklad.vkladname << endl;
+    os << "Rate  of vklad - " << our_vklad.rate << endl;
+    os << "Minimum times of  vklad - " << our_vklad.times << endl;
+    os << "-----------------------" << endl;
+    return os;
+}
 
 void bestbank::choosebest() {
     int a = 0;
@@ -177,7 +191,9 @@ void bestbank::choosebest() {
         cout<<"The debit invest is not suitable for the terms"<< endl;
     }
     else {
-        cout << "Best " << banki[maxI].our_vklad[a].vkladname << " invest: BANK - " << banki[maxI].bankname << ", in the next year you will receive " <<summa << endl;
+        cout << banki[maxI];
+        cout << banki[maxI].our_vklad[a];
+        cout << "If your invest "<< sumvkl << ", you will receive " << summa << endl;
     }
 }
 
