@@ -1,7 +1,9 @@
 #include "Header.h"
+#include <windows.h>
+#include <stdio.h>
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <string>
 using namespace std;
 
 
@@ -10,10 +12,6 @@ int PathError()
 {
 	std::cout << "This file isn`t exist. Be sure, that u writed a correct path with type *.<type>" << endl;
 	return 1;
-}
-int IndexError(int index, int size) {
-	cout << "Index Error. A index should be the greater (or equal) than 0 and the less than " << size << "\nU inputed: " << index << endl;
-	return -1; 
 }
 string input_path()
 {
@@ -24,18 +22,20 @@ string input_path()
 	}
 	return path;
 }
-template<typename T>
-int operator+(int& f, Cart<T> s) {
-	int tmp = f;
-	tmp += s.cost;
+double operator+(int& f, Cart s) {
+	double tmp = f;
+	tmp += s.get_cost();
+	return tmp;
 }
 void user() 
 {
 	
-	NewConteiner<Base<Product>> base;  NewConteiner<Base<Product>>::read(input_path(), base);
-	Receipt<Cart<Product>> q;
+	NewConteiner<Base> base;  
+	NewConteiner<Base>::read(input_path(), base);
+	Receipt q;
 	q.set_num(1);
-	std::cout << "Hi. Lets start.\n  This is all our products: \n " << endl;  print_all_products(base.get_elements(), base.len());
+	Base* e = base.get_elements();
+	std::cout << "Hi. Lets start.\n  This is all our products: \n " << endl;  print_all_products(e, base.len());
 
 	while (true) {
 
@@ -47,7 +47,12 @@ void user()
 		
 		if (user == 0) {
 			f = 0;
-			std::cout << "Have a nice day! " << endl; return;
+			std::cout << "Have a nice day! " << endl; 
+			for (int i = 0; i < base.len(); i++)
+			{
+				delete e[i].get_product();
+			}
+			return;
 		}
 		if (user == 1) {
 
@@ -55,21 +60,21 @@ void user()
 			std::cout << "Which one do u wanna add ? Pls input code of product" << endl;
 			string product;  cin >> product;
 			int count = 0, ucount;
-			Cart<Product> tmp;
-			Base<Product>* pr = nullptr;
+			Cart tmp;
+			Base* pr = nullptr;
 			for (int i = 0; i < base.len(); i++) {
 
-				if (base.get_elements()[i].product == product) {
+				if (*(base.get_elements()[i].get_product()) == product) {
 					pr = &base.get_elements()[i];
 
-					if (q.find(*pr).product.get_name() != "") {
-						std::cout << "Your product: " << pr->product;
-						count = pr->count - tmp.count;
+					if (q.find(*pr).get_product()->get_name() != "") {
+						std::cout << "Your product: " << *pr->get_product();
+						count = pr->get_count()  - tmp.get_count();
 						break;
 					}
 					else {
-						std::cout << "Your product: " << pr->product;
-						count = pr->count;
+						std::cout << "Your product: " << *pr->get_product();
+						count = pr->get_count();
 						break;
 					}
 				}
@@ -84,11 +89,11 @@ void user()
 				std::cout << "Wrong count. Try again" << endl;
 				continue;
 			}
-			pr->count -= ucount;
-			if (q.find(*pr).product.get_name() != "")
+			pr->set_count(pr->get_count() - ucount);
+			if (q.find(*pr).get_product()->get_name() != "")
 				q.add(q.find(*pr), ucount);
 			else {
-				q.add(pr->product, ucount);
+				q.add(pr->get_product(), ucount);
 
 			}
 			cout << "\nDone!" << endl;
@@ -99,19 +104,19 @@ void user()
 			q.print_cart();
 			std::cout << "Which one do u wanna remove ? Pls input code of product" << endl;
 			string product;  cin >> product;
-			Base<Product>* pr = nullptr;
+			Base* pr = nullptr;
 			int ucount;			
-			Cart<Product> tmp = q.find(product);
-			if (tmp.product.get_name() == "") {
+			Cart tmp = q.find(product);
+			if (tmp.get_product()->get_name() == "") {
 				std::cout << "Sorry, we dont have this product in the cart " << endl;
 				continue;
 			}
-			std::cout << "Input a count of products between 0 and " << tmp.count << endl;
+			std::cout << "Input a count of products between 0 and " << tmp.get_count() << endl;
 			cin >> ucount;
 
-			if (ucount < 0 || ucount > tmp.count) {
+			if (ucount < 0 || ucount > tmp.get_count()) {
 				std::cout << "Wrong count. Try again" << endl;
-				break;
+				continue;
 			}
 			q.remove(tmp, ucount);
 			cout << "\nDone!" << endl;
@@ -135,7 +140,7 @@ void user()
 
 
 //Product
-//constructors and destructor
+
 Product::Product()
 {
 	code = '*';
@@ -155,18 +160,7 @@ Product::Product(const Product& new_product)
 	name = new_product.name;
 	cost = new_product.cost;
 }
-Product::Product(Product& new_product)
-{
-	code = new_product.code;
-	name = new_product.name;
-	cost = new_product.cost;
-}
-Product::~Product()
-{
-	code = ' ';
-	name = ' ';
-	cost = 0;
-}
+
 
 
 //overloaded operations
@@ -192,18 +186,25 @@ Product& Product::operator=(const Product& new_product)
 	cost = new_product.cost;
 	return *this;
 }
-bool Product::operator==(string& str) { return (code == str || name == str); }
-bool Product::operator==(Product& prod)
+bool Product::operator==(const string& str) const {
+	return (code == str || name == str);
+}
+bool Product::operator==(const Product& prod) const
 {
 	return (code == prod.code && name == prod.name && cost == prod.cost);
 }
-//getters
-string Product::get_name() { return name; }
-string Product::get_code() { return code; }
-double Product::get_cost() { return cost; }
 
 
-
+string Product::get_name() const {
+	if (this == nullptr) return "";
+	return name; 
+}
+string Product::get_code() const {
+	return code; 
+}
+double Product::get_cost() const {
+	return cost;
+}
 
 
 //Data
@@ -223,4 +224,45 @@ void Data::now() {
 }
 
 
+//Base
+ifstream& operator>>(ifstream& buf, Base& data) {
+	if (data.product == nullptr) data.product = new Product;
+	buf >> *(data.product) >> data.count;
+	return buf;
+}
+ostream& operator<<(ostream& buf, const Base& data) {
+	buf << *(data.product) << data.count << endl;
+	return buf;
+}
+istream& operator>>(istream& buf, Base& data) {
+	if (data.product == nullptr) data.product = new Product;
+	buf >> *(data.product) >> data.count;
+	return buf;
+}
+bool Base::operator == (const string& str) const
+{
+	return *(product) == str; 
+}
+bool Base::operator == (const Base& base) const
+{
+	return *product == *(base.product);
+}
+bool Base::operator != (const Base& base) const
+{
+	return !(*this == base);
+}
+
+
+Product* Base::get_product() const
+{
+	return product;
+}
+int Base::get_count() const
+{
+	return count;
+}
+void Base::set_count(const int ucount)
+{
+	count = ucount;
+}
 
