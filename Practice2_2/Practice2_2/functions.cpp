@@ -16,21 +16,21 @@ int count_shops(const string adress) {
 		exit(1);
 	}
 	base.close();
-	return lines;
+	return lines-1;
 }
-List* info(int& n, const string adress) {
-	List* list;
+List info(int& n, const string adress) {
+	List list{};
 	ifstream file(adress);
-	list->count = n;
-	list->shop = new Shop[list->count];
+	list.count = n;
+	list.shop = new Shop[list.count];
 	for (int i = 0; i < n; i++) {
-		list->shop[i].op = new Opening_Hours[7];
+		list.shop[i].op = new Opening_Hours[7];
 	}
 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < list.count; i++)
 	{
-		file >> list->shop[i].name >> list->shop[i].adress.street >> list->shop[i].phone_number >> list->shop[i].specialization >> list->shop[i].op[0].Day >> list->shop[i].op[0].open.hours
-			>> list->shop[i].op[0].open.minutes >> list.shop[i].op[0].close.hours >> list.shop[i].op[0].close.minutes >> list.shop[i].op[1].Day >>  list.shop[i].op[1].open.hours >>
+		file >> list.shop[i].name >> list.shop[i].adress.street >> list.shop[i].phone_number >> list.shop[i].specialization >> list.shop[i].op[0].Day >> list.shop[i].op[0].open.hours
+			>> list.shop[i].op[0].open.minutes >> list.shop[i].op[0].close.hours >> list.shop[i].op[0].close.minutes >> list.shop[i].op[1].Day >>  list.shop[i].op[1].open.hours >>
 			list.shop[i].op[1].open.minutes >> list.shop[i].op[1].close.hours >> list.shop[i].op[1].close.minutes >> list.shop[i].op[2].Day >> list.shop[i].op[2].open.hours >> 
 			list.shop[i].op[2].open.minutes >> list.shop[i].op[2].close.hours >> list.shop[i].op[2].close.minutes >> list.shop[i].op[3].Day >> list.shop[i].op[3].open.hours >> 
 			list.shop[i].op[3].open.minutes >> list.shop[i].op[3].close.hours >> list.shop[i].op[3].close.minutes >> list.shop[i].op[4].Day >> list.shop[i].op[4].open.hours >> 
@@ -42,14 +42,16 @@ List* info(int& n, const string adress) {
 	file.close();
 	return list;
 }
-ostream& operator<<(ostream& os, const Shop& shop) {
-	os << "\nName: " << shop.name << "\nAdress: " << shop.adress.street << "\nPhone number: " << shop.phone_number << "\nSpecialization : " << shop.specialization << "\nForm of ownership: " << shop.form_of_ownership << "\nPostcode: " << shop.adress.postcode << endl;
-	for (int i = 0; i < 7; i++) {
-		if (shop.op[i].open.hours == "closed")
-			cout << shop.op[i].Day << ": closed" << endl;
-		else {
+ostream& operator<<(ostream& os, const List& list) {
+	for (int j = 0; j < list.count; j++) {
+		os << "\nName: " << list.shop[j].name << "\nAdress: " << list.shop[j].adress.street << "\nPhone number: " << list.shop[j].phone_number << "\nSpecialization : " << list.shop[j].specialization << "\nForm of ownership: " << list.shop[j].form_of_ownership << "\nPostcode: " << list.shop[j].adress.postcode << endl;
+		for (int i = 0; i < 7; i++) {
+			if (list.shop[j].op[i].open.hours == "closed")
+				cout << list.shop[j].op[i].Day << ": closed" << endl;
+			else {
 
-			cout << shop.op[i].Day << ": " << shop.op[i].open.hours << ":" << shop.op[i].open.minutes << "-" << shop.op[i].close.hours << ":" << shop.op[i].close.minutes << endl;
+				cout << list.shop[j].op[i].Day << ": " << list.shop[j].op[i].open.hours << ":" << list.shop[j].op[i].open.minutes << "-" << list.shop[j].op[i].close.hours << ":" << list.shop[j].op[i].close.minutes << endl;
+			}
 		}
 	}
 	return os;
@@ -70,10 +72,12 @@ int our_quantity(Shop* shops, int records) {
 	}
 	return count;
 }
-Shop* correct_shop(Shop* shops, int length, int count) {
-	Shop* shop = new Shop[count];
+List correct_shop(Shop* shops, int length, int count) {
+	List list{};
+	list.count = count;
+	list.shop = new Shop[list.count];
 	for (int i = 0; i < count; i++) {
-		shop[i].op = new Opening_Hours[7];
+		list.shop[i].op = new Opening_Hours[7];
 	}
 	for (int c = 0; c < count; c++) {
 		for (int i = 0; i < length; i++) {
@@ -83,18 +87,18 @@ Shop* correct_shop(Shop* shops, int length, int count) {
 						break;
 					else {
 						if (j == 6){
-						shop[c].name = shops[i].name;
-						shop[c].specialization = shops[i].specialization;
-						shop[c].phone_number = shops[i].phone_number;
-						shop[c].adress.street = shops[i].adress.street;
-						shop[c].adress.postcode = shops[i].adress.postcode;
-						shop[c].form_of_ownership = shops[i].form_of_ownership;
+						list.shop[c].name = shops[i].name;
+						list.shop[c].specialization = shops[i].specialization;
+						list.shop[c].phone_number = shops[i].phone_number;
+						list.shop[c].adress.street = shops[i].adress.street;
+						list.shop[c].adress.postcode = shops[i].adress.postcode;
+						list.shop[c].form_of_ownership = shops[i].form_of_ownership;
 						for (int b = 0; b < 7; b++) {
-							shop[c].op[b].Day = shops[i].op[b].Day;
-							shop[c].op[b].open.hours = shops[i].op[b].open.hours;
-							shop[c].op[b].open.minutes = shops[i].op[b].open.minutes;
-							shop[c].op[b].close.hours = shops[i].op[b].close.hours;
-							shop[c].op[b].close.minutes = shops[i].op[b].close.minutes;
+							list.shop[c].op[b].Day = shops[i].op[b].Day;
+							list.shop[c].op[b].open.hours = shops[i].op[b].open.hours;
+							list.shop[c].op[b].open.minutes = shops[i].op[b].open.minutes;
+							list.shop[c].op[b].close.hours = shops[i].op[b].close.hours;
+							list.shop[c].op[b].close.minutes = shops[i].op[b].close.minutes;
 						}
 						c++;
 						}
@@ -103,11 +107,11 @@ Shop* correct_shop(Shop* shops, int length, int count) {
 				}
 			}
 		}
-		return shop;
+		return list;
 	}
-void free_str(Shop* shop,int length) {
+void free_str(List* list,int length) {
 	for (int i = 0; i < length; i++) {
-		delete[] shop[i].op;
+		delete[] list->shop[i].op;
 	}
-	delete[] shop;
+	delete[] list->shop;
 }
