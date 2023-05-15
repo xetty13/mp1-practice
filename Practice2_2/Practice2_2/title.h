@@ -27,10 +27,14 @@ struct Shop {
 	Adress adress;
 	string form_of_ownership;
 };
+struct List {
+	Shop* shop;
+	int count;
+};
 int count_shops(const string adress);
-Shop* info(int& n, const string adress);
-ostream& operator<<(ostream& os, const Shop& shop);
+List info(int& n, const string adress);
+ostream& operator<<(ostream& os, const List& list);
 int our_quantity(Shop* shops, int records);
-Shop* correct_shop(Shop* shops, int length, int count);
-void free_str(Shop* shop, int length);
+List correct_shop(Shop* shops, int length, int count);
+void free_str(List* list, int length);
 #endif
