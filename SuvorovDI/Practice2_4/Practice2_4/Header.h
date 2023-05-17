@@ -1,4 +1,10 @@
+#ifndef _HEADER_H
+#define _HEADER_H
+
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
 
 const int step_value = 10;
 
@@ -27,6 +33,88 @@ public:
 	T& previous();
 };
 
+// Database clasess
+class TInfoProduct {
+private:
+	long code;
+	std::string name;
+	double cost;
+	int count;
+public:
+	TInfoProduct();
+	const TInfoProduct& operator= (const TInfoProduct&);
+
+	void SetCode(const long);
+	void SetName(const std::string&);
+	void SetCost(const double);
+	void SetCount(const int);
+
+	long GetCode() const;
+	std::string GetName() const;
+	double GetCost() const;
+	int GetCount() const;
+};
+
+std::ostream& operator<<(std::ostream& out, const TInfoProduct& s);
+
+class TProductsDatabase {
+private:
+	TContainer<TInfoProduct>* productsInStock;
+public:
+	TProductsDatabase(const std::string& filename);
+
+	int try_to_open_file(const std::string& fname) const;
+	int find_num_univ(const std::string& fname) const;
+	void print();
+};
+
+// Receipt clasess
+class TProduct {
+private:
+	long code;
+	std::string name;
+	double cost;
+public:
+	TProduct();
+};
+
+class TReceiptLine {
+private:
+	TProduct product;
+	int count;
+	double sum_cost;
+public:
+	TReceiptLine();
+	const TReceiptLine& operator= (const TReceiptLine&);
+};
+
+class TDate {
+private:
+	int day;
+	int month;
+	int year;
+};
+
+class TTime {
+private:
+	int hour;
+	int minute;
+	int second;
+};
+
+class TReceipt {
+private:
+	long code;
+	/*TDate date;
+	TTime time;*/
+	TContainer<TReceiptLine>* products;
+public:
+	TReceipt();
+	TReceipt(int msize);
+};
+
+
+// T_CONTAINER:
 // Constructors&destructors
 template <typename T>
 TContainer<T>::TContainer() {
@@ -65,7 +153,7 @@ TContainer<T>::~TContainer() {
 // overloading
 template <typename T>
 T& TContainer<T>::operator[] (int ind) {
-	if (ind >= size or ind < 0)
+	if (ind >= max_size or ind < 0)
 		throw "Index out of range";
 	current_index = ind;
 	return elements[ind];
@@ -133,3 +221,5 @@ T& TContainer<T>::previous() {
 	current_index--;
 	return elements[current_index];
 }
+
+#endif
