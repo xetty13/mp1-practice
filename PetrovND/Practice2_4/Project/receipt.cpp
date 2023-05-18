@@ -51,6 +51,14 @@ Product* dataBase::searchProductByCode() {
 	}
 }
 
+void dataBase::writeData(const string& path) {
+	ofstream out;
+	out.open(path);
+	for (int i = 0; i < data.size(); i++) {
+		out << data[i].first->getCode() << ";" << data[i].first->getName() << ";" << data[i].second << endl;
+	}
+}
+
 void Receipt::addItem(Product* product, dataBase& db) {
 	int quantity;
 	bool isCorrectQuantity = false;
@@ -138,18 +146,21 @@ Receipt::Receipt(const Receipt& other) :
 	code(other.code), time_(other.time_), date(other.date), pr(other.pr) {}
 dataBase::~dataBase() {
 	for (auto& pair : data) {
-		free(pair.first);
+		delete pair.first;
 	}
 	data.clear();
 }
 
 ostream& operator<<(ostream& os, Receipt& receipt) {
 	cout << endl;
-	cout << "receipt number: " << receipt.code << " " << receipt.time_.hour << ":" << receipt.time_.minute << " " << receipt.date.day << "." << receipt.date.mounth << "." << receipt.date.year << endl;
+	cout << "receipt number: " << receipt.code << " " << receipt.time_.hour << ":"
+		<< receipt.time_.minute << " " << receipt.date.day << "." 
+		<< receipt.date.mounth << "." << receipt.date.year << endl;
 	for (int i = 0; i < receipt.pr.getSize(); i++) {
 		ReceiptLine receiptLine = receipt.pr[i];
 		Product* product = receiptLine.getProduct();
-		os << "Product: " << (*product).getName() << " - " << (*product).getPrice() << " Count: " << receiptLine.getCount() << " Total: " << receiptLine.getSumm() << endl;
+		os << "Product: " << (*product).getName() << " - " << (*product).getPrice() << 
+			" Count: " << receiptLine.getCount() << " Total: " << receiptLine.getSumm() << endl;
 	}
 	return os;
 }

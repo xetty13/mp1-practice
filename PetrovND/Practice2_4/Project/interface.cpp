@@ -18,6 +18,19 @@ string start() {
 	}
 }
 
+string getDebugPath() {
+	string path;
+	while (true) {
+		cout << "Enter path to debug file..." << endl;
+		getline(cin, path);
+		ifstream file(path);
+		if (file.good()) {
+			file.close();
+			return path;
+		}
+	}
+}
+
 void menu(dataBase& data, Container<Receipt>& receipts) {
 	int i = 0;
 	while (true) {
@@ -65,6 +78,8 @@ void menu(dataBase& data, Container<Receipt>& receipts) {
 				receipts.add(currentReceipt);
 				currentReceipt.dataUpdate(data);
 				cout << "Exit.\n";
+				string debugPath = getDebugPath();
+				data.writeData(debugPath);
 				return;
 			}
 

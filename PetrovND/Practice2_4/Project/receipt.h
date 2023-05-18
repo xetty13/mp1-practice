@@ -22,6 +22,7 @@ struct dataBase {
 	dataBase(const string& path);
 	~dataBase();
 	Product* searchProductByCode();
+	void writeData(const string& path);
 	vector<pair<Product*, int>> data;
 };
 
