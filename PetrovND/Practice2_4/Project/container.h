@@ -67,6 +67,45 @@ public:
 		capacity = 0;
 		currentIndex = 0;
 	}
+	void insertBefore(const T& element){
+		if (size == capacity) {
+			resize(size + 1);
+		}
+		for (size_t i = size; i > currentIndex; i--) {
+			elements[i] = elements[i - 1];
+		}
+		elements[currentIndex] = element;
+		size++;
+	}
+	void insertAfter(const T& element){
+		if (size == capacity) {
+			resize(size + 1);
+		}
+		for (size_t i = size; i > currentIndex + 1; i--) {
+			elements[i] = elements[i - 1];
+		}
+		elements[currentIndex + 1] = element;
+		size++;
+	}
+	void insertAtBeginning(const T& element){
+		if (size == capacity) {
+			resize(size + 1);
+		}
+		for (size_t i = size; i > 0; i--) {
+			elements[i] = elements[i - 1];
+		}
+		elements[0] = element;
+		size++;
+		currentIndex++;
+	}
+	int find(const T& element) const{
+		for (int i = 0; i < size; i++) {
+			if (elements[i] == element) {
+				return i;
+			}
+		}
+		return -1;
+	}
 	Container(const Container& other) :
 		currentIndex(other.currentIndex), size(other.size),
 		capacity(other.capacity), step(other.step), elements(new T[other.capacity]) {
@@ -74,7 +113,6 @@ public:
 			elements[i] = other.elements[i];
 		}
 	}
-
 	Container& operator=(const Container& other) {
 		if (this != &other) {
 			delete[] elements;
@@ -95,7 +133,7 @@ private:
 	int size;
 	int capacity;
 	int step;
-	void resize() {//вставка до и после текущего, поиск по элементу, вставка в начало и в конец
+	void resize() {
 		T* newElements = new T[capacity + step];
 		for (int i = 0; i < size; i++) {
 			newElements[i] = elements[i];
