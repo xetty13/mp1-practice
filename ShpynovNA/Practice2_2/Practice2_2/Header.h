@@ -45,6 +45,7 @@ struct lib {
 
 	lib(int n);
 	lib(const lib& l);
+	lib(const string& filename);
 	~lib();
 
 	employee& operator[](int ind);
@@ -55,7 +56,6 @@ struct lib {
 	}
 
 	lib output();
-	void createmem(string str);
 };
 
 string get_string(ifstream& file);

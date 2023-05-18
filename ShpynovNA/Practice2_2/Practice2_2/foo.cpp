@@ -22,6 +22,19 @@ lib::lib(const lib& l) {
 		this->empls[i] = l.empls[i];
 	}
 }
+lib::lib(const string& filename) {
+	string* strtmp = new string[50];
+	ifstream file(filename);
+	int n = 0;
+	while ((strtmp[n] = get_string(file)) != "")
+		n++;
+	emp_amount = n;
+	empls = new employee[emp_amount];
+	for (int i = 0; i < emp_amount; i++)
+		empls[i].create_data(strtmp[i]);
+	file.close();
+	delete[] strtmp;
+}
 lib::~lib() {
 	delete[] this->empls;
 }
@@ -41,13 +54,6 @@ lib lib::output() {
 			k++;
 		}
 	return new_lib;
-}
-void lib::createmem(string filename)
-{
-	ifstream file(filename);
-	for (int i = 0; i < emp_amount; i++)
-		empls[i].create_data(get_string(file));
-	file.close();
 }
 
 void employee::create_data(string str)
