@@ -9,6 +9,7 @@ struct date {
 	int year;
 
 	void create_data(string str);
+	const date& operator= (const date& e);
 };
 
 struct pasport {
@@ -19,9 +20,9 @@ struct pasport {
 	date issue;
 	date birth;
 
-
 	bool isElderly();
 	void create_data(string* str);
+	const pasport& operator= (const pasport& e);
 };
 
 struct employee {
@@ -35,13 +36,27 @@ struct employee {
 	date lastdate;
 
 	void create_data(string str);
-
-
+	const employee& operator= (const employee& e);
 };
 
-void createmem(int n, string filename, employee** g_empls);
+struct lib {
+	int emp_amount;
+	employee* empls;
 
-void age_scan(int n, employee* g_empls);
+	lib(int n);
+	lib(const lib& l);
+	~lib();
+
+	employee& operator[](int ind);
+	friend ostream& operator<<(ostream& out, const lib& l) {
+		for (int i = 0; i < l.emp_amount; i++)
+			out << l.empls[i].name << " - " << l.empls[i].pspt.birth.day << "." << l.empls[i].pspt.birth.month << ".19" << l.empls[i].pspt.birth.year << endl;
+		return out;
+	}
+
+	lib output();
+	void createmem(string str);
+};
 
 string get_string(ifstream& file);
 

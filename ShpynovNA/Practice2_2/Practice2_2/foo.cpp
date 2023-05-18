@@ -11,6 +11,45 @@ string get_string(ifstream& file) {
 	return tmp;
 }
 
+lib::lib(int n) {
+	emp_amount = n;
+	empls = new employee[emp_amount];
+}
+lib::lib(const lib& l) {
+	emp_amount = l.emp_amount;
+	empls = new employee[emp_amount];
+	for (int i = 0; i < emp_amount; i++) {
+		this->empls[i] = l.empls[i];
+	}
+}
+lib::~lib() {
+	delete[] this->empls;
+}
+employee& lib::operator[](int ind) {
+	return empls[ind];
+}
+lib lib::output() {
+	int n = 0;
+	for (int i = 0; i < this->emp_amount; i++)
+		if (this->empls[i].pspt.isElderly())
+			n++;
+	lib new_lib(n);
+	int k = 0;
+	for (int i = 0; i < this->emp_amount; i++)
+		if (this->empls[i].pspt.isElderly()) {
+			new_lib[k] = this->empls[i];
+			k++;
+		}
+	return new_lib;
+}
+void lib::createmem(string filename)
+{
+	ifstream file(filename);
+	for (int i = 0; i < emp_amount; i++)
+		empls[i].create_data(get_string(file));
+	file.close();
+}
+
 void employee::create_data(string str)
 {
 	string Stmp[14];
@@ -33,7 +72,28 @@ void employee::create_data(string str)
 	this->dateofappnt.create_data(Stmp[11]);
 	this->lastdate.create_data(Stmp[12]);
 }
+const employee& employee::operator=(const employee& e) {
+	pspt = e.pspt;
+	name = e.name;
+	edu = e.edu;
+	spec = e.spec;
+	unit = e.unit;
+	appnt = e.appnt;
+	dateofappnt = e.dateofappnt;
+	lastdate = e.lastdate;
+	return *this;
+}
 
+const pasport& pasport::operator=(const pasport& p) {
+
+	series = p.series;
+	number = p.number;
+	auth = p.auth;
+	reg = p.reg;
+	issue = p.issue;
+	birth = p.birth;
+	return *this;
+}
 void pasport::create_data(string* str) {
 	this->series = atoi(str[1].c_str());
 	this->number = atoi(str[2].c_str());
@@ -59,26 +119,12 @@ void date::create_data(string str) {
 	tmp = str.substr(8, 2);
 	this->year = atoi(tmp.c_str());
 }
-
-void createmem(int n, string filename, employee** g_empls)
-{
-	ifstream file(filename);
-	for (int i = 0; i < n; i++) 
-		(*g_empls)[i].create_data(get_string(file));
-	file.close();
+const date& date::operator=(const date& d) {
+	day = d.day;
+	month = d.month;
+	year = d.year;
+	return *this;
 }
 
-void age_scan(int n, employee* g_empls) {
-	cout << "all employees:" << endl;
-	for (int i = 0; i < n; i++)
-		cout << g_empls[i].name << " - " << g_empls[i].pspt.birth.day << "."
-		<< g_empls[i].pspt.birth.month << ".19"
-		<< g_empls[i].pspt.birth.year << endl;
-	cout << endl << "elderly ones:" << endl;
-	for (int i = 0; i < n; i++)
-		if (g_empls[i].pspt.isElderly())
-			cout << g_empls[i].name << " - " << g_empls[i].pspt.birth.day << "."
-			<< g_empls[i].pspt.birth.month << ".19"
-			<< g_empls[i].pspt.birth.year << endl;
-}
+
 
