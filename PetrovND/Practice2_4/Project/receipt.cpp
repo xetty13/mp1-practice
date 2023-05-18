@@ -1,31 +1,18 @@
 #include "receipt.h"
+#include "container.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <ctime>
 
-int Product::getCode() { return code; }
-float Product::getPrice() { return price; }
-string Product::getName() { return name; }
-Product& ReceiptLine::getProduct() { return product; }
-int ReceiptLine::getCount() { return count; }
-float ReceiptLine::getSumm() { return summ; }
+int Product::getCode() const { return code; }
+float Product::getPrice() const { return price; }
+string Product::getName() const  { return name; }
+Product* ReceiptLine::getProduct() const { return product; }
+int ReceiptLine::getCount() const { return count; }
+float ReceiptLine::getSumm() const { return summ; }
 void ReceiptLine::setCount(int count) { this->count = count; }
 void ReceiptLine::setSumm(int summ) { this->summ = summ; }
-
-string start() {
-	string path;
-	while (true) {
-		cout << "Enter the file path..." << endl;
-		getline(cin, path);
-		ifstream file(path);
-		if (file.good()) {
-			file.close();
-			return path;
-		}
-		cout << "ERROR: Could not open file!\n" << endl;
-	}
-}
 
 dataBase::dataBase(const string& path) {
 	ifstream file(path);
@@ -40,53 +27,21 @@ dataBase::dataBase(const string& path) {
 		getline(ss, name, ';');
 		getline(ss, price, ';');
 		getline(ss, count, ';');
-		Product product(stoi(code), name, stof(price));
-		data.push_back(make_tuple(product, stoi(count)));
+
+		Product* product = new Product(stoi(code), name, stof(price));
+		data.push_back(make_pair(product, stoi(count)));
 	}
 }
 
-void menu(dataBase& data, Receipt& receipt) {
-	int choice;
-	do {
-		cout << "0)Add 1)Remove 2)Count total cost 3)New receipt 4)Exit : ";
-		cin >> choice;
-		switch (choice) {
-		case 0: {
-			Product product = data.searchProductByCode();
-			receipt.addItem(product, data);
-			cout << receipt << endl;
-			break;
-		}
-		case 1: {
-			Product product = data.searchProductByCode();
-			receipt.removeItem(product);
-			cout << receipt << endl;
-			break;
-		}
-		case 2: {
-			cout << receipt;
-			cout << "Total cost: " << receipt.getTotal() << endl;
-			break;
-		}
-		case 3: {
-			receipt.reset();
-			break;
-		}
-		default:
-			break;
-		}
-	} while (choice != 4);
-}
-
-Product dataBase::searchProductByCode() {
+Product* dataBase::searchProductByCode() {
 	bool isFound = false;
 	int code;
 	while (!isFound) {
 		cout << "Enter product code: ";
 		cin >> code;
-		for (auto& tuple : data) {
-			if (get<0>(tuple).getCode() == code && get<1>(tuple) > 0) {
-				return get<0>(tuple);
+		for (auto& pair : data) {
+			if ((*pair.first).getCode() == code && pair.second > 0) {
+				return pair.first;
 				isFound = true;
 			}
 		}
@@ -96,15 +51,16 @@ Product dataBase::searchProductByCode() {
 	}
 }
 
-void Receipt::addItem(Product& product, dataBase& db) {
+void Receipt::addItem(Product* product, dataBase& db) {
 	int quantity;
 	bool isCorrectQuantity = false;
 	while (!isCorrectQuantity) {
 		cout << "Enter quantity: ";
 		cin >> quantity;
-		for (auto& tuple : db.data) {
-			if (get<0>(tuple).getCode() == product.getCode() && get<1>(tuple) > quantity && quantity > 0) {
+		for (auto& pair : db.data) {
+			if (pair.first->getCode() == (* product).getCode() && pair.second > quantity&& quantity > 0) {
 				isCorrectQuantity = true;
+				break;
 			}
 		}
 		if (!isCorrectQuantity) {
@@ -112,9 +68,9 @@ void Receipt::addItem(Product& product, dataBase& db) {
 		}
 	}
 	for (int i = 0; i < pr.getSize(); i++) {
-		if (pr[i].getProduct().getCode() == product.getCode()) {
+		if ((*pr[i].getProduct()).getCode() == (*product).getCode()) {
 			pr[i].setCount(pr[i].getCount() + quantity);
-			pr[i].setSumm(pr[i].getProduct().getPrice() * pr[i].getCount());
+			pr[i].setSumm((*pr[i].getProduct()).getPrice() * pr[i].getCount());
 			return;
 		}
 	}
@@ -122,10 +78,10 @@ void Receipt::addItem(Product& product, dataBase& db) {
 	pr.add(line);
 }
 
-void Receipt::removeItem(Product& product) {
+void Receipt::removeItem(Product* product) {
 	int i;
 	for (i = 0; i < pr.getSize(); i++) {
-		if (pr[i].getProduct().getCode() == product.getCode()) {
+		if ((*pr[i].getProduct()).getCode() == (*product).getCode()) {
 			pr.remove(i);
 			return;
 		}
@@ -136,21 +92,21 @@ void Receipt::removeItem(Product& product) {
 double Receipt::getTotal() {
 	double total = 0;
 	for (int i = 0; i < pr.getSize(); i++) {
-		total += pr[i].getSumm();
+		total += pr.getCurrent().getSumm();
+		pr.next();
 	}
 	return total;
 }
 
-Product::Product() : code(0), name(""), price(0) {}
-Product::Product(int code, const string& name, double price) :
-	code(code), name(name), price(price) {}
-ReceiptLine::ReceiptLine() : count(0), summ(0) {}
-ReceiptLine::ReceiptLine(Product product, int count) {
-	this->product = product;
-	this->count = count;
-	summ = product.getPrice() * count;
+void Receipt::dataUpdate(dataBase& data) {
+	for (int i = 0; i < pr.getSize(); i++) {
+		for (auto& pair : data.data) {
+			if (pr[i].getProduct()->getCode() == pair.first->getCode()) {
+				pair.second -= pr[i].getCount();
+			}
+		}
+	}
 }
-Receipt::Receipt() { setTime(); }
 
 void Receipt::reset() {
 	setTime();
@@ -167,14 +123,43 @@ void Receipt::setTime() {
 	date.year = localTime->tm_year + 1900;
 }
 
+Product::Product() : code(0), name(""), price(0) {}
+Product::Product(int code, const string& name, double price) :
+	code(code), name(name), price(price) {}
+ReceiptLine::ReceiptLine() : count(0), summ(0) {}
+ReceiptLine::ReceiptLine(Product* product, int count) {
+	this->product = product;
+	this->count = count;
+	summ = (*product).getPrice() * count;
+}
+Receipt::Receipt() { setTime(), code = 0; }
+Receipt::Receipt(int code) { this->code = code, setTime(); }
+Receipt::Receipt(const Receipt& other) :
+	code(other.code), time_(other.time_), date(other.date), pr(other.pr) {}
+dataBase::~dataBase() {
+	for (auto& pair : data) {
+		free(pair.first);
+	}
+	data.clear();
+}
+
 ostream& operator<<(ostream& os, Receipt& receipt) {
 	cout << endl;
-	cout << receipt.time_.hour << ":" << receipt.time_.minute << " " << receipt.date.day << "." << receipt.date.mounth << "." << receipt.date.year << endl;
+	cout << "receipt number: " << receipt.code << " " << receipt.time_.hour << ":" << receipt.time_.minute << " " << receipt.date.day << "." << receipt.date.mounth << "." << receipt.date.year << endl;
 	for (int i = 0; i < receipt.pr.getSize(); i++) {
-		ReceiptLine& receiptLine = receipt.pr[i];
-		Product& product = receiptLine.getProduct();
-		os << "Product: " << product.getName() << " - " << product.getPrice() << " Count: " << receiptLine.getCount() << " Total: " << receiptLine.getSumm() << endl;
+		ReceiptLine receiptLine = receipt.pr[i];
+		Product* product = receiptLine.getProduct();
+		os << "Product: " << (*product).getName() << " - " << (*product).getPrice() << " Count: " << receiptLine.getCount() << " Total: " << receiptLine.getSumm() << endl;
 	}
 	return os;
 }
 
+Receipt& Receipt::operator=(const Receipt& other) {
+	if (this != &other) {
+		code = other.code;
+		time_ = other.time_;
+		date = other.date;
+		pr = other.pr;
+	}
+	return *this;
+}

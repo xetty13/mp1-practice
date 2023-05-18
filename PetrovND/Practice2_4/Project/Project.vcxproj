@@ -129,10 +129,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="receipt.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="container.h" />
+    <ClInclude Include="interface.h" />
     <ClInclude Include="receipt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
