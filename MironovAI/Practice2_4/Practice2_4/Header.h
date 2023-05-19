@@ -12,6 +12,7 @@ using namespace std;
 //functions
 int PathError();
 string input_path();
+/*
 template<typename Type> // template for "Cart" and "Base"
 void print_all_products(const Type* products,const int size)
 {
@@ -20,6 +21,7 @@ void print_all_products(const Type* products,const int size)
 		cout << products[i] << endl;
 	}
 } 
+*/
 void user();
 
 
@@ -38,10 +40,10 @@ public:
 
 	
 	//overloaded operations
-	friend ifstream& operator>>(ifstream& buf, Product& data);
-	friend istream& operator>>(istream& buf, Product& data);
-	friend ostream& operator<<(ostream& buf, const Product& data);
-	Product& operator=(const Product& new_product);
+	friend ifstream& operator>>(ifstream& buf, Product& Date);
+	friend istream& operator>>(istream& buf, Product& Date);
+	friend ostream& operator<<(ostream& buf, const Product& Date);
+	const Product& operator=(const Product& new_product);
 	bool operator==(const string& str) const;
 	bool operator==(const Product& prod) const;
 	//getters
@@ -53,28 +55,19 @@ public:
 
 class Base {
 private:
-	Product* product;
+	Product product;
 	int count;
 public:
 	Base() {
 		count = 0;
-		product = nullptr;
 	}
-	/*
-	virtual ~Base()
-	{
-		count = 0;
-		if (product != nullptr) delete product;
-	}
-	*/
-	
-	friend ifstream& operator>>(ifstream& buf, Base& data);
-	friend ostream& operator<<(ostream& buf, const Base& data); 
-	friend istream& operator>>(istream& buf, Base& data);
+	friend ifstream& operator>>(ifstream& buf, Base& Date);
+	friend ostream& operator<<(ostream& buf, const Base& Date); 
+	friend istream& operator>>(istream& buf, Base& Date);
 	bool operator == (const string& str) const;
 	bool operator == (const Base& base) const;
 	bool operator != (const Base& base) const;
-	Product* get_product() const;
+	Product get_product() const;
 	int get_count() const;
 	void set_count(const int ucount);
 };
@@ -93,80 +86,49 @@ public:
 		product = nullptr;
 
 	}
-	Cart(const Product*& pr, const int& ncount,const double& ncost = 0) {
+	Cart(const Product& pr, const int& ncount,const double& ncost = 0) {
 		product = new Product;
-		*product = *pr;
+		*product = pr;
 		count = ncount;
 		cost = ncost;
 	}
-	friend ifstream& operator>>(ifstream& buf, Cart& data) {
-		if (data.product == nullptr) data.product = new Product;
-		buf >> *(data.product) >> data.count >> data.cost;
+	
+	friend ifstream& operator>>(ifstream& buf, Cart& Date) {
+		if (Date.product == nullptr) Date.product = new Product;
+		buf >> *(Date.product) >> Date.count >> Date.cost;
 		return buf;
 	}
-	friend ostream& operator<<(ostream& buf, const Cart& data) {
-		buf << *(data.product) << data.count << endl;
+	friend istream& operator>>(istream& buf, Cart& Date) {
+		if (Date.product == nullptr) Date.product = new Product;
+		buf >> *(Date.product) >> Date.count >> Date.cost;
 		return buf;
 	}
-	friend istream& operator>>(istream& buf, Cart& data) {
-		if (data.product == nullptr) data.product = new Product;
-		buf >> *(data.product) >> data.count >> data.cost;
+	
+	friend ostream& operator<<(ostream& buf, const Cart& Date) {
+		buf << *(Date.product) << Date.count << endl;
 		return buf;
 	}
 	//bool operator != (Product tmp) { return (product != tmp.product); }
-	bool operator == (const Cart& tmp) const{
-		return (*(product) == *(tmp.product));
-	}
-	bool operator == (const Base& tmp) const { 
-		return (product == tmp.get_product()); 
-	}
-	bool operator != (const Cart& tmp) const {
-		return !(product == tmp.product); 
-	}
-	bool operator == (const string& tmp) const {
-		return *product == tmp;
-	}
-	bool operator <= (const int& ncount) const { 
-		return count <= ncount; 
-	}
-	Cart& operator = (const Cart& tmp) {
-		product = tmp.product;
-		count = tmp.count;
-		cost = tmp.cost;
-		return *this;
-	}
-	Cart& operator += (const int& ncount)
-	{
-		count += ncount;
-		return *this;
-	}
-	Cart& operator -= (const int& ncount) {
-		count -= ncount;
-		return *this;
-	}
+	bool operator == (const Cart& tmp) const;
+	bool operator == (const Base& tmp) const;
+	bool operator != (const Cart& tmp) const;
+	bool operator == (const string& tmp) const;
+	bool operator <= (const int& ncount) const;
+	Cart& operator = (const Cart& tmp);
+	Cart& operator += (const int& ncount);
+	Cart& operator -= (const int& ncount);
 	
-	Product* get_product() const
-	{
-		return product;
-	}
-	int get_count() const
-	{
-		return count;
-	}
-	double get_cost() const
-	{
-		return cost;
-	}
+	Product* get_product() const;
+	int get_count() const;
+	double get_cost() const;
 };
-//Data
-struct Data
+//Date
+struct Date
 {
 	//int year, month, day, hour, min, sec;
 	tm* timeinfo;
 	void now();
 };
-
-
 
 //Receipt
 class Receipt
@@ -174,138 +136,55 @@ class Receipt
 private:
 	int num;
 	int size;
-	Data data;
+	Date Date;
 	NewConteiner<Cart> cart;
-
 public:
 	//constructors
-	Receipt() { 
-		num = 0; size = 0; data.timeinfo = NULL;
+	Receipt() {
+		num = 0; size = 0; Date.timeinfo = NULL;
 	}
-	/*
-	Receipt(int nnum, int nsize, Cart*& nproducts)
-	{
-		num = nnum;
-		size = nsize;
-		cart = NewConteiner<Cart>(size, nproducts);
-	}
-	*/
 	Receipt(const Receipt& receipt)
 	{
 		num = receipt.num;
 		size = receipt.size;
-		data = receipt.data;
+		Date = receipt.Date;
 		cart = NewConteiner<Cart>(receipt.cart);
 	}
-
-	//destrictor
-	virtual ~Receipt() {}
-
 	//overloaded operations
-	friend istream& operator>>(istream& buf, Receipt& data)
+	/*
+	friend istream& operator>>(istream& buf, Receipt& Date)
 	{
-		buf >> data.num >> data.size >> data.cart;
+		buf >> Date.num >> Date.size >> Date.cart;
 		return buf;
 	}
-	friend ostream& operator<<(ostream& buf, Receipt& data)
+	*/
+
+	friend ostream& operator<<(ostream& buf, Receipt& Date)
 	{
-		buf << "\nNumber of a receipt: " << data.num << endl;
-		buf << "Data: " << endl;
-		data.data.now();
+		buf << "\nNumber of a receipt: " << Date.num << endl;
+		buf << "Date: " << endl;
+		Date.Date.now();
 		buf << "Products: \n";
-		for (int i = 0; i < data.size; i++) {
-			buf << data.cart[i];
+		for (int i = 0; i < Date.size; i++) {
+			buf << Date.cart[i];
 		}
 		buf << endl;
 		return buf;
 	}
-	Receipt& operator=(const Receipt& receipt) 
-	{
-		num = receipt.num;
-		size = receipt.size;
-		data = receipt.data;
-		cart = receipt.cart;
-		return *this;
-	}
-	
+	bool operator == (const Receipt& r) { return (size == r.size && cart == r.cart); }
+	const Receipt& operator=(const Receipt& receipt);
 	//functions
-	void add(const Cart product, const int& count = 0)
-	{
-		int ncount = 0;
-		if (!count) ncount = product.get_count();
-		for (int i = 0; i < size; i++) {
-			if (cart[i] == product) {
-				cart[i] += ncount;
-				return;
-			}
-		}
-		size += 1;
-		cart.push_back(product);
-	}
-	void add(const Product* product, const int& count)
-	{
-		Cart tmp(product, count, product->get_cost());
-		add(tmp, count);
-	}
-
-	void remove(const Cart& product, const int& count)
-	{
-		for (int i = 0; i < size; i++) {
-			if (cart[i] == product) {
-				if (cart[i] <= count) { cart.pop_id(i); }
-				else { cart[i] -= count; }
-			}
-		}
-	}
-	double sum() const
-	{
-		double sum = 0;
-		for (int i = 0; i < size; i++) {
-			sum = sum + cart[i].get_cost() * cart[i].get_count();
-		}
-		return sum;
-	}
-	void print_cart() const { 
-		if (!size) cout << "Nothing in the cart. Add something!" << endl;
-		cout << "Your products:: " << endl;
-		for (int i = 0; i < size; i++)
-			cout << cart << endl;
-	}
-	void pdata() { 
-		data.now(); 
-	}
-	void set_num(const int& q) { 
-		(q > 0) ? num = q : num = 1; 
-	}
-
-	Cart& find(const Base& product) const
-	{
-		Cart tmp;
-		for (int i = 0; i < size; i++)
-		{
-			if (cart[i] == product)
-				return cart[i];
-		}
-		return tmp;
-	}
-	Cart& find(const string& product) const
-	{
-		Cart tmp;
-		for (int i = 0; i < size; i++)
-		{
-			if (cart[i] == product)
-				return cart[i];
-		}
-		return tmp;
-	}
-
-	int len() const
-	{
-		return size;
-	}
+	void add(const Cart& product, const int& count = 1);
+	void add(const Product product, const int& count = 1);
+	void remove(const Cart& product, const int& count);
+	double sum() const;
+	void print_cart() const;
+	void pdata();
+	void set_num(const int& q);
+	Cart* find(const Base& product) const;
+	Cart* find(const string& product) const;
+	int len() const;
+	bool empty();
 };
 
 #endif
-
-//constructors
-

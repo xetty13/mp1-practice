@@ -27,6 +27,14 @@ private:
 	int position;
  void realloc() {
 		max_size += step;
+		if (elements == nullptr)
+		{
+			elements = new Type[max_size];
+			position = 0;
+			size = 0;
+			return;
+		}
+		if (max_size == 0) return;
 		Type* tmp = new Type[max_size];
 		for (int i = 0; i < size; i++) {
 			tmp[i] = elements[i];
@@ -45,14 +53,15 @@ public:
 		size = 0;
 		max_size = 0;
 		step = 10;
-		position = 0;
-		elements = new Type[1];
+		position = -1;
+		elements = nullptr;
 	}
 	// Lengh of the nelements must be equal new_size
-	NewConteiner<Type>(int new_size, Type* nelements, int nmax_size = 0, int nstep = 100) {
-		max_size = nstep + new_size;
+	NewConteiner(const int& new_size, const Type*& nelements, int nstep = 10) {
+		if (max_size < new_size + 1) {
+			realloc();
+		}
 		size = new_size;
-		elements = new Type[max_size];
 		for (int i = 0; i < size; i++) {
 			elements[i] = nelements[i];
 		}
@@ -60,46 +69,56 @@ public:
 		position = size;
 	}
 
-	NewConteiner<Type>(const NewConteiner<Type>& container) {
+	NewConteiner(const NewConteiner<Type>& container) {
 		size = container.size;
-		if (container.max_size == 0) elements = new Type[1];
-		else elements = new Type[container.max_size];
-		elements = container.elements;
+		if (container.max_size != 0) {
+			if (max_size < container.size) {
+				realloc();
+			}
+			elements = new Type[container.max_size];
+		}
+
+		for (int i = 0; i < container.size; i++)
+		{
+			elements[i] = container.elements[i];
+		}
 		max_size = container.max_size;
 		position = container.position;
 		step = container.step;
 	}
 	//destructor
-	virtual ~NewConteiner<Type>() {
-		delete[] elements;
+	virtual ~NewConteiner() {
+		if (elements != nullptr) delete[] elements;
 	}
 
 	//overloaded operations	
-	friend ifstream& operator>>(ifstream& buf, NewConteiner<Type>& data) {
+	friend ifstream& operator>>(ifstream& buf, NewConteiner<Type>& Date) {
 		{
-
-			for (int i = 0; i < data.size; i++) {
-				if (data.size == data.max_size) realloc();
-				buf >> data.elements[i];
-				data.next();
+			buf >> Date.size;
+			for (int i = 0; i < Date.size; i++) {
+				if (Date.size+1 >= Date.max_size) Date.realloc();
+				buf >> Date.elements[i];
+				Date.next();
 			}
 			return buf;
 		}
 	}
-	friend istream& operator>>(istream& buf, NewConteiner<Type>& data) {
+	
+	friend istream& operator>>(istream& buf, NewConteiner<Type>& Date) {
 		{
-
-			for (int i = 0; i < data.size; i++) {
-				if (data.size == data.max_size) data.realloc();
-				buf >> data.elements[i];
-				data.next();
+			buf >> Date.size;
+			for (int i = 0; i < Date.size; i++) {
+				if (Date.size == Date.max_size) Date.realloc();
+				buf >> Date.elements[i];
+				Date.next();
 			}
 			return buf;
 		}
 	}
-	friend ostream& operator<<(ostream& buf, const NewConteiner<Type>& data) {
-		for (int i = 0; i < data.size; i++) {
-			buf << data.elements[i] << " ";
+	
+	friend ostream& operator<<(ostream& buf, const NewConteiner<Type>& Date) {
+		for (int i = 0; i < Date.size; i++) {
+			buf << Date.elements[i] << " ";
 		}
 		buf << endl;
 		return buf;
@@ -119,24 +138,26 @@ public:
 		return true;
 	}
 	bool operator!=(const NewConteiner<Type>& container) const {
-		if (size != container.size || max_size != container.max_size || step != container.step) return true;
-		for (int i = 0; i < size; i++) {
-			if (elements[i] != container.elements[i]) return true;
-		}
-		return true;
+		return !(*this == container);
 	}
 
-	NewConteiner<Type>& operator=(const NewConteiner<Type>& container) {
-
-		delete[] elements;
+	const NewConteiner<Type>& operator=(const NewConteiner<Type>& container) {
+		if (*this == container)  return *this;
+		
+		if (max_size < container.size)
+		{
+			int tmp = step;
+			step = max(container.max_size - max_size + 1, step);
+			realloc();
+			step = tmp;
+		}
 		size = container.size;
 		max_size = container.max_size;
-		step = container.step;
-		elements = new Type[max_size];
-		for (int i = 0; i < max_size; i++) {
+		for (int i = 0; i < size; i++) {
 			elements[i] = container.elements[i];
 		}
 		position = container.position;
+		step = container.step;
 		return *this;
 	}
 
@@ -146,85 +167,78 @@ public:
 	}
 	//setters
 	void set_step(const int& nstep) { step = nstep; }
-	void push(const Type& value, const int& index = position + 1)
+
+	void push(const Type& value, const int& index)
 	{
-		if (index < 0 && index >= size) {
-			cout << "Wrong index" << endl;
-			return;
+		if (index < 0 && index >= size)
+		{
+			throw IndexError;
 		}
-		if (size == max_size) realloc();
-		Type* tmp = new Type[max_size];
-		for (int i = 0; i < index; i++) {
-			tmp[i] = elements[i];
+		if (size + 1 >= max_size) realloc();
+		
+		for (int i = size - 2; i >= index; i--)
+		{
+			elements[i + 1] = elements[i];
 		}
-		tmp[index] = value;
-		for (int i = index; i < size; i++) {
-			tmp[i + 1] = elements[i];
-		}
-		for (int i = 0; i < size + 1; i++) {
-			elements[i] = tmp[i];
-		}
-		position = size + 1;
+
+		elements[index] = value;
+
+		position = size+1;
 		size++;
-		delete[] tmp;
 	}
 	void push_back(const Type& value)
 	{
-		if (size == max_size) realloc();
-		Type* tmp = new Type[max_size];
-		for (int i = 0; i < size; i++) {
-			tmp[i] = elements[i];
-		}
-		tmp[size] = value;
-		for (int i = 0; i < size + 1; i++) {
-			elements[i] = tmp[i];
-		}
-		delete[] tmp;
+		if (size + 1 >= max_size) realloc();
+		elements[position] = value;
 		position = size + 1;
 		size++;
 	}
+	/*
 	void push_front(const Type& value)
 	{
-		if (size == max_size) realloc();
-		Type* tmp = new Type[max_size];
-		tmp[0] = value;
-		for (int i = 0; i < size; i++) {
-			tmp[i + 1] = elements[i];
-		}
-
-		for (int i = 0; i < size + 1; i++) {
-			elements[i] = tmp[i];
-		}
-		delete[] tmp;
-		position = size + 1;
-		size = size + 1;
-	}
-	void pop_id(const int& index) {
-		if (index < 0 && index >= size) {
+		if (index < 0 && index >= size)
+		{
 			cout << "Wrong index" << endl;
 			return;
 		}
-		Type* tmp = new Type[size - 1];
-		for (int i = 0; i < index; i++) {
-			tmp[i] = elements[i];
+		if (size + 1 >= max_size) realloc();
+
+		for (int i = size, i >= 0; i--)
+		{
+			elements[i + 1] = elemnts[i];
 		}
-		for (int i = index; i < size - 1; i++) tmp[i] = elements[i + 1];
-		size -= 1;
-		position -= 1;
-		delete[] elements; elements = new Type[size];
-		for (int i = 0; i < size; i++) {
-			elements[i] = tmp[i];
+		elements[0] = value;
+
+		position = size + 1;
+		size++;
+	}
+	*/
+	void pop_id(const int& index) {
+		if (index < 0 && index >= size)
+		{
+			throw IndexError;
 		}
-		delete[] tmp;
+		
+		if (size == 1) {
+			elements = nullptr;
+			return;
+		}
+
+		for (int i = index; i - 2 < size; i++)
+		{
+			elements[i] = elements[i+1];
+		}
+
+		position = size - 1;
+		size--;
 	}
 	void pop_value(const Type& value) {
-		for (int i = 0; i < size; i++) {
-			if (elements[i] == value) {
-				pop_id(i);
-				return;
-			}
-		}
+
+		int k = find_id(value);
+		if (k != -1) pop_id(k);
+		throw IndexError;
 	}
+	/*
 	void pop_back() 
 	{ 
 		pop_id(size - 1);
@@ -232,32 +246,38 @@ public:
 	void pop_front() {
 		pop_id(0); 
 	}
+	*/
 	int len() const {
 		return size;
 	}
+	template<typename Type1>
+	Type* find(const Type1& element) const {
 
-	Type& find(const Type& element) const {
-		Type tmp;
 		for (int i = 0; i < size; i++) {
-			if (element == elements[i]) return elements[i];
+			if (element == elements[i]) return &elements[i];
 		}
-		return tmp;
+		return nullptr;
 	}
-	static void read(const string& path,NewConteiner<Type>& data)
+	template<typename Type1>
+	int find_id(const Type1& element) const {
+		for (int i = 0; i < size; i++) {
+			if (element == elements[i]) return i;
+		}
+		return -1;
+	}
+	static void read(const string& path,NewConteiner<Type>& Date)
 	{
 		ifstream file(path);
 		int count; file >> count;
-		Type* tmp = new Type[count];
-		for (int i = 0; i < count; i++) { file >> tmp[i]; }
-		//NewConteiner<Type> tmp2(count, tmp, count+100, 100);
-		data = NewConteiner<Type>::NewConteiner(count,tmp,count+100,100);
-		delete[] tmp;
-		//delete &tmp2;
+		if (Date.size + count + 1 >= Date.max_size) Date.realloc();
+ 		for (int i = 0; i < count; i++) { file >> Date[i]; }
+		Date.size = count;
 		file.close();
 	}
 	//Movements 
+
 	void next() {
-		if (position+1 < max_size) position++;
+		if (position + 1 < max_size && position != -1) position++;
 	}
 	void back() { 
 		if (position > 0)  position--;
@@ -266,7 +286,7 @@ public:
 		position = 0;
 	}
 	bool is_end() const { 
-		(size == max_size) ? true : false;
+		return (position + 1  == max_size) ? true : false;
 	}
 
 
