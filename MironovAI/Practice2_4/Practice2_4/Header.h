@@ -67,6 +67,7 @@ public:
 	bool operator == (const string& str) const;
 	bool operator == (const Base& base) const;
 	bool operator != (const Base& base) const;
+	Base& operator += (const int& ucount);
 	Product get_product() const;
 	int get_count() const;
 	void set_count(const int ucount);
@@ -175,7 +176,7 @@ public:
 	const Receipt& operator=(const Receipt& receipt);
 	//functions
 	void add(const Cart& product, const int& count = 1);
-	void add(const Product product, const int& count = 1);
+	void add(const Product& product, const int& count = 1);
 	void remove(const Cart& product, const int& count);
 	double sum() const;
 	void print_cart() const;

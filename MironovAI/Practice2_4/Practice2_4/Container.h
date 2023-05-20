@@ -68,7 +68,6 @@ public:
 		step = nstep;
 		position = size;
 	}
-
 	NewConteiner(const NewConteiner<Type>& container) {
 		size = container.size;
 		if (container.max_size != 0) {
@@ -250,18 +249,18 @@ public:
 	int len() const {
 		return size;
 	}
-	template<typename Type1>
+	template<typename Type1> // temlate for string. Why template? cuz NewContainer "must not know about different types"
 	Type* find(const Type1& element) const {
 
 		for (int i = 0; i < size; i++) {
-			if (element == elements[i]) return &elements[i];
+			if (elements[i] == element) return &elements[i];
 		}
 		return nullptr;
 	}
 	template<typename Type1>
 	int find_id(const Type1& element) const {
 		for (int i = 0; i < size; i++) {
-			if (element == elements[i]) return i;
+			if (elements[i] == element) return i;
 		}
 		return -1;
 	}

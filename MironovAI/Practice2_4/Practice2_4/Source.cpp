@@ -56,38 +56,30 @@ void user()
 			std::cout << "Which one do u wanna add ? Pls input code of product" << endl;
 			string product;  cin >> product;
 			int count = 0, ucount;
-			Cart tmp;
-			Base pr = base.get_elements()[0];
-			for (int i = 0; i < base.len(); i++) {
 
-				if (base.get_elements()[i].get_product() == product) {
-					pr = base.get_elements()[i];
-					
-					if (q.find(pr)!=nullptr) {
-						std::cout << "Your product: " << pr.get_product();
-						count = pr.get_count()  - tmp.get_count();
-						break;
-					}
-					else {
-						std::cout << "Your product: " << pr.get_product();
-						count = pr.get_count();
-						break;
-					}
-				}
-			}
-			
-			if (pr == base.get_elements()[0] &&  !(base.get_elements()[0].get_product() == product)) {
+			// if we dont have the product
+			if (base.find(product) == nullptr)
+			{
 				std::cout << "Sorry, we dont have this product now" << endl;
 				continue;
 			}
+
+			//now we know, that we have this product "pr" 
+			Base pr = *base.find(product);
+			count = pr.get_count();
+			cout << "Your product:" << pr.get_product() << endl;
+
 			std::cout << "Input a count of products between 0 and " << count << endl;
 			cin >> ucount;
+			//changing count in the base
 			if (ucount < 0 || ucount > count) {
 				std::cout << "Wrong count. Try again" << endl;
 				continue;
 			}
 			if (ucount == 0) continue;
 			base[base.find_id(pr)].set_count(pr.get_count() - ucount);
+
+			//add
 			if (q.find(pr)!=nullptr)
 				q.add(*q.find(pr), ucount);
 			else {
@@ -107,20 +99,32 @@ void user()
 			}
 			std::cout << "Which one do u wanna remove ? Pls input code of product" << endl;
 			string product;  cin >> product;
-			Base* pr = nullptr;
 			int ucount;			
+
+			//find element in the cart
 			Cart* tmp = q.find(product);
 			if (tmp == nullptr) {
 				std::cout << "Sorry, we dont have this product in the cart " << endl;
 				continue;
 			}
+
+
+			//user count 
 			std::cout << "Input a count of products between 0 and " << tmp->get_count() << endl;
 			cin >> ucount;
-
 			if (ucount < 0 || ucount > tmp->get_count()) {
 				std::cout << "Wrong count. Try again" << endl;
 				continue;
 			}
+
+			// add deleted from the cart elements to the base
+			int index = base.find_id(product);
+			if (index >= 0 && index < base.len())
+			{
+				base[index] += ucount;
+			}
+
+			//remove 
 			q.remove(*tmp, ucount);
 			cout << "\nDone!" << endl;
 			q.print_cart();
@@ -264,6 +268,14 @@ bool Base::operator != (const Base& base) const
 {
 	return !(*this == base);
 }
+Base& Base::operator+=(const int& ucount)
+{
+	if (ucount)
+	{
+		count += ucount;
+	}
+	return *this;
+}
 
 
 Product Base::get_product() const
@@ -354,7 +366,7 @@ void Receipt::add(const Cart& product, const int& count)
 	size += 1;
 	cart.push_back(product);
 }
-void Receipt::add(const Product product, const int& count )
+void Receipt::add(const Product& product, const int& count )
 {
 	Cart tmp(product, count, product.get_cost());
 	add(tmp, count);
@@ -378,7 +390,10 @@ double Receipt::sum() const
 	return sum;
 }
 void Receipt::print_cart() const {
-	if (!size) cout << "Nothing in the cart. Add something!" << endl;
+	if (!size) {
+		cout << "Nothing in the cart. Add something!" << endl;
+		return;
+	}
 	cout << "Your products: " << endl;
 	cout << cart << endl;
 }
