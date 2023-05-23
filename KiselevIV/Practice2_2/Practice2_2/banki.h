@@ -8,32 +8,25 @@ struct vkladstruct {
 	string vkladname;
 	float rate;
 	int times;
-	friend ostream& operator<<(ostream& os, const vkladstruct& our_vklad);
+	//friend ostream& operator<<(ostream& os, const vkladstruct& our_vklad);
 };
 struct bankstruct {
 	int count;
 	string bankname;
 	string banktype;
 	vkladstruct* our_vklad;
-	friend ostream& operator<<(ostream& os, const bankstruct& banki);
+	//friend ostream& operator<<(ostream& os, const bankstruct& banki);
 };
 
-struct bestbank {
+struct banklib {
 	bankstruct* banki;
-	int sumvkl;
-	int your_month;
-	string your_type;
-	int stringcount;//поле, ниже одноимённый параметр(он другой)
-	bestbank(int stringcount);
-	~bestbank();
-	void workfile(string path);
+	int count;
+	banklib(const string& path);
+	~banklib();
+	 void search(float sum, int kMonths, string vkladType);
 
-	void data_input();
-
-	void choosebest();
-
+	friend ostream& operator << (ostream& out, const banklib& banks);
 };
-
 int strcount(string path);
 string getfile();
 #endif
