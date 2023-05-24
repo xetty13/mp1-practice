@@ -110,7 +110,7 @@ banklib::banklib(const string& path) {
 }
 
 
-void banklib::search(float sum, int kMonths, string vkladType) {
+banklib& banklib::search(float sum, int kMonths, string vkladType) {
     int a = 0;
     if (vkladType == "saving") {
         a = 0;
@@ -145,11 +145,11 @@ void banklib::search(float sum, int kMonths, string vkladType) {
         cout << "The debit invest is not suitable for the terms" << endl;
     }
     else {
-        //cout << banki[maxI];
-        //cout << banki[maxI].our_vklad[a];
+        cout << banki[maxI];
+        cout << banki[maxI].our_vklad[a];
         cout << "If your invest " << sum << ", you will receive " << final_sum << endl;
     }
-    //return *this;
+    return *this;
 }
 banklib::~banklib() {
     for (int i = 0; i < count; i++) {
@@ -157,33 +157,7 @@ banklib::~banklib() {
     }
     delete[] banki;
 }
-/*ostream& operator<<(ostream& os, const vkladstruct& our_vklad) {
-    os << "-----------------------" << endl;
-  //  os << "Name of bank - " << banki.bankname << endl;
-    //os << "Type of bank - " << banki.banktype << endl;
-    os << "-----------------------" << endl;
-    return os;
-}*/
-ostream& operator<<(ostream& os, const banklib& banks) {
-    os << "-----------------------" << endl;
-    for (int i = 0; i < banks.count; i++) {
-        os << "Name of bank - " << banks.banki[i].bankname << " ";
-        os << "Type of  bank - " << banks.banki[i].banktype << endl;
-        for (int j = 0; j < banks.banki[i].count; j++) {
-            os << "    Vkladname of  bank - " << banks.banki[i].our_vklad[j].vkladname << " ";
-            os << "Times of vklad- " << banks.banki[i].our_vklad[j].times << " ";
-            os << "Rate of vklad - " << banks.banki[i].our_vklad[j].rate << endl;
-        }
-        os << endl;
-    }
-    os << "-----------------------" << endl;
-    return os;
-}
-/*bestbank::bestbank(int stringcount) {
-    this->banki = new bankstruct[stringcount];
-    this->stringcount = stringcount;
-}
-*/
+
 string getfile() {
     string path;
     while (true) {
@@ -202,20 +176,45 @@ string getfile() {
 }
 
 
+banklib::banklib(const banklib& banks) {
+    count = banks.count;
+    banki = new bankstruct[count];
 
-/*ostream& operator<<(ostream& os, const bankstruct& banki) {
+    for (int i = 0; i <count; i++) {
+        banki[i].bankname = banks.banki[i].bankname;
+        banki[i].banktype = banks.banki[i].banktype;
+        banki[i].count = banks.banki[i].count;
+        banki[i].our_vklad = new vkladstruct[banki[i].count];
+        for (int j = 0; j < banki[i].count; j++) {
+            banki[i].our_vklad[j].rate = banks.banki[i].our_vklad[j].rate;
+            banki[i].our_vklad[j].times = banks.banki[i].our_vklad[j].times;
+            banki[i].our_vklad[j].vkladname = banks.banki[i].our_vklad[j].vkladname;
+        }
+    }
+    //return *this;//опер присваивания
+}
+
+ostream& operator<<(ostream& os, const banklib& banks) {
     os << "-----------------------" << endl;
-    os << "Name of bank - " << banki.bankname << endl;
-    os << "Type of  bank - " << banki.banktype << endl;
+    for (int i = 0; i < banks.count; i++) {
+        os << banks.banki[i];
+        for (int j = 0; j < banks.banki[i].count; j++) {
+            os << banks.banki[i].our_vklad[j] << " ";
+        }
+        os << endl;
+    }
     os << "-----------------------" << endl;
     return os;
 }
-*/
-/*ostream& operator<<(ostream& os, const vkladstruct& our_vklad) {
-    os << "Name of vklad - " << our_vklad.vkladname << endl;
-    os << "Rate  of vklad - " << our_vklad.rate << endl;
-    os << "Minimum times of  vklad - " << our_vklad.times << endl;
-    os << "-----------------------" << endl;
+ostream& operator<<(ostream& os, const bankstruct& banki) {
+    os << "Name of bank - " << banki.bankname << " ";
+    os << "Type of  bank - " << banki.banktype << endl;
     return os;
-}*/
+}
+ostream& operator<<(ostream& os, const vkladstruct& our_vklad) {
+    os << "    Name of vklad - " << our_vklad.vkladname << " ";
+    os << "    Rate  of vklad - " << our_vklad.rate << " ";
+    os << "    Minimum times of  vklad - " << our_vklad.times << endl;
+    return os;
+}
 

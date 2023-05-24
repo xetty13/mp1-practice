@@ -25,13 +25,8 @@ int main() {
 	if (vkladType != "saving" && vkladType != "debit" && vkladType != "cumulative") {
 		printf("ERROR!This type of vklad does not exist\n");
 	}
-	/*cin >> sum;
-	cin >> kMonths;
-	cin >> vkladType;
-	*/ 
-
-	banks.search(sum, kMonths, vkladType);
-	//cout << mybanks;
+	banklib mybank= banks.search(sum, kMonths, vkladType);//1 стр. -конструктор копирования, 2- опер. присваивания
+	cout << mybank;
 	return 0;
 
 }
