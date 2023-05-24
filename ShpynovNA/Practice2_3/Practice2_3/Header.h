@@ -10,7 +10,8 @@ private:
 	int year;
 public:
 	void create_data(string str);
-	void give_data(int* day_dest, int* month_dest, int* year_dest);
+	void givedata(int* daydest, int* monthdest, int* yeardest);
+	const date& operator= (const date& e);
 };
 
 class pasport {
@@ -21,13 +22,12 @@ private:
 	string reg;
 	date issue;
 	date birth;
-
 public:
 	bool isElderly();
 	void create_data(string* str);
-	void output();
+	string givedate();
+	const pasport& operator= (const pasport& e);
 };
-
 
 class employee {
 private:
@@ -41,14 +41,32 @@ private:
 	date lastdate;
 public:
 	void create_data(string str);
-	void output();
-	bool isElderly();
+	string givename();
+	pasport givepasport();
+	const employee& operator= (const employee& e);
 };
 
-void createmem(int n, string filename, employee** g_empls);
+class lib {
+private:
+	int emp_amount;
+	employee* empls;
+public:
+	lib(int n);
+	lib(const lib& l);
+	lib(const string& filename);
+	~lib();
 
-void age_scan(int n, employee* g_empls);
+	employee& operator[](int ind);
+	friend ostream& operator<<(ostream& out, const lib& l) {
+		for (int i = 0; i < l.emp_amount; i++) {
+			out << l.empls[i].givename() << " - " << l.empls[i].givepasport().givedate() << endl;
+		}
+		return out;
+	}
+
+	lib output();
+};
 
 string get_string(ifstream& file);
-#endif //!_HEADER_H
 
+#endif //!_HEADER_H

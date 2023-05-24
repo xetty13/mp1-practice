@@ -3,10 +3,57 @@
 #include <string>
 #include <fstream>
 
+using namespace std;
+
 string get_string(ifstream& file) {
 	string tmp;
 	getline(file, tmp);
 	return tmp;
+}
+
+lib::lib(int n) {
+	emp_amount = n;
+	empls = new employee[emp_amount];
+}
+lib::lib(const lib& l) {
+	emp_amount = l.emp_amount;
+	empls = new employee[emp_amount];
+	for (int i = 0; i < emp_amount; i++) {
+		this->empls[i] = l.empls[i];
+	}
+}
+lib::lib(const string& filename) {
+	string* strtmp = new string[50];
+	ifstream file(filename);
+	int n = 0;
+	while ((strtmp[n] = get_string(file)) != "")
+		n++;
+	emp_amount = n;
+	empls = new employee[emp_amount];
+	for (int i = 0; i < emp_amount; i++)
+		empls[i].create_data(strtmp[i]);
+	file.close();
+	delete[] strtmp;
+}
+lib::~lib() {
+	delete[] this->empls;
+}
+employee& lib::operator[](int ind) {
+	return empls[ind];
+}
+lib lib::output() {
+	int n = 0;
+	for (int i = 0; i < this->emp_amount; i++)
+		if (this->empls[i].givepasport().isElderly())
+			n++;
+	lib new_lib(n);
+	int k = 0;
+	for (int i = 0; i < this->emp_amount; i++)
+		if (this->empls[i].givepasport().isElderly()) {
+			new_lib[k] = this->empls[i];
+			k++;
+		}
+	return new_lib;
 }
 
 void employee::create_data(string str)
@@ -31,16 +78,35 @@ void employee::create_data(string str)
 	this->dateofappnt.create_data(Stmp[11]);
 	this->lastdate.create_data(Stmp[12]);
 }
-void employee::output() {
-	cout << this->name << " - ";
-	this->pspt.output();
-	cout << endl;
+const employee& employee::operator=(const employee& e) {
+	pspt = e.pspt;
+	name = e.name;
+	edu = e.edu;
+	spec = e.spec;
+	unit = e.unit;
+	appnt = e.appnt;
+	dateofappnt = e.dateofappnt;
+	lastdate = e.lastdate;
+	return *this;
 }
-bool employee::isElderly() {
-	return this->pspt.isElderly();
+string employee::givename() {
+	return name;
+}
+pasport employee::givepasport() {
+	return pspt;
 }
 
-void pasport::create_data(string * str) {
+const pasport& pasport::operator=(const pasport& p) {
+
+	series = p.series;
+	number = p.number;
+	auth = p.auth;
+	reg = p.reg;
+	issue = p.issue;
+	birth = p.birth;
+	return *this;
+}
+void pasport::create_data(string* str) {
 	this->series = atoi(str[1].c_str());
 	this->number = atoi(str[2].c_str());
 	this->auth = str[3];
@@ -49,25 +115,26 @@ void pasport::create_data(string * str) {
 	this->birth.create_data(str[5]);
 }
 bool pasport::isElderly() {
-	int d, m, y;
-	this->birth.give_data(&d, &m, &y);
-	if ((y < 58) ||
-		((y == 58) && ((m < 4) ||
-			((m == 4) && (d < 27)))))
+	int a, b, c;
+	this->birth.givedata(&a, &b, &c);
+	if ((c < 58) ||
+		((c == 58) && ((b< 4) ||
+			((b == 4) && (a < 27)))))
 		return true;
 	else return false;
 }
-void pasport::output() {
-	int d, m, y;
-	this->birth.give_data(&d, &m, &y);
-	cout << d << "." << m << ".19" << y;
+string pasport::givedate() {
+	int a, b, c;
+	string tmp = "";
+	this->birth.givedata(&a, &b, &c);
+	tmp.append(to_string(a));
+	tmp.append(".");
+	tmp.append(to_string(b));
+	tmp.append(".19");
+	tmp.append(to_string(c));
+	return tmp;
 }
 
-void date::give_data(int* day_dest, int* month_dest, int* year_dest) {
-	*day_dest = this->day;
-	*month_dest = this->month;
-	*year_dest = this->year;
-}
 void date::create_data(string str) {
 	string tmp;
 	tmp = str.substr(0, 2);
@@ -77,25 +144,16 @@ void date::create_data(string str) {
 	tmp = str.substr(8, 2);
 	this->year = atoi(tmp.c_str());
 }
-
-void createmem(int n, string filename, employee** g_empls)
-{
-	ifstream file(filename);
-	for (int i = 0; i < n; i++)
-		(*g_empls)[i].create_data(get_string(file));
-	file.close();
+void date::givedata(int* a, int* b, int* c) {
+	*a = day;
+	*b = month;
+	*c = year;
+}
+const date& date::operator=(const date& d) {
+	day = d.day;
+	month = d.month;
+	year = d.year;
+	return *this;
 }
 
-void age_scan(int n, employee* g_empls) {
-	cout << "all employees:" << endl;
-	for (int i = 0; i < n; i++) {
-		g_empls[i].output();
 
-	}
-	cout << endl;
-	cout << "elderly ones:" << endl;
-	for (int i = 0; i < n; i++)
-		if (g_empls[i].isElderly()) {
-			g_empls[i].output();
-		}
-}
