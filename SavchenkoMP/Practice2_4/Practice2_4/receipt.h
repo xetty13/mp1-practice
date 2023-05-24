@@ -24,7 +24,6 @@ public:
 	bool operator==(const TReceiptLine& rl);
 	const TReceiptLine& operator=(const TReceiptLine& rl);
 
-	//void Print();
 	friend ostream& operator<<(ostream& out, const TReceiptLine& rl) {
 		out << *(rl.product) << "*" << rl.count << " =" << rl.sum;
 		return out;
@@ -39,8 +38,8 @@ private:
 	TTime time;
 	double sum = 0;
 
-	double money;
-	double odd_money;
+	double money = 0;
+	double odd_money = 0;
 
 public:
 	void Add(const TReceiptLine& product, int _count = 1);

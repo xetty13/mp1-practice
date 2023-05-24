@@ -14,7 +14,7 @@ public:
 	TDataBase(const string& filename = "data.txt");
 	void ScanFile(const string& filename);
 
-	int Check(const string& _code);
+	int Check(const string& _code); // -1 - Продукт не найден
 	TProduct* GetProduct(int index);
 
 	void PrintAll() {

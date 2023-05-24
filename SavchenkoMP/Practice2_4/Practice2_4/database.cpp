@@ -44,7 +44,7 @@ void TDataBase::ScanFile(const string& filename) {
 }
 
 
-int TDataBase::Check(const string& _code) { // -1 - Продукт не найден
+int TDataBase::Check(const string& _code) {	// -1 - Продукт не найден
 	for (int i = 0; i < n; i++)
 		if (product[i].GetCode() == _code)
 			return i;

@@ -52,6 +52,8 @@ public:
 				elem[i] = elem[i + 1];
 		count--;
 	}
+
+
 	TELEM& operator[](int index) {
 		if (index < 0 || index >= count) {
 			string exp = "cntINDOUTOFRANGE";
@@ -66,6 +68,50 @@ public:
 		}
 		return elem[index];
 	}
+
+
+	TContainer& operator=(const TContainer& _cnt) {	// присваивание контейнеров
+		if (this != &_cnt) {
+			delete[] elem;;
+			size = _cnt.size;
+			count = _cnt.count;
+			elem = new TELEM[size];
+			for (int i = 0; i < count; i++)
+				elem[i] = _cnt.elem[i];
+		}
+		return *this;
+	} 
+	TContainer operator+(const TContainer& _cnt) {	// объединение контейнеров
+		int i;
+		TContainer<TELEM> tmp(count + _cnt.count + sizestep);
+		for (i = 0; i < count; i++)
+			tmp.elem[i] = elem[i];
+		tmp.count = count;
+		for (i = 0; i < _cnt.count; i++)
+			tmp.Add(_cnt.elem[i]);
+		return tmp;
+	} 
+	TContainer operator*(const TContainer& _cnt) {	// пересечение контейнеров
+		int i;
+		int ss = count;
+		if (ss < _cnt.count) ss = _cnt.count;
+		TContainer<TELEM> tmp(ss + sizestep);
+		tmp.count = 0;
+		for (i = 0; i < count; i++)
+			if (_cnt._find(elem[i]) != -1) tmp.elem[tmp.count++] =
+				elem[i];
+		return tmp;
+	} 
+	TContainer operator-(const TContainer& _cnt) {	// разность контейнеров
+		int i;
+		TContainer<TELEM> tmp(count + sizestep);
+		tmp.count = 0;
+		for (i = 0; i < count; i++)
+			if (_cnt._find(elem[i]) == -1) tmp.elem[tmp.count++] =
+				elem[i];
+		return tmp;
+	} 
+
 
 	friend ostream& operator<<(ostream& out, const TContainer<TELEM>& _elm) {
 		for (int i = 0; i < _elm.Count(); i++)
@@ -102,7 +148,7 @@ public:
 		return nom;
 	}
 
-private:
+protected:
 	void resize(int dsize = 0) { // Изменить размер массива
 		if (dsize == 0) dsize = sizestep;
 		size += dsize;

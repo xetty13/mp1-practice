@@ -24,8 +24,7 @@ struct TDate {
 	void Print() {
 		cout << setfill('0') << setw(2) << d << '.' << setfill('0') << setw(2) << m << '.' << y;
 	}
-	friend ostream& operator<<(ostream& out, const TDate& date) {	// Âûâîäèò äàòó ÑÅÉ×ÀÑ
-		//date.setCurrentDay();
+	friend ostream& operator<<(ostream& out, const TDate& date) {
 		out << setfill('0') << setw(2) << date.d << '.' << setfill('0') << setw(2) << date.m << '.' << date.y;
 		return out;
 	}
@@ -57,8 +56,7 @@ struct TTime {
 	void Print() {
 		cout << setfill('0') << setw(2) << h << ':' << setfill('0') << setw(2) << m << ':' << setfill('0') << setw(2) << s;
 	}
-	friend ostream& operator<<(ostream& out, const TTime& time) {	// Âûâîäèò âðåìÿ ÑÅÉ×ÀÑ
-		//time.setCurrentTime();
+	friend ostream& operator<<(ostream& out, const TTime& time) {
 		out << setfill('0') << setw(2) << time.h << ':' << setfill('0') << setw(2) << time.m << ':' << setfill('0') << setw(2) << time.s;
 		return out;
 	}

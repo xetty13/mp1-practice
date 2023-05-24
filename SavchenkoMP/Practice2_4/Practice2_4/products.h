@@ -10,7 +10,6 @@ private:
 	string code;
 	string name;
 	double cost = 0;
-	//int nameleng;
 public:
 	void Set(const string _code, const string _name, const double _cost);
 	string GetCode() { return code; }

@@ -5,9 +5,10 @@
 using namespace std;
 
 struct TDisplay {
-	// Кол-во пунктов в меню
+	// Кол-во пунктов в меню //////
 	const int mainmenu = 4;
 	const int menuscanproduct = 2;
+	///////////////////////////////
 
 	int scanmode = 0; // 0 - без ввода кол-ва; 1 - с вводом кол-ва
 	void ChangeScanMode();

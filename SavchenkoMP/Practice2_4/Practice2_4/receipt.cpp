@@ -85,21 +85,13 @@ void TReceipt::Show() const { // Показывает данные чека на мониторе
 	cout << products[index] << endl;
 }
 void TReceipt::Payment(double _money) { // Печатает чек, т.е. заканчивается работа с данным покупателем
-	for (int i = 0; i < products.Count(); i++) {
-		sum += products[i].GetSum();
-	}
-	if (_money >= sum) {
-		money = _money;
-		odd_money = money - sum;
-	}
-	else {
-		string exp = "Не достаточно денег.";
-		throw exp;
-	}
+	money = _money;
+	odd_money = money - sum;
 
 	cout << date << ' ' << time << endl;
-	cout << products << endl;
-	cout << "Итоговая сумма к оплате: " << sum << " руб." << endl;
+	for (int i = 0; i < products.Count(); i++)
+		cout << i + 1 << ". " << products[i] << endl;
+	cout << "\nИтоговая сумма к оплате: " << sum << " руб." << endl;
 	cout << "Вы оплатили: " << money << " руб." << endl;
 	cout << "Ваша сдача: " << odd_money << " руб.\n" << endl;
 	cout << "СПАСИБО ЗА ПОКУПКУ! ЖДЕМ ВАС СНОВО!!!" << endl;
@@ -132,10 +124,10 @@ const TReceipt& TReceipt::operator=(const TReceipt& r) {
 	products = r.products;
 	date = r.date;
 	time = r.time;
-	sum = sum;
+	sum = r.sum;
 
-	money = money;
-	odd_money = odd_money;
+	money = r.money;
+	odd_money = r.odd_money;
 	return *this;
 }
 
