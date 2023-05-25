@@ -9,11 +9,13 @@
 
 using namespace std;
 
-int strcount(string path) {
+
+banklib::banklib(const string& path) {
     int stringcount = 0;
     ifstream file(path);
     if (!file.is_open()) {
         cout << "ERROR: Could not open file!" << endl;
+        
     }
     else {
         string line;
@@ -23,18 +25,15 @@ int strcount(string path) {
                 stringcount++;
             }
         }
-        file.close();
+        
     }
-    return stringcount;
-}
-
-banklib::banklib(const string& path) {
-    int stringcount = strcount(path);
+  
+    //int stringcount = strcount(path);
     this->banki = new bankstruct[stringcount];
     this->count = stringcount;
     int i = 0;
     int j = 0;
-    ifstream file(path);
+    //ifstream file(path);
     if (!file.is_open()) {
         cout << "ERROR: Could not open file!" << endl;
     }
@@ -111,6 +110,7 @@ banklib::banklib(const string& path) {
 
 
 banklib& banklib::search(float sum, int kMonths, string vkladType) {
+    this->vkladType = vkladType;
     int a = 0;
     if (vkladType == "saving") {
         a = 0;
@@ -127,6 +127,7 @@ banklib& banklib::search(float sum, int kMonths, string vkladType) {
     int koef = 0;
     int j = 0;
     int k = 0;
+   
     for (i = 1; i < this->count; i++) {
         if (banki[i].count >= (a + 1)) {
             if (banki[i].our_vklad[a].rate > maxproc && kMonths >= banki[i].our_vklad[a].times) {
@@ -177,33 +178,74 @@ string getfile() {
 
 
 banklib::banklib(const banklib& banks) {
+    //return *this;//опер присваивания
     count = banks.count;
     banki = new bankstruct[count];
 
     for (int i = 0; i <count; i++) {
         banki[i].bankname = banks.banki[i].bankname;
         banki[i].banktype = banks.banki[i].banktype;
-        banki[i].count = banks.banki[i].count;
+        //banki[i].count = banks.banki[i].count;
+        int a;
+        if (banks.vkladType == "saving") {
+            a = 0;
+        }
+        else if (banks.vkladType == "debit") {
+            a = 1;
+        }
+        else if (banks.vkladType == "cumulative") {
+            a = 2;
+        }
+        banki[i].count = 1;
         banki[i].our_vklad = new vkladstruct[banki[i].count];
-        for (int j = 0; j < banki[i].count; j++) {
-            banki[i].our_vklad[j].rate = banks.banki[i].our_vklad[j].rate;
-            banki[i].our_vklad[j].times = banks.banki[i].our_vklad[j].times;
-            banki[i].our_vklad[j].vkladname = banks.banki[i].our_vklad[j].vkladname;
+        for (int j = 0; j < banks.banki[i].count; j++) {
+            if(banks.banki[i].our_vklad[j].vkladname == banks.vkladType){
+                banki[i].our_vklad[0].rate = banks.banki[i].our_vklad[a].rate;
+                banki[i].our_vklad[0].times = banks.banki[i].our_vklad[a].times;
+                banki[i].our_vklad[0].vkladname = banks.banki[i].our_vklad[a].vkladname;
+            }
+            else {
+                banki[i].our_vklad[0].rate = 0;
+                banki[i].our_vklad[0].times = 0;
+                banki[i].our_vklad[0].vkladname = "nothing";
+            }
         }
     }
     //return *this;//опер присваивания
+    
+}
+bool vkladstruct::operator==(const string& vkladType) const {
+    return (vkladname == vkladType);
+}
+
+bool vkladstruct::operator!=(const string& vkladType) const {
+    return !(vkladname == vkladType);
 }
 
 ostream& operator<<(ostream& os, const banklib& banks) {
+    /*int count = 0;
+    if (banks.vkladType == "saving") {
+        count = 1;
+    }
+    else if (banks.vkladType == "debit") {
+        count = 1;
+    }
+    else if (banks.vkladType == "cumulative") {
+        count = 1;
+    }*/
     os << "-----------------------" << endl;
     for (int i = 0; i < banks.count; i++) {
-        os << banks.banki[i];
+        //os << banks.banki[i];
         for (int j = 0; j < banks.banki[i].count; j++) {
-            os << banks.banki[i].our_vklad[j] << " ";
+            if (banks.banki[i].our_vklad[j].vkladname != "nothing") {
+                os << banks.banki[i];
+                os << banks.banki[i].our_vklad[j] << " ";
+                os << endl;
+            }
         }
-        os << endl;
     }
     os << "-----------------------" << endl;
+    //count++;
     return os;
 }
 ostream& operator<<(ostream& os, const bankstruct& banki) {
