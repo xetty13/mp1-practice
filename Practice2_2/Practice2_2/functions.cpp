@@ -29,18 +29,21 @@ List info(int& n, const string adress) {
 
 	for (int i = 0; i < list.count; i++)
 	{
-		file >> list.shop[i].name >> list.shop[i].adress.street >> list.shop[i].phone_number >> list.shop[i].specialization >> list.shop[i].op[0].Day >> list.shop[i].op[0].open.hours
-			>> list.shop[i].op[0].open.minutes >> list.shop[i].op[0].close.hours >> list.shop[i].op[0].close.minutes >> list.shop[i].op[1].Day >>  list.shop[i].op[1].open.hours >>
-			list.shop[i].op[1].open.minutes >> list.shop[i].op[1].close.hours >> list.shop[i].op[1].close.minutes >> list.shop[i].op[2].Day >> list.shop[i].op[2].open.hours >> 
-			list.shop[i].op[2].open.minutes >> list.shop[i].op[2].close.hours >> list.shop[i].op[2].close.minutes >> list.shop[i].op[3].Day >> list.shop[i].op[3].open.hours >> 
-			list.shop[i].op[3].open.minutes >> list.shop[i].op[3].close.hours >> list.shop[i].op[3].close.minutes >> list.shop[i].op[4].Day >> list.shop[i].op[4].open.hours >> 
-			list.shop[i].op[4].open.minutes >> list.shop[i].op[4].close.hours >> list.shop[i].op[4].close.minutes >> list.shop[i].op[5].Day >> list.shop[i].op[5].open.hours >>
-			list.shop[i].op[5].open.minutes >> list.shop[i].op[5].close.hours >> list.shop[i].op[5].close.minutes >> list.shop[i].op[6].Day >> list.shop[i].op[6].open.hours >>
-			list.shop[i].op[6].open.minutes >> list.shop[i].op[6].close.hours >> list.shop[i].op[6].close.minutes >> list.shop[i].form_of_ownership >> list.shop[i].adress.postcode;
-			
+		file >> list.shop[i];
 	}
 	file.close();
 	return list;
+}
+istream& operator >>(istream& os, Shop& shop) {
+	os >> shop.name >> shop.adress.street >> shop.phone_number >> shop.specialization >> shop.op[0].Day >> shop.op[0].open.hours
+		>> shop.op[0].open.minutes >> shop.op[0].close.hours >> shop.op[0].close.minutes >> shop.op[1].Day >> shop.op[1].open.hours >>
+		shop.op[1].open.minutes >> shop.op[1].close.hours >> shop.op[1].close.minutes >> shop.op[2].Day >> shop.op[2].open.hours >>
+		shop.op[2].open.minutes >> shop.op[2].close.hours >> shop.op[2].close.minutes >> shop.op[3].Day >> shop.op[3].open.hours >>
+		shop.op[3].open.minutes >> shop.op[3].close.hours >> shop.op[3].close.minutes >> shop.op[4].Day >> shop.op[4].open.hours >>
+		shop.op[4].open.minutes >> shop.op[4].close.hours >> shop.op[4].close.minutes >> shop.op[5].Day >> shop.op[5].open.hours >>
+		shop.op[5].open.minutes >> shop.op[5].close.hours >> shop.op[5].close.minutes >> shop.op[6].Day >> shop.op[6].open.hours >>
+		shop.op[6].open.minutes >> shop.op[6].close.hours >> shop.op[6].close.minutes >> shop.form_of_ownership >> shop.adress.postcode;
+	return os;
 }
 ostream& operator<<(ostream& os, const List& list) {
 	for (int j = 0; j < list.count; j++) {
