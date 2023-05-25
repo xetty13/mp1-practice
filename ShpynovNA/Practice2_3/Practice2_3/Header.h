@@ -3,15 +3,17 @@
 
 using namespace std;
 
-class date {
-private:
+struct date {
 	int day;
 	int month;
 	int year;
-public:
-	void create_data(string str);
-	void givedata(int* daydest, int* monthdest, int* yeardest);
+	date();
+	date(const string& str);
 	const date& operator= (const date& e);
+	friend ostream& operator<<(ostream& out, const date& d) {
+		out << d.day << "." << d.month << ".19" << d.year;
+		return out;
+	};
 };
 
 class pasport {
@@ -23,10 +25,14 @@ private:
 	date issue;
 	date birth;
 public:
-	bool isElderly();
-	void create_data(string* str);
-	string givedate();
+	pasport();
+	pasport(const string* str);
+	bool isElderly() const;
 	const pasport& operator= (const pasport& e);
+	friend ostream& operator<<(ostream& out, const pasport& p) {
+		out << p.birth;
+		return out;
+	};
 };
 
 class employee {
@@ -40,10 +46,14 @@ private:
 	date dateofappnt;
 	date lastdate;
 public:
-	void create_data(string str);
-	string givename();
-	pasport givepasport();
+	employee();
+	employee(const string& str);
+	pasport givepasport(); 
 	const employee& operator= (const employee& e);
+	friend ostream& operator<<(ostream& out, const employee& e) {
+		out << e.name << " - " << e.pspt;
+		return out;
+	};
 };
 
 class lib {
@@ -59,12 +69,12 @@ public:
 	employee& operator[](int ind);
 	friend ostream& operator<<(ostream& out, const lib& l) {
 		for (int i = 0; i < l.emp_amount; i++) {
-			out << l.empls[i].givename() << " - " << l.empls[i].givepasport().givedate() << endl;
+			out << l.empls[i] << endl;
 		}
 		return out;
 	}
 
-	lib output();
+	lib output() const;
 };
 
 string get_string(ifstream& file);
