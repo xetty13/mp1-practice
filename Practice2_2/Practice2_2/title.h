@@ -34,6 +34,7 @@ struct List {
 int count_shops(const string adress);
 List info(int& n, const string adress);
 ostream& operator<<(ostream& os, const List& list);
+istream& operator >>(istream& os, Shop& shop);
 int our_quantity(Shop* shops, int records);
 List correct_shop(Shop* shops, int length, int count);
 void free_str(List* list, int length);
