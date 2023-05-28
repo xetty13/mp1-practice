@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <cstdlib>
 
@@ -26,12 +27,14 @@ public:
 	T& operator[] (int);
 	/*bool operator==(const TContainer<T>&);*/
 	/*bool operator!=(const TContainer<T>&);*/
-	friend std::ostream& operator<<(std::ostream& out, TContainer<T>& c) {
+	friend std::ostream& operator<<(std::ostream& out, const TContainer<T>& c) {
 		for (int i = 0; i < c.size; i++) {
-			out << c.elements[i] << std::endl;
+			out << c.elements[i];
 		}
 		return out;
 	}
+
+	int Get_size();
 
 	void insert(const T&);
 	void insert_forward(const T&);
@@ -49,51 +52,63 @@ public:
 	T& next();
 	T& previous();
 	T& current();
+	bool IsEnded();
 };
 
- // Database clasess
-class TInfoProduct {
-private:
-	TProduct prod;
+struct TProduct {
+	long code;
+	std::string name;
+	double cost;
+
+	bool operator==(const TProduct&);
+	friend std::ostream& operator<<(std::ostream&, const TProduct&);
+};
+
+struct TInfoProduct {
+	TProduct product;
 	int count;
-public:
-	TInfoProduct();
-	const TInfoProduct& operator=(const TInfoProduct&);
 
-	void Set_product(const TProduct&);
-	void Set_count(const int);
+	bool operator==(const TInfoProduct&);
+	friend std::ostream& operator<<(std::ostream&, const TInfoProduct&);
 };
-
-std::ostream& operator<<(std::ostream& out, const TInfoProduct& s);
 
 class TProductsDatabase {
 private:
 	TContainer<TInfoProduct> productsInStock;
 
-	int try_to_open_file(const std::string& fname) const;
-	int find_num_products(const std::string& fname) const;
+	void get_correct_file_name(const std::string& fname) const;
+	bool check_file_name(const std::string& fname) const;
 public:
 	TProductsDatabase(const std::string& filename);
+
+	TInfoProduct& operator[](int);
+	int barcode_search(const long barcode);
+
+	int Get_num_prods();
 
 	void print();
 };
 
-//// Receipt clasess
-struct TProduct {
-	long code;
-	std::string name;
-	double cost;
-};
+class TReceiptLine {
+private:
+	TProduct product;
+	int count;
+	double sum_cost;
+public:
+	TReceiptLine();
+	TReceiptLine(TProduct&, int, double);
 
-//class TReceiptLine {
-//private:
-//	TProduct product;
-//	int count;
-//	double sum_cost;
-//public:
-//	TReceiptLine();
-//	const TReceiptLine& operator= (const TReceiptLine&);
-//};
+	const TReceiptLine& operator= (const TReceiptLine&);
+	friend std::ostream& operator<<(std::ostream& out, const TReceiptLine& rec_line);
+
+	TProduct& Get_product();
+	int Get_count();
+	double Get_sum_cost();
+
+	void Set_count(int);
+	void Set_sum_cost(double);
+
+};
 //
 //class TDate {
 //private:
@@ -109,16 +124,27 @@ struct TProduct {
 //	int second;
 //};
 //
-//class TReceipt {
-//private:
-//	long code;
-//	/*TDate date;
-//	TTime time;*/
-//	TContainer<TReceiptLine>* products;
-//public:
-//	TReceipt();
-//	TReceipt(int msize);
-//};
+class TReceipt {
+private:
+	static long code;
+	/*TDate date;
+	TTime time;*/
+	TContainer<TReceiptLine> products;
+
+	static void Code_increase();
+public:
+	TReceipt();
+	TReceipt(TReceipt&);
+
+	TReceiptLine& operator[](int);
+	friend std::ostream& operator<<(std::ostream& out, const TReceipt& rec);
+	const TReceipt& operator= (const TReceipt&);
+
+	int Find_product(const TProduct&);
+	int Get_num_products();
+	void Add_new_prod(const TReceiptLine&);
+	
+};
 
 
 // T_CONTAINER:
@@ -328,6 +354,16 @@ T& TContainer<T>::current() {
 	if (current_index == -1)
 		throw std::exception("Conteiner is Empty! Isert some element in it");
 	return elements[current_index];
+}
+
+template <typename T>
+bool TContainer<T>::IsEnded() {
+	return current_index == (size - 1);
+}
+
+template <typename T>
+int TContainer<T>::Get_size() {
+	return size;
 }
 
 #endif

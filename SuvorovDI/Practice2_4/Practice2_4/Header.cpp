@@ -2,140 +2,194 @@
 
 // TProductsDatabase:
 TProductsDatabase::TProductsDatabase(const std::string& filename) {
-    int count = try_to_open_file(filename);
-    productsInStock = new TContainer<TInfoProduct>(count);
+    get_correct_file_name(filename);
     std::ifstream file(filename);
-
-    int i = 0;
-    while (i < count) {
-        std::string line;
-        TInfoProduct tmp;
-
-        getline(file, line, ';');
-        tmp.SetCode(std::stol(line));
-
-        getline(file, line, ';');
-        tmp.SetName(line);
-
-        getline(file, line, ';');
-        tmp.SetCost(stod(line));
-
-        getline(file, line, ';');
-        tmp.SetCount(stoi(line));
-
-        productsInStock->insert(tmp);
-
-        i++;
-        file.get();
-    }
-
-    file.close();
-}
-
-int TProductsDatabase::try_to_open_file(const std::string& fname) const {
-    int c = -1;
-    while (c == -1) { 
-        getline(std::cin, const_cast<std::string&>(fname));
-        c = find_num_univ(fname);
-
-        if (c == -1) {
-            std::cout << "Such file doesn't exist" << std::endl;
-        }
-    }
-    return c;
-}
-
-int TProductsDatabase::find_num_univ(const std::string& fname) const {
     std::string line;
-    int c = 0;
-
-    std::ifstream file(fname);
-
-    if (file.fail())
-        return - 1;
 
     while (getline(file, line)) {
-        c++;
+        std::stringstream f_line(line);
+        std::string info_unit;
+        TInfoProduct tmp;
+        TProduct curr_prod;
+
+        getline(f_line, info_unit, ';');
+        curr_prod.code = stol(info_unit);
+
+        getline(f_line, info_unit, ';');
+        curr_prod.name = info_unit;
+
+        getline(f_line, info_unit, ';');
+        curr_prod.cost = stod(info_unit);
+
+        tmp.product = curr_prod;
+
+        getline(f_line, info_unit, ';');
+        tmp.count = stoi(info_unit);
+
+        productsInStock.insert(tmp);
+
+        /*file.get();*/
     }
 
     file.close();
-    return c;
 }
-
+void TProductsDatabase::get_correct_file_name(const std::string& fname) const {
+    bool file_exist;
+    do {
+        getline(std::cin, const_cast<std::string&>(fname));
+        file_exist = check_file_name(fname);
+        if (!file_exist)
+            std::cout << "Such file doesn't exist" << std::endl;
+    } while (!file_exist);
+}
+bool TProductsDatabase::check_file_name(const std::string& fname) const {
+    std::ifstream fin(fname);
+    return !fin.fail();
+}
 void TProductsDatabase::print() {
-    productsInStock->print_elements();
+    std::cout << productsInStock;
+}
+TInfoProduct& TProductsDatabase::operator[](int ind) {
+    return productsInStock[ind];
+}
+int TProductsDatabase::Get_num_prods() {
+    return productsInStock.Get_size();
+}
+int TProductsDatabase::barcode_search(const long barcode) {
+    for (int i = 0; i < productsInStock.Get_size(); i++) {
+        if (productsInStock[i].product.code == barcode) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 // TInfoProduct:
-TInfoProduct::TInfoProduct() {
-    code = -1;
-    name = "";
-    cost = -1;
-    count = -1;
+std::ostream& operator<<(std::ostream& out, const TInfoProduct& prod) {
+    out << "\n";
+    out << "Product: \n" << prod.product;
+    out << "Quantity of product in stock: " << prod.count;
+
+    return out;
+}
+bool TInfoProduct::operator==(const TInfoProduct& p) {
+    return (product == p.product and count == p.count);
 }
 
-const TInfoProduct& TInfoProduct::operator=(const TInfoProduct& prod) {
-    if (this == &prod) {
-        return *this;
-    }
+// TProduct:
+bool TProduct::operator==(const TProduct& p) {
+    return (code == p.code and name == p.name and cost == p.cost);
+}
+std::ostream& operator<<(std::ostream& out, const TProduct& p) {
+    out << "Product code: " << p.code << "   ";
+    out << "Product name: " << p.name << "   ";
+    out << "Cost per unit: " << p.cost;
 
-    code = prod.code;
-    name = prod.name;
-    cost = prod.cost;
-    count = prod.count;
-
-    return *this;
+    return out;
 }
 
-void TInfoProduct::SetCode(const long code) {
-    this->code = code;
+//TReceiptLine:
+TReceiptLine::TReceiptLine() {
+    count = 0;
+    sum_cost = 0;
 }
 
-void TInfoProduct::SetName(const std::string& name) {
-    this->name = name;
-}
-
-void TInfoProduct::SetCost(const double cost) {
-    this->cost = cost;
-}
-
-void TInfoProduct::SetCount(const int count) {
+TReceiptLine::TReceiptLine(TProduct& product, int count, double sum_cost) {
+    this->product = product;
     this->count = count;
+    this->sum_cost = sum_cost;
 }
 
-long TInfoProduct::GetCode() const {
-    return code;
+TProduct& TReceiptLine::Get_product() {
+    return product;
 }
-
-std::string TInfoProduct::GetName() const {
-    return name;
-}
-
-double TInfoProduct::GetCost() const {
-    return cost;
-}
-
-int TInfoProduct::GetCount() const {
+int TReceiptLine::Get_count() {
     return count;
 }
+double TReceiptLine::Get_sum_cost() {
+    return sum_cost;
+}
 
-std::ostream& operator<<(std::ostream& out, const TInfoProduct& product) {
-    out << "\n";
-    out << "Product barcode: " << product.GetCode() << "\n";
-    out << "Product name: " << product.GetName() << "\n";
-    out << "Unit price: " << product.GetCost() << "\n";
-    out << "Quantity of product in stock: " << product.GetCount();
+void TReceiptLine::Set_count(int c) {
+    count = c;
+}
+
+void TReceiptLine::Set_sum_cost(double s) {
+    sum_cost = s;
+}
+
+const TReceiptLine& TReceiptLine::operator=(const TReceiptLine& rec_line) {
+    this->product = rec_line.product;
+    this->count = rec_line.count;
+    this->sum_cost = rec_line.sum_cost;
+
+    return (*this);
+}
+
+std::ostream& operator<<(std::ostream& out, const TReceiptLine& rec_line) {
+    out << rec_line.product << "\n";
+    out << rec_line.count << " pieces\n";
+    out << "total cost:" << rec_line.sum_cost << "rubles\n\n";
 
     return out;
 }
 
 // TReceipt:
-//TReceipt::TReceipt() {
-//    code = 0000001;
-//    products = nullptr;
+long TReceipt::code = -1;
+void TReceipt::Code_increase() {
+    code++;
+}
+
+int TReceipt::Get_num_products() {
+    return products.Get_size();
+}
+
+TReceipt::TReceipt() {
+    Code_increase();
+    
+}
+
+void TReceipt::Add_new_prod(const TReceiptLine& rec_line) {
+    products.insert(rec_line);
+}
+
+//TReceipt::TReceipt(TReceipt& rec) {
+//    rec.Get_num_products();
+//    for (int i = 0; i < rec.Get_num_products(); i++) {
+//        this->products.insert(rec.products[i]);
+//    }
+//    this->code = rec.code;
+//    
 //}
-//
-//TReceipt::TReceipt(int msize) {
-//    code = 1000001;
-//    products = new TContainer<TReceiptLine>(msize);
-//}
+
+TReceiptLine& TReceipt::operator[](int ind) {
+    return products[ind];
+}
+
+const TReceipt& TReceipt::operator= (const TReceipt& rec) {
+    this->code = rec.code;
+    this->products = rec.products;
+
+    return (*this);
+}
+
+int TReceipt::Find_product(const TProduct& prod) {
+    for (int i = 0; i < products.Get_size(); i++) {
+        if (products[i].Get_product() == prod) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+std::ostream& operator<<(std::ostream& out, const TReceipt& rec) {
+    out << "\n------------------------------------------\n";
+    out << "Receipt code: " << rec.code << "\n\n";
+    out << "Yout products: \n";
+
+    out << rec.products;
+
+    out << "------------------------------------------\n";
+
+    return out;
+}
