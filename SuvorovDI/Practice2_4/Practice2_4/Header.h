@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <ctime>
 
 const int STEP = 10;
 
@@ -22,11 +23,11 @@ private:
 public:
 	TContainer();
 	TContainer(int, int);
-	TContainer(const TContainer<T>&);
+	TContainer(const TContainer<T>& c);
 	~TContainer();
+
 	T& operator[] (int);
-	/*bool operator==(const TContainer<T>&);*/
-	/*bool operator!=(const TContainer<T>&);*/
+	const TContainer& operator=(const TContainer& c);
 	friend std::ostream& operator<<(std::ostream& out, const TContainer<T>& c) {
 		for (int i = 0; i < c.size; i++) {
 			out << c.elements[i];
@@ -97,8 +98,10 @@ private:
 public:
 	TReceiptLine();
 	TReceiptLine(TProduct&, int, double);
+	TReceiptLine(const TReceiptLine&);
 
 	const TReceiptLine& operator= (const TReceiptLine&);
+	bool operator==(const TReceiptLine&);
 	friend std::ostream& operator<<(std::ostream& out, const TReceiptLine& rec_line);
 
 	TProduct& Get_product();
@@ -109,40 +112,45 @@ public:
 	void Set_sum_cost(double);
 
 };
-//
-//class TDate {
-//private:
-//	int day;
-//	int month;
-//	int year;
-//};
-//
-//class TTime {
-//private:
-//	int hour;
-//	int minute;
-//	int second;
-//};
-//
+
+struct TDate {
+	int day;
+	int month;
+	int year;
+
+	TDate();
+};
+
+struct TTime {
+	int hour;
+	int minute;
+	int second;
+
+	TTime();
+};
+
 class TReceipt {
 private:
 	static long code;
-	/*TDate date;
-	TTime time;*/
+	TDate date;
+	TTime time;
 	TContainer<TReceiptLine> products;
 
 	static void Code_increase();
 public:
 	TReceipt();
-	TReceipt(TReceipt&);
+	TReceipt(const TReceipt&);
 
 	TReceiptLine& operator[](int);
-	friend std::ostream& operator<<(std::ostream& out, const TReceipt& rec);
+	friend std::ostream& operator<<(std::ostream& out, TReceipt& rec);
 	const TReceipt& operator= (const TReceipt&);
 
 	int Find_product(const TProduct&);
 	int Get_num_products();
 	void Add_new_prod(const TReceiptLine&);
+	double Get_total_sum();
+	void Get_data_n_time();
+	void Delete_current_prod();
 	
 };
 
@@ -189,6 +197,27 @@ TContainer<T>::~TContainer() {
 
 // overloading
 template <typename T>
+const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& c) {
+	if (this == &c)
+		return (*this);
+
+	size = c.size;
+	max_size = c.max_size;
+	step = c.step;
+	current_index = c.current_index;
+	if (elements) {
+		delete[] elements;
+	}
+	elements = new T[max_size];
+
+	for (int i = 0; i < size; i++) {
+		elements[i] = c.elements[i];
+	}
+	
+	return (*this);
+}
+
+template <typename T>
 T& TContainer<T>::operator[] (int ind) {
 	if (ind >= max_size || ind < 0)
 		throw "Index out of range";
@@ -197,21 +226,11 @@ T& TContainer<T>::operator[] (int ind) {
 }
 
 //template <typename T>
-//bool TContainer<T>::operator== (const TContainer<T>& c) {
-//	if (size != c.size)
-//		return false;
-//
-//	for (int i = 0; i < size; i++) {
-//		if (elements[i] != c.elements[i]) {
-//			return false;
-//		}
+//std::ostream& operator<<(std::ostream& out, const TContainer<T>& c) {
+//	for (int i = 0; i < c.size; i++) {
+//		out << c.elements[i];
 //	}
-//	return true;
-//}
-
-//template <typename T>
-//bool TContainer<T>::operator!= (const TContainer<T>& c) {
-//	return !(*(this) == c);
+//	return out;
 //}
 
 // methods

@@ -100,12 +100,20 @@ TReceiptLine::TReceiptLine(TProduct& product, int count, double sum_cost) {
     this->sum_cost = sum_cost;
 }
 
+TReceiptLine::TReceiptLine(const TReceiptLine& rec_line) {
+    this->product = rec_line.product;
+    this->count = rec_line.count;
+    this->sum_cost = rec_line.sum_cost;
+}
+
 TProduct& TReceiptLine::Get_product() {
     return product;
 }
+
 int TReceiptLine::Get_count() {
     return count;
 }
+
 double TReceiptLine::Get_sum_cost() {
     return sum_cost;
 }
@@ -126,6 +134,10 @@ const TReceiptLine& TReceiptLine::operator=(const TReceiptLine& rec_line) {
     return (*this);
 }
 
+bool TReceiptLine::operator==(const TReceiptLine& rec_line) {
+    return (this->product == rec_line.product);
+}
+
 std::ostream& operator<<(std::ostream& out, const TReceiptLine& rec_line) {
     out << rec_line.product << "\n";
     out << rec_line.count << " pieces\n";
@@ -134,43 +146,74 @@ std::ostream& operator<<(std::ostream& out, const TReceiptLine& rec_line) {
     return out;
 }
 
+// Time & Data
+TTime::TTime() {
+    hour = 0;
+    minute = 0;
+    second = 0;
+}
+
+TDate::TDate() {
+    year = 0;
+    month = 0;
+    day = 0;
+}
+
 // TReceipt:
 long TReceipt::code = -1;
 void TReceipt::Code_increase() {
     code++;
 }
 
-int TReceipt::Get_num_products() {
-    return products.Get_size();
-}
+TReceipt::TReceipt() {}
 
-TReceipt::TReceipt() {
-    Code_increase();
-    
+TReceipt::TReceipt(const TReceipt& rec) {
+    this->code = rec.code;
+    this->time = rec.time;
+    this->date = rec.date;
+    this->products = rec.products;
 }
-
-void TReceipt::Add_new_prod(const TReceiptLine& rec_line) {
-    products.insert(rec_line);
-}
-
-//TReceipt::TReceipt(TReceipt& rec) {
-//    rec.Get_num_products();
-//    for (int i = 0; i < rec.Get_num_products(); i++) {
-//        this->products.insert(rec.products[i]);
-//    }
-//    this->code = rec.code;
-//    
-//}
 
 TReceiptLine& TReceipt::operator[](int ind) {
     return products[ind];
 }
 
 const TReceipt& TReceipt::operator= (const TReceipt& rec) {
+    if (this == &rec)
+        return (*this);
+
     this->code = rec.code;
+    this->time = rec.time;
+    this->date = rec.date;
     this->products = rec.products;
 
     return (*this);
+}
+
+std::ostream& operator<<(std::ostream& out, TReceipt& rec) {
+    rec.Code_increase();
+
+    out << "\n------------------------------------------\n";
+    out << "Receipt code: " << rec.code << "\n\n";
+    out << rec.date.day << "." << rec.date.month << "." << rec.date.year << "  ";
+    out << rec.time.hour << ":" << rec.time.minute << ":" << rec.time.second << "\n";
+    out << "Your products: \n";
+
+    out << rec.products;
+
+    out << "TOTAL SUM:  " << rec.Get_total_sum() << " rubles\n";
+
+    out << "------------------------------------------\n";
+
+    return out;
+}
+
+int TReceipt::Get_num_products() {
+    return products.Get_size();
+}
+
+void TReceipt::Add_new_prod(const TReceiptLine& rec_line) {
+    products.insert(rec_line);
 }
 
 int TReceipt::Find_product(const TProduct& prod) {
@@ -182,14 +225,29 @@ int TReceipt::Find_product(const TProduct& prod) {
     return -1;
 }
 
-std::ostream& operator<<(std::ostream& out, const TReceipt& rec) {
-    out << "\n------------------------------------------\n";
-    out << "Receipt code: " << rec.code << "\n\n";
-    out << "Yout products: \n";
+double TReceipt::Get_total_sum() {
+    double total_sum = 0;
+    int count = this->Get_num_products();
 
-    out << rec.products;
+    for (int i = 0; i < count; i++) {
+        total_sum += this->products[i].Get_sum_cost();
+    }
 
-    out << "------------------------------------------\n";
+    return total_sum;
+}
 
-    return out;
+void TReceipt::Get_data_n_time() {
+    std::time_t mil = std::time(0);
+    std::tm* now = std::localtime(&mil);
+    this->time.hour = now->tm_hour;
+    this->time.minute = now->tm_min;
+    this->time.second = now->tm_sec;
+
+    this->date.day = now->tm_mday;
+    this->date.month = now->tm_mon + 1;
+    this->date.year = now->tm_year + 1900;
+}
+
+void TReceipt::Delete_current_prod() {
+    this->products.remove(this->products.current());
 }
