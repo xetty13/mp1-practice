@@ -10,5 +10,7 @@ int main() {
 
 	work_with_client(database);
 
+	database.print();
+
 	return 0;
 }

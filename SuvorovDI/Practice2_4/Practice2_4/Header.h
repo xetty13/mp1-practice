@@ -35,7 +35,7 @@ public:
 		return out;
 	}
 
-	int Get_size();
+	int Get_size() const;
 
 	void insert(const T&);
 	void insert_forward(const T&);
@@ -71,23 +71,6 @@ struct TInfoProduct {
 
 	bool operator==(const TInfoProduct&);
 	friend std::ostream& operator<<(std::ostream&, const TInfoProduct&);
-};
-
-class TProductsDatabase {
-private:
-	TContainer<TInfoProduct> productsInStock;
-
-	void get_correct_file_name(const std::string& fname) const;
-	bool check_file_name(const std::string& fname) const;
-public:
-	TProductsDatabase(const std::string& filename);
-
-	TInfoProduct& operator[](int);
-	int barcode_search(const long barcode);
-
-	int Get_num_prods();
-
-	void print();
 };
 
 class TReceiptLine {
@@ -146,12 +129,30 @@ public:
 	const TReceipt& operator= (const TReceipt&);
 
 	int Find_product(const long);
-	int Get_num_products();
+	int Get_num_products() const;
 	void Add_new_prod(const TReceiptLine&);
 	double Get_total_sum();
 	void Get_data_n_time();
 	void Delete_prod(const int ind);
-	
+
+};
+
+class TProductsDatabase {
+private:
+	TContainer<TInfoProduct> productsInStock;
+
+	void get_correct_file_name(const std::string& fname) const;
+	bool check_file_name(const std::string& fname) const;
+public:
+	TProductsDatabase(const std::string& filename);
+
+	TInfoProduct& operator[](int);
+
+	int barcode_search(const long barcode);
+	int Get_num_prods() const;
+	void Updating_data_remove(const TProduct& prod);
+	void Updating_data_add(const TProduct& prod);
+	void print();
 };
 
 
@@ -381,7 +382,7 @@ bool TContainer<T>::IsEnded() {
 }
 
 template <typename T>
-int TContainer<T>::Get_size() {
+int TContainer<T>::Get_size() const {
 	return size;
 }
 

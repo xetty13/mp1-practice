@@ -52,7 +52,7 @@ void TProductsDatabase::print() {
 TInfoProduct& TProductsDatabase::operator[](int ind) {
     return productsInStock[ind];
 }
-int TProductsDatabase::Get_num_prods() {
+int TProductsDatabase::Get_num_prods() const {
     return productsInStock.Get_size();
 }
 int TProductsDatabase::barcode_search(const long barcode) {
@@ -62,6 +62,15 @@ int TProductsDatabase::barcode_search(const long barcode) {
         }
     }
     return -1;
+}
+void TProductsDatabase::Updating_data_remove(const TProduct& prod) {
+    int ind_such_prod = this->barcode_search(prod.code);
+    (*this)[ind_such_prod].count -= 1;
+}
+
+void TProductsDatabase::Updating_data_add(const TProduct& prod) {
+    int ind_such_prod = this->barcode_search(prod.code);
+    (*this)[ind_such_prod].count += 1;
 }
 
 // TInfoProduct:
@@ -208,7 +217,7 @@ std::ostream& operator<<(std::ostream& out, TReceipt& rec) {
     return out;
 }
 
-int TReceipt::Get_num_products() {
+int TReceipt::Get_num_products() const {
     return products.Get_size();
 }
 

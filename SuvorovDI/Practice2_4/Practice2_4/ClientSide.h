@@ -5,6 +5,6 @@
 
 void work_with_client(TProductsDatabase& db);
 
-int barcode_search(const long, TProductsDatabase&);
+bool isDigit(const std::string& s);
 
 #endif

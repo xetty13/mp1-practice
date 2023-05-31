@@ -1,5 +1,13 @@
 #include "ClientSide.h"
 
+bool isDigit(const std::string& s) {
+	for (int i = 0; i < s.size(); i++) {
+		if (std::isdigit(s[i]) == 0)
+			return false;
+	}
+	return true;
+}
+
 void work_with_client(TProductsDatabase& db) {
 	std::cout << "\nWelcome!\n";
 
@@ -26,17 +34,17 @@ void work_with_client(TProductsDatabase& db) {
 
 		bool receiptCompleted = false;
 		while (!receiptCompleted) {
-			std::cout << "If you want to scan new product - enter its barcode.\n";
+			std::cout << "If you want to scan new product - enter '+'.\n";
 			std::cout << "If you want to complete this receipt and print it - enter '#'.\n";
 			std::cout << "If you want to delete some product - enter '-'.\n  >>> ";
 
 			std::string user_input;
 			do {
 				getline(std::cin, user_input);
-				if (user_input != "#" and user_input != "-" and user_input.size() != 5) {
-					std::cout << "Uncorrect input. Remind that in our store barcodes have 5 characters! Try again\n  >>> ";
+				if (user_input != "#" and user_input != "-" and user_input != "+") {
+					std::cout << "Uncorrect input! Try again following the input instructions\n  >>> ";
 				}
-			} while (user_input != "#" and user_input != "-" and user_input.size() != 5);
+			} while (user_input != "#" and user_input != "-" and user_input != "+");
 
 			if (user_input == "#") {
 				receiptCompleted = true;
@@ -49,27 +57,61 @@ void work_with_client(TProductsDatabase& db) {
 					std::cout << "Enter product barcode that you want to delete:\n\n  --- ";
 					int search_result;
 					std::string barcode;
+					bool isAvaliable;
+
 					do {
+						search_result = 0;
+						isAvaliable = true;
 						getline(std::cin, barcode);
-						search_result = curr_rec.Find_product(stol(barcode));
+						if (isDigit(barcode)) {
+							search_result = curr_rec.Find_product(stol(barcode));
+							if (db[search_result].count == 0) {
+								isAvaliable = false;
+							}
+						}
 						if (search_result == -1) {
 							std::cout << "You did not add a product with this barcode to the receipt. Try again\n\n  --- ";
 						}
+						if (!isDigit(barcode)) {
+							std::cout << "Barcodes consists only of digits! Try again\n\n  --- ";
+						}
+						if (!isAvaliable) {
+							std::cout << "Unfortunately, the product is out of stock. Take something else.\n\n  >>> ";
+						}
 
-					} while (search_result == -1);
+					} while (search_result == -1 or !isDigit(barcode) or !isAvaliable);
+
 					curr_rec.Delete_prod(search_result);
+					db.Updating_data_add(curr_rec[search_result].Get_product());
 				}
 			}
-			else {
+			else if (user_input == "+") {
+				std::cout << "Enter barcode you want to add\n\n  >>> ";
 				int search_result;
-				do {
-					search_result = db.barcode_search(stol(user_input));
-					if (search_result == -1) {
-						std::cout << "In our store there are not the product with this barcode. Try again\n  >>> ";
-						getline(std::cin, user_input);
-					}
+				bool isAvaliable;
+				std::string barcode;
 
-				} while (search_result == -1);
+				do {
+					search_result = 0;
+					isAvaliable = true;
+					getline(std::cin, barcode);
+					if (isDigit(barcode)) {
+						search_result = db.barcode_search(stol(barcode));
+						if (db[search_result].count == 0) {
+							isAvaliable = false;
+						}
+					}
+					if (search_result == -1) {
+						std::cout << "In our store there are not the product with this barcode. Try again!\n  >>> ";
+					}
+					if (!isDigit(barcode)) {
+						std::cout << "Barcodes consists only of digits! Try again!\n\n  >>> ";
+					}
+					if (!isAvaliable) {
+						std::cout << "Unfortunately, the product is out of stock. Take something else.\n\n  >>> ";
+					}
+					
+				} while (search_result == -1 or !isDigit(barcode) or !isAvaliable);
 
 				TProduct curr_p = db[search_result].product;
 				std::cout << "\n" << curr_p << "\n";
@@ -90,6 +132,8 @@ void work_with_client(TProductsDatabase& db) {
 					TReceiptLine curr_rec_line(curr_p, 1, curr_p.cost);
 					curr_rec.Add_new_prod(curr_rec_line);
 				}
+
+				db.Updating_data_remove(curr_p);
 			}
 		}
 		
