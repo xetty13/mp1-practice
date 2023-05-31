@@ -11,6 +11,11 @@
 
 const int STEP = 10;
 
+class TProductsDatabase;
+class TReceipt;
+class TReceiptLine;
+
+
 template <typename T>
 class TContainer {
 private:
@@ -121,6 +126,8 @@ private:
 	TContainer<TReceiptLine> products;
 
 	static void Code_increase();
+	int get_barcode_delete(TProductsDatabase& db);
+	int get_barcode_add(TProductsDatabase& db);
 public:
 	TReceipt();
 	TReceipt(const TReceipt&);
@@ -135,7 +142,8 @@ public:
 	double Get_total_sum();
 	void Get_data_n_time();
 	void Delete_prod(const int ind);
-
+	void Delete(TProductsDatabase& db);
+	void Add(TProductsDatabase& db);
 };
 
 class TProductsDatabase {

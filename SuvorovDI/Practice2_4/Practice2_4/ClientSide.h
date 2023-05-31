@@ -5,8 +5,6 @@
 
 void work_with_client(TProductsDatabase& db);
 
-bool isDigit(const std::string& s);
-
 void create_updating_db(TProductsDatabase& db);
 
 

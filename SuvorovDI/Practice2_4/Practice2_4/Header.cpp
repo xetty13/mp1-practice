@@ -1,5 +1,67 @@
 #include "Header.h"
 
+bool isDigit(const std::string& s) {
+    for (int i = 0; i < s.size(); i++) {
+        if (std::isdigit(s[i]) == 0)
+            return false;
+    }
+    return true;
+}
+
+
+int TReceipt::get_barcode_add(TProductsDatabase& db) {
+    std::string barcode;
+    int search_result = 0;
+    bool isAvaliable = true;
+
+    getline(std::cin, barcode);
+    if (isDigit(barcode)) {
+        search_result = db.barcode_search(stol(barcode));
+        if (search_result == -1) {
+            std::cout << "In our store there are not the product with this barcode. Try again!\n  >>> ";
+        }
+        else if (db[search_result].count == 0) {
+            isAvaliable = false;
+        }
+    }
+    if (!isDigit(barcode)) {
+        std::cout << "Barcodes consists only of digits! Try again!\n\n  >>> ";
+    }
+    if (!isAvaliable) {
+        std::cout << "Unfortunately, the product is out of stock. Take something else.\n\n  >>> ";
+    }
+
+    if (search_result != -1 and isDigit(barcode) and isAvaliable) {
+        return search_result;
+    }
+    else {
+        return -1;
+    }
+}
+
+int TReceipt::get_barcode_delete(TProductsDatabase& db) {
+    std::string barcode;
+    int search_result = 0;
+
+    getline(std::cin, barcode);
+    if (isDigit(barcode)) {
+        search_result = this->Find_product(stol(barcode));
+        if (search_result == -1) {
+            std::cout << "You did not add a product with this barcode to the receipt. Try again\n\n  --- ";
+        }
+    }
+    if (!isDigit(barcode)) {
+        std::cout << "Barcodes consists only of digits! Try again\n\n  --- ";
+    }
+    
+    if (search_result != -1 and isDigit(barcode)) {
+        return search_result;
+    }
+    else {
+        return -1;
+    }
+}
+
 // TProductsDatabase:
 TProductsDatabase::TProductsDatabase(const std::string& filename) {
     get_correct_file_name(filename);
@@ -261,4 +323,50 @@ void TReceipt::Get_data_n_time() {
 void TReceipt::Delete_prod(const int ind) {
     std::cout << "This product was deleted: " << this->products[ind].Get_product() << "\n";
     this->products.remove(ind);
+}
+
+void TReceipt::Delete(TProductsDatabase& db) {
+    if (this->Get_num_products() == 0) {
+        std::cout << "The receipt is empty, there is nothing to delete!\n"; \
+    }
+    else {
+        std::cout << "Enter product barcode that you want to delete:\n\n  --- ";
+        int search_result = this->get_barcode_delete(db);
+        
+        if (search_result != -1) {
+            db.Updating_data_add((*this)[search_result].Get_product(), (*this)[search_result].Get_count());
+            this->Delete_prod(search_result);
+        }
+    }
+}
+
+void TReceipt::Add(TProductsDatabase& db) {
+    std::cout << "Enter barcode you want to add\n\n  >>> ";
+
+    int search_result = this->get_barcode_add(db);
+
+    if (search_result != -1) {
+
+        TProduct curr_p = db[search_result].product;
+        std::cout << "\n" << curr_p << "\n";
+
+        // Search such prod in receipt
+
+        int idx_prod_in_receipt = this->Find_product(curr_p.code);
+        if (idx_prod_in_receipt != -1) {
+            ((*this)[idx_prod_in_receipt]).Set_count(
+                ((*this)[idx_prod_in_receipt]).Get_count() + 1
+            );
+
+            ((*this)[idx_prod_in_receipt]).Set_sum_cost(
+                ((*this)[idx_prod_in_receipt]).Get_sum_cost() + curr_p.cost
+            );
+        }
+        else {
+            TReceiptLine curr_rec_line(curr_p, 1, curr_p.cost);
+            this->Add_new_prod(curr_rec_line);
+        }
+
+        db.Updating_data_remove(curr_p);
+    }
 }
