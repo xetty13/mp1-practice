@@ -9,16 +9,20 @@ using namespace std;
  struct Time{
 	string hours;
 	string minutes;
+	Time();
 } ;
 struct Opening_Hours {
 	string Day;
 	Time open;
 	Time close;
+	Opening_Hours();
+	Opening_Hours& operator=(const Opening_Hours& other);
 };
-typedef struct {
+ struct Adress{
 	string street;
 	string postcode;
-}Adress;
+	Adress& operator=(const Adress& other);
+};
 struct Shop {
 	string name;
 	string phone_number;
@@ -26,16 +30,23 @@ struct Shop {
 	Opening_Hours* op;
 	Adress adress;
 	string form_of_ownership;
+	Shop();
+	Shop& operator=(const Shop& other);
+	friend istream& operator >>(istream& os, Shop& shop);
 };
 struct List {
+	friend ostream& operator<<(ostream& os, const List& list);
 	Shop* shop;
 	int count;
+	List(string adress);
+	List();
+	~List();
+	List& correct_base(List& first);
+	List& operator=(const List& other);
 };
-int count_shops(const string adress);
-List info(int& n, const string adress);
+
 ostream& operator<<(ostream& os, const List& list);
 istream& operator >>(istream& os, Shop& shop);
-int our_quantity(Shop* shops, int records);
-List correct_shop(Shop* shops, int length, int count);
-void free_str(List* list, int length);
+
+
 #endif
