@@ -63,14 +63,15 @@ int TProductsDatabase::barcode_search(const long barcode) {
     }
     return -1;
 }
+
 void TProductsDatabase::Updating_data_remove(const TProduct& prod) {
     int ind_such_prod = this->barcode_search(prod.code);
     (*this)[ind_such_prod].count -= 1;
 }
 
-void TProductsDatabase::Updating_data_add(const TProduct& prod) {
+void TProductsDatabase::Updating_data_add(const TProduct& prod, int count) {
     int ind_such_prod = this->barcode_search(prod.code);
-    (*this)[ind_such_prod].count += 1;
+    (*this)[ind_such_prod].count += count;
 }
 
 // TInfoProduct:

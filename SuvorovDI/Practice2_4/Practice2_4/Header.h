@@ -7,6 +7,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <stdio.h>
 
 const int STEP = 10;
 
@@ -151,7 +152,7 @@ public:
 	int barcode_search(const long barcode);
 	int Get_num_prods() const;
 	void Updating_data_remove(const TProduct& prod);
-	void Updating_data_add(const TProduct& prod);
+	void Updating_data_add(const TProduct& prod, int count);
 	void print();
 };
 

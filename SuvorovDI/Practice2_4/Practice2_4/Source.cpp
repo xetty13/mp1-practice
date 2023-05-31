@@ -6,11 +6,11 @@ int main() {
 	std::string file_name;
 	TProductsDatabase database(file_name);
 
-	database.print();
+	//database.print();
 
 	work_with_client(database);
-
-	database.print();
+	
+	//database.print();
 
 	return 0;
 }
