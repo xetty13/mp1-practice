@@ -83,7 +83,7 @@ bool TProduct::operator==(const TProduct& p) {
 std::ostream& operator<<(std::ostream& out, const TProduct& p) {
     out << "Product code: " << p.code << "   ";
     out << "Product name: " << p.name << "   ";
-    out << "Cost per unit: " << p.cost;
+    out << "Cost per unit: " << p.cost << "\n";
 
     return out;
 }
@@ -216,9 +216,9 @@ void TReceipt::Add_new_prod(const TReceiptLine& rec_line) {
     products.insert(rec_line);
 }
 
-int TReceipt::Find_product(const TProduct& prod) {
+int TReceipt::Find_product(const long code) {
     for (int i = 0; i < products.Get_size(); i++) {
-        if (products[i].Get_product() == prod) {
+        if (products[i].Get_product().code == code) {
             return i;
         }
     }
@@ -248,6 +248,7 @@ void TReceipt::Get_data_n_time() {
     this->date.year = now->tm_year + 1900;
 }
 
-void TReceipt::Delete_current_prod() {
-    this->products.remove(this->products.current());
+void TReceipt::Delete_prod(const int ind) {
+    std::cout << "This product was deleted: " << this->products[ind].Get_product() << "\n";
+    this->products.remove(ind);
 }

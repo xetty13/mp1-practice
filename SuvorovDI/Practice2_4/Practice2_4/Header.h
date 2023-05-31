@@ -145,12 +145,12 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, TReceipt& rec);
 	const TReceipt& operator= (const TReceipt&);
 
-	int Find_product(const TProduct&);
+	int Find_product(const long);
 	int Get_num_products();
 	void Add_new_prod(const TReceiptLine&);
 	double Get_total_sum();
 	void Get_data_n_time();
-	void Delete_current_prod();
+	void Delete_prod(const int ind);
 	
 };
 
