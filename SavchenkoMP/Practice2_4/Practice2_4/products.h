@@ -9,20 +9,25 @@ class TProduct {
 private:
 	string code;
 	string name;
-	double cost = 0;
+	double cost;
 public:
+	TProduct(const string& _code = "", const string& _name = "", const double _cost = 0);
 	void Set(const string _code, const string _name, const double _cost);
-	string GetCode() { return code; }
-	string GetName() { return name; }
-	double GetCost() { return cost; }
+	string GetCode() const { return code; }
+	string GetName() const { return name; }
+	double GetCost() const { return cost; }
 
-	bool operator==(const TProduct& p);
+	bool operator==(const TProduct& p) const;
 	const TProduct& operator=(const TProduct& p);
 
-	void Print() { // Печать всех данных о продукте
-		cout << code << ' ' << name << ' ' << cost << ' ' << endl;
+	// Печать всех данных о продукте без форматирования
+	void Print() {
+		cout << code << ' ' << name << ' ' << cost;
 	}
-	friend ostream& operator<<(ostream& out, const TProduct& p) { // Печать с выделенным количеством места
+	ostream& ostreamProduct(ostream& out);
+	
+	// Печать с выделенным количеством места (с форматированием)
+	friend ostream& operator<<(ostream& out, const TProduct& p) {
 		int NameLeng = 35;
 		int CostLeng = 5;
 		char NameFill = ' ';

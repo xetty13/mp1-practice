@@ -3,12 +3,24 @@
 #include "products.h"
 #include "receipt.h"
 #include "database.h"
+#include "display.h"
+#include "utility.h"
 using namespace std;
+
+TReceiptLine::TReceiptLine() {
+	count = 0;
+	sum = 0;
+	product = NULL;
+}
 
 bool TReceiptLine::Scan(TDataBase& data, const string& code, const int _count) {
 	int ind = data.Check(code);
 	if (ind == -1) {
 		cout << "Неправильный штрихкод. Побробуйте отсканировать другой." << endl;
+
+		int tmp;
+		cout << "\nНажмите любую клавишу, чтобы продолжить.\n" << endl;
+		cin >> tmp;
 		return false;
 	}
 
@@ -40,6 +52,15 @@ void TReceiptLine::AddCount(int _count) {
 
 // =====================================================================
 // TReceipt
+
+TReceipt::TReceipt() {
+	index = 0;
+	sum = 0;
+	
+	money = 0;
+	odd_money = 0;
+	SetCLOCK();
+}
 
 void TReceipt::Add(const TReceiptLine& product, int _count) {
 	int i = products._find(product);
@@ -81,20 +102,35 @@ int TReceipt::Count() const{
 	return products.Count();
 }
 
+void TReceipt::SetCode(int _code) {
+	code = date.StringDate() + intToString(_code, 3, '0');
+}
+
 void TReceipt::Show() const { // Показывает данные чека на мониторе
 	cout << products[index] << endl;
 }
-void TReceipt::Payment(double _money) { // Печатает чек, т.е. заканчивается работа с данным покупателем
+void TReceipt::Payment(TDataBase& data, const double _money) { // Печатает чек, т.е. заканчивается работа с данным покупателем
 	money = _money;
 	odd_money = money - sum;
 
+	// Формирование чека //
+	dsp::Line();
+	cout << "Чек #" << code << endl;
 	cout << date << ' ' << time << endl;
 	for (int i = 0; i < products.Count(); i++)
 		cout << i + 1 << ". " << products[i] << endl;
 	cout << "\nИтоговая сумма к оплате: " << sum << " руб." << endl;
 	cout << "Вы оплатили: " << money << " руб." << endl;
 	cout << "Ваша сдача: " << odd_money << " руб.\n" << endl;
-	cout << "СПАСИБО ЗА ПОКУПКУ! ЖДЕМ ВАС СНОВО!!!" << endl;
+	cout << "СПАСИБО ЗА ПОКУПКУ! ЖДЕМ ВАС СНОВА!!!" << endl;
+	dsp::Line();
+
+	// Внесение изменений в базу данных //
+	for (int i = 0; i < products.Count(); i++) {
+		string pcode = products[i].GetCode();
+		int dind = data.Check(pcode);
+		data.GetProductCount(dind) -= products[i].GetCount();
+	}
 }
 void TReceipt::Clear() {
 	products.Clear();
@@ -102,20 +138,14 @@ void TReceipt::Clear() {
 	sum = 0;
 }
 
-void TReceipt::Next() {	// Показывает следующий продукт
-	index++;
-	if (index > products.Count())
-		index = 0;
-	cout << products[index] << endl;
-}
-void TReceipt::Now() {	// Показывает продукт, который сейчас выбран
+void TReceipt::LastScan() {	// Показывает продукт, который сейчас выбран
 	if (Count()) cout << products[index] << endl;
 }
-void TReceipt::Prev() {	// Показывает предыдущий продукт.
-	index--;
-	if (index == -1)
-		index = products.Count();
-	cout << products[index] << endl;
+
+int TReceipt::FindCount(const TReceiptLine& rl) {
+	int ind = _find(rl);
+	if (ind == -1) return 0;
+	else return products[ind].GetCount();
 }
 
 const TReceipt& TReceipt::operator=(const TReceipt& r) {
@@ -130,12 +160,11 @@ const TReceipt& TReceipt::operator=(const TReceipt& r) {
 	odd_money = r.odd_money;
 	return *this;
 }
+bool TReceipt::operator==(const TReceipt& r) const {
+	if (this == &r) return true;
+	return false;
+}
 
 TReceiptLine TReceipt::operator[](int ind) {
 	return products[ind];
-}
-
-void TReceipt::SetSum() {
-	for (int i = 0; i < products.Count(); i++)
-		sum += products[i].GetSum();
 }

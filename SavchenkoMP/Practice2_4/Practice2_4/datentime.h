@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <iomanip> // setfill(), setw()
+#include "utility.h"
 using namespace std;
 
 struct TDate {
@@ -23,6 +24,10 @@ struct TDate {
 	}
 	void Print() {
 		cout << setfill('0') << setw(2) << d << '.' << setfill('0') << setw(2) << m << '.' << y;
+	}
+	string StringDate() const {
+		string ans = intToString(d, 2) + intToString(m, 2) + intToString(y - 2000, 2);
+		return ans;
 	}
 	friend ostream& operator<<(ostream& out, const TDate& date) {
 		out << setfill('0') << setw(2) << date.d << '.' << setfill('0') << setw(2) << date.m << '.' << date.y;
@@ -53,8 +58,12 @@ struct TTime {
 		m = now_tm.tm_min;
 		s = now_tm.tm_sec;
 	}
-	void Print() {
+	void Print() const {
 		cout << setfill('0') << setw(2) << h << ':' << setfill('0') << setw(2) << m << ':' << setfill('0') << setw(2) << s;
+	}
+	string StringTime() const {
+		string ans = intToString(h, 2) + intToString(m, 2) + intToString(s, 2);
+		return ans;
 	}
 	friend ostream& operator<<(ostream& out, const TTime& time) {
 		out << setfill('0') << setw(2) << time.h << ':' << setfill('0') << setw(2) << time.m << ':' << setfill('0') << setw(2) << time.s;

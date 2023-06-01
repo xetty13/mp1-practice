@@ -6,19 +6,23 @@
 #include "container.h"
 #include "datentime.h"
 #include "database.h"
+#include "display.h"
 using namespace std;
 
 class TReceiptLine {
 private:
-	int count = 0;
-	double sum = 0;
+	int count;
+	double sum;
 	TProduct* product;
 public:
+	TReceiptLine();
+
 	bool Scan(TDataBase& data, const string& code, const int _count = 1);
 	void AddCount(int _count = 1);
 	string GetCode() const { return (*product).GetCode(); }
 	string GetName() const { return (*product).GetName(); }
 	double GetCost() const { return (*product).GetCost(); }
+	int GetCount() const { return count; }
 	double GetSum() const { return sum; }
 
 	bool operator==(const TReceiptLine& rl);
@@ -32,16 +36,19 @@ public:
 
 class TReceipt {
 private:
-	int index = 0;
+	int index;
+	string code;	// »Ì‰Ë‚Ë‰Û‡Î¸Ì˚È ÍÓ‰ ˜ÂÍ‡
 	TContainer<TReceiptLine> products;
 	TDate date;
 	TTime time;
-	double sum = 0;
+	double sum;
 
-	double money = 0;
-	double odd_money = 0;
+	double money;
+	double odd_money;
 
 public:
+	TReceipt();
+
 	void Add(const TReceiptLine& product, int _count = 1);
 	void Del(int index);
 	void Del(const TReceiptLine& product);
@@ -49,37 +56,34 @@ public:
 	void Cart();
 	int Count() const;
 	
-	void SetSum();
-	double GetSum() { return sum; }
+	double GetSum() const { return sum; }
+	void SetCode(int _code);
 
 	void Show() const;
-	void Payment(double money);
+	void Payment(TDataBase& data, const double _money);
 	void Clear();
 
-	void Next();
-	void Now();
-	void Prev();
+	void LastScan();
 
 	void SetIndex(int _index) { _index = index; }
-	void SetDate() { date.setCurrentDay(); }
-	void SetTime() { time.setCurrentTime(); }
+	void SetCLOCK() { date.setCurrentDay(); time.setCurrentTime(); }
 
-	int _find(const TReceiptLine& rl) { return products._find(rl); }
+	int _find(const TReceiptLine& rl) const { return products._find(rl); }
+	int FindCount(const TReceiptLine& rl);
 
 	const TReceipt& operator=(const TReceipt& r);
 
 	TReceiptLine operator[](int ind);
-	bool operator==(const TReceipt& r) { return false; }
+	bool operator==(const TReceipt& r) const;
 	friend ostream& operator<<(ostream& out, const TReceipt& r) {
+		cout << "◊ÂÍ #" << r.code << endl;
 		cout << r.date << ' ' << r.time << "\n" << endl;
 		cout << r.products << endl;
 		cout << "»ÚÓ„Ó‚‡ˇ ÒÛÏÏ‡ Í ÓÔÎ‡ÚÂ: " << r.sum << " Û·." << endl;
 		cout << "¬˚ ÓÔÎ‡ÚËÎË: " << r.money << " Û·." << endl;
 		cout << "¬‡¯‡ Ò‰‡˜‡: " << r.odd_money << " Û·.\n" << endl;
-		cout << "—œ¿—»¡Œ «¿ œŒ ”œ ”! ∆ƒ≈Ã ¬¿— —ÕŒ¬Œ!!!" << endl;
+		cout << "—œ¿—»¡Œ «¿ œŒ ”œ ”! ∆ƒ≈Ã ¬¿— —ÕŒ¬¿!!!" << endl;
 	}
-
-	int DEBUGIndex() { return index; }
-	int DEBUGSize() { return products.Size(); }
 };
+
 #endif // !_RECEIPT_H
