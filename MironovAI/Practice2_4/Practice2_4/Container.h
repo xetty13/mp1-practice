@@ -17,7 +17,7 @@ static int IndexError() {
 
 //Container
 template <typename Type>
-class NewConteiner
+class NewContainer
 {
 private:
 	int size;
@@ -25,7 +25,7 @@ private:
 	int max_size;
 	int step;
 	int position;
- void realloc() {
+    void realloc() {
 		max_size += step;
 		if (elements == nullptr)
 		{
@@ -49,7 +49,7 @@ private:
 	}
 public:
 	//constructors
-	NewConteiner() {
+	NewContainer() {
 		size = 0;
 		max_size = 0;
 		step = 10;
@@ -57,7 +57,7 @@ public:
 		elements = nullptr;
 	}
 	// Lengh of the nelements must be equal new_size
-	NewConteiner(const int& new_size, const Type*& nelements, int nstep = 10) {
+	NewContainer(const int& new_size, const Type*& nelements, int nstep = 10) {
 		if (max_size < new_size + 1) {
 			realloc();
 		}
@@ -68,7 +68,7 @@ public:
 		step = nstep;
 		position = size;
 	}
-	NewConteiner(const NewConteiner<Type>& container) {
+	NewContainer(const NewContainer<Type>& container) {
 		size = container.size;
 		if (container.max_size != 0) {
 			if (max_size < container.size) {
@@ -86,12 +86,12 @@ public:
 		step = container.step;
 	}
 	//destructor
-	virtual ~NewConteiner() {
+	virtual ~NewContainer() {
 		if (elements != nullptr) delete[] elements;
 	}
 
 	//overloaded operations	
-	friend ifstream& operator>>(ifstream& buf, NewConteiner<Type>& Date) {
+	friend ifstream& operator>>(ifstream& buf, NewContainer<Type>& Date) {
 		{
 			buf >> Date.size;
 			for (int i = 0; i < Date.size; i++) {
@@ -102,8 +102,7 @@ public:
 			return buf;
 		}
 	}
-	
-	friend istream& operator>>(istream& buf, NewConteiner<Type>& Date) {
+	friend istream& operator>>(istream& buf, NewContainer<Type>& Date) {
 		{
 			buf >> Date.size;
 			for (int i = 0; i < Date.size; i++) {
@@ -114,8 +113,7 @@ public:
 			return buf;
 		}
 	}
-	
-	friend ostream& operator<<(ostream& buf, const NewConteiner<Type>& Date) {
+	friend ostream& operator<<(ostream& buf, const NewContainer<Type>& Date) {
 		for (int i = 0; i < Date.size; i++) {
 			buf << Date.elements[i] << " ";
 		}
@@ -129,18 +127,17 @@ public:
 		}
 		return elements[index];
 	}
-	bool operator==(const NewConteiner<Type>& container) const {
+	bool operator==(const NewContainer<Type>& container) const {
 		if (size != container.size || max_size != container.max_size || step != container.step) return false;
 		for (int i = 0; i < size; i++) {
 			if (elements[i] != container.elements[i]) return false;
 		}
 		return true;
 	}
-	bool operator!=(const NewConteiner<Type>& container) const {
+	bool operator!=(const NewContainer<Type>& container) const {
 		return !(*this == container);
 	}
-
-	const NewConteiner<Type>& operator=(const NewConteiner<Type>& container) {
+	const NewContainer<Type>& operator=(const NewContainer<Type>& container) {
 		if (*this == container)  return *this;
 		
 		if (max_size < container.size)
@@ -264,7 +261,7 @@ public:
 		}
 		return -1;
 	}
-	static void read(const string& path,NewConteiner<Type>& Date)
+	static void read(const string& path,NewContainer<Type>& Date)
 	{
 		ifstream file(path);
 		int count; file >> count;
@@ -287,9 +284,6 @@ public:
 	bool is_end() const { 
 		return (position + 1  == max_size) ? true : false;
 	}
-
-
-
 };
 
 

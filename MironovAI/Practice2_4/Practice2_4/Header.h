@@ -7,72 +7,10 @@
 #include <fstream>
 #include <string>
 #include "Container.h"
+#include "GlobalFunctions.h"
+#include "Product.h"
+#include "Base.h"
 using namespace std;
-
-//functions
-int PathError();
-string input_path();
-/*
-template<typename Type> // template for "Cart" and "Base"
-void print_all_products(const Type* products,const int size)
-{
-	cout << "Products: \n " << endl;
-	for (int i = 0; i < size; i++) {
-		cout << products[i] << endl;
-	}
-} 
-*/
-void user();
-
-
-class Product
-{
-private:
-	string code;
-	string name;
-	double cost;
-
-public:
-	//constructors
-	Product();
-	Product(const string& ncode, const string& nname, const double& ncost);
-	Product(const Product& new_product);
-
-	
-	//overloaded operations
-	friend ifstream& operator>>(ifstream& buf, Product& Date);
-	friend istream& operator>>(istream& buf, Product& Date);
-	friend ostream& operator<<(ostream& buf, const Product& Date);
-	const Product& operator=(const Product& new_product);
-	bool operator==(const string& str) const;
-	bool operator==(const Product& prod) const;
-	//getters
-	string get_name() const;
-	string get_code() const;
-	double get_cost() const;
-};
-
-
-class Base {
-private:
-	Product product;
-	int count;
-public:
-	Base() {
-		count = 0;
-	}
-	friend ifstream& operator>>(ifstream& buf, Base& Date);
-	friend ostream& operator<<(ostream& buf, const Base& Date); 
-	friend istream& operator>>(istream& buf, Base& Date);
-	bool operator == (const string& str) const;
-	bool operator == (const Base& base) const;
-	bool operator != (const Base& base) const;
-	Base& operator += (const int& ucount);
-	Product get_product() const;
-	int get_count() const;
-	void set_count(const int ucount);
-};
-
 
 class Cart {
 private:
@@ -138,7 +76,7 @@ private:
 	int num;
 	int size;
 	Date Date;
-	NewConteiner<Cart> cart;
+	NewContainer<Cart> cart;
 public:
 	//constructors
 	Receipt() {
@@ -149,7 +87,7 @@ public:
 		num = receipt.num;
 		size = receipt.size;
 		Date = receipt.Date;
-		cart = NewConteiner<Cart>(receipt.cart);
+		cart = NewContainer<Cart>(receipt.cart);
 	}
 	//overloaded operations
 	/*
@@ -185,7 +123,7 @@ public:
 	Cart* find(const Base& product) const;
 	Cart* find(const string& product) const;
 	int len() const;
-	bool empty();
+	bool empty() const;
 };
 
 #endif
