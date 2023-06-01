@@ -1,19 +1,5 @@
 #include "ClientSide.h"
 
-void create_updating_db(TProductsDatabase& db) {
-	std::remove("DB.csv");
-	std::ofstream file("DB.csv");
-
-	for (int i = 0; i < db.Get_num_prods(); i++) {
-		file << db[i].product.code << ";";
-		file << db[i].product.name << ";";
-		file << db[i].product.cost << ";";
-		file << db[i].count << ";";
-		file << "\n";
-	}
-	file.close();
-}
-
 std::string get_first_input() {
 	std::string input_action;
 
@@ -56,7 +42,6 @@ void Add_new_receipt(TContainer<TReceipt>& receipts, TReceipt& rec) {
 
 void work_with_client(TProductsDatabase& db) {
 	std::cout << "\nWelcome!\n";
-
 	TContainer<TReceipt> receipts;
 
 	while (1) {
@@ -86,8 +71,7 @@ void work_with_client(TProductsDatabase& db) {
 				curr_rec.Add(db);
 			}
 		}
-		
 		Add_new_receipt(receipts, curr_rec);
 	}
-	create_updating_db(db);
+	db.create_updating_db();
 }

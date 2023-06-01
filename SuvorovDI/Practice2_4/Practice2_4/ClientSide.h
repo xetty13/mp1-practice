@@ -5,7 +5,4 @@
 
 void work_with_client(TProductsDatabase& db);
 
-void create_updating_db(TProductsDatabase& db);
-
-
 #endif

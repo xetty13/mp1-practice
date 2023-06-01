@@ -8,60 +8,6 @@ bool isDigit(const std::string& s) {
     return true;
 }
 
-
-int TReceipt::get_barcode_add(TProductsDatabase& db) {
-    std::string barcode;
-    int search_result = 0;
-    bool isAvaliable = true;
-
-    getline(std::cin, barcode);
-    if (isDigit(barcode)) {
-        search_result = db.barcode_search(stol(barcode));
-        if (search_result == -1) {
-            std::cout << "In our store there are not the product with this barcode. Try again!\n  >>> ";
-        }
-        else if (db[search_result].count == 0) {
-            isAvaliable = false;
-        }
-    }
-    if (!isDigit(barcode)) {
-        std::cout << "Barcodes consists only of digits! Try again!\n\n  >>> ";
-    }
-    if (!isAvaliable) {
-        std::cout << "Unfortunately, the product is out of stock. Take something else.\n\n  >>> ";
-    }
-
-    if (search_result != -1 and isDigit(barcode) and isAvaliable) {
-        return search_result;
-    }
-    else {
-        return -1;
-    }
-}
-
-int TReceipt::get_barcode_delete(TProductsDatabase& db) {
-    std::string barcode;
-    int search_result = 0;
-
-    getline(std::cin, barcode);
-    if (isDigit(barcode)) {
-        search_result = this->Find_product(stol(barcode));
-        if (search_result == -1) {
-            std::cout << "You did not add a product with this barcode to the receipt. Try again\n\n  --- ";
-        }
-    }
-    if (!isDigit(barcode)) {
-        std::cout << "Barcodes consists only of digits! Try again\n\n  --- ";
-    }
-    
-    if (search_result != -1 and isDigit(barcode)) {
-        return search_result;
-    }
-    else {
-        return -1;
-    }
-}
-
 // TProductsDatabase:
 TProductsDatabase::TProductsDatabase(const std::string& filename) {
     get_correct_file_name(filename);
@@ -95,6 +41,7 @@ TProductsDatabase::TProductsDatabase(const std::string& filename) {
 
     file.close();
 }
+
 void TProductsDatabase::get_correct_file_name(const std::string& fname) const {
     bool file_exist;
     do {
@@ -104,19 +51,20 @@ void TProductsDatabase::get_correct_file_name(const std::string& fname) const {
             std::cout << "Such file doesn't exist" << std::endl;
     } while (!file_exist);
 }
+
 bool TProductsDatabase::check_file_name(const std::string& fname) const {
     std::ifstream fin(fname);
     return !fin.fail();
 }
-void TProductsDatabase::print() {
-    std::cout << productsInStock;
-}
+
 TInfoProduct& TProductsDatabase::operator[](int ind) {
     return productsInStock[ind];
 }
+
 int TProductsDatabase::Get_num_prods() const {
     return productsInStock.Get_size();
 }
+
 int TProductsDatabase::barcode_search(const long barcode) {
     for (int i = 0; i < productsInStock.Get_size(); i++) {
         if (productsInStock[i].product.code == barcode) {
@@ -131,25 +79,32 @@ void TProductsDatabase::Updating_data_remove(const TProduct& prod) {
     (*this)[ind_such_prod].count -= 1;
 }
 
-void TProductsDatabase::Updating_data_add(const TProduct& prod, int count) {
+void TProductsDatabase::Updating_data_add(const TProduct& prod) {
     int ind_such_prod = this->barcode_search(prod.code);
-    (*this)[ind_such_prod].count += count;
+    (*this)[ind_such_prod].count += 1;
+}
+
+void TProductsDatabase::create_updating_db() {
+    std::remove("DB.csv");
+    std::ofstream file("DB.csv");
+
+    for (int i = 0; i < this->Get_num_prods(); i++) {
+        file << (*this)[i].product.code << ";";
+        file << (*this)[i].product.name << ";";
+        file << (*this)[i].product.cost << ";";
+        file << (*this)[i].count << ";";
+        file << "\n";
+    }
+    file.close();
 }
 
 // TInfoProduct:
-std::ostream& operator<<(std::ostream& out, const TInfoProduct& prod) {
-    out << "\n";
-    out << "Product: \n" << prod.product;
-    out << "Quantity of product in stock: " << prod.count;
-
-    return out;
-}
-bool TInfoProduct::operator==(const TInfoProduct& p) {
+bool TInfoProduct::operator==(const TInfoProduct& p) const {
     return (product == p.product and count == p.count);
 }
 
 // TProduct:
-bool TProduct::operator==(const TProduct& p) {
+bool TProduct::operator==(const TProduct& p) const {
     return (code == p.code and name == p.name and cost == p.cost);
 }
 std::ostream& operator<<(std::ostream& out, const TProduct& p) {
@@ -178,15 +133,15 @@ TReceiptLine::TReceiptLine(const TReceiptLine& rec_line) {
     this->sum_cost = rec_line.sum_cost;
 }
 
-TProduct& TReceiptLine::Get_product() {
+const TProduct& TReceiptLine::Get_product() const {
     return product;
 }
 
-int TReceiptLine::Get_count() {
+int TReceiptLine::Get_count() const {
     return count;
 }
 
-double TReceiptLine::Get_sum_cost() {
+double TReceiptLine::Get_sum_cost() const {
     return sum_cost;
 }
 
@@ -206,7 +161,7 @@ const TReceiptLine& TReceiptLine::operator=(const TReceiptLine& rec_line) {
     return (*this);
 }
 
-bool TReceiptLine::operator==(const TReceiptLine& rec_line) {
+bool TReceiptLine::operator==(const TReceiptLine& rec_line) const {
     return (this->product == rec_line.product);
 }
 
@@ -280,7 +235,60 @@ std::ostream& operator<<(std::ostream& out, TReceipt& rec) {
     return out;
 }
 
-int TReceipt::Get_num_products() const {
+int TReceipt::get_barcode_add(TProductsDatabase& db) {
+    std::string barcode;
+    int search_result = 0;
+    bool isAvaliable = true;
+
+    getline(std::cin, barcode);
+    if (isDigit(barcode)) {
+        search_result = db.barcode_search(stol(barcode));
+        if (search_result == -1) {
+            std::cout << "In our store there are not the product with this barcode. Try again!\n  >>> ";
+        }
+        else if (db[search_result].count == 0) {
+            isAvaliable = false;
+        }
+    }
+    if (!isDigit(barcode)) {
+        std::cout << "Barcodes consists only of digits! Try again!\n\n  >>> ";
+    }
+    if (!isAvaliable) {
+        std::cout << "Unfortunately, the product is out of stock. Take something else.\n\n  >>> ";
+    }
+
+    if (search_result != -1 and isDigit(barcode) and isAvaliable) {
+        return search_result;
+    }
+    else {
+        return -1;
+    }
+}
+
+int TReceipt::get_barcode_delete(TProductsDatabase& db) {
+    std::string barcode;
+    int search_result = 0;
+
+    getline(std::cin, barcode);
+    if (isDigit(barcode)) {
+        search_result = this->Find_product(stol(barcode));
+        if (search_result == -1) {
+            std::cout << "You did not add a product with this barcode to the receipt. Try again\n\n  --- ";
+        }
+    }
+    if (!isDigit(barcode)) {
+        std::cout << "Barcodes consists only of digits! Try again\n\n  --- ";
+    }
+
+    if (search_result != -1 and isDigit(barcode)) {
+        return search_result;
+    }
+    else {
+        return -1;
+    }
+}
+
+int TReceipt::Get_num_products() const  {
     return products.Get_size();
 }
 
@@ -288,7 +296,7 @@ void TReceipt::Add_new_prod(const TReceiptLine& rec_line) {
     products.insert(rec_line);
 }
 
-int TReceipt::Find_product(const long code) {
+int TReceipt::Find_product(const long code) const {
     for (int i = 0; i < products.Get_size(); i++) {
         if (products[i].Get_product().code == code) {
             return i;
@@ -297,7 +305,7 @@ int TReceipt::Find_product(const long code) {
     return -1;
 }
 
-double TReceipt::Get_total_sum() {
+double TReceipt::Get_total_sum() const {
     double total_sum = 0;
     int count = this->Get_num_products();
 
@@ -322,7 +330,12 @@ void TReceipt::Get_data_n_time() {
 
 void TReceipt::Delete_prod(const int ind) {
     std::cout << "This product was deleted: " << this->products[ind].Get_product() << "\n";
-    this->products.remove(ind);
+    if (this->products[ind].Get_count() == 1) {
+        this->products.remove(ind);
+    }
+    else {
+        this->products[ind].Set_count(this->products[ind].Get_count() - 1);
+    }
 }
 
 void TReceipt::Delete(TProductsDatabase& db) {
@@ -334,7 +347,7 @@ void TReceipt::Delete(TProductsDatabase& db) {
         int search_result = this->get_barcode_delete(db);
         
         if (search_result != -1) {
-            db.Updating_data_add((*this)[search_result].Get_product(), (*this)[search_result].Get_count());
+            db.Updating_data_add((*this)[search_result].Get_product());
             this->Delete_prod(search_result);
         }
     }

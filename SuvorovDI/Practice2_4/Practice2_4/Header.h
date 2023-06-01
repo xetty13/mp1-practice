@@ -15,7 +15,6 @@ class TProductsDatabase;
 class TReceipt;
 class TReceiptLine;
 
-
 template <typename T>
 class TContainer {
 private:
@@ -33,6 +32,7 @@ public:
 	~TContainer();
 
 	T& operator[] (int);
+	const T& operator[] (int) const;
 	const TContainer& operator=(const TContainer& c);
 	friend std::ostream& operator<<(std::ostream& out, const TContainer<T>& c) {
 		for (int i = 0; i < c.size; i++) {
@@ -67,7 +67,7 @@ struct TProduct {
 	std::string name;
 	double cost;
 
-	bool operator==(const TProduct&);
+	bool operator==(const TProduct&) const;
 	friend std::ostream& operator<<(std::ostream&, const TProduct&);
 };
 
@@ -75,8 +75,7 @@ struct TInfoProduct {
 	TProduct product;
 	int count;
 
-	bool operator==(const TInfoProduct&);
-	friend std::ostream& operator<<(std::ostream&, const TInfoProduct&);
+	bool operator==(const TInfoProduct&) const;
 };
 
 class TReceiptLine {
@@ -90,12 +89,12 @@ public:
 	TReceiptLine(const TReceiptLine&);
 
 	const TReceiptLine& operator= (const TReceiptLine&);
-	bool operator==(const TReceiptLine&);
+	bool operator==(const TReceiptLine&) const;
 	friend std::ostream& operator<<(std::ostream& out, const TReceiptLine& rec_line);
 
-	TProduct& Get_product();
-	int Get_count();
-	double Get_sum_cost();
+	const TProduct& Get_product() const;
+	int Get_count() const;
+	double Get_sum_cost() const;
 
 	void Set_count(int);
 	void Set_sum_cost(double);
@@ -136,10 +135,10 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, TReceipt& rec);
 	const TReceipt& operator= (const TReceipt&);
 
-	int Find_product(const long);
+	int Find_product(const long) const;
 	int Get_num_products() const;
 	void Add_new_prod(const TReceiptLine&);
-	double Get_total_sum();
+	double Get_total_sum() const;
 	void Get_data_n_time();
 	void Delete_prod(const int ind);
 	void Delete(TProductsDatabase& db);
@@ -160,10 +159,9 @@ public:
 	int barcode_search(const long barcode);
 	int Get_num_prods() const;
 	void Updating_data_remove(const TProduct& prod);
-	void Updating_data_add(const TProduct& prod, int count);
-	void print();
+	void Updating_data_add(const TProduct& prod);
+	void create_updating_db();
 };
-
 
 // T_CONTAINER:
 // Constructors&destructors
@@ -228,20 +226,19 @@ const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& c) {
 }
 
 template <typename T>
+const T& TContainer<T>::operator[] (int ind) const {
+	if (ind >= max_size || ind < 0)
+		throw "Index out of range";
+	return elements[ind];
+}
+
+template <typename T>
 T& TContainer<T>::operator[] (int ind) {
 	if (ind >= max_size || ind < 0)
 		throw "Index out of range";
 	current_index = ind;
 	return elements[ind];
 }
-
-//template <typename T>
-//std::ostream& operator<<(std::ostream& out, const TContainer<T>& c) {
-//	for (int i = 0; i < c.size; i++) {
-//		out << c.elements[i];
-//	}
-//	return out;
-//}
 
 // methods
 template <typename T>
