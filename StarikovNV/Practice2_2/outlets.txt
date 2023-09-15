@@ -1,5 +1,0 @@
-ABC Store,Main St,123,5551234,Grocery,Monday:08:00-20:00,Tuesday:08:00-20:00,Wednesday:08:00-20:00,Thursday:08:00-20:00,Friday:08:00-20:00,Saturday:10:00-18:00,Sunday:10:00-18:00
-XYZ Supermarket,2nd Ave,456,5555678,Supermarket,Monday:07:00-23:00,Tuesday:07:00-23:00,Wednesday:07:00-23:00,Thursday:07:00-23:00,Friday:07:00-23:00,Saturday:07:00-23:00,Sunday:07:00-23:00
-MNO Mini Mart,3rd St,789,5559012,Convenience Store,Monday:09:00-21:00,Tuesday:09:00-21:00,Wednesday:09:00-21:00,Thursday:09:00-21:00,Friday:09:00-21:00,Saturday:09:00-21:00,Sunday:09:00-21:00
-Big Box Store,Oak St.,789,5559101,General Merchandise,Monday:00:00-00:00,Tuesday:00:00-00:00,Wednesday:00:00-00:00,Thursday:00:00-00:00,Friday:00:00-00:00,Saturday:00:00-00:00,Sunday:00:00-00:00
-Convenience Corner,Maple St.,12,5551212,Convenience,Monday:00:00-00:00,Tuesday:00:00-00:00,Wednesday:00:00-00:00,Thursday:00:00-00:00,Friday:00:00-00:00

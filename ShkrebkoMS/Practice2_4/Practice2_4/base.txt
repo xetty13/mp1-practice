@@ -1,7 +1,0 @@
-100;Bread;55;2
-101;Milk;75;3
-102;Eggs;80;2
-103;Cookies;85;4
-104;Chocolate;79;1
-105;Beer;89;1
-106;Sausage;250;2
