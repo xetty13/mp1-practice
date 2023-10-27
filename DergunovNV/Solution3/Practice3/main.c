@@ -9,10 +9,10 @@
 #include <time.h>
 #include <stdlib.h>
 int main() {
-    setlocale(LC_ALL, "Rus");
-    srand((unsigned int)time(0));
     int mode = 0, value = 0, numb = rand() % 1001, count = 1;
     char znak = '>';
+    setlocale(LC_ALL, "Rus");
+    srand((unsigned int)time(0));
     do {
         printf("Выберите режим игры: 1(Пользователь отгадывает число) или 2(Компьютер угадывает Ваше число)\n");
         scanf("%d", &mode);
@@ -41,7 +41,7 @@ int main() {
         printf("Загадайте число от 1 до 1000:\n ");
         printf("%d\n", numb);
         printf("Вы загадали число '>' или '<' или '=' %d", value); printf("?\n");
-        scanf(" %c", &znak);
+        scanf("%*c%c", &znak);
         while (znak != '=') {
             count++;
             switch (znak) {
@@ -56,7 +56,7 @@ int main() {
             default: break;
             }
             printf("Вы загадали число '>' или '<' или '=' %d", value); printf("?\n");
-            scanf(" %c", &znak);
+            scanf("%*c%c", &znak);
         }
         printf("Я молодец, угадал ваше число\n", numb);
         printf("Мое количество попыток: %d", count);
