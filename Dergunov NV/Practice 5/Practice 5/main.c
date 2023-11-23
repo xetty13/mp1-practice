@@ -4,7 +4,6 @@
 
 
 void main() {
-	setlocale(LC_ALL, "Rus");
 	int sum = 0;
 	int sum_discount = 0;
 	int sum_with_discount = 0;
@@ -19,6 +18,7 @@ void main() {
 	int price[N] = { 1000, 2500, 900, 1000, 5000, 1700, 2000 };
 	int discount[N] = { 5, 35, 10, 20, 25, 15, 30 };
 	int count[N] = { 0, 0, 0, 0, 0, 0, 0 };
+	setlocale(LC_ALL, "Rus");
 
 	do {
 		printf("¬ведите штрихкод товара (дл€ вывода чека введите 0):\n");
