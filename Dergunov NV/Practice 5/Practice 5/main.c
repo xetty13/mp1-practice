@@ -1,70 +1,52 @@
 #include <stdio.h>
-#define N 7
-#include <locale.h>
+#include <string.h>
+#include <stdlib.h>
+#define N 5
+char* barcodes[N] = { "1212", "0101" , "2323" , "2424" , "5454" };
+char* names[N] = { "Tea", "Milk", "Bread", "Eggs", "Apples" };
+int price[N] = { 150, 100, 105, 100, 120 };
+float discout[N] = { 0.15, 0.20, 0.0, 0.25, 0.10 };
 
-
-void main() {
-	int sum = 0;
-	int sum_discount = 0;
-	int sum_with_discount = 0;
-	int a[4];
-	int b, c;
-	int cnt = 0;
-	double total_amount = 0;
-
-
-	int code[N][4] = { {1,2,3,4}, {7,2,3,4}, {1,2,1,7}, {2,3,4,1}, {6,9,6,3}, {9,6,8,4}, {1,8,7,3} };
-	char* product[N] = { "Футболка", "Джинсы", "Перчатка", "Кепка", "Кроссовки", "Свитер", "Майка" };
-	int price[N] = { 1000, 2500, 900, 1000, 5000, 1700, 2000 };
-	int discount[N] = { 5, 35, 10, 20, 25, 15, 30 };
-	int count[N] = { 0, 0, 0, 0, 0, 0, 0 };
-	setlocale(LC_ALL, "Rus");
-
-	do {
-		printf("Введите штрихкод товара (для вывода чека введите 0):\n");
-		scanf_s("%d", &b);
-		c = b;
-		for (int i = 3; i >= 0; i--) {
-			a[i] = b % 10;
-			b /= 10;
-		}
-
-
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (a[j] == code[i][j]) {
-					cnt += 1;
-				}
-			}
-			if (cnt == 4) {
-				count[i]++;
-				printf("Штрих-код: %d | наименование: ", c);
-				printf(product[i]);
-				printf("  | цена: %d рублей | скидка: %d %%\n", price[i], discount[i]);
-			}
-			cnt = 0;
-		}
-	} while (c != 0);
-
-
-	for (int i = 0; i < N; i++) {
-		sum += price[i] * count[i];
-		sum_discount += price[i] * discount[i] / 100 * count[i];
-		sum_with_discount += price[i] * (100 - discount[i]) / 100 * count[i];
-	}
-	printf("\n");
-	printf("ОАО КАССА\n");
-	printf("Общая стоимость:         \n");
-
-	for (int i = 0; i < N; i++) {
-		if (count[i] != 0) {
-			printf(product[i]);
-			printf(" | %d рублей | %d шт. | %d рублей \n", price[i], count[i], count[i] * price[i]);
-
-		}
-	}
-	printf("Сумма: %d рублей\n", sum);
-	printf("Скидка: %d рублей\n", sum_discount);
-	printf("К оплате : %d рублей\n", sum_with_discount);
-	printf("Спасибо за покупку! Всего доброго!\n");
+int scan(int* amount) {
+    char barcode[7] = " ";
+    int flag = 0;
+    printf("Enter a barcode or write (result) if you want to sum it up: \n");
+    while (strcmp(barcodes, "0")) {
+        gets(barcode);
+        flag = 0;
+        if (strcmp(barcode, "0")) {
+            for (int i = 0; i < N; i++) {
+                if (strcmp(barcodes[i], barcode) == 0) {
+                    printf("NAME:%s\nPRICE:%d rubles\nDISCOUNT:%.2f\nEnter a barcode or (result) if u want to exit:\n", names[i], price[i], discout[i]);
+                    amount[i] += 1;
+                    flag = 1;
+                }
+                if (strcmp(barcode, "result") == 0) {
+                    return 0;
+                }
+            }
+            if (flag == 0) { printf("ya ne nashel barcode\n");  return 1; }
+        }
+    }
 }
+
+void finalcheck(int* amount) {
+    float check = 0;
+    printf("===Total check===\n");
+    for (int i = 0; i < N; i++) {
+        if (amount[i] != 0) {
+            printf(("%s, price(with discount) - %.2f\n%d(count).\n"), names[i], (price[i] * (1 - (discout[i] / 100))), amount[i]);
+        }
+        check += (price[i] * (1 - (discout[i] / 100))) * amount[i];
+    }
+    printf("Total cost - %.2f", check);
+}
+
+int main() {
+    int count[N] = { 0 };
+    int number = 0;
+    printf("===CASH===\n");
+    int scan(count);
+    if (scan(count) == 0) finalcheck(count);
+}
+
