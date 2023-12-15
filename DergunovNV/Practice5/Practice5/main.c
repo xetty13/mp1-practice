@@ -7,7 +7,7 @@
 
 char* barcodes[N] = { "1212", "0101" , "2323" , "2424" , "5454" };
 char* names[N] = { "Tea", "Milk", "Bread", "Eggs", "Apples" };
-float price[N] = { 150, 100, 105, 100, 120 };
+float price[N] = { 150.f, 100.f, 105.f, 100.f, 120.f };
 float discout[N] = { 0.15f, 0.20f, 0.0f, 0.25f, 0.10f };
 
 int check(int *barcode,int *amount) {
@@ -46,5 +46,6 @@ int main() {
         i = check(barcode,amount);
     } while (strcmp(barcode, "result") != 0);
     finalcheck(amount);
+    return 0;
 }
 
