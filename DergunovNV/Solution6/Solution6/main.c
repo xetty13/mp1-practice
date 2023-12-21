@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <time.h>
 #include <locale.h>
 #include <windows.h>
 #include <stdlib.h>
+#include <omp.h>
 #define REP 45
 #define FILES 50000 
 #define BUFFER 2048
@@ -12,8 +12,7 @@ void Output(wchar_t** filesName, ULONGLONG* filesSize, int* filesIdx, int N);
 int ListDirectoryContents(const wchar_t* sDir, wchar_t** filesName, ULONGLONG* filesSize);
 void bubbleSort(ULONGLONG* filesSize, int* filesIdx, int N);
 void insertSort(ULONGLONG* fileSize, int* fileIdx, int n);
-void Quick_Split(ULONGLONG* filesSize, int* fileIdx, int* i, int* j, int p);
-void Quick_Sort(ULONGLONG* filesSize, int fileIdx, int n1, int n2);
+void quickSort(ULONGLONG* filesSize, int fileIdx, int n1, int n2);
 
 void menu(int* method)
 {
@@ -96,68 +95,66 @@ void bubbleSort(ULONGLONG* filesSize, int* fileIdx, int N)
 		}
 	}
 }
-void insertSort(ULONGLONG* fileSize, int* fileIdx, int N)
+void insertSort(ULONGLONG* filesSize, int* fileIdx, int N)
 {
 	int i, j, tmp2;
 	ULONGLONG tmp;
 	for (i = 1; i < N; i++)
 	{
-		tmp = fileSize[i];
+		tmp = filesSize[i];
 		tmp2 = fileIdx[i];
 		j = i - 1;
-		while (j >= 0 && fileSize[j] > tmp)
+		while (j >= 0 && filesSize[j] > tmp)
 		{
-			fileSize[j + 1] = fileSize[j];
+			filesSize[j + 1] = filesSize[j];
 			fileIdx[j + 1] = fileIdx[j];
 			j--;
 		}
-		fileSize[j + 1] = tmp;
+		filesSize[j + 1] = tmp;
 		fileIdx[j + 1] = tmp2;
 	}
 }
-void Quick_Sort(ULONGLONG* filesSize, int fileIdx, int n1, int n2)
-{
-	int m;
-	int i = n1; int j = n2;
-	m = (n1 + n2) / 2;
-	Quick_Split(filesSize, fileIdx, &i, &j, filesSize[m]);
-	if (i < n2)
-		Quick_Sort(filesSize, fileIdx, n2, i);
-	if (j > n1)
-		Quick_Sort(filesSize, fileIdx, n1, j);
-}
-void Quick_Split(ULONGLONG* filesSize, int* fileIdx, int* i, int* j, int p)
-{
-	ULONGLONG tmp;
-	do
-	{
-		while (filesSize[*i] < p)
-			(*i)++;
-		while (filesSize[*j] > p)
-			(*j)--;
-		if (*i <= *j)
-		{
-			tmp = fileIdx[*i];
-			fileIdx[*i] = fileIdx[*j];
-			fileIdx[*j] = tmp;
-			(*i)++;
-			(*j)--;
+void quickSort(ULONGLONG* filesSize, int* fileIdx, int left, int right) {
+	int i = left, j = right;
+	unsigned long long pivot = filesSize[(left + right) / 2];
+	while (i <= j) {
+		while (filesSize[i] < pivot) {
+			i++;
 		}
-	} while (*i <= *j);
+		while (filesSize[j] > pivot) {
+			j--;
+		}
+		if (i <= j) {
+			unsigned long long temp = filesSize[i];
+			filesSize[i] = filesSize[j];
+			filesSize[j] = temp;
+			wchar_t* temp2 = fileIdx[i];
+			fileIdx[i] = fileIdx[j];
+			fileIdx[j] = temp2;
+			i++;
+			j--;
+		}
+	}
+	if (left < j) {
+		quickSort(filesSize, fileIdx, left, j);
+	}
+	if (i < right) {
+		quickSort(filesSize, fileIdx, i, right);
+	}
 }
+
 int main()
 {
 	wchar_t* filesPath, ** filesName;//массив имен
 	ULONGLONG* filesSize, * tmpSizes, * copy_filesSize;;//массив размеров файлов
 	int* filesIdx, * copy_filesIdx;// индексы для имен файлов
 	int j = -1, i = 0;
-	clock_t start;
-	clock_t end;
+
+	double start, end;
+
 	int method = 0, f = 0;
 	filesName = (wchar_t**)malloc(FILES * sizeof(wchar_t*));
 	filesSize = (ULONGLONG*)malloc(FILES * sizeof(ULONGLONG));
-	copy_filesSize = (wchar_t**)malloc(FILES * sizeof(wchar_t*));
-	copy_filesIdx = (wchar_t**)malloc(FILES * sizeof(wchar_t*));
 	printf("------FILE MANAGER------");
 	printf("\nWay to the folder: \n");
 	setlocale(LC_ALL, "ru");
@@ -173,43 +170,37 @@ int main()
 	Output(filesName, filesSize, filesIdx, j);
 	do
 	{
-		//memcpy(copy_filesSize, filesSize, BUFFER);
-		//memcpy(copy_filesIdx, filesIdx, BUFFER);
 		menu(&method);
-		if (method == 4) return;
+		if (method == 4) return 0;
 
 		tmpSizes = (ULONGLONG*)malloc(j * sizeof(ULONGLONG));
 		for (i = 0; i < j; i++)
 			tmpSizes[i] = filesSize[i];
 
 		printf("\nType of sort - %d.\n", method);
-		start = clock();
 		switch (method)
 		{
 		case 1://готово
-			start = clock();
+			start = omp_get_wtime();
 			bubbleSort(filesSize, filesIdx, j);
-			end = clock();
+			end = omp_get_wtime();
 			Output(filesName, filesSize, filesIdx, j);
 			break;
 		case 2://готово
-			start = clock();
+			start = omp_get_wtime();
 			insertSort(filesSize, filesIdx, j);
-			end = clock();
+			end = omp_get_wtime();
 			Output(filesName, filesSize, filesIdx, j);
 			break;
-		case 3:
-			Quick_Sort(tmpSizes, filesIdx, 0, (j - 1));
-			break;
-			end = clock();
+		case 3://готово
+			start = omp_get_wtime();
+			quickSort(filesSize, filesIdx, 0, (j - 1));
+			end = omp_get_wtime();
 			Output(filesName, filesSize, filesIdx, j);
-
-			printf("\n Time: %.4lf sec.\n", (double)(end - start) / CLOCKS_PER_SEC);
-
-			for (i = 0; i < j; i++)
-				filesIdx[i] = i;
-			start = end = 0;
-			free(tmpSizes);
+			break;
 		}
-	} while (1);
+		printf("\nTime: %5.15lf сек \n", end - start);
+
+
+	} while (method != 4);
 }
