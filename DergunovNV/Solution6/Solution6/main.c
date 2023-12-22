@@ -13,7 +13,7 @@ int ListDirectoryContents(const wchar_t* sDir, wchar_t** filesName, ULONGLONG* f
 void bubbleSort(ULONGLONG* filesSize, int* filesIdx, int N);
 void insertSort(ULONGLONG* fileSize, int* fileIdx, int n);
 void quickSort(ULONGLONG* filesSize, int fileIdx, int n1, int n2);
-
+//пузырьком, вставками, быстрая
 void menu(int* method)
 {
 	do
@@ -37,7 +37,7 @@ void Output(wchar_t** filesName, ULONGLONG* filesSize, int* filesIdx, int N)
 	int i;
 	printf("\nFolder contents:\n");
 	for (i = 0; i < N; i++) {
-		printf("%d. File: %S Size: %d bytes\n", i + 1, filesName[filesIdx[i]], filesSize[i]);
+		printf("%d. File: %S Size: %llu bytes\n", i + 1, filesName[filesIdx[i]], filesSize[filesIdx[i]]);
 	}
 }
 int ListDirectoryContents(const wchar_t* sDir, wchar_t** filesName, ULONGLONG* filesSize)
@@ -163,9 +163,12 @@ int main()
 		Input(&filesPath);
 		j = ListDirectoryContents(filesPath, filesName, filesSize);
 	}
+	tmpSizes = (ULONGLONG*)malloc(j * sizeof(ULONGLONG));
 	filesIdx = (int*)malloc(j * sizeof(int));
 	for (i = 0; i < j; i++)
+	{
 		filesIdx[i] = i;
+	}
 
 	Output(filesName, filesSize, filesIdx, j);
 	do
@@ -173,34 +176,43 @@ int main()
 		menu(&method);
 		if (method == 4) return 0;
 
-		tmpSizes = (ULONGLONG*)malloc(j * sizeof(ULONGLONG));
 		for (i = 0; i < j; i++)
+		{
 			tmpSizes[i] = filesSize[i];
+			filesIdx[i] = i;
+		}
 
 		printf("\nType of sort - %d.\n", method);
 		switch (method)
 		{
 		case 1://готово
 			start = omp_get_wtime();
-			bubbleSort(filesSize, filesIdx, j);
+			bubbleSort(tmpSizes, filesIdx, j);
 			end = omp_get_wtime();
 			Output(filesName, filesSize, filesIdx, j);
 			break;
 		case 2://готово
 			start = omp_get_wtime();
-			insertSort(filesSize, filesIdx, j);
+			insertSort(tmpSizes, filesIdx, j);
 			end = omp_get_wtime();
 			Output(filesName, filesSize, filesIdx, j);
 			break;
 		case 3://готово
 			start = omp_get_wtime();
-			quickSort(filesSize, filesIdx, 0, (j - 1));
+			quickSort(tmpSizes, filesIdx, 0, (j - 1));
 			end = omp_get_wtime();
 			Output(filesName, filesSize, filesIdx, j);
 			break;
 		}
 		printf("\nTime: %5.15lf сек \n", end - start);
-
-
 	} while (method != 4);
+	for (i = 0; i < j; i++)
+	{
+		free(filesName[i]);
+	}
+	free(filesName);
+	free(filesSize);
+	free(filesIdx);
+	free(tmpSizes);
+	return 0;
 }
