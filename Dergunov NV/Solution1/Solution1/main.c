@@ -12,21 +12,28 @@ int main()
     int n;
     double result;
     TVector V1, V2, s, m;
-    setlocale(LC_ALL, "Ru");
-    printf("Длина V1 = ");
+    /*printf("Длина V1 = ");
     scanf("%d", &n);
     allocate(&V1, n);
     printf("Длина V2 = ");
     scanf("%d", &n);
     allocate(&V2, n);
     fill(&V1);
-    fill(&V2);
+    fill(&V2);*/
+    read(&V1, &V2);
+    printf("Vector 1: \n");
+    print(&V1);
+    printf("\n");
+    printf("Vector 2: \n");
+    print(&V2);
+    printf("\n");
+
     s = sum(&V1, &V2);
     m = minus(&V1, &V2);
-    print(&s);
-    print(&m);
     result = dot(&V1, &V2);
-    printf("Векторное произведение: %lf", result);
+
+    write(&s, &m, result);
+
     free(V1.x);
     free(V2.x);
     if (s.x != NULL) {
