@@ -18,22 +18,11 @@
     <ClCompile Include="main.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="another func.h">
+    <ClCompile Include="func.h">
       <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="struct.h">
+    </ClCompile>
+    <ClCompile Include="func.c">
       <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="sumf.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="minusf.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="dot.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
 </Project>
