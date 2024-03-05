@@ -30,7 +30,7 @@ void print(TVector* V)
 void read(const char* filename, TVector* V1, TVector* V2)
 {
     int i = 0;
-    FILE* f = fopen("vectorIN.txt", "r+");
+    FILE* f = fopen(filename, "r");
     if (f == NULL) {
         printf("File not found");
         abort();
@@ -53,6 +53,7 @@ void write(const char* filename, TVector* s, TVector* m, double dot)
     FILE* f = fopen(filename, "w+");
     if (f == NULL) {
         printf("File not found");
+        abort();
     }
     fprintf(f, "Summa = ");
     for (; i < s->n; i++) {

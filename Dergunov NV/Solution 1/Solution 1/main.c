@@ -5,8 +5,8 @@ int main(int argc, char** argv)
     int n;
     double result;
     TVector V1, V2, s, m;
-    char* infilename, *outfilename;
- 
+    char* infilename, * outfilename;
+
     if (argc < 3) {
         printf("Incorrect argument\n");
         return 1;
