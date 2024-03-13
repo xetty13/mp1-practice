@@ -34,7 +34,7 @@ TVector TVector::operator+(const TVector& V)
 {
     if (this->n != V.n)
     {
-        throw std::exception("Diff len");
+        throw std::exception("Different len");
     }
     TVector res(this->n);
     for (int i = 0; i < this->n; i++)
@@ -48,7 +48,7 @@ TVector TVector::operator-(const TVector& V)
 {
     if (this->n != V.n)
     {
-        throw std::exception("Diff len");
+        throw std::exception("Different len");
     }
     TVector res(this->n);
     for (int i = 0; i < this->n; i++)
@@ -58,7 +58,7 @@ TVector TVector::operator-(const TVector& V)
     return res;
 }
 
-TVector& TVector::operator=(const TVector& V)
+const TVector& TVector::operator=(const TVector& V)
 {
     n = V.n;
     for (int i = 0; i < this->n; i++)
