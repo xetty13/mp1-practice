@@ -84,9 +84,7 @@ double TVector::operator*(const TVector& V)
 
 std::istream& operator>>(std::istream& in, TVector& V)
 {
-    std::cout << "Input n: ";
     in >> V.n;
-    std::cout << "Input x: ";
     if (V.x != nullptr)
     {
         delete[] V.x;
@@ -105,8 +103,11 @@ std::ostream& operator<<(std::ostream& out, const TVector& V)
     {
         out << V.x[i] << " ";
     }
+    std::cout << std::endl;
     return out;
 }
+
+
 
 
 
