@@ -26,5 +26,11 @@
     <ClInclude Include="func.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="date.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="gender.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

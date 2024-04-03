@@ -1,6 +1,6 @@
 #include "func.h"
+#include "date.h"
 #include <string.h>
-#define MAX_LEN 256
 
 void menu() {
     printf("=================\n");
@@ -13,18 +13,25 @@ void menu() {
     printf("Ваш выбор: ");
 }
 
-void read(const FILE* f, info* n)
+void read(const char* filename, SportsmenLib* slib)
 {
-    char* str[200];
-    if (fgets(str, 200, f) != NULL)
+    n->Name = (char*)malloc(sizeof(char) * Buffer);
+    n->Surname = (char*)malloc(sizeof(char) * Buffer);
+    n->Gender = ((char*)malloc(sizeof(char) * Buffer));
+    n->DateOfBirth = ((char*)malloc(sizeof(char) * Buffer));
+    n->Nation = ((char*)malloc(sizeof(char) * Buffer));
+    n->Sport = ((char*)malloc(sizeof(char) * Buffer));
+    n->Club = ((char*)malloc(sizeof(char) * Buffer));
+    char* str[Buffer];
+    if (fgets(str, Buffer, f) != NULL)
     {
-        fscanf(f,"%s", &n->Name);
-        fscanf(f,"%s", &n->Surname);
-        fscanf(f,"%s", &n->Gender);
-        fscanf(f,"%s", &n->DateOfBirth);
-        fscanf(f,"%s", &n->Nation);
-        fscanf(f,"%s", &n->Sport);
-        fscanf(f,"%s", &n->Club);
+        fscanf(f,"%s", n->Name);
+        fscanf(f,"%s", n->Surname);
+        fscanf(f,"%s", n->Gender);
+        fscanf(f,"%s", n->DateOfBirth);
+        fscanf(f,"%s", n->Nation);
+        fscanf(f,"%s", n->Sport);
+        fscanf(f,"%s", n->Club);
         fscanf(f,"%d", &n->Record);
     }
     return 0;

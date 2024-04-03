@@ -2,17 +2,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define LEN 128
-typedef struct{
-    char* Name[LEN];
-    char* Surname[LEN];
-    char* Gender[LEN];
-    char* DateOfBirth[LEN];
-    char* Nation[LEN];
-    char* Sport[LEN];
-    char* Club[LEN];
-    int Record;
-}info;
+#include "date.h"
+#include "gender.h"
+#define Buffer 128
 
-void read(const FILE* f, info* n);
-void write(info* n);
+typedef struct{
+    char* Name;
+    char* Surname;
+    Gender Gend;
+    Date DateBirth;
+    char* Nation;
+    char* Sport;
+    char* Club;
+    int Record;
+}Sportsman;
+
+typedef struct
+{
+    Sportsman *person;
+    int count;
+} SportsmenLib;
+
+void read(const char* filename, SportsmenLib* slib);
+void write(SportsmenLib* sLib);
+void menu();

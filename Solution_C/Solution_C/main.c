@@ -8,9 +8,7 @@ int main(int argc, char** argv) {
     int count = 0;
     int i = 0;
     char* vid_sporta[100];
-    char* shit[256];
-    info n[MAX];//массив структур
-
+    char* trash[256];
     setlocale(LC_ALL, "ru");
     if (argc < 2)
     {
@@ -24,7 +22,7 @@ int main(int argc, char** argv) {
         abort();
     }
     fscanf(f, "%d", &count);
-    /*fgets(shit, 256, f);*/
+    /*fgets(trash, 256, f);*/
     for (i = 0; i < count; i++) {
         read(f, &n[i]);
     }
@@ -49,9 +47,20 @@ int main(int argc, char** argv) {
                     printf("\n");
                 }
             }
+            break;
         case 3:;               
         }
     } while (button != 4);
+    for (i = 0; i < count; i++) {
+        free(n[i].Name);
+        free(n[i].Surname);
+        free(n[i].Gender);
+        free(n[i].DateOfBirth);
+        free(n[i].Nation);
+        free(n[i].Sport);
+        free(n[i].Club);
+
+    }
      exit(1);
      return 0;
 }
