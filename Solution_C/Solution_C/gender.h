@@ -3,9 +3,12 @@
 #include <stdio.h>
 #include <locale.h>
 #define Buffer 512
-typedef struct
+// file: 0 1
+// file: MALE FEMALE
+typedef enum
 {
-    char* gender;
-}Gender;
+    MALE = 0,
+    FEMALE = 1,
+} Gender;
 
 void read_gend(const FILE* f, Gender* g);

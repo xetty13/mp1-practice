@@ -38,3 +38,11 @@ void write_sport(Sportsman* n)
     printf("%s ", n->Club);
     printf("%d ", n->Record);
 }
+void free_mem(Sportsman *n)
+{
+    free(n->Name);
+    free(n->Surname);
+    free(n->Nation);
+    free(n->Sport);
+    free(n->Club);
+}

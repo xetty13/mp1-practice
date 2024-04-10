@@ -2,7 +2,6 @@
 void read(const char* filename, SportsmenLib* sLib)
 {
     int i = 0;
-    char* trash[256];
     FILE* f = fopen(filename, "r");
     fscanf(f, "%d", &sLib->count);
     if (f == NULL)

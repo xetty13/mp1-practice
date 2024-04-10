@@ -63,11 +63,7 @@ int main(int argc, char** argv)
     {
         for (i = 0; i < count; i++)
         {
-            free(sLib.person[i].Name);
-            free(sLib.person[i].Surname);
-            free(sLib.person[i].Nation);
-            free(sLib.person[i].Sport);
-            free(sLib.person[i].Club);
+            free_mem(&sLib.person[i]);
         }
     }
     exit(1);
