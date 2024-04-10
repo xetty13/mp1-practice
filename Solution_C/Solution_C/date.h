@@ -1,11 +1,12 @@
-#define DATE_H
-#include <stdio.h>
+#pragma once
 #include <stdlib.h>
-#include <string.h>
-
+#include <stdio.h>
+#include<locale.h>
 typedef struct
 {
     int day;
     int month;
     int year;
-} Date;
+}Date;
+
+void read_date(const FILE* f, Date* d);

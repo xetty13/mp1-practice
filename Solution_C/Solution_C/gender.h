@@ -1,9 +1,11 @@
-#define GENDER_H
-#include <stdio.h>
+#pragma once
 #include <stdlib.h>
-#include <string.h>
-typedef enum
+#include <stdio.h>
+#include <locale.h>
+#define Buffer 512
+typedef struct
 {
-    MALE = 0,
-    FEMALE = 1,
-} Gender;
+    char* gender;
+}Gender;
+
+void read_gend(const FILE* f, Gender* g);
