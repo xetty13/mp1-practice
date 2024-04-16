@@ -5,8 +5,7 @@
 typedef struct {
     char* Name;
     char* Surname;
-    Gender Gend; // 0 or 1 (Gend = atoi(str))
-                 // MALE or FEMALE (strcmp("MALE", str) == 0 -> Gend = 0)
+    Gender Gend; 
     Date DateBirth;
     char* Nation;
     char* Sport;
@@ -15,4 +14,3 @@ typedef struct {
 }Sportsman;
 void readPerson(const FILE* f, Sportsman* n);
 void write_sport(Sportsman* n);
-void free_mem(Sportsman* n);

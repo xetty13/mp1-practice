@@ -27,7 +27,12 @@ void write(SportsmenLib* sLib)
     {
         printf("%d. %s ", i + 1, sLib->person[i].Name);
         printf("%s ", sLib->person[i].Surname);
-        printf("%s ", sLib->person[i].Gend.gender);
+        if (sLib->person[i].Gend == Male) {
+            printf("Male ");
+        }
+        else if (sLib->person[i].Gend == Female) {
+            printf("Female ");
+        }
         printf("%d.", sLib->person[i].DateBirth.day);
         if (sLib->person[i].DateBirth.month < 10)
         {
@@ -42,5 +47,47 @@ void write(SportsmenLib* sLib)
         printf("%s ", sLib->person[i].Club);
         printf("%d ", sLib->person[i].Record);
         printf("\n");
+    }
+}
+
+int sort(SportsmenLib* sLib, char* vid_sporta)
+{
+    int max = 0;
+    int idx = 0;
+    int i = 0;
+    for (i = 0; i < sLib->count; i++) {
+        if (strcmp(sLib->person[i].Sport, vid_sporta) == 0)
+        {
+            if (sLib->person[i].Record > max)
+            {
+                idx = i;
+                max = sLib->person[i].Record;
+            }
+        }
+    }
+    return idx;
+}
+
+void without_sort(SportsmenLib* sLib, char* vid_sporta)
+{
+    int i = 0;
+    for (i = 0; i < sLib->count; i++) {
+        if (strcmp(sLib->person[i].Sport, vid_sporta) == 0)
+        {
+            write_sport(&sLib->person[i]);
+            printf("\n");
+        }
+    }
+}
+
+void free_mem(SportsmenLib* sLib)
+{
+    int i = 0;
+    for (i = 0; i < sLib->count; i++) {
+        free(sLib->person->Name);
+        free(sLib->person->Surname);
+        free(sLib->person->Sport);
+        free(sLib->person->Nation);
+        free(sLib->person->Club);
     }
 }

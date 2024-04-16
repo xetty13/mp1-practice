@@ -1,4 +1,5 @@
 #include "Person.h"
+#include "SportsmenLib.h"
 void readPerson(const FILE* f, Sportsman* n)
 {
     n->Name = (char*)malloc(sizeof(char) * Buffer);
@@ -23,8 +24,15 @@ void write_sport(Sportsman* n)
 {
     printf("%s ", n->Name);
     printf("%s ", n->Surname);
-    printf("%s ", n->Gend.gender);
-    printf("%d.", n->DateBirth.day);
+    if (n->Gend == 0) {
+        printf("Male ");
+    }
+    else if (n->Gend == 1) {
+        printf("Female ");
+    }
+    if (n->DateBirth.day < 10) {
+        printf("0%d.", n->DateBirth.day);
+    }
     if (n->DateBirth.month < 10)
     {
         printf("0%d.", n->DateBirth.month);
@@ -38,11 +46,4 @@ void write_sport(Sportsman* n)
     printf("%s ", n->Club);
     printf("%d ", n->Record);
 }
-void free_mem(Sportsman *n)
-{
-    free(n->Name);
-    free(n->Surname);
-    free(n->Nation);
-    free(n->Sport);
-    free(n->Club);
-}
+

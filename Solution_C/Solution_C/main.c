@@ -7,13 +7,9 @@ int main(int argc, char** argv)
     Date d;
     Gender g;
     char* filename;
-    char* trash[20];
     char* vid_sporta[100];
     int button = 0;
-    int i = 0;
-    int max = 0;
-    int idx = 0;
-    int count = 0;
+    int test = 0;
     setlocale(LC_ALL, "ru");
     if (argc < 2)
     {
@@ -34,37 +30,20 @@ int main(int argc, char** argv)
         case 2:
             printf("¬ведите вид спорта: ");
             scanf("%s", &vid_sporta);
-            for (i = 0; i < sLib.count; i++){
-                if (strcmp(sLib.person[i].Sport, vid_sporta) == 0) {
-                    write_sport(&sLib.person[i]);
-                    printf("\n");
-                }
-            }
+            without_sort(&sLib, vid_sporta);
             break;
-        case 3: 
+         case 3: 
             printf("¬ведите вид спорта: ");
             scanf("%s", &vid_sporta);
-            for (i = 0; i < sLib.count; i++){
-                if (strcmp(sLib.person[i].Sport, vid_sporta) == 0){
-                    if (sLib.person[i].Record > max)
-                    {   
-                        idx = i;
-                        max = sLib.person[i].Record;
-                    }
-                }
-            }
-            max = 0;
-            write_sport(&sLib.person[idx]);
+            test = sort(&sLib, vid_sporta);
+            write_sport(&sLib.person[test]);
             printf("\n");
             break;
         }
     } while (button != 4);
     if (sLib.person != NULL)
     {
-        for (i = 0; i < count; i++)
-        {
-            free_mem(&sLib.person[i]);
-        }
+        free_mem(&sLib);
     }
     exit(1);
     return 0;
