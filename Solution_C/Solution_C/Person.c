@@ -20,7 +20,7 @@ void readPerson(const FILE* f, Sportsman* n)
         fscanf(f, "%d", &n->Record);
     }
 }
-void write_sport(Sportsman* n)
+void print_record(Sportsman* n)
 {
     printf("%s ", n->Name);
     printf("%s ", n->Surname);

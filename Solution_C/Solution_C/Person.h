@@ -13,4 +13,4 @@ typedef struct {
     int Record;
 }Sportsman;
 void readPerson(const FILE* f, Sportsman* n);
-void write_sport(Sportsman* n);
+void print_record(Sportsman* n);

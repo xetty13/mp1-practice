@@ -25,18 +25,18 @@ int main(int argc, char** argv)
         switch (button)
         {
         case 1:
-            write(&sLib);
+            print(&sLib);
             break;
         case 2:
             printf("¬ведите вид спорта: ");
             scanf("%s", &vid_sporta);
-            without_sort(&sLib, vid_sporta);
+            print_sport(&sLib, vid_sporta);
             break;
          case 3: 
             printf("¬ведите вид спорта: ");
             scanf("%s", &vid_sporta);
-            test = sort(&sLib, vid_sporta);
-            write_sport(&sLib.person[test]);
+            test = search(&sLib, vid_sporta);
+            print_record(&sLib.person[test]);
             printf("\n");
             break;
         }
@@ -45,6 +45,5 @@ int main(int argc, char** argv)
     {
         free_mem(&sLib);
     }
-    exit(1);
     return 0;
 }

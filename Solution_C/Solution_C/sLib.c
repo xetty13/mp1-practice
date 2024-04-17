@@ -20,7 +20,7 @@ void read(const char* filename, SportsmenLib* sLib)
     fclose(f);
 }
 
-void write(SportsmenLib* sLib)
+void print(SportsmenLib* sLib)
 {
     int i = 0;
     for (i = 0; i < sLib->count; i++)
@@ -50,7 +50,7 @@ void write(SportsmenLib* sLib)
     }
 }
 
-int sort(SportsmenLib* sLib, char* vid_sporta)
+int search(SportsmenLib* sLib, char* vid_sporta)
 {
     int max = 0;
     int idx = 0;
@@ -68,13 +68,13 @@ int sort(SportsmenLib* sLib, char* vid_sporta)
     return idx;
 }
 
-void without_sort(SportsmenLib* sLib, char* vid_sporta)
+void print_sport(SportsmenLib* sLib, char* vid_sporta)
 {
     int i = 0;
     for (i = 0; i < sLib->count; i++) {
         if (strcmp(sLib->person[i].Sport, vid_sporta) == 0)
         {
-            write_sport(&sLib->person[i]);
+            print_record(&sLib->person[i]);
             printf("\n");
         }
     }
@@ -84,10 +84,10 @@ void free_mem(SportsmenLib* sLib)
 {
     int i = 0;
     for (i = 0; i < sLib->count; i++) {
-        free(sLib->person->Name);
-        free(sLib->person->Surname);
-        free(sLib->person->Sport);
-        free(sLib->person->Nation);
-        free(sLib->person->Club);
+        free(sLib->person[i].Name);
+        free(sLib->person[i].Surname);
+        free(sLib->person[i].Sport);
+        free(sLib->person[i].Nation);
+        free(sLib->person[i].Club);
     }
 }

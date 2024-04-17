@@ -9,7 +9,7 @@ typedef struct
 } SportsmenLib;
 
 void read(const char* filename, SportsmenLib* sLib);
-int sort(SportsmenLib* sLib, char* vid_sporta);
-void write(SportsmenLib* sLib);
-void without_sort(SportsmenLib* sLib, char* vid_sporta);
+int search(SportsmenLib* sLib, char* vid_sporta);
+void print(SportsmenLib* sLib);
+void print_sport(SportsmenLib* sLib, char* vid_sporta);
 void free_mem(SportsmenLib* sLib);
