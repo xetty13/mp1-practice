@@ -17,5 +17,9 @@ private:
     std::string Club;
     int Record;
 public:
-   friend std::ifstream& operator>> (std::ifstream& in, Person& pers);
+    friend std::ifstream& operator>> (std::ifstream& in, Person& pers);
+    friend std::ostream& operator<< (std::ostream& out, const Person& pers);
+    int getRecord() const;
+    std::string getSport() const;
 };
+

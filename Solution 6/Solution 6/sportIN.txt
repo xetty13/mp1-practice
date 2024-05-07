@@ -1,0 +1,10 @@
+Lebron James Male 29 02 1986 USA Basketball Lakers 554  
+Ivan Ivanov Male 19 04 2000 Russia Football RealMadrid 15 
+Stas Olivie Male 24 06 2006 France Football Barcelona 13  
+Vitek Koshmar Male 24 02 1996 Russia Hockey CSKA 72 
+Anastasia Volochkova Female 09 07 1991 Japan Basketball Pokemon 460  
+Lionelia Messi Female 09 05 1978 Argentina Football ManchesterCity 17 
+Ilya Kuzovkin Male 29 05 2005 Russia Football Arsenal 1  
+Tony Montana Male 07 08 1970 Nigeria Hockey Dallas 55
+Olga Sapogova Female 04 02 1996 Russia Basketball Pari 490  
+Lanaya Templarova Female 31 12 2004 Germany Hockey AkBars 46
