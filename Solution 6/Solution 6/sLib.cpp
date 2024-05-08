@@ -19,27 +19,25 @@ sLib::sLib(int count, const std::string& filename)
     in.close();
 }
 
-void sLib::printData()
+Person sLib::searchBest(const std::string& type) const
 {
-    for (int i = 0; i < count; i++) {
-        std::cout << i + 1 << ".";
-        std::cout << person[i] << std::endl;
-    }
-}
-
-void sLib::printSearch(const std::string& type)
-{
+    Person* maxPerson = nullptr;
     int maxRecord = 0;
-    Person maxRecordPerson;
     for (int i = 0; i < count; i++)
     {
         if (person[i].getSport() == type && person[i].getRecord() > maxRecord)
         {
             maxRecord = person[i].getRecord();
-            maxRecordPerson = person[i];
+            maxPerson = &person[i];
         }
     }
-    std::cout << maxRecordPerson << std::endl;
+    if (maxPerson)
+    {
+        return *maxPerson;
+    }
+    else {
+        throw "Ќет, спортсмена заданного вида спорта!!";
+    }
 }
 
 sLib::~sLib()

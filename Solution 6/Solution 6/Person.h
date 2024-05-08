@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <locale.h>
 #include "Date.h"
 #include "Gender.h"
 
